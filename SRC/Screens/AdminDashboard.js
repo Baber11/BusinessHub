@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import {Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Color from '../Assets/Utilities/Color';
@@ -17,19 +17,37 @@ import CustomTable from '../Components/CustomTable';
 import moment from 'moment';
 import { Get } from '../Axios/AxiosInterceptorFunction';
 import { useSelector } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
 
-const HomeScreen = () => {
+const AdminDashboard = () => {
     const token = useSelector(state=> state.authReducer.token);
-    const userData = useSelector(state=> state.commonReducer.userData);
-    console.log("🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:", userData)
-
     const [isLoading, setIsLoading] = useState(false)
-    const [users, setUsers] = useState([])
-    const isFocused = useIsFocused()
-    console.log("🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:", isFocused)
-
-  const dummyArray1 = ['Name', 'Contact', 'Role', 'Address'];
+  const dummyArray = [
+    {
+      color: ['rgba(15,206,235 , 0.9)', 'rgba(215,106,135 , 0.9)'],
+      logo: 'cash-register',
+      amount: 100,
+      title: 'Sale current month',
+    },
+    {
+      color: ['rgba(97,179,59 , 0.9)', 'rgba(97,119,9 , 0.9)'],
+      logo: 'cash-register',
+      amount: 100,
+      title: 'Stock',
+    },
+    {
+      color: ['rgba(5,25,0, 0.9)', 'rgba(95,105,0, 0.9)'],
+      logo: 'cash-register',
+      amount: 100,
+      title: 'Udhaar',
+    },
+    {
+      color: ['rgba(0,70,255 , 0.9)', 'rgba(0,100,155 , 0.9)'],
+      logo: 'cash-register',
+      amount: 100,
+      title: 'Inventory Sell Last Month',
+    },
+  ];
+  const dummyArray1 = ['Category', 'status', 'Time', 'amount'];
   const dummyArrayTable = [
     {
       name: 'Patti',
@@ -56,38 +74,27 @@ const HomeScreen = () => {
     setIsLoading(true)
     const response = await Get(url,token);
     setIsLoading(false)
-    if(response?.data?.success){
-      console.log('auth user response======>>>>>>>>>>', response?.data?.data)
-        setUsers(response?.data?.data?.users)
+    if(response!= undefined){
+        console.log('auth user response======>>>>>>>>>>', response?.data)
     }
 
   }
-
-  useEffect(() => {
-    getUser()
-  
-
-  }, [isFocused])
-  
-  
 
 
   return (
     <>
       <CustomStatusBar
-        backgroundColor={['#CBE4E8','#D2E4E4']}
+        backgroundColor={[Color.themeColor, '#83D475', '#ABE098']}
         barStyle={'dark-content'}
       />
-      <Header 
-      headerColor={['#CBE4E8','#D2E4E4']}
-      />
-      {/* <ScrollView
+      <Header />
+      <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(20, 0.6),
           alignItems: 'center',
-        }}> */}
-        {/* <CustomText
+        }}>
+        <CustomText
           isBold
           style={{
             width: windowWidth * 0.9,
@@ -109,20 +116,22 @@ const HomeScreen = () => {
           {dummyArray.map((item, index) => {
             return <Chuncks color={item.color} item={item} key={index} />;
           })}
-        </View> */}
-
+        </View>
+        <View
+          style={{
+            width: windowWidth * 0.9,
+          }}>
           <CustomText
             isBold
             style={{
               fontSize: moderateScale(20, 0.6),
               marginTop: moderateVerticalScale(20, 0.6),
-              marginLeft:moderateScale(20,.3)
             }}>
-           Users
+            Today Sell
           </CustomText>
-      
+        </View>
         <CustomTable
-          data={users}
+          data={dummyArrayTable}
           tableFields={dummyArray1}
           headingStyle={{
             width: windowWidth * 0.2,
@@ -131,18 +140,17 @@ const HomeScreen = () => {
           customStyle={{
             // backgroundColor: 'red',
             marginBottom: moderateScale(70, 0.3),
-            height : windowHeight * 0.7
           }}
           dataStyle={{
             width: windowWidth * 0.2,
           }}
         />
-      {/* </ScrollView> */}
+      </ScrollView>
     </>
   );
 };
 
-export default HomeScreen;
+export default AdminDashboard;
 
 const Chuncks = ({color, item}) => {
   return (

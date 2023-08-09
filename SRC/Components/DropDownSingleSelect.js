@@ -29,7 +29,9 @@ const DropDownSingleSelect = ({
   inRow,
   myJobs,
   Colors,
+  elevation,
   dropdownStyle,
+  borderColor
 }) => {
   const [data , setData] = useState([])
 
@@ -58,9 +60,22 @@ const DropDownSingleSelect = ({
           marginTop: 0,
           alignItems: 'center',
           borderRadius: 10,
-
-          borderWidth: 0,
+          
+          borderWidth: 1,
         },
+        elevation && {
+          shadowColor: Color.themeColor,
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.32,
+          shadowRadius: 5.46,
+
+          elevation: 9,
+          
+        },
+      
 
         extreme && {
           width: width * 1.13,
@@ -77,6 +92,7 @@ const DropDownSingleSelect = ({
           name={iconName}
           as={iconType}
           size={moderateScale(22, 0.3)}
+          color={Color.veryLightGray}
           style={[
             styles.icon2,
             backgroundColor && {color: Color.themeGray},
@@ -95,11 +111,13 @@ const DropDownSingleSelect = ({
           ...(myJobs && {
             backgroundColor: `${Color.themeInputText}`,
             width: windowWidth * 0.35,
-            borderRadius: 10,
+            borderRadius: 40,
           }),
+          ...(borderColor && {borderColor:borderColor, borderWidth:1, borderRadius:moderateScale(10,.6)}),
           ...(backgroundColor && {
             backgroundColor: backgroundColor,
           }),
+          
           ...(!iconName && {
             width: width,
           }),
@@ -121,6 +139,7 @@ const DropDownSingleSelect = ({
             position: 'absolute',
             left: moderateScale(40, 0.6),
           }),
+         
         }}
         rowStyle={{...styles.dropDownRow}}
         rowTextStyle={{
@@ -171,7 +190,8 @@ const styles = ScaledSheet.create({
     backgroundColor: Color.themeInputText,
     height: height * 0.06,
     borderBottomWidth: moderateScale(1, 0.3),
-    borderColor: 'lightgrey',
+    borderColor: Color.lightGrey,
+    // borderWidth:1,
     marginTop: moderateScale(6, 0.3),
     // borderRadius: moderateScale(20, 0.3),
     paddingLeft: moderateScale(32, 0.3),

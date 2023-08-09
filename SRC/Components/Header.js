@@ -17,8 +17,9 @@ import Modal from 'react-native-modal';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {imageUrl} from '../Config';
-import {setUserLogout} from '../Store/slices/auth';
+import {setUserLogout, setUserLogoutAuth} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
+import { setUserLogOut } from '../Store/slices/common';
 
 const Header = props => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const Header = props => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y:1}}
       colors={
-        headerColor ? headerColor : [Color.themeColor, '#83D475', '#ABE098']
+        headerColor ? headerColor : Color.themeBgColor
       }>
       {/* <View
       style={[
@@ -85,7 +86,7 @@ const Header = props => {
             }}
           />
         ): (
-          <View></View>
+         <></>
         )}
       </View>
       <CustomImage
@@ -96,9 +97,7 @@ const Header = props => {
           height: windowHeight * 0.05,
         }}
         source={
-          userRole == 'Qbid Member'
-            ? require('../Assets/Images/errorimage.png')
-            : require('../Assets/Images/errorimage.png')
+        require('../Assets/Images/logo.png')
         }
       /> 
      
@@ -107,23 +106,22 @@ const Header = props => {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
-            navigationN.navigate('MyAccounts');
+          dispatch(setUserLogoutAuth())
+          dispatch(setUserLogOut())
           }}
           style={{
-            width: moderateScale(36, 0.3),
-            height: moderateScale(36, 0.3),
-            borderRadius: moderateScale(18, 0.3),
-            backgroundColor: Color.green,
+            width: moderateScale(30, 0.3),
+            height: moderateScale(30, 0.3),
+            // borderRadius: moderateScale(18, 0.3),
+            // backgroundColor: Color.green,
             overflow: 'hidden',
           }}>
           <CustomImage
             onPress={() => {
-              navigationN.navigate('MyAccounts');
+            dispatch(setUserLogoutAuth())
+            dispatch(setUserLogOut())
             }}
-            source={
-              user?.photo
-                ? {uri: `${user?.photo}`}
-                : require('../Assets/Images/errorimage.png')
+            source={require('../Assets/Images/logout.png')
             }
             resizeMode={'cover'}
             style={{

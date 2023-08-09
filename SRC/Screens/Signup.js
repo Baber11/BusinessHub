@@ -2,59 +2,120 @@ import React, {useState} from 'react';
 import * as Animatable from 'react-native-animatable';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import ScreenBoiler from '../Components/ScreenBoiler';
 import LinearGradient from 'react-native-linear-gradient';
-import {View} from 'react-native';
+import {ActivityIndicator, ScrollView, View} from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import navigationService from '../navigationService';
 import CardContainer from '../Components/CardContainer';
+import DropDownSingleSelect from '../Components/DropDownSingleSelect';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import {useDispatch} from 'react-redux';
+import {setUserData} from '../Store/slices/common';
+import {setUserToken} from '../Store/slices/auth';
+import {ToastAndroid} from 'react-native';
+import {Platform} from 'react-native';
+import { validateEmail } from '../Config';
 
 const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
-  const [confirmPass, setconfirmPass] = useState('')
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [confirmPass, setconfirmPass] = useState('');
+  const [userRole, setUserRole] = useState('vendor');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const UserRoleArray = ['vendor', 'customer'];
+  
+  const dispatch = useDispatch();
+
+  const registerUser = async () => {
+    const body = {
+      name: username,
+      email: email,
+      phone: '084867346',
+      address: 'ABC',
+      password: password,
+      c_password: confirmPass,
+      role : userRole
+    };
+    for(let key in body){
+      
+      if(body[key] == ''){
+        return Platform.OS == 'android'
+            ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
+            : alert(`${key} is required`);
+      }
+    }
+   if (!validateEmail(email)) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show('Email is invalid', ToastAndroid.SHORT)
+        : Alert.alert('Email is invalid');
+    }
+    else if(password != confirmPass){
+      return Platform.OS == 'android'
+      ? ToastAndroid.show('passwords donot match', ToastAndroid.SHORT)
+      : alert('passwords donot match');
+    }
+    const url = 'register';
+
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader());
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log('response data==========>>>>>>>>', response?.data);
+      dispatch(setUserData(response?.data?.user_info));
+      dispatch(setUserToken({token: response?.data?.token}));
+    }
+  };
+
   return (
     <ScreenBoiler
       statusBarBackgroundColor={'white'}
       statusBarContentStyle={'dark-content'}>
-      <LinearGradient
-        style={{
-          width: windowWidth,
-          height: windowHeight,
-          alignItems: 'center',
-          justifyContent: 'center',
+        <ScrollView 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          
         }}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        colors={Color.themeBgColor}
-        // locations ={[0, 0.5, 0.6]}
-      >
+        >
+        <LinearGradient
+          style={{
+            width: windowWidth,
+          paddingBottom : moderateScale(30,0.6),
+
+            // height: windowHeight,
+          alignItems: 'center',
+
+            
+          }}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}
+          colors={Color.themeBgColor}
+        >
         <View
           style={{
-            height: windowHeight * 0.15,
-            width: windowWidth * 0.8,
-            // marginTop:moderateScale(30,.3),
-            // marginBottom:moderateScale(20,.3),
-            // paddingVertical: moderateScale(20, 0.6),
-            // backgroundColor:'black'
-          }}>
+            marginTop : 40,
+            height: windowHeight * 0.1,
+            width: windowWidth * 0.8, }}>
           <CustomImage
             resizeMode="contain"
             source={require('../Assets/Images/logo.png')}
             style={{
               width: '100%',
               height: '100%',
-              // marginTop: moderateScale(25, 0.3),
             }}
           />
         </View>
@@ -63,8 +124,24 @@ const Signup = () => {
             paddingVertical: moderateScale(30, 0.3),
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: moderateScale(50, 0.3),
+            marginTop: moderateScale(30, 0.3),
           }}>
+             <DropDownSingleSelect
+            array={UserRoleArray}
+            item={userRole}
+            setItem={setUserRole}
+            placeholder={userRole}
+            width={windowWidth * 0.75}
+            dropDownHeight={windowHeight * 0.06}
+            dropdownStyle={{
+              width: windowWidth * 0.75,
+              borderBottomWidth: 0,
+              // backgroundColor : 'red'
+            }}
+            borderColor={Color.lightGrey}
+            elevation
+            // backgroundColor={'white'}
+          />
           <TextInputWithTitle
             iconName={'user'}
             iconType={SimpleLineIcons}
@@ -75,7 +152,7 @@ const Signup = () => {
             value={username}
             viewHeight={0.07}
             viewWidth={0.75}
-            inputWidth={0.7}
+               inputWidth={0.55}
             border={1}
             backgroundColor={Color.white}
             borderColor={Color.black}
@@ -95,15 +172,57 @@ const Signup = () => {
             value={email}
             viewHeight={0.07}
             viewWidth={0.75}
-            inputWidth={0.7}
+               inputWidth={0.55}
             border={1}
             borderColor={Color.black}
             backgroundColor={Color.white}
-            marginTop={moderateScale(25, 0.3)}
+            marginTop={moderateScale(10, 0.3)}
             color={Color.black}
             placeholderColor={Color.veryLightGray}
             elevation
           />
+          { userRole == 'vendor' &&
+        <>
+            <TextInputWithTitle
+            iconName={'cellphone-sound'}
+            iconType={MaterialCommunityIcons}
+            LeftIcon={true}
+            titleText={'Contact'}
+            placeholder={'Contact'}
+            setText={setPhone}
+            value={phone}
+            viewHeight={0.07}
+            viewWidth={0.75}
+               inputWidth={0.55}
+            border={1}
+            borderColor={Color.black}
+            backgroundColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+          />
+            <TextInputWithTitle
+            iconName={'address'}
+            iconType={Entypo}
+            LeftIcon={true}
+            titleText={'address'}
+            placeholder={'address'}
+            setText={setAddress}
+            value={address}
+            viewHeight={0.07}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            border={1}
+            borderColor={Color.black}
+            backgroundColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+            />
+            </>
+          }
 
           <TextInputWithTitle
             iconName={'key-outline'}
@@ -116,18 +235,17 @@ const Signup = () => {
             secureText={true}
             viewHeight={0.07}
             viewWidth={0.75}
-            inputWidth={0.7}
+               inputWidth={0.55}
             border={1}
             borderColor={'#000'}
             backgroundColor={Color.white}
-            marginTop={moderateScale(25, 0.3)}
+            marginTop={moderateScale(10, 0.3)}
             color={Color.black}
             placeholderColor={Color.veryLightGray}
             elevation
           />
 
           <TextInputWithTitle
-             
             iconName={'check-outline'}
             iconType={MaterialCommunityIcons}
             LeftIcon={true}
@@ -138,19 +256,26 @@ const Signup = () => {
             secureText={true}
             viewHeight={0.07}
             viewWidth={0.75}
-            inputWidth={0.7}
+            inputWidth={0.55}
             border={1}
             borderColor={'#000'}
             backgroundColor={Color.white}
-            marginTop={moderateScale(25, 0.3)}
+            marginTop={moderateScale(10, 0.3)}
             color={Color.black}
             placeholderColor={Color.veryLightGray}
             elevation
           />
+         
 
           <CustomButton
-            onPress={() => navigationService.navigate('LoginScreen')}
-            text={'SIGN UP'}
+            onPress={() => registerUser()}
+            text={
+              isLoading ? (
+                <ActivityIndicator color={Color.themeColor} size={'small'} />
+              ) : (
+                'SIGN UP'
+              )
+            }
             textColor={Color.white}
             width={windowWidth * 0.4}
             height={windowHeight * 0.06}
@@ -161,6 +286,7 @@ const Signup = () => {
           />
         </CardContainer>
       </LinearGradient>
+        </ScrollView>
     </ScreenBoiler>
   );
 };

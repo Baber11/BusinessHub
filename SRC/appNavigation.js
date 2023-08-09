@@ -16,6 +16,7 @@ import GetStarted from './Screens/GetStarted';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Color from './Assets/Utilities/Color';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
+import HomeScreen from './Screens/HomeScreen';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -35,10 +36,10 @@ const AppNavigator = () => {
 
   const AppNavigatorContainer = () => {
     const firstScreen =
-    walkThrough == false ? 
+    !walkThrough ? 
     'WalkThroughScreen' :
-    // token != null
-    // ? 'HomeScreen' :
+    token != null
+    ? 'HomeScreen' :
      'GetStarted';
 
     return (
@@ -47,6 +48,7 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+         <RootNav.Screen name="HomeScreen" component={HomeScreen} />
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />

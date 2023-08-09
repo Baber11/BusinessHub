@@ -78,7 +78,7 @@ elevation: 9,
           alignItems: props.alignItems,
         },
         props.iconName && !props.rightIcon &&{
-          paddingLeft: moderateScale(60, 0.3),
+          paddingLeft: moderateScale(15, 0.3),
         },
       ]}
     >
@@ -224,7 +224,7 @@ const styles = ScaledSheet.create({
     backgroundColor: Color.white,
     borderRadius: 8,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     borderColor: Color.lightGrey,
     flexDirection: 'row',
     placeholderTextColor: Color.white,
