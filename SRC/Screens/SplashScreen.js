@@ -6,6 +6,7 @@ import { windowHeight, windowWidth } from "../Utillity/utils";
 import { moderateScale, ScaledSheet } from "react-native-size-matters";
 import ScreenBoiler from "../Components/ScreenBoiler";
 import LinearGradient from "react-native-linear-gradient";
+import CustomText from "../Components/CustomText";
 
 const SplashScreen = () => {
   return (
@@ -23,7 +24,7 @@ const SplashScreen = () => {
         }}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y:1}}
-        colors={Color.themeBgColor}
+        colors={[Color.themeColor2 , Color.themeColor2]}
         // locations ={[0, 0.5, 0.6]}
         >
 
@@ -33,15 +34,31 @@ const SplashScreen = () => {
           animation="zoomIn"
           duration={2500}
           useNativeDriver
-          style={[styles?.textContainer]}
+          style={{
+            // backgroundColor : 'red',
+            alignItems : 'center'
+          }}
           
           
           >
           <CustomImage
             source={require('../Assets/Images/logo.png')}
-            resizeMode={"contain"}
+            resizeMode={"stretch"}
             style={[styles.bottomImage]}
             />
+            <CustomText isBold style={{
+              textAlign : 'center',
+              fontSize : moderateScale(27,0.6),
+              marginTop : moderateScale(10,0.3)
+            }}>Business Hub</CustomText>
+             <CustomText  style={{
+              textAlign : 'center',
+              fontSize : moderateScale(18,0.6),
+              color : Color.veryLightGray,
+    fontStyle : 'italic'
+
+              // marginTop : moderateScale(10,0.3)
+            }}>A big business starts small</CustomText>
         </Animatable.View>
    
             </LinearGradient>
@@ -59,7 +76,8 @@ const styles = ScaledSheet.create({
     backgroundColor : Color.themeColor
   },
   bottomImage: {
-    width : windowWidth * 0.5
+    width : windowWidth * 0.4,
+    height :windowWidth * 0.3,
   },
   // textContainer: {
   //   flexDirection: "row",

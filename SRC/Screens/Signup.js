@@ -44,20 +44,20 @@ const Signup = () => {
     const body = {
       name: username,
       email: email,
-      phone: '084867346',
-      address: 'ABC',
+      phone: phone,
+      address: address,
       password: password,
       c_password: confirmPass,
       role : userRole
     };
-    for(let key in body){
+    // for(let key in body){
       
-      if(body[key] == ''){
-        return Platform.OS == 'android'
-            ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
-            : alert(`${key} is required`);
-      }
-    }
+    //   if(body[key] == ''){
+    //     return Platform.OS == 'android'
+    //         ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
+    //         : alert(`${key} is required`);
+    //   }
+    // }
    if (!validateEmail(email)) {
       return Platform.OS == 'android'
         ? ToastAndroid.show('Email is invalid', ToastAndroid.SHORT)
@@ -88,13 +88,15 @@ const Signup = () => {
         <ScrollView 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          
+        // paddingBottom : moderateScale(40,0.6)  
         }}
+      
         >
         <LinearGradient
           style={{
             width: windowWidth,
-          paddingBottom : moderateScale(30,0.6),
+            minHeight : windowHeight,
+          paddingBottom : moderateScale(40,0.6),
 
             // height: windowHeight,
           alignItems: 'center',
@@ -103,7 +105,7 @@ const Signup = () => {
           }}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
-          colors={Color.themeBgColor}
+           colors={[Color.themeColor2,Color.themeColor2]}
         >
         <View
           style={{
@@ -181,8 +183,8 @@ const Signup = () => {
             placeholderColor={Color.veryLightGray}
             elevation
           />
-          { userRole == 'vendor' &&
-        <>
+          {/* { userRole == 'vendor' &&
+        <> */}
             <TextInputWithTitle
             iconName={'cellphone-sound'}
             iconType={MaterialCommunityIcons}
@@ -221,8 +223,8 @@ const Signup = () => {
             placeholderColor={Color.veryLightGray}
             elevation
             />
-            </>
-          }
+            {/* </> */}
+          {/* } */}
 
           <TextInputWithTitle
             iconName={'key-outline'}
@@ -271,7 +273,7 @@ const Signup = () => {
             onPress={() => registerUser()}
             text={
               isLoading ? (
-                <ActivityIndicator color={Color.themeColor} size={'small'} />
+                <ActivityIndicator color={Color.white} size={'small'} />
               ) : (
                 'SIGN UP'
               )
@@ -285,6 +287,13 @@ const Signup = () => {
             // isGradient
           />
         </CardContainer>
+        <CustomText style={styles.txt5}>Already have an account ?</CustomText>
+        <CustomText
+          onPress={() => navigationService.navigate('LoginScreen')}
+          isBold
+          style={styles.txt6}>
+          Login
+        </CustomText>
       </LinearGradient>
         </ScrollView>
     </ScreenBoiler>
@@ -293,7 +302,7 @@ const Signup = () => {
 
 const styles = ScaledSheet.create({
   txt5: {
-    marginTop: moderateScale(25, 0.3),
+    // marginTop: moderateScale(25, 0.3),
     fontSize: moderateScale(11, 0.6),
   },
   txt6: {

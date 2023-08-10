@@ -85,7 +85,7 @@ const [ConfirmPass, setConfirmPass] = useState('')
         }}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y:1}}
-        colors={Color.themeBgColor}
+         colors={[Color.themeColor2,Color.themeColor2]}
         // locations ={[0, 0.5, 0.6]}
         >
             <TouchableOpacity
@@ -184,7 +184,7 @@ const [ConfirmPass, setConfirmPass] = useState('')
               height={windowHeight * 0.06}
               marginTop={moderateScale(20, 0.3)}
               onPress={() => {
-              dispatch(setUserToken({token : 'sadasdawdadas'}))
+              // dispatch(setUserToken({token : 'sadasdawdadas'}))
               }}
               bgColor={Color.yellow
             }

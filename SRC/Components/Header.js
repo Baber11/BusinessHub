@@ -9,17 +9,14 @@ import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from './CustomText';
 import CustomImage from './CustomImage';
 const {height, width} = Dimensions.get('window');
-import Foundation from 'react-native-vector-icons/Foundation';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-import Modal from 'react-native-modal';
+import Feather from 'react-native-vector-icons/Feather';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {imageUrl} from '../Config';
 import {setUserLogout, setUserLogoutAuth} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
-import { setUserLogOut } from '../Store/slices/common';
+import {setUserLogOut} from '../Store/slices/common';
+import navigationService from '../navigationService';
 
 const Header = props => {
   const dispatch = useDispatch();
@@ -35,6 +32,7 @@ const Header = props => {
     close,
     navigateTO,
     headerType,
+    cart,
     Notify,
     hideUser,
   } = props;
@@ -53,11 +51,9 @@ const Header = props => {
   return (
     <LinearGradient
       style={styles.header2}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y:1}}
-      colors={
-        headerColor ? headerColor : Color.themeBgColor
-      }>
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      colors={headerColor ? headerColor : Color.themeBgColor}>
       {/* <View
       style={[
         styles.header2,
@@ -73,20 +69,28 @@ const Header = props => {
           borderRadius: moderateScale(5, 0.3),
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: showBack || showList ? 'white' : 'transparent',
+          // backgroundColor: showBack || showList ? 'white' : 'transparent',
         }}>
         {showBack ? (
           <Icon
-            name={'arrowleft'}
-            as={AntDesign}
-            size={moderateScale(22, 0.3)}
-            color={userRole == 'Qbid Member' ? Color.themeColor : Color.blue}
+            name={'arrow-back'}
+            as={Ionicons}
+            size={moderateScale(25, 0.3)}
+            color={Color.black}
             onPress={() => {
               navigationN.goBack();
             }}
           />
-        ): (
-         <></>
+        ) : (
+          <Icon
+            name={'menu'}
+            as={Feather}
+            size={moderateScale(25, 0.3)}
+            color={Color.black}
+            onPress={() => {
+              navigationN.toggleDrawer();
+            }}
+          />
         )}
       </View>
       <CustomImage
@@ -96,41 +100,23 @@ const Header = props => {
           // backgroundColor : 'red' ,
           height: windowHeight * 0.05,
         }}
-        source={
-        require('../Assets/Images/logo.png')
-        }
-      /> 
-     
+        source={require('../Assets/Images/logo.png')}
+      />
+
       {/* <CustomText isBold style={{color : Color.white , fontSize : moderateScale(20,0.6)}} >Hola!!</CustomText> */}
       {!hideUser ? (
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => {
-          dispatch(setUserLogoutAuth())
-          dispatch(setUserLogOut())
-          }}
-          style={{
-            width: moderateScale(30, 0.3),
-            height: moderateScale(30, 0.3),
-            // borderRadius: moderateScale(18, 0.3),
-            // backgroundColor: Color.green,
-            overflow: 'hidden',
-          }}>
-          <CustomImage
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Icon
+            name={'shopping-cart'}
+            as={Feather}
+            size={moderateScale(25, 0.3)}
+            color={Color.black}
             onPress={() => {
-            dispatch(setUserLogoutAuth())
-            dispatch(setUserLogOut())
-            }}
-            source={require('../Assets/Images/logout.png')
-            }
-            resizeMode={'cover'}
-            style={{
-              width: '100%',
-              height: '100%',
+              navigationService.navigate('CartScreen');
             }}
           />
-          {/* )} */}
-        </TouchableOpacity>
+       
+        </View>
       ) : (
         <View
           style={{

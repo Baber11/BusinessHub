@@ -17,11 +17,20 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import Color from './Assets/Utilities/Color';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
 import HomeScreen from './Screens/HomeScreen';
+import Drawer from './Drawer/Drawer';
+import AdminDashboard from './Screens/AdminDashboard';
+import CustomerDashboard from './Screens/CustomerDashboard';
+import ProductDetails from './Screens/ProductDetails';
+import CartScreen from './Screens/CartScreen';
+import HomeScreenOther from './Screens/HomeScreenOther';
 
 const AppNavigator = () => {
   // const isLogin = false;
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
+  const role = useSelector(state => state.authReducer.role);
+  console.log("🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:", role)
+
   console.log("🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:", walkThrough)
   
   const isVerified = useSelector(state => state.authReducer.isVerified);
@@ -35,11 +44,12 @@ const AppNavigator = () => {
   const RootNavLogged = createNativeStackNavigator();
 
   const AppNavigatorContainer = () => {
+    const HomeScreen = role == 'admin' ? 'MyDrawer' : 'HomeScreenOther' 
     const firstScreen =
     !walkThrough ? 
     'WalkThroughScreen' :
     token != null
-    ? 'HomeScreen' :
+    ? HomeScreen :
      'GetStarted';
 
     return (
@@ -51,11 +61,16 @@ const AppNavigator = () => {
          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
+          <RootNav.Screen name="ProductDetails" component={ProductDetails} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="ChangePassword" component={ChangePassword} />
+          <RootNav.Screen name="CartScreen" component={CartScreen} />
+          <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} />
+
 
         </RootNav.Navigator>
       </NavigationContainer>
@@ -65,48 +80,31 @@ const AppNavigator = () => {
   return <AppNavigatorContainer />;
 };
 
-// export const MyDrawer = () => {
-//   const DrawerNavigation = createDrawerNavigator();
-//   const firstScreen = 'HomeScreen';
-//   return (
-//     <DrawerNavigation.Navigator 
-//      drawerContent={props => <Drawer {...props}/>}
-//      initialRouteName={HomeScreen}
-//       screenOptions={{
-//         headerShown: false,
-//         drawerStyle: {
-//           backgroundColor: '#c6cbef',
-//           width: '100%',
-//         },
-//       }}
-//      >
-//       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} 
-//        options={{
-//         drawerIcon: ({focused, size , color}) => (
-//           <Ionicons
-//              name="md-home"
-//              size={size}
-//              color={focused ? color : '#ccc'}
-//           />),
-//         title: 'Home',
-//         drawerActiveBackgroundColor: Color.themeBgColor,
-//         drawerActiveTintColor : Color.themeColor ,
-//       }}
-//        />
-//       <DrawerNavigation.Screen name="AssetScreen" component={AssetScreen} 
-//        options={{
-//         drawerIcon: ({focused, size , color}) => (
-//           <Ionicons
-//              name="lock-closed"
-//              size={size}
-//              color={focused ? color : '#ccc'}
-//           />),
-//         title: 'AssetScreen',
-//         drawerActiveBackgroundColor: Color.themeBgColor,
-//         drawerActiveTintColor : Color.themeColor ,
-//       }}/>
-//     </DrawerNavigation.Navigator>
-//   );
-// };
+export const MyDrawer = () => {
+  const DrawerNavigation = createDrawerNavigator();
+  const firstScreen = 'HomeScreen';
+  return (
+    <DrawerNavigation.Navigator
+      drawerContent={props => <Drawer {...props} />}
+      initialRouteName={'HomeScreen'}
+      screenOptions={{
+        headerShown: false,      
+      }}>
+      <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
+      
 
+      <DrawerNavigation.Screen
+        name="AdminDashboard"
+        component={AdminDashboard}
+       
+      />
+      <DrawerNavigation.Screen
+        name="CustomerDashboard"
+        component={CustomerDashboard}
+       
+      />
+       
+    </DrawerNavigation.Navigator>
+  );
+};
 export default AppNavigator;

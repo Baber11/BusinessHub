@@ -7,6 +7,7 @@ import { windowWidth } from "../Utillity/utils";
 
 export default function CustomStatusBar(props) {
   const { backgroundColor, barStyle } = props;
+  console.log("🚀 ~ file: CustomStatusBar.js:10 ~ CustomStatusBar ~ backgroundColor:", backgroundColor)
 
   const isGradient = Array.isArray(backgroundColor);
   const StatusBarHeight = StatusBar.currentHeight;

@@ -7,6 +7,7 @@ const initialState = {
   isVerified: false,
   userWalkThrough: false,
   isGoalCreated : false ,
+  role : '',
 };
 
 const AuthSlice = createSlice({
@@ -20,6 +21,10 @@ const AuthSlice = createSlice({
     
     SetFCMToken(state, action) {
       state.fcmToken = action?.payload?.fcmToken;
+    },
+    SetUserRole(state, action) {
+      console.log('in reduxxxxxxxxx' , action.payload)
+      state.role = action?.payload;
     },
     setUserLogin(state, action) {
       state.token = action?.payload;
@@ -41,6 +46,7 @@ export const {
   setUserToken,
   SetFCMToken,
   setWalkThrough,
+  SetUserRole
   
   
 } = AuthSlice.actions;

@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React ,{useState} from 'react';
 import {Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Color from '../Assets/Utilities/Color';

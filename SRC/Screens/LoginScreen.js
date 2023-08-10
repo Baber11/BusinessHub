@@ -16,7 +16,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import navigationService from '../navigationService';
 import {useDispatch} from 'react-redux';
 import CardContainer from '../Components/CardContainer';
-import {setUserToken} from '../Store/slices/auth';
+import {SetUserRole, setUserToken} from '../Store/slices/auth';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {setUserData} from '../Store/slices/common';
@@ -46,11 +46,12 @@ const LoginScreen = () => {
       return Platform.OS == 'android'
         ? ToastAndroid.show('password is required', ToastAndroid.SHORT)
         : alert('password is required');
-    } else if (userRole == '') {
-      return Platform.OS == 'android'
-        ? ToastAndroid.show('user role is required', ToastAndroid.SHORT)
-        : alert('user role is required');
     }
+    //  else if (userRole == '') {
+    //   return Platform.OS == 'android'
+    //     ? ToastAndroid.show('user role is required', ToastAndroid.SHORT)
+    //     : alert('user role is required');
+    // }
 
     const url = 'login';
     const body = {email: email.trim(), password: password};
@@ -62,6 +63,8 @@ const LoginScreen = () => {
     if (response?.data?.success) {
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
+      dispatch(SetUserRole(response?.data?.user_info?.role))
+
     }
   };
 
@@ -78,7 +81,7 @@ const LoginScreen = () => {
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={Color.themeBgColor}
+        colors={[Color.themeColor2,Color.themeColor2]}
         // locations ={[0, 0.5, 0.6]}
       >
         <View
@@ -166,7 +169,7 @@ const LoginScreen = () => {
             }}
             text={
               isLoading ? (
-                <ActivityIndicator size={'small'} color={Color.themeColor} />
+                <ActivityIndicator size={'small'} color={Color.white} />
               ) : (
                 'Login'
               )
@@ -200,9 +203,9 @@ const styles = ScaledSheet.create({
     color: Color.black,
   },
   txt6: {
-    fontSize: moderateScale(19, 0.6),
-    color: Color.white,
-    // color:Color.black
+    fontSize: moderateScale(15, 0.6),
+    // color: Color.white,
+    color:Color.black
   },
 });
 

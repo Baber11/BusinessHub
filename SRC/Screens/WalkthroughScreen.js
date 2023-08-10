@@ -79,10 +79,10 @@ const WalkThroughScreen = props => {
           <View
             style={{
               width: windowWidth * 0.9,
-              // height: windowHeight * 0.4,
+              height: windowHeight * 0.38,
               borderRadius: moderateScale(20, 0.6),
               paddingVertical: moderateScale(26, 0.6),
-              backgroundColor: 'rgba(233, 189, 147, 0.6)',
+              backgroundColor: Color.themeColor2,
               alignItems: 'center',
             }}>
             <CustomText
@@ -174,11 +174,11 @@ const WalkThroughScreen = props => {
           data={slides}
           showSkipButton={true}
           showPrevButton={true}
-          activeDotStyle={{backgroundColor: Color.yellow}}
+          activeDotStyle={{backgroundColor: Color.themeColor2}}
           dotStyle={{
             backgroundColor: 'transparent',
             borderWidth: 1,
-            borderColor: Color.yellow,
+            borderColor: Color.themeColor2,
           }}
           renderDoneButton={RenderDoneBtn}
           renderNextButton={RenderNextBtn}
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
   },
   title: {
-    color: Color.yellow,
+    color: Color.themeColor2,
     fontWeight: '700',
     fontSize: 30,
     textAlign: 'center',
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: moderateScale(35, 0.3),
   },
   subText: {
-    color: Color.yellow,
+    color: Color.themeColor2,
     textAlign: 'center',
     fontWeight: '400',
     fontSize: moderateScale(15, 0.3),
@@ -235,11 +235,11 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(15, 0.3),
   },
   btnLeft: {
-    color: Color.yellow,
+    color: Color.themeColor2,
     paddingLeft: moderateScale(20, 0.3),
   },
   btnRight: {
-    color: Color.yellow,
+    color: Color.themeColor2,
     paddingRight: moderateScale(20, 0.3),
   },
 });

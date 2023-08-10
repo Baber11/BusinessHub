@@ -40,7 +40,8 @@ const CustomButton = (props) => {
     isBold,
     disabled = false,
     alignSelf,
-    elevation
+    elevation,
+    marginRight
 
     // value
   } = props;
@@ -73,6 +74,9 @@ elevation: 9,},
         },
         justifyContent && {
           justifyContent: justifyContent,
+        },
+        marginRight && {
+          marginRight : marginRight
         },
         borderRadius && {
           borderRadius: borderRadius,

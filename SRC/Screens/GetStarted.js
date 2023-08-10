@@ -26,7 +26,7 @@ const GetStarted = () => {
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={['white', 'white']}
+        colors={[Color.themeColor2, Color.themeColor2]}
         // locations ={[0, 0.5, 0.6]}
       >
         <CustomText isBold style={{
@@ -44,7 +44,7 @@ const GetStarted = () => {
            }}>
           <CustomImage
             resizeMode="contain"
-            source={require('../Assets/Images/charater_shoping.jpg')}
+            source={require('../Assets/Images/charater_shoping-removebg-preview.png')}
             style={{
               width: '100%',
               height: '100%',
@@ -55,7 +55,7 @@ const GetStarted = () => {
 
         <View
           style={{
-            backgroundColor: 'white',
+            // backgroundColor: 'white',
             bottom: 0,
             position: 'absolute',
             width: windowWidth * 0.98,

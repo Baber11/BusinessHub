@@ -28,7 +28,9 @@ export default Color = {
   purple: '#0D668E',
 
   // theme colors
-  themeColor: '#F79C00',
+  themeColor: '#EBB645',
+  themeColor2: '#D2E4E4',
+
   btnColor:['#565657',"#000000"],
   themePink : '#F84569',
   themeColor1: '#52C4BF',
