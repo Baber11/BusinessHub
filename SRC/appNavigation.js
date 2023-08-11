@@ -23,6 +23,7 @@ import CustomerDashboard from './Screens/CustomerDashboard';
 import ProductDetails from './Screens/ProductDetails';
 import CartScreen from './Screens/CartScreen';
 import HomeScreenOther from './Screens/HomeScreenOther';
+import Orders from './Screens/Orders';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -44,7 +45,7 @@ const AppNavigator = () => {
   const RootNavLogged = createNativeStackNavigator();
 
   const AppNavigatorContainer = () => {
-    const HomeScreen = role == 'admin' ? 'MyDrawer' : 'HomeScreenOther' 
+    const HomeScreen = role == 'admin' ? 'MyDrawer' : role == 'customer' ? 'HomeScreenOther' : 'HomeScreenOther' 
     const firstScreen =
     !walkThrough ? 
     'WalkThroughScreen' :
@@ -70,6 +71,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
           <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} />
+          <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} />
 
 
         </RootNav.Navigator>
@@ -82,7 +84,9 @@ const AppNavigator = () => {
 
 export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
-  const firstScreen = 'HomeScreen';
+  const role = useSelector(state => state.authReducer.role);
+  // const firstScreen = role == 'admin' ? 'HomeScreen': role == 'customer'? 'CustomerDashboard':'Orders';
+
   return (
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
@@ -91,6 +95,11 @@ export const MyDrawer = () => {
         headerShown: false,      
       }}>
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
+      {/* <DrawerNavigation.Screen
+        name="Orders"
+        component={Orders}
+       
+      />
       
 
       <DrawerNavigation.Screen
@@ -102,7 +111,7 @@ export const MyDrawer = () => {
         name="CustomerDashboard"
         component={CustomerDashboard}
        
-      />
+      /> */}
        
     </DrawerNavigation.Navigator>
   );

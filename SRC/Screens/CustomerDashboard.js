@@ -36,17 +36,11 @@ const CustomerDashboard = () => {
   );
 
   const Services = [
+   
     {
-      name: 'All',
-      image2: require('../Assets/Images/menu.png'),
-      image: require('../Assets/Images/menu1.png'),
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      name: 'Dress',
-      image: require('../Assets/Images/dress.png'),
+      id: 1,
+      name: 'Stitching',
+      image: require('../Assets/Images/dummyman4.png'),
       image2: require('../Assets/Images/dress1.png'),
       onPress: () => {
         console.log('here');
@@ -54,45 +48,43 @@ const CustomerDashboard = () => {
       },
     },
     {
-      name: 'T-shirt',
-      image: require('../Assets/Images/tshirt.png'),
+      id: 2,
+      name: 'Painting',
+      image: require('../Assets/Images/dummyUser2.png'),
       image2: require('../Assets/Images/tshirt1.png'),
       onPress: () => {
         console.log('here');
       },
     },
     {
+      id: 3,
       name: 'jeans',
-      image: require('../Assets/Images/jeans.png'),
+      image: require('../Assets/Images/dummyman1.png'),
       image2: require('../Assets/Images/jeans1.png'),
       onPress: () => {
         console.log('here');
       },
     },
     {
+      id: 4,
       name: 'shoes',
-      image: require('../Assets/Images/shoes.png'),
+      image: require('../Assets/Images/dummyUser1.png'),
       image2: require('../Assets/Images/shoes1.png'),
       onPress: () => {
         console.log('here');
       },
     },
     {
+      id: 5,
       name: 'shoes',
-      image: require('../Assets/Images/shoes.png'),
+      image: require('../Assets/Images/dummyman4.png'),
       image2: require('../Assets/Images/shoes1.png'),
       onPress: () => {
         console.log('here');
       },
     },
-    {
-      name: 'shoes',
-      image: require('../Assets/Images/shoes.png'),
-      image2: require('../Assets/Images/shoes1.png'),
-      onPress: () => {
-        console.log('here');
-      },
-    },
+   
+    
   ];
 
   const newArrivals = [
@@ -122,6 +114,17 @@ const CustomerDashboard = () => {
         require('../Assets/Images/Mask.png'),
         require('../Assets/Images/Mask2.png'),
       ],
+      comments: [
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser.png'), time: '2 days ago', text: 'I just love love & love my purchase. Highly recommended from my side'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman1.png'), time: '2 weeks ago', text: 'Excellent Product Same as shown in the photos'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman4.png'), time: '3 weeks ago', text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.'},
+        {
+          userName: 'ABC', image:require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser2.png'), time: '3 weeks ago', text: 'Bad service'},
+      ],
     },
     {
       id: 2,
@@ -149,6 +152,17 @@ const CustomerDashboard = () => {
         require('../Assets/Images/Mask.png'),
         require('../Assets/Images/Mask2.png'),
       ],
+      comments: [
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser.png'), time: '2 days ago', text: 'I just love love & love my purchase. Highly recommended from my side'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman1.png'), time: '2 weeks ago', text: 'Excellent Product Same as shown in the photos'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman4.png'), time: '3 weeks ago', text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.'},
+        {
+          userName: 'ABC', image:require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser2.png'), time: '3 weeks ago', text: 'Bad service'},
+      ],
     },
     {
       id: 3,
@@ -174,6 +188,17 @@ const CustomerDashboard = () => {
       images: [
         require('../Assets/Images/Mask.png'),
         require('../Assets/Images/Mask2.png'),
+      ],
+      comments: [
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser.png'), time: '2 days ago', text: 'I just love love & love my purchase. Highly recommended from my side'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman1.png'), time: '2 weeks ago', text: 'Excellent Product Same as shown in the photos'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman4.png'), time: '3 weeks ago', text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.'},
+        {
+          userName: 'ABC', image:require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser2.png'), time: '3 weeks ago', text: 'Bad service'},
       ],
     },
     {
@@ -204,6 +229,17 @@ const CustomerDashboard = () => {
         require('../Assets/Images/Mask.png'),
         require('../Assets/Images/Mask2.png'),
       ],
+      comments: [
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser.png'), time: '2 days ago', text: 'I just love love & love my purchase. Highly recommended from my side'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman1.png'), time: '2 weeks ago', text: 'Excellent Product Same as shown in the photos'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman4.png'), time: '3 weeks ago', text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.'},
+        {
+          userName: 'ABC', image:require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser2.png'), time: '3 weeks ago', text: 'Bad service'},
+      ],
     },
     {
       id: 5,
@@ -227,6 +263,17 @@ const CustomerDashboard = () => {
       selectedColor: '',
       totalQty: 18,
       images: [require('../Assets/Images/Mask2.png')],
+      comments: [
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser.png'), time: '2 days ago', text: 'I just love love & love my purchase. Highly recommended from my side'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman1.png'), time: '2 weeks ago', text: 'Excellent Product Same as shown in the photos'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman4.png'), time: '3 weeks ago', text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.'},
+        {
+          userName: 'ABC', image:require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser2.png'), time: '3 weeks ago', text: 'Bad service'},
+      ],
     },
     {
       id: 6,
@@ -254,20 +301,38 @@ const CustomerDashboard = () => {
         require('../Assets/Images/Mask.png'),
         require('../Assets/Images/Mask2.png'),
       ],
+      comments: [
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser.png'), time: '2 days ago', text: 'I just love love & love my purchase. Highly recommended from my side'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman1.png'), time: '2 weeks ago', text: 'Excellent Product Same as shown in the photos'},
+        {userName: 'ABC', image:require('../Assets/Images/dummyman4.png'), time: '3 weeks ago', text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.'},
+        {
+          userName: 'ABC', image:require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {userName: 'ABC', image:require('../Assets/Images/dummyUser2.png'), time: '3 weeks ago', text: 'Bad service'},
+      ],
     },
   ];
 
   return (
     <>
       <CustomStatusBar
-        backgroundColor={['#CBE4E8', '#D2E4E4']}
+        backgroundColor={'#D2E4E4'}
         barStyle={'dark-content'}
       />
-      <Header headerColor={['#CBE4E8', '#D2E4E4']} cart />
-      <ScrollView 
-      contentContainerStyle={{
-        paddingBottom:moderateScale(60,.3)
-      }}>
+      <Header headerColor={['#D2E4E4','#D2E4E4']} cart />
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: moderateScale(60, 0.3),
+        }}
+        style={{
+          minHeight : windowHeight * 0.9, 
+          backgroundColor : '#D2E4E4'
+          
+        }}
+        >
         <CustomText
           isBold
           style={{
@@ -278,11 +343,10 @@ const CustomerDashboard = () => {
           Services
         </CustomText>
         <ScrollView
+        showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            height: windowHeight * 0.12,
-            // width: windowWidth * 1,
             padding: moderateScale(10, 0.6),
-            marginTop: moderateScale(20, 0.3),
+            // marginTop: moderateScale(10, 0.3),
             alignItems: 'center',
 
             flexDirection: 'row',
@@ -301,50 +365,63 @@ const CustomerDashboard = () => {
             );
             return (
               <>
+
                 <TouchableOpacity
+                  key={item?.id}
                   style={{
+                    flexDirection : 'row',
                     alignItems: 'center',
+                    // justifyContent : 'center',
+                    width : windowWidth * 0.45 , 
+                    paddingVertical: moderateScale(5,0.6),
+                    borderRadius : moderateScale(20,0.6),
+                    borderColor : Color.veryLightGray,
+                    borderWidth: 1,
                     //  width: windowWidth * 0.16,
-                    marginHorizontal: moderateScale(10, 0.3),
-                    // justifyContent:'center'
-                    // backgroundColor:'black'
+                    marginHorizontal: moderateScale(5, 0.3),
+                    backgroundColor : 'white'
                   }}
-                  onPress={item?.onPress}>
-                  <LinearGradient
-                    style={{
-                      height: moderateScale(52, 0.6),
-                      width: moderateScale(52, 0.6),
-                      borderRadius: moderateScale(10, 0.6),
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                    colors={
-                      selectedService == item?.name
-                        ? Color.themeBgColor
-                        : ['#CBE4E8', 'white']
-                    }>
+                  // onPress={item?.onPress}
+                  >
+                    <View style={{
+                      width : moderateScale(50,0.6),
+                      height : moderateScale(50,0.6),
+                      borderRadius : moderateScale(5,0.6),
+                      backgroundColor : 'white',
+                      overflow : 'hidden',
+            marginLeft : moderateScale(10,0.6),
+
+
+                    }}>
+
+                
                     <CustomImage
-                      source={
-                        selectedService == item?.name
-                          ? item?.image2
-                          : item?.image
-                      }
-                      // style={{}}
-                      resizeMode={'cover'}
+                      source={item?.image}
+                      style={{
+                        width : '100%',
+                        height : '100%'
+                      }}
+                      resizeMode={'stretch'}
                       onPress={() => {
                         setSelectedService(item?.name);
                         item?.onPress();
                       }}
-                    />
-                  </LinearGradient>
+                      />
+                      </View>
+                      <View style={{
+                        marginLeft : moderateScale(10,0.3)
+                      }}>
+
                   <CustomText
                     style={{
-                      width: windowWidth * 0.14,
-                      textAlign: 'center',
+                      width: windowWidth * 0.16,
+                      // textAlign: 'center',
                       color: 'black',
                     }}>
                     {item?.name}
                   </CustomText>
+                  <CustomText isBold>Rs 25</CustomText>
+                      </View>
                 </TouchableOpacity>
               </>
             );

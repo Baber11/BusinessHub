@@ -17,7 +17,7 @@ const Product = ({item}) => {
   const[like, setLike] = useState(item?.like);
 
   const cartData = useSelector(state => state.commonReducer.cart);
-  // console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
+  console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
 
   const addedItem = item => {
     // console.log('add DATA===>', cartData);
@@ -32,8 +32,9 @@ const Product = ({item}) => {
   const tempitem = cartData?.find((x, index) => x?.id == item?.id);
   // console.log('QTY+++', tempitem);
   return (
-    <View>
+    <View key={item?.id}>
       <TouchableOpacity
+
         onLongPress={() => {
           setLike(!like);
           // dispatch(setLiked({id : item?.id , liked : !item?.like}))
@@ -79,7 +80,7 @@ const Product = ({item}) => {
             borderRadius: 5,
             marginTop: moderateScale(15, 0.3),
           }}>
-          {like && (
+          {/* {like && (
             <Icon
               name={'heart'}
               as={Entypo}
@@ -90,7 +91,7 @@ const Product = ({item}) => {
                 zIndex: 1,
               }}
             />
-          )}
+          )} */}
           <CustomImage
             onLongPress={() => {
               setLike(!like);
@@ -109,7 +110,7 @@ const Product = ({item}) => {
             }}
           />
 
-          {item?.sale && (
+          {/* {item?.sale && (
             <View style={styles.sale}>
               <CustomText
                 isBold
@@ -120,7 +121,7 @@ const Product = ({item}) => {
                 {item.sale}
               </CustomText>
             </View>
-          )}
+          )} */}
         </TouchableOpacity>
 
         <CustomText
@@ -165,9 +166,9 @@ const Product = ({item}) => {
             position: 'absolute',
             bottom: moderateScale(10, 0.3),
             right: moderateScale(15, 0.3),
-            fontSize: 13,
+            fontSize: moderateScale(11,0.6),
           }}>
-          View all
+          View Details
         </CustomText>
       </TouchableOpacity>
 

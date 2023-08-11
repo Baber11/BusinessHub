@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import {Icon} from 'native-base';
-import {View, Platform, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Platform,
+  Dimensions,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
@@ -21,6 +27,7 @@ import navigationService from '../navigationService';
 const Header = props => {
   const dispatch = useDispatch();
   const notification = useSelector(state => state.commonReducer.notification);
+  const cartData = useSelector(state => state.commonReducer.cart);
   const navigationN = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
   const {
@@ -105,17 +112,51 @@ const Header = props => {
 
       {/* <CustomText isBold style={{color : Color.white , fontSize : moderateScale(20,0.6)}} >Hola!!</CustomText> */}
       {!hideUser ? (
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <View
+          style={{
+            // backgroundColor: 'red',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            paddingTop: moderateScale(6,0.6),
+          }}>
+          {cartData?.length > 0 && (
+            <View
+              style={{
+                width: moderateScale(14, 0.6),
+                height: moderateScale(14, 0.6),
+                borderRadius: moderateScale(7, 0.6),
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'red',
+                position: 'absolute',
+                right: -4,
+                zIndex: 1,
+                top: 0,
+              }}>
+              <CustomText
+                style={{
+                  fontSize: 8,
+                }}>
+                {cartData?.length < 10 ? cartData?.length : '9+'}
+              </CustomText>
+            </View>
+          )}
+
           <Icon
             name={'shopping-cart'}
             as={Feather}
             size={moderateScale(25, 0.3)}
             color={Color.black}
             onPress={() => {
-              navigationService.navigate('CartScreen');
+              if (cartData?.length > 0) {
+                navigationService.navigate('CartScreen');
+              } else {
+                return Platform.OS == 'android'
+                  ? ToastAndroid.show('No Item in cart', ToastAndroid.SHORT)
+                  : Alert('No Item in cart');
+              }
             }}
           />
-       
         </View>
       ) : (
         <View

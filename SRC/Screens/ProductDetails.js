@@ -4,7 +4,7 @@ import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
-import {Icon, ScrollView} from 'native-base';
+import {FlatList, Icon, ScrollView} from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,13 +16,15 @@ import {
   increamentQuantity,
   setColor,
   setCotton,
-  setLiked,
   setSize,
 } from '../Store/slices/common';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import {useIsFocused} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
+import CommentsSection from '../Components/CommentsSection';
+import TextInputWithTitle from '../Components/TextInputWithTitle';
+import moment from 'moment';
 
 const ProductDetails = props => {
   const item = props.route.params.item;
@@ -32,6 +34,7 @@ const ProductDetails = props => {
     '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
     cartData,
   );
+  const user = useSelector(state => state.commonReducer.userData);
   const cartitem = cartData?.find((x, index) => x?.id == item?.id);
   // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
   const dispatch = useDispatch();
@@ -50,8 +53,8 @@ const ProductDetails = props => {
     '🚀 ~ file: DressesDetail.js:35 ~ DressesDetail ~ Selectedsize:',
     Selectedsize,
   );
-  const [like, setLike] = useState(cartitem ? cartitem.like : item?.like);
-  console.log('🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ liked:', like);
+  // const [like, setLike] = useState(cartitem ? cartitem.like : item?.like);
+  // console.log('🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ liked:', like);
 
   const [index, setIndex] = useState(1);
   const [quantity, setQuantity] = useState(
@@ -60,6 +63,10 @@ const ProductDetails = props => {
   const [cotton, setcotton] = useState(
     cartitem ? cartitem?.cotton : item?.cotton,
   );
+  const [comments, setComments] = useState(
+    item?.comments ? item?.comments : [],
+  );
+  const [yourComment, setYourComment] = useState('');
   // console.log(
   //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:',
   //   cartData,
@@ -91,7 +98,7 @@ const ProductDetails = props => {
     cotton: cotton,
     id: item?.id,
     img: item?.img,
-    like: like,
+    // like: like,
     price: item?.price,
     qty: quantity,
     sale: item?.sale,
@@ -105,13 +112,12 @@ const ProductDetails = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header
-       showBack={true} headerColor={['#CBE4E8', '#D2E4E4']}
-       cart
-      />
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{
-        paddingBottom:moderateScale(60,.3)
-      }}>
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: moderateScale(60, 0.3),
+        }}>
         <View style={styles.banner}>
           <View style={styles.container}>
             {index > 0 && item?.images.length > 1 && (
@@ -250,7 +256,7 @@ const ProductDetails = props => {
               {finalItem?.subTitle}
             </CustomText>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               activeOpacity={0.6}
               style={{paddingRight: 10}}
               onPress={() => {
@@ -272,7 +278,7 @@ const ProductDetails = props => {
                   color={'black'}
                 />
               )}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View
@@ -344,6 +350,7 @@ const ProductDetails = props => {
               color: '#201E1D',
               fontSize: moderateScale(14, 0.6),
               width: windowWidth * 0.17,
+              marginLeft: moderateScale(10, 0.3),
             }}>
             Color
           </CustomText>
@@ -376,6 +383,7 @@ const ProductDetails = props => {
               fontSize: moderateScale(14, 0.6),
               color: '#201E1D',
               width: windowWidth * 0.17,
+              marginLeft: moderateScale(10, 0.3),
             }}>
             Size
           </CustomText>
@@ -500,6 +508,113 @@ const ProductDetails = props => {
             </View>
           </View>
         </View>
+
+        <View
+          style={{
+            width: windowWidth * 0.95,
+            backgroundColor: 'white',
+            alignSelf: 'center',
+            marginTop: moderateScale(10, 0.3),
+            borderRadius: moderateScale(10, 0.6),
+            paddingVertical: moderateScale(10, 0.6),
+            alignItems: 'center',
+          }}>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(14, 0.6),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Reviews
+          </CustomText>
+
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={1}
+            data={comments}
+            contentContainerStyle={{
+              alignSelf: 'center',
+              marginTop: moderateScale(5, 0.3),
+            }}
+            renderItem={({item, index}) => {
+              return <CommentsSection item={item} />;
+            }}
+          />
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(14, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Your review
+          </CustomText>
+          <View
+            style={{
+              flexDirection: 'row',
+              // backgroundColor:'black',
+              width: windowWidth * 0.9,
+              justifyContent: 'space-between',
+            }}>
+            <TextInputWithTitle
+              titleText={'Write a review'}
+              // secureText={false}
+              placeholder={'Write a review'}
+              setText={setYourComment}
+              value={yourComment}
+              viewHeight={0.05}
+              viewWidth={0.7}
+              inputWidth={0.7}
+              // border={1}
+              borderColor={Color.veryLightGray}
+              backgroundColor={'#FFFFFF'}
+              marginTop={moderateScale(10, 0.3)}
+              color={Color.themeColor}
+              marginRight={moderateScale(10, 0.3)}
+              placeholderColor={Color.themeLightGray}
+              borderRadius={moderateScale(25, 0.3)}
+              marginBottom={moderateScale(10, 0.3)}
+              elevation
+            />
+            <CustomButton
+              isBold
+              onPress={() => {
+                const body = {
+                  userName: user?.name,
+                  image: user?.image,
+                  text: yourComment,
+                  time: moment().format(' hh:mm:ss a'),
+                };
+                console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
+                setComments(prev => [
+                  ...prev,
+                  {
+                    userName: user?.name,
+                    image: user?.image,
+                    text: yourComment,
+                    time: moment().format(' hh:mm:ss a'),
+                  },
+                ]);
+                setYourComment('')
+              }
+            }
+              text={'Add'}
+              textColor={Color.white}
+              width={windowWidth * 0.15}
+              height={windowHeight * 0.045}
+              fontSize={moderateScale(10, 0.6)}
+              // marginBottom={moderateScale(10,.3)}
+              // marginTop={moderateScale(20, 0.3)}
+              bgColor={Color.themeColor}
+              borderRadius={moderateScale(30, 0.3)}
+              // isGradient
+            />
+          </View>
+        </View>
       </ScrollView>
 
       <View style={styles.bottomContainer}>
@@ -528,7 +643,7 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   size: {
     height: windowWidth * 0.08,
-    alignItems:'center',
+    alignItems: 'center',
     // backgroundColor:'red',
     width: windowWidth * 0.08,
     borderRadius: (windowWidth * 0.1) / 2,
@@ -570,7 +685,7 @@ const styles = StyleSheet.create({
   banner: {
     width: windowWidth * 0.95,
     // height: windowHeight * 0.8,
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     alignSelf: 'center',
     overflow: 'hidden',
     borderRadius: 10,
@@ -584,7 +699,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    padding: moderateScale(10, 0.6),
+    padding: moderateScale(5, 0.6),
     // backgroundColor:'black'
   },
 

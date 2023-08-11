@@ -22,7 +22,7 @@ import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch} from 'react-redux';
 import {setUserData} from '../Store/slices/common';
-import {setUserToken} from '../Store/slices/auth';
+import {SetUserRole, setUserToken} from '../Store/slices/auth';
 import {ToastAndroid} from 'react-native';
 import {Platform} from 'react-native';
 import { validateEmail } from '../Config';
@@ -33,10 +33,10 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [confirmPass, setconfirmPass] = useState('');
-  const [userRole, setUserRole] = useState('vendor');
+  const [userRole, setuserRole] = useState('seller');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const UserRoleArray = ['vendor', 'customer'];
+  const UserRoleArray = ['seller', 'buyer'];
   
   const dispatch = useDispatch();
 
@@ -48,7 +48,7 @@ const Signup = () => {
       address: address,
       password: password,
       c_password: confirmPass,
-      role : userRole
+      role : userRole == 'seller' ? 'vendor' : 'customer'
     };
     // for(let key in body){
       
@@ -78,6 +78,7 @@ const Signup = () => {
       console.log('response data==========>>>>>>>>', response?.data);
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
+      dispatch(SetUserRole(response?.data?.user_info?.role))
     }
   };
 
@@ -131,7 +132,7 @@ const Signup = () => {
              <DropDownSingleSelect
             array={UserRoleArray}
             item={userRole}
-            setItem={setUserRole}
+            setItem={setuserRole}
             placeholder={userRole}
             width={windowWidth * 0.75}
             dropDownHeight={windowHeight * 0.06}

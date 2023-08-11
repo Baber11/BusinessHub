@@ -22,16 +22,14 @@ import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
-  const cartData = useSelector(state => state.commonReducer.cartData);
+  const cartData = useSelector(state => state.commonReducer.cart);
   console.log(item?.img)
   console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
   const dispatch = useDispatch();
 
   return (
-    <View style={styles.cardContainer}>
-      <CustomText isBold style={styles.name}>
-        Sleeve Hoodie
-      </CustomText>
+    <View style={styles.cardContainer} key={item?.id}>
+      
       <View
         style={{
           flexDirection: 'row',

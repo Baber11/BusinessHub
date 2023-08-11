@@ -68,14 +68,14 @@ const CustomTable = ({
                 
                 <CustomButton
                 isBold
-                text={data1[x] == 'active' ? 'Deactive' : 'Active'}
+                text={data1[x] == 'active' ? 'Deactiveate' : 'Activate'}
                 textColor={Color.white}
                 width={windowWidth * 0.18}
                 marginTop={moderateScale(10,.3)}
                 marginBottom={moderateScale(10,.3)}
                 height={windowHeight * 0.04}
                 bgColor={data1[x] == 'active' ? Color.red : 'green'}
-                fontSize={moderateScale(10,.6)}
+                fontSize={moderateScale(9,.6)}
                 borderRadius={moderateScale(5, 0.3)}
                 marginRight={moderateScale(5, 0.3)}
                 onPress={()=>{
