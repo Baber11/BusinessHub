@@ -24,6 +24,7 @@ import ProductDetails from './Screens/ProductDetails';
 import CartScreen from './Screens/CartScreen';
 import HomeScreenOther from './Screens/HomeScreenOther';
 import Orders from './Screens/Orders';
+import Myorders from './Screens/Myorders';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -98,6 +99,11 @@ export const MyDrawer = () => {
       <DrawerNavigation.Screen
         name="Orders"
         component={Orders}
+       
+      />
+      <DrawerNavigation.Screen
+        name="Myorders"
+        component={Myorders}
        
       />
       

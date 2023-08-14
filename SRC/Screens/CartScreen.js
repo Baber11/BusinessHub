@@ -18,7 +18,7 @@ import {
   import {Icon} from 'native-base';
   import CustomButton from '../Components/CustomButton';
   import {ActivityIndicator} from 'react-native';
-  import {EmptyCart, setWholeCart} from '../Store/slices/common';
+  import {EmptyCart, setWholeCart,Order} from '../Store/slices/common';
   import navigationService from '../navigationService';
   import {useEffect} from 'react';
   import { Get, Post } from '../Axios/AxiosInterceptorFunction';
@@ -29,7 +29,8 @@ import {
   const CartScreen = ({route}) => {
     const dispatch = useDispatch();
     const cartData = useSelector(state => state.commonReducer.cart);
-    console.log( 'the data is ========>> >> ',cartData)
+    const orderDATA = useSelector(state => state.commonReducer.order);
+    console.log( 'the data is ========>> >> ',orderDATA)
     const [finalAmount, setFinalAmount] = useState(0);
     const [productsForCard, setProdctsForCart] = useState([]);
     const subTotal = route?.params?.subTotal;
@@ -81,7 +82,9 @@ import {
               <CustomButton
             isBold
             onPress={() => {
+              dispatch(Order(cartData))
               dispatch(EmptyCart())
+         
               navigationService.navigate('HomeScreen')
             }}
             text={'Pay'}
