@@ -22,7 +22,7 @@ import {useIsFocused} from '@react-navigation/native';
 const HomeScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);

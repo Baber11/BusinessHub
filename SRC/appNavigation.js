@@ -50,7 +50,7 @@ const AppNavigator = () => {
     !walkThrough ? 
     'WalkThroughScreen' :
     token != null
-    ? HomeScreen :
+    ? 'MyDrawer' :
      'GetStarted';
 
     return (
@@ -85,17 +85,17 @@ const AppNavigator = () => {
 export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
   const role = useSelector(state => state.authReducer.role);
-  // const firstScreen = role == 'admin' ? 'HomeScreen': role == 'customer'? 'CustomerDashboard':'Orders';
+  const firstScreen = role == 'admin' ? 'HomeScreen': role == 'customer'? 'CustomerDashboard':'Orders';
 
   return (
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
-      initialRouteName={'HomeScreen'}
+      initialRouteName={firstScreen}
       screenOptions={{
         headerShown: false,      
       }}>
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
-      {/* <DrawerNavigation.Screen
+      <DrawerNavigation.Screen
         name="Orders"
         component={Orders}
        
@@ -111,7 +111,7 @@ export const MyDrawer = () => {
         name="CustomerDashboard"
         component={CustomerDashboard}
        
-      /> */}
+      />
        
     </DrawerNavigation.Navigator>
   );

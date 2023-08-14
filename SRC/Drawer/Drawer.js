@@ -56,11 +56,11 @@ const Drawer = () => {
       },
     },
     // {
-    //   name: 'Orders',
+    //   name: 'Myorders',
     //   iconName: 'package',
     //   iconType: Feather,
     //   onPress: () => {
-    //     navigation.navigate('Orders');
+    //     navigation.navigate('Myorders');
     //   },
     // },
     {
