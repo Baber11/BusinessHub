@@ -84,8 +84,7 @@ import {
             onPress={() => {
               dispatch(Order(cartData))
               dispatch(EmptyCart())
-         
-              navigationService.navigate('HomeScreen')
+              navigationService.navigate('CustomerDashboard')
             }}
             text={'Pay'}
             textColor={Color.white}

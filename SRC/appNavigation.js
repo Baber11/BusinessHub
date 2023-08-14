@@ -60,7 +60,7 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
-         <RootNav.Screen name="HomeScreen" component={HomeScreen} />
+         {/* <RootNav.Screen name="HomeScreen" component={HomeScreen} /> */}
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="ProductDetails" component={ProductDetails} />
@@ -71,8 +71,8 @@ const AppNavigator = () => {
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
-          <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} />
-          <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} />
+          {/* <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} /> */}
+          {/* <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} /> */}
 
 
         </RootNav.Navigator>

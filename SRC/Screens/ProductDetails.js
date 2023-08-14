@@ -622,7 +622,7 @@ const ProductDetails = props => {
           disabled={cartitem?.qty > 0 ? true : false}
           isBold
           onPress={() => addedItem(body)}
-          text={'ADD TO CART'}
+          text={cartitem?.qty > 0 ? 'Already Added':'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
