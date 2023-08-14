@@ -82,7 +82,7 @@ import {
             isBold
             onPress={() => {
               dispatch(EmptyCart())
-              navigationService.navigate('HomeScreen')
+              navigationService.navigate('CustomerDashboard')
             }}
             text={'Pay'}
             textColor={Color.white}

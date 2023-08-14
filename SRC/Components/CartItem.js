@@ -89,16 +89,20 @@ const CartItem = ({item, fromCheckout}) => {
             )}
           </View>
           {item?.selectedColor ? (
+            <View style={{
+              flexDirection : 'row',
+              alignItems : 'center'
+            }}> 
             <CustomText style={{color: Color.black, textAlign : 'left'}}>
               Selected Color:{' '}
-              {
-                <View
+            
+            </CustomText>
+            <View
                   style={[
                     styles.colorBox,
                     {backgroundColor: item?.selectedColor.toLowerCase()},
                   ]}></View>
-              }
-            </CustomText>
+            </View>
           ) : (
             <View
               style={{
