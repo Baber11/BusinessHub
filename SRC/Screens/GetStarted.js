@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import * as Animatable from 'react-native-animatable';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -60,17 +59,6 @@ const GetStarted = () => {
             position: 'absolute',
             width: windowWidth * 0.98,
             height: windowHeight * 0.4,
-            // borderTopStartRadius: moderateScale(30, 0.6),
-            // borderTopEndRadius: moderateScale(30, 0.6),
-            // shadowColor: Color.themeColor,
-            // shadowOffset: {
-            //   width: 0,
-            //   height: 3,
-            // },
-            // shadowOpacity: 0.29,
-            // shadowRadius: 4.65,
-
-            // elevation: 7,
           }}>
           <CustomButton
             text={
@@ -85,7 +73,7 @@ const GetStarted = () => {
             height={windowHeight * 0.06}
             marginTop={moderateScale(100, 0.3)}
             onPress={() => {
-              navigationService.navigate('Signup');
+              navigationService.navigate('MyDrawer');
             }}
             bgColor={Color.white}
             borderColor={Color.yellow}

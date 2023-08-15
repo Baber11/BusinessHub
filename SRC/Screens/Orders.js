@@ -20,6 +20,7 @@ import {useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
+import navigationService from '../navigationService';
 
 const Orders = () => {
   const token = useSelector(state => state.authReducer.token);
@@ -39,23 +40,212 @@ const Orders = () => {
     {
       id: 1,
       orderId: 3237687,
-      price: 1200,
-      numOfItems: 1,
+      price: 12000,
+      qty: 1,
       status: 'Processed',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      selectedColor: '#4e86c2',
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize: 'S',
+      cotton: 3,
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Image.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com'
+
+      },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 2,
+
       orderId: 12392830,
       price: 12000,
       numOfItems: 5,
       status: 'Shipped',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      qty: 3,
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: 'M',
+      selectedColor: '#313436',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com'
+        
+      },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 3,
+
       orderId: 1238109238,
       price: 8000,
       numOfItems: 3,
       status: 'Processed',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      qty: 2,
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: 'L',
+      selectedColor: '#2c4973',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com'
+        
+      },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 4,
@@ -63,37 +253,343 @@ const Orders = () => {
       price: 9500,
       numOfItems: 2,
       status: 'Shipped',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      qty: 2,
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: 'M',
+      selectedColor: '#1ABFBC',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com',
+      },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
   ];
 
   const previousOrders = [
     {
       id: 1,
-      orderId: 1283791,
-      price: 300,
-      numOfItems: 2,
+      orderId: 3237687,
+      price: 1200,
+      qty: 1,
       status: 'Delivered',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      selectedColor: '#4e86c2',
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize: 'S',
+      cotton: 3,
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com',
+      },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 2,
-      orderId: 171928378,
+      orderId: 12392830,
       price: 12000,
+      numOfItems: 5,
       status: 'Cancelled',
-      numOfItems: 6,
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      qty: 3,
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com',
+      },
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: 'M',
+      selectedColor: '#313436',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Image.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 3,
-      orderId: 3264874,
-      price: 1200,
-      numOfItems: 1,
+      orderId: 1238109238,
+      price: 8000,
+      numOfItems: 3,
       status: 'Delivered',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      qty: 2,
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: 'L',
+      selectedColor: '#2c4973',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com',
+      },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 4,
-      orderId: 37428377,
-      price: 17000,
-      numOfItems: 8,
-      status: 'Delivered',
+      orderId: 2368263789,
+      price: 9500,
+      numOfItems: 2,
+      status: 'Cancelled',
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+      qty: 2,
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '#1ABFBC',
+      selectedColor: 'M',
+      totalQty: 18,
+      buyer:{
+        name:'XYZ',
+        contact:'439847298',
+        address:"Karachi pakistan",
+        email:'xyz@gmail.com',
+      },
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
   ];
 
@@ -103,10 +599,11 @@ const Orders = () => {
         backgroundColor={['#CBE4E8', '#D2E4E4']}
         barStyle={'dark-content'}
       />
-      <Header headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <Header headerColor={['#CBE4E8', '#D2E4E4']}  />
       <ScrollView
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
+          backgroundColor: '#CBE4E8',
         }}>
         <CustomText
           isBold
@@ -119,16 +616,9 @@ const Orders = () => {
         </CustomText>
         <ScrollView
           contentContainerStyle={{
-            // height: windowHeight * 0.12,
-            // width: windowWidth * 1,
             padding: moderateScale(10, 0.6),
-            marginTop: moderateScale(20, 0.3),
             alignItems: 'center',
-
             flexDirection: 'row',
-            // backgroundColor:'purple',
-            // marginBottom: moderateScale(60, 0.3),
-            // justifyContent: 'space-between',
           }}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -153,25 +643,22 @@ const Orders = () => {
           isBold
           style={{
             fontSize: moderateScale(20, 0.6),
-            marginTop: moderateVerticalScale(20, 0.6),
             marginLeft: moderateScale(20, 0.3),
-            // backgroundColor:'black'
           }}>
           History
         </CustomText>
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          numColumns={2}
+          numColumns={1}
           data={previousOrders}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(10, 0.3),
-            // backgroundColor:'black'
           }}
           renderItem={({item, index}) => {
             return (
-              <OrderCard2
+              <OrderCard
                 item={item}
                 selectedOrder={selectedOrder}
                 setSelectedOrder={setSelectedOrder}
@@ -193,172 +680,98 @@ const OrderCard = ({item}) => {
         key={item?.id}
         style={{
           alignItems: 'center',
-          marginHorizontal: moderateScale(10, 0.3),
+          backgroundColor: 'white',
+          marginRight: moderateScale(10, 0.3),
+          width: windowWidth * 0.95,
+          height: windowHeight * 0.15,
           borderRadius: moderateScale(20, 0.6),
+          flexDirection: 'row',
+          marginVertical: moderateScale(10, 0.6),
         }}
-        onPress={item?.onPress}>
-        <LinearGradient
+        onPress={() => {
+          navigationService.navigate('OrderDetails', {item: item});
+        }}>
+        <View
           style={{
-            // height: windowHeight * 0.25,
-            width: windowWidth * 0.6,
-            borderRadius: moderateScale(20, 0.6),
-            alignItems: 'center',
-            
-            //   justifyContent: 'center',
-          }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          colors={
-            item?.status =='Processed'
-              ? [Color.blue, 'white']
-              : [Color.orange, 'white']
-          }>
-          <CustomText
-            style={{
-              //   width: windowWidth * 0.14,
-              marginTop: moderateScale(10, 0.3),
-              textAlign: 'center',
-              fontSize: moderateScale(20, 0.6),
-              color: 'black',
-            }}
-            isBold>
-            {` Order No ${item?.orderId}`}
-          </CustomText>
-          <CustomText
-            style={{
-              //   width: windowWidth * 0.14,
-              textAlign: 'center',
-              color: Color.darkGray,
-              fontSize: moderateScale(30, 0.6),
-            }}>
-            {item?.numOfItems}
-          </CustomText>
-          <CustomText
-            style={{
-              //   width: windowWidth * 0.14,
-              textAlign: 'center',
-              color: 'black',
-              fontSize: moderateScale(15, 0.6),
-            }}
-            >
-            items
-          </CustomText>
-          <CustomText
-            style={{
-              textAlign: 'center',
-              color: Color.black,
-              marginTop: moderateScale(10, 0.3),
-              fontSize: moderateScale(15, 0.6),
-            }}
-            isBold
-            >
-            Spent {item?.price}$
-          </CustomText>
-          <CustomText
-            style={{
-              textAlign: 'center',
-              color: item?.status =='Processed' ? Color.blue : Color.orange,
-              marginTop: moderateScale(10, 0.3),
-              fontSize: moderateScale(15, 0.6),
-              marginBottom: moderateScale(10, 0.6),
-            }}
-            isBold
-            >
-            {item?.status}
-          </CustomText>
-        </LinearGradient>
-      </TouchableOpacity>
-    </>
-  );
-};
-const OrderCard2 = ({item, selectedOrder, setSelectedOrder, width}) => {
-  return (
-    <>
-      <TouchableOpacity
-        key={item?.id}
-        style={{
-          alignItems: 'center',
-          marginHorizontal: moderateScale(10, 0.3),
-          borderRadius: moderateScale(20, 0.6),
-        }}
-        onPress={item?.onPress}>
-        <LinearGradient
-          style={{
-            // height: windowHeight * 0.22,
-            width: windowWidth * 0.44,
-            borderRadius: moderateScale(20, 0.6),
-            alignItems: 'center',
-
-            //   justifyContent: 'center',
-          }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          colors={
-            item?.status =='Cancelled'
-              ? [Color.red, 'white']
-              : [Color.green, 'white']
-          }>
-          <CustomText
-            style={{
-              //   width: windowWidth * 0.14,
-              marginTop: moderateScale(10, 0.3),
-              textAlign: 'center',
-              fontSize: moderateScale(15, 0.6),
-              color: 'black',
-            }}
-            isBold>
-            {` Order No ${item?.orderId}`}
-          </CustomText>
-          <CustomText
-            style={{
-              //   width: windowWidth * 0.14,
-              textAlign: 'center',
-              color: Color.darkGray,
-              fontSize: moderateScale(30, 0.6),
-            }}>
-            {item?.numOfItems}
-          </CustomText>
-          <CustomText
-            style={{
-              //   width: windowWidth * 0.14,
-              textAlign: 'center',
-              color: Color.black,
-              fontSize: moderateScale(15, 0.6),
-            }}
-           >
-            items
-          </CustomText>
-          <CustomText
-            style={{
-              textAlign: 'center',
-              color: Color.black,
-              marginTop: moderateScale(10, 0.3),
-              fontSize: moderateScale(15, 0.6),
-            }}
-            isBold
-            >
-            Spent {item?.price}$
-          </CustomText>
-          <CustomText
-            style={{
-              textAlign: 'center',
-              color: item?.status == 'Cancelled' ? 'red' :'green',
-              marginTop: moderateScale(10, 0.3),
-              fontSize: moderateScale(15, 0.6),
-              marginBottom: moderateScale(10, 0.6),
-            }}
-            isBold>
-            {item?.status}
-          </CustomText>
-        </LinearGradient>
-        <CustomText
-          style={{
-            width: windowWidth * 0.14,
-            textAlign: 'center',
-            color: 'black',
+            width: windowWidth * 0.2,
+            height: windowHeight * 0.12,
+            marginLeft: moderateScale(10, 0.3),
+            backgroundColor: 'black',
+            borderRadius: moderateScale(10, 0.6),
+            overflow: 'hidden',
           }}>
-          {item?.name}
-        </CustomText>
+          <CustomImage
+            source={item?.images[0]}
+            style={{width: '100%', height: '100%'}}
+            resizeMode={'cover'}
+          />
+        </View>
+        <View
+          style={{
+            marginLeft: moderateScale(20, 0.3),
+            width: windowWidth * 0.6,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              // marginBottom:moderateScale(10,.3),
+            }}>
+            <CustomText
+              style={{
+                textAlign: 'left',
+                color: 'black',
+                fontSize: moderateScale(12, 0.6),
+              }}
+              isBold>
+              Order ID : {item?.orderId}
+            </CustomText>
+            <CustomText
+              style={{
+                // width: windowWidth * 0.3,
+                // right: -10,
+                textAlign: 'center',
+                fontSize: moderateScale(12, 0.6),
+                borderRadius: moderateScale(10, 0.6),
+                padding: moderateScale(5, 0.6),
+                // position: 'absolute',
+                // top: -15,
+                backgroundColor:
+                  item?.status == 'Cancelled'
+                    ? 'red'
+                    : item?.status == 'Delivered'
+                    ? 'green'
+                    : 'orange',
+                color: Color.black,
+              }}
+              isBold>
+              {`${item?.status}`}
+            </CustomText>
+          </View>
+
+          <CustomText
+            style={{
+              textAlign: 'left',
+              color: Color.black,
+              width: windowWidth * 0.3,
+              fontSize: moderateScale(12, 0.6),
+            }}
+            isBold>
+            Qty : {item?.qty}
+          </CustomText>
+          <CustomText
+            style={{
+              textAlign: 'left',
+              color: Color.black,
+              marginTop: moderateScale(5, 0.3),
+              fontSize: moderateScale(12, 0.6),
+              width: windowWidth * 0.28,
+            }}
+            isBold>
+            {item?.price} Rs
+          </CustomText>
+        </View>
       </TouchableOpacity>
     </>
   );

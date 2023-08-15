@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserLogoutAuth} from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
+import navigationService from '../navigationService';
 
 const Drawer = () => {
   const navigation = useNavigation();
@@ -31,11 +32,20 @@ const Drawer = () => {
     {
       name: 'Home',
       iconName: 'home',
-    iconType: Entypo,
+      iconType: Entypo,
       onPress: () => {
         navigation.navigate('HomeScreen');
       },
     },
+    {
+      name: 'change password',
+      iconName: 'lock',
+      iconType: Entypo,
+      onPress: () => {
+        navigation.navigate('ChangePassword');
+      },
+    },
+
     {
       name: 'Log out',
       iconName: 'logout',
@@ -53,6 +63,14 @@ const Drawer = () => {
       iconType: Entypo,
       onPress: () => {
         navigation.navigate('CustomerDashboard');
+      },
+    },
+    {
+      name: 'change password',
+      iconName: 'lock',
+      iconType: Entypo,
+      onPress: () => {
+        navigation.navigate('ChangePassword');
       },
     },
     // {
@@ -79,7 +97,15 @@ const Drawer = () => {
       iconName: 'home',
       iconType: Entypo,
       onPress: () => {
-        navigation.navigate('sellerDashboard');
+        navigation.navigate('Orders');
+      },
+    },
+    {
+      name: 'change password',
+      iconName: 'lock',
+      iconType: Entypo,
+      onPress: () => {
+        navigation.navigate('ChangePassword');
       },
     },
     // {
@@ -106,11 +132,7 @@ const Drawer = () => {
   ];
 
   const data =
-    role == 'admin'
-      ? adminData
-      : role == 'customer'
-      ? customerData
-      : sellerData;
+    role == 'admin' ? adminData : role == 'vendor' ? sellerData : customerData;
 
   return (
     <ScreenBoiler
@@ -131,7 +153,35 @@ const Drawer = () => {
             backgroundColor: '#D2E4E4',
           }}>
           {token == null ? (
-            <CustomText>Login /{<CustomText>SignUp</CustomText>}</CustomText>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                // backgroundColor: 'black',
+                height: windowHeight * 0.2,
+              }}>
+              <View style={styles.Profile}>
+                <CustomImage
+                  resizeMode={'cover'}
+                  source={require('../Assets/Images/no-profile.jpeg')}
+                  style={{width: '100%', height: '100%'}}
+                />
+              </View>
+              <CustomText
+                style={{
+                  color: Color.black,
+                  fontSize: moderateScale(20, 0.6),
+                  marginLeft: moderateScale(10, 0.3),
+                  // backgroundColor: 'purple',
+                  // top: 50,
+                }}
+                isBold
+                onPress={() => {
+                  navigationService.navigate('LoginScreen');
+                }}>
+                {`Login/Signup`}
+              </CustomText>
+            </View>
           ) : (
             <View
               style={{
@@ -173,32 +223,38 @@ const Drawer = () => {
             marginTop: moderateScale(10, 0.3),
           }}>
           {data.map((item, index) => (
-            <TouchableOpacity
-              onPress={item?.onPress}
-              style={{
-                width: windowWidth * 0.5,
-                // borderBottomWidth: 0.5,
-                borderColor: Color.black,
-                margin: moderateScale(15, 0.3),
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Icon
-                name={item?.iconName}
-                as={item?.iconType}
-                size={moderateScale(20, 0.3)}
-                color={Color.black}
-                onPress={item?.onPress}
-              />
-              <CustomText
-                style={{
-                  fontSize: moderateScale(14, 0.6),
-                  color: Color.black,
-                  marginLeft: moderateScale(10, 0.3),
-                }}>
-                {item.name}
-              </CustomText>
-            </TouchableOpacity>
+            <>
+              {(token == null && item?.name == 'Home') ? (
+                <TouchableOpacity
+                  onPress={item?.onPress}
+                  style={{
+                    width: windowWidth * 0.5,
+                    // borderBottomWidth: 0.5,
+                    borderColor: Color.black,
+                    margin: moderateScale(15, 0.3),
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    name={item?.iconName}
+                    as={item?.iconType}
+                    size={moderateScale(20, 0.3)}
+                    color={Color.black}
+                    onPress={item?.onPress}
+                  />
+                  <CustomText
+                    style={{
+                      fontSize: moderateScale(14, 0.6),
+                      color: Color.black,
+                      marginLeft: moderateScale(10, 0.3),
+                    }}>
+                    {item.name}
+                  </CustomText>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+            </>
           ))}
         </View>
 
