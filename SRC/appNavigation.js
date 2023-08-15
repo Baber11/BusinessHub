@@ -25,6 +25,8 @@ import CartScreen from './Screens/CartScreen';
 import HomeScreenOther from './Screens/HomeScreenOther';
 import Orders from './Screens/Orders';
 import Myorders from './Screens/Myorders';
+import OrderDetailScreen from './Screens/OrderDetailScreen';
+
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -71,6 +73,8 @@ const AppNavigator = () => {
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen name="OrderDetailScreen" component={OrderDetailScreen} />
+        
           {/* <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} /> */}
           {/* <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} /> */}
 
@@ -118,6 +122,7 @@ export const MyDrawer = () => {
         component={CustomerDashboard}
        
       />
+      
        
     </DrawerNavigation.Navigator>
   );

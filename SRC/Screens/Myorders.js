@@ -7,9 +7,15 @@ import CustomStatusBar from '../Components/CustomStatusBar';
 import Myorder from '../Components/MyorderComponent';
 
 import { moderateScale } from 'react-native-size-matters';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Myorders = () => {
+  const navigation = useNavigation()
+  const orderData = useSelector(state => state.commonReducer.order);
+
+  console.log("Data55",orderData)
  
   const Data1 = [
     {
@@ -63,9 +69,15 @@ const Myorders = () => {
      
       
         <FlatList
-          data={Data1}
+        showsVerticalScrollIndicator={false}
+          data={orderData}
           contentContainerStyle={{
-          marginBottom: moderateScale(10, 0.3),
+          paddingBottom: moderateScale(20, 0.3),
+          minHeight : windowHeight * 0.9,
+          }}
+          style={{
+            backgroundColor :'white',
+         
           }}
           renderItem={({item, index}) => {
             console.log("DATA34",item)
