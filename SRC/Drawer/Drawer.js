@@ -73,14 +73,14 @@ const Drawer = () => {
         navigation.navigate('ChangePassword');
       },
     },
-    // {
-    //   name: 'Myorders',
-    //   iconName: 'package',
-    //   iconType: Feather,
-    //   onPress: () => {
-    //     navigation.navigate('Myorders');
-    //   },
-    // },
+    {
+      name: 'Myorders',
+      iconName: 'shopping-outline',
+      iconType: MaterialCommunityIcons,
+      onPress: () => {
+        navigation.navigate('Myorders');
+      },
+    },
     {
       name: 'Log out',
       iconName: 'logout',
