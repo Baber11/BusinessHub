@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SetUserRole, setUserLogoutAuth} from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
 import navigationService from '../navigationService';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Drawer = () => {
   const navigation = useNavigation();
@@ -54,7 +54,7 @@ const Drawer = () => {
       onPress: () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
-        dispatch(SetUserRole(''))
+        dispatch(SetUserRole(''));
       },
     },
   ];
@@ -68,7 +68,7 @@ const Drawer = () => {
       },
     },
     {
-      name: 'Myorders',
+      name: 'My Orders',
       iconName: 'shopping-outline',
       iconType: MaterialCommunityIcons,
       onPress: () => {
@@ -76,7 +76,7 @@ const Drawer = () => {
       },
     },
     {
-      name: 'change password',
+      name: 'Change Password',
       iconName: 'lock',
       iconType: Entypo,
       onPress: () => {
@@ -91,7 +91,7 @@ const Drawer = () => {
       onPress: () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
-        dispatch(SetUserRole(''))
+        dispatch(SetUserRole(''));
       },
     },
   ];
@@ -113,25 +113,13 @@ const Drawer = () => {
       },
     },
     {
-      name: 'change password',
+      name: 'Change Password',
       iconName: 'lock',
       iconType: Entypo,
       onPress: () => {
         navigation.navigate('ChangePassword');
       },
     },
-    // {
-    //   name: 'Customer',
-    //   onPress : ()=>{
-    //     navigation.navigate('CustomerDashboard')
-    //   },
-    // },
-    // {
-    //   name: 'AdminDashboard',
-    //   onPress : ()=>{
-    //     navigation.navigate('AdminDashboard')
-    //   },
-    // },
     {
       name: 'Log out',
       iconName: 'logout',
@@ -139,13 +127,29 @@ const Drawer = () => {
       onPress: () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
-        dispatch(SetUserRole(''))
+        dispatch(SetUserRole(''));
+      },
+    },
+  ];
+  const otherData = [
+    {
+      name: 'Home',
+      iconName: 'home',
+      iconType: Entypo,
+      onPress: () => {
+        navigation.navigate('CustomerDashboard');
       },
     },
   ];
 
   const data =
-    role == 'admin' ? adminData : role == 'vendor' ? sellerData : customerData;
+    role == 'admin'
+      ? adminData
+      : role == 'vendor'
+      ? sellerData
+      : role == 'customer'
+      ? customerData
+      : otherData;
 
   return (
     <ScreenBoiler

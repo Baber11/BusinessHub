@@ -98,7 +98,7 @@ const AddProduct = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

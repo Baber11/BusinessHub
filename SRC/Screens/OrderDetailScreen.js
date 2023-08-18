@@ -247,7 +247,7 @@ const OrderDetailScreen = props => {
                 paddingHorizontal: moderateScale(18, 0.6),
               }}>
               <CustomText
-                style={{color: Color.ver, fontSize: moderateScale(12, 0.6)}}>
+                style={{color: Color.veryLightGray, fontSize: moderateScale(12, 0.6)}}>
                 Quantity
               </CustomText>
 

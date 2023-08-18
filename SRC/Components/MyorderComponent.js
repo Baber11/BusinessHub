@@ -102,12 +102,13 @@ elevation: 5,
 
   
           <CustomText
+          isBold
            onPress={()=> navigation.navigate('OrderDetailScreen',{item})}
             style={{
               color: '#000',
               fontSize: moderateScale(12, 0.6),
             }}>
-            View all
+           Details
           </CustomText>
           
         </View>

@@ -63,7 +63,7 @@ const Header = props => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => { navigationService.navigate('LoginScreen') }},
+      {text: 'Login', onPress: () => { navigationService.navigate('LoginScreen') }},
     ]);
     return true;
   }

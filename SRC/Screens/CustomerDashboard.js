@@ -53,6 +53,38 @@ const CustomerDashboard = () => {
         console.log('here');
         navigationService.navigate('Dresses');
       },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 2,
@@ -69,6 +101,38 @@ const CustomerDashboard = () => {
       onPress: () => {
         console.log('here');
       },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 3,
@@ -85,6 +149,38 @@ const CustomerDashboard = () => {
       onPress: () => {
         console.log('here');
       },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 4,
@@ -102,6 +198,38 @@ const CustomerDashboard = () => {
       onPress: () => {
         console.log('here');
       },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
     {
       id: 5,
@@ -118,6 +246,38 @@ const CustomerDashboard = () => {
       onPress: () => {
         console.log('here');
       },
+      comments: [
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser.png'),
+          time: '2 days ago',
+          text: 'I just love love & love my purchase. Highly recommended from my side',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman1.png'),
+          time: '2 weeks ago',
+          text: 'Excellent Product Same as shown in the photos',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyman4.png'),
+          time: '3 weeks ago',
+          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser1.png'),
+          time: '2 months ago',
+          text: 'Quality is not good',
+        },
+        {
+          userName: 'ABC',
+          image: require('../Assets/Images/dummyUser2.png'),
+          time: '3 weeks ago',
+          text: 'Bad service',
+        },
+      ],
     },
   ];
 

@@ -44,7 +44,7 @@ const OrderDetails = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart={!details} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

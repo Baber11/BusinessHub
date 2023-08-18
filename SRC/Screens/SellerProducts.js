@@ -185,7 +185,7 @@ const SellerProduct = (props) => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
-      <Header headerColor={['#D2E4E4', '#D2E4E4']} cart />
+      <Header headerColor={['#D2E4E4', '#D2E4E4']}  />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

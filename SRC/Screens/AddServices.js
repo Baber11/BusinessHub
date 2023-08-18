@@ -13,7 +13,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import CommentsSection from '../Components/CommentsSection';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -25,6 +25,7 @@ import {TriangleColorPicker} from 'react-native-color-picker';
 import Modal from 'react-native-modal';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {bindActionCreators} from 'redux';
+import navigationService from '../navigationService';
 
 const AddServices = props => {
   const item = props?.route?.params?.item;
@@ -34,10 +35,12 @@ const AddServices = props => {
   console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [charges, setCharges] = useState('');
+  const [charges, setCharges] = useState();
   const [imagePickerModal, setImagePickerModal] = useState(false);
   const [description, setDescription] = useState('');
   const [image, setImage] = useState({});
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (Object.keys(image).length > 0) {
@@ -49,7 +52,7 @@ const AddServices = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']}  />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -276,6 +279,11 @@ const AddServices = props => {
               description: description,
             };
             for (let key in body) {
+              // if (key == 'charges') {
+              //   typeof body[key] != 'number' && Platform.OS == 'android'
+              //     ? ToastAndroid.show('Charges should be number', ToastAndroid.SHORT)
+              //     : Alert.alert('Charges is required');
+              // }
               if (body[key] == '') {
                 console.log(key);
                 return Platform.OS == 'android'
@@ -287,6 +295,7 @@ const AddServices = props => {
               '🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:',
               body,
             );
+            navigation.goBack();
           }}
           text={'Save'}
           textColor={Color.white}

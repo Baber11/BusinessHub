@@ -700,7 +700,7 @@ const OrderCard = ({item}) => {
           marginVertical: moderateScale(10, 0.6),
         }}
         onPress={() => {
-          navigationService.navigate('OrderDetails', {item: item});
+          navigationService.navigate('OrderDetails', {item: item, details:true});
         }}>
         <View
           style={{

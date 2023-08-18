@@ -25,6 +25,7 @@ import {
   increamentQuantity,
   setColor,
   setCotton,
+  setServiceBooking,
   setSize,
 } from '../Store/slices/common';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -94,31 +95,19 @@ const ServiceDetails = props => {
       setYourComment('');
     } else {
       Confirm();
-      // return Platform.OS == 'android' ? ToastAndroid.show('login first to Continue', ToastAndroid.SHORT) : Alert.alert('login first to Continue')
     }
   };
 
-  //   const body = {
-  //     Title: item?.Title,
-  //     colors: item?.colors,
-  //     cotton: cotton,
-  //     id: item?.id,
-  //     img: item?.img,
-  //     // like: like,
-  //     price: item?.price,
-  //     qty: quantity,
-  //     sale: item?.sale,
-  //     size: item?.size,
-  //     subTitle: item?.subTitle,
-  //     selectedSize: Selectedsize,
-  //     selectedColor: Selectedcolor,
-  //     totalQty: item?.totalQty,
-  //   };
+  
 
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <Header
+        showBack={true}
+        headerColor={['#CBE4E8', '#D2E4E4']}
+        cart={!seller}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -421,6 +410,9 @@ const ServiceDetails = props => {
           <CustomButton
             isBold
             onPress={() => {
+              if(token==null){
+                Confirm()
+              }
               setBookingModal(true);
             }}
             text={'Book Now'}
@@ -494,14 +486,20 @@ const ServiceDetails = props => {
                       ToastAndroid.SHORT,
                     )
                   : Alert.alert('Please select a date');
+              } else {
+                console.log('item dispatching......', {
+                  ...item,
+                  date: date,
+                });
+                dispatch(setServiceBooking({...item, date: date}));
+                Platform.OS == 'android'
+                  ? ToastAndroid.show(
+                      'Your Booking has been confirmed',
+                      ToastAndroid.SHORT,
+                    )
+                  : Alert.alert('Your Booking has been confirmed');
+                setBookingModal(false);
               }
-              Platform.OS == 'android'
-                ? ToastAndroid.show(
-                    'Your Booking has been confirmed',
-                    ToastAndroid.SHORT,
-                  )
-                : Alert.alert('Your Booking has been confirmed');
-              setBookingModal(false);
             }}
             text={'Confirm'}
             textColor={Color.white}

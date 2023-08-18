@@ -6,6 +6,7 @@ const initialState = {
   categoryProperties: [],
   financeBreakDown: [],
   cart:[],
+  bookings:[],
   notification: false,
   order : [],
  
@@ -105,14 +106,18 @@ const CommonSlice = createSlice({
       }
     },
     setLiked(state, action) {
-      console.log(action.payload);
       const itemId = action.payload.id;
-      console.log(itemId);
       const item = state.cart.find(item => item.id === itemId);
       if (item) {
         item.like = action.payload.liked;
       }
     },
+    setServiceBooking(state, action){
+      console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
+      
+      state.bookings.push(action.payload)
+
+    }
     
   },
 });
@@ -134,6 +139,7 @@ export const {
   decrementQuantity, 
   increamentQuantity, 
   EmptyCart,
+  setServiceBooking,
   Order
 } = CommonSlice.actions;
 

@@ -120,6 +120,10 @@ export const MyDrawer = () => {
       screenOptions={{
         headerShown: false,
       }}>
+        <DrawerNavigation.Screen
+        name="CustomerDashboard"
+        component={CustomerDashboard}
+      />
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
 
       <DrawerNavigation.Screen name="Orders" component={Orders} />
@@ -142,10 +146,7 @@ export const MyDrawer = () => {
       />
       <DrawerNavigation.Screen name="SellerProduct" component={SellerProduct} />
 
-      <DrawerNavigation.Screen
-        name="CustomerDashboard"
-        component={CustomerDashboard}
-      />
+      
       
        
     </DrawerNavigation.Navigator>
