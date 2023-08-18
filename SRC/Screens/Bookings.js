@@ -22,7 +22,7 @@ import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
 
-const CustomerDashboard = () => {
+const Bookings = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
@@ -35,6 +35,192 @@ const CustomerDashboard = () => {
     '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
     isFocused,
   );
+  const serviceBookings = [
+    {
+      id: 1,
+      title: 'Stitching',
+      sellerName: 'ABC',
+      price: 300,
+      dateOfBooking: '2023-8-5',
+      timeSlot: '9am - 6pm',
+      userName: 'xyz',
+      contact: '283623918739',
+      address: 'dfjasljfkjksjglks',
+      status: 'Pending',
+      image: [require('../Assets/Images/stitching.jpg')],
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    },
+    {
+      id: 2,
+      title: 'Hair Cut',
+      sellerName: 'ABC',
+      price: 800,
+      dateOfBooking: '2023-7-30',
+      timeSlot: '9am - 6pm',
+      status: 'Completed',
+      userName: 'xyz',
+      contact: '283623918739',
+      address: 'dfjasljfkjksjglks',
+      image: [
+        require('../Assets/Images/haircut.png'),
+        require('../Assets/Images/haircut.png'),
+      ],
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    },
+    {
+      id: 3,
+      title: 'Bridal Makeup',
+      sellerName: 'xyz',
+      price: 100,
+      dateOfBooking: '2023-7-25',
+      timeSlot: '9am - 6pm',
+      status: 'Cancelled',
+      userName: 'xyz',
+      contact: '283623918739',
+      address: 'dfjasljfkjksjglks',
+      image: [
+        require('../Assets/Images/haircut.png'),
+        require('../Assets/Images/haircut.png'),
+      ],
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    },
+    {
+      id: 4,
+      title: 'Makeup Artist',
+      sellerName: 'abc',
+      price: 200,
+      dateOfBooking: '2023-7-23',
+      timeSlot: '9am - 6pm',
+      status: 'Rejected',
+      userName: 'xyz',
+      contact: '283623918739',
+      address: 'dfjasljfkjksjglks',
+      image: [require('../Assets/Images/makeupartist.png')],
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    },
+  ];
+
+  const productBookings = [
+    {
+      id: 1,
+      orderId: '3746287',
+      customerId: '123456789',
+      sellerName: 'ABC',
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      price: 'Rs. 100',
+      paymentMethod: 'Cash On Delivery (COD)',
+      address: 'kjfhksjflakjflakj',
+      dateOfBooking: '2023-7-16',
+      time: '10 am to 1 pm ',
+      image: [require('../Assets/Images/Image.png')],
+      items: [
+        {id: 1, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 2, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 3, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 4, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+      ],
+      customerName: 'abc',
+      contact: '8273638123',
+      email: 'abc@gmail.com',
+    },
+    {
+      id: 2,
+      orderId: '3746287',
+      customerId: '123456789',
+      price: 'Rs. 100',
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      sellerName: 'ABC',
+      paymentMethod: 'Cash On Delivery (COD)',
+      address: 'kjfhksjflakjflakj',
+      dateOfBooking: '2023-7-28',
+      time: '10 am to 1 pm ',
+      image: [require('../Assets/Images/Image.png')],
+      items: [
+        {id: 1, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 2, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 3, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 4, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+      ],
+      customerName: 'abc',
+      contact: '8273638123',
+      email: 'abc@gmail.com',
+    },
+    {
+      id: 3,
+      orderId: '3746287',
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      customerId: '123456789',
+      price: 'Rs. 100',
+      sellerName: 'ABC',
+      paymentMethod: 'Cash On Delivery (COD)',
+      address: 'kjfhksjflakjflakj',
+      dateOfBooking: '2023-8-2',
+      time: '10 am to 1 pm ',
+      image: [require('../Assets/Images/Image.png')],
+      items: [
+        {id: 1, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 2, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 3, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 4, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+      ],
+      customerName: 'abc',
+      contact: '8273638123',
+      email: 'abc@gmail.com',
+    },
+    {
+      id: 4,
+      orderId: '3746287',
+      customerId: '123456789',
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      price: 'Rs. 100',
+      sellerName: 'ABC',
+      paymentMethod: 'Cash On Delivery (COD)',
+      address: 'kjfhksjflakjflakj',
+      dateOfBooking: '2023-8-5',
+      time: '10 am to 1 pm ',
+      image: [require('../Assets/Images/Image.png')],
+      items: [
+        {id: 1, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 2, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 3, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 4, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+      ],
+      customerName: 'abc',
+      contact: '8273638123',
+      email: 'abc@gmail.com',
+    },
+    {
+      id: 5,
+      orderId: '3746287',
+      customerId: '123456789',
+      price: 'Rs. 100',
+      sellerName: 'ABC',
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      paymentMethod: 'Cash On Delivery (COD)',
+      address: 'kjfhksjflakjflakj',
+      dateOfBooking: '2023-8-12',
+      time: '10 am to 1 pm ',
+      image: [require('../Assets/Images/Image.png')],
+      items: [
+        {id: 1, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 2, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 3, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+        {id: 4, name: 'jeans', image: [require('../Assets/Images/Mask.png')]},
+      ],
+      customerName: 'abc',
+      contact: '8273638123',
+      email: 'abc@gmail.com',
+    },
+  ];
 
   const Services = [
     {
@@ -502,7 +688,7 @@ const CustomerDashboard = () => {
           contentContainerStyle={{
             padding: moderateScale(10, 0.6),
             // marginTop: moderateScale(10, 0.3),
-            alignItems: 'center',
+            // alignItems: 'center',
 
             flexDirection: 'row',
             // backgroundColor:'purple',
@@ -513,68 +699,14 @@ const CustomerDashboard = () => {
           showsHorizontalScrollIndicator={false}
           // style={styles.categoryContainer}
         >
-          {Services.map((item, index) => {
+          {serviceBookings.map((item, index) => {
             console.log(
               '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
               item,
             );
             return (
               <>
-                <TouchableOpacity
-                  key={item?.id}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    // justifyContent : 'center',
-                    width: windowWidth * 0.45,
-                    paddingVertical: moderateScale(5, 0.6),
-                    borderRadius: moderateScale(20, 0.6),
-                    borderColor: Color.veryLightGray,
-                    borderWidth: 1,
-                    //  width: windowWidth * 0.16,
-                    marginHorizontal: moderateScale(5, 0.3),
-                    backgroundColor: 'white',
-                  }}
-                  onPress={() => {
-                    navigationService.navigate('ServiceDetails', {item, seller:false});
-                  }}>
-                  <View
-                    style={{
-                      width: moderateScale(50, 0.6),
-                      height: moderateScale(50, 0.6),
-                      borderRadius: moderateScale(5, 0.6),
-                      backgroundColor: 'white',
-                      overflow: 'hidden',
-                      marginLeft: moderateScale(10, 0.6),
-                    }}>
-                    <CustomImage
-                      source={item?.image}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      resizeMode={'stretch'}
-                      onPress={() => {
-                        setSelectedService(item?.Title);
-                        navigationService.navigate('ServiceDetails', {item});
-                      }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginLeft: moderateScale(10, 0.3),
-                    }}>
-                    <CustomText
-                      style={{
-                        width: windowWidth * 0.16,
-                        // textAlign: 'center',
-                        color: 'black',
-                      }}>
-                      {item?.Title}
-                    </CustomText>
-                    <CustomText isBold>Rs {item?.price}</CustomText>
-                  </View>
-                </TouchableOpacity>
+                <ServiceCard item={item} />
               </>
             );
           })}
@@ -593,14 +725,18 @@ const CustomerDashboard = () => {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={newArrivals}
+          data={productBookings}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
           }}
           renderItem={({item, index}) => {
-            return <Product item={item} />;
+            console.log(
+              '🚀 ~ file: Bookings.js:719 ~ {serviceBookings.map ~ item:',
+              item,
+            );
+
+            return <ProductCard item={item} />;
           }}
         />
       </ScrollView>
@@ -608,11 +744,352 @@ const CustomerDashboard = () => {
   );
 };
 
-export default CustomerDashboard;
+export default Bookings;
+
+const ServiceCard = ({item}) => {
+  return (
+    <TouchableOpacity
+      key={item?.id}
+      style={{
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        // justifyContent : 'center',
+        width: windowWidth * 0.9,
+        paddingVertical: moderateScale(10, 0.6),
+        borderRadius: moderateScale(20, 0.6),
+        borderColor: Color.veryLightGray,
+        borderWidth: 1,
+        //  width: windowWidth * 0.16,
+        marginHorizontal: moderateScale(5, 0.3),
+        backgroundColor: 'white',
+      }}
+      onPress={() => {}}>
+      <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            width: moderateScale(50, 0.6),
+            height: moderateScale(50, 0.6),
+            borderRadius: moderateScale(5, 0.6),
+            backgroundColor: 'white',
+            overflow: 'hidden',
+            marginLeft: moderateScale(10, 0.6),
+          }}>
+          <CustomImage
+            source={item?.image[0]}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            resizeMode={'stretch'}
+            onPress={() => {}}
+          />
+        </View>
+        <View
+          style={{
+            marginLeft: moderateScale(10, 0.3),
+          }}>
+          <CustomText
+            style={{
+              width: windowWidth * 0.16,
+              // textAlign: 'center',
+              fontSize: moderateScale(14, 0.8),
+              color: 'black',
+            }}
+            isBold>
+            {item?.sellerName}
+          </CustomText>
+          <CustomText
+            style={{
+              color: Color.veryLightGray,
+              fontSize: moderateScale(12, 0.6),
+              width: windowWidth * 0.7,
+            }}>
+            {item?.description}
+          </CustomText>
+        </View>
+      </View>
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            // backgroundColor: Color.veryLightGray,
+            justifyContent: 'space-between',
+            paddingHorizontal: moderateScale(10, 0.6),
+          }}>
+          <CustomText
+            style={{
+              color: 'black',
+              fontSize: moderateScale(13, 0.6),
+              // backgroundColor:'purple',
+
+              paddingVertical: moderateScale(5, 0.6),
+              marginTop: moderateScale(5, 0.3),
+            }}
+            isBold>
+            Booking Details
+          </CustomText>
+          <CustomText
+            style={{
+              color: Color.veryLightGray,
+              fontSize: moderateScale(13, 0.6),
+              // backgroundColor:'purple',
+              marginLeft: moderateScale(10, 0.3),
+              paddingVertical: moderateScale(5, 0.6),
+              marginTop: moderateScale(5, 0.3),
+            }}
+            isBold>
+            {moment(item?.dateOfBooking).format('D MMMM')}
+          </CustomText>
+        </View>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(10,.6),
+          }}
+          isBold>
+          Name :
+          <CustomText style={{color: Color.black}}>{item?.userName}</CustomText>
+        </CustomText>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(20,.6),
+          }}
+          isBold>
+          Contact :
+          <CustomText style={{color: Color.black}}>{item?.contact}</CustomText>
+        </CustomText>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(20,.6),
+          }}
+          isBold>
+          Address :
+          <CustomText style={{color: Color.black}}>{item?.address}</CustomText>
+        </CustomText>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(20,.6),
+          }}
+          isBold>
+          Total Amount :
+          <CustomText style={{color: Color.black}}>{item?.price} Rs</CustomText>
+        </CustomText>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const ProductCard = ({item}) => {
+  console.log('🚀 ~ file: Bookings.js:878 ~ ProductCard ~ item:', item);
+
+  return (
+    <View
+      key={item?.id}
+      style={{
+        width: windowWidth * 0.9,
+        paddingVertical: moderateScale(10, 0.6),
+        borderRadius: moderateScale(20, 0.6),
+        borderColor: Color.veryLightGray,
+        borderWidth: 1,
+        marginVertical: moderateScale(10, 0.3),
+        marginHorizontal: moderateScale(5, 0.3),
+        backgroundColor: 'white',
+      }}>
+      <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            width: moderateScale(50, 0.6),
+            height: moderateScale(50, 0.6),
+            borderRadius: moderateScale(5, 0.6),
+            backgroundColor: 'white',
+            overflow: 'hidden',
+            marginLeft: moderateScale(10, 0.6),
+          }}>
+          <CustomImage
+            source={item?.image[0]}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            resizeMode={'stretch'}
+            onPress={() => {}}
+          />
+        </View>
+        <View
+          style={{
+            marginLeft: moderateScale(10, 0.3),
+          }}>
+          <CustomText
+            style={{
+              width: windowWidth * 0.16,
+              // textAlign: 'center',
+              fontSize: moderateScale(14, 0.8),
+              color: 'black',
+            }}
+            isBold>
+            {item?.sellerName}
+          </CustomText>
+          <CustomText
+            style={{
+              color: Color.veryLightGray,
+              fontSize: moderateScale(12, 0.6),
+              width: windowWidth * 0.7,
+            }}>
+            {item?.description}
+          </CustomText>
+        </View>
+      </View>
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            // backgroundColor: Color.veryLightGray,
+            justifyContent: 'space-between',
+            paddingHorizontal: moderateScale(10, 0.6),
+          }}>
+          <CustomText
+            style={{
+              color: 'black',
+              fontSize: moderateScale(13, 0.6),
+              // backgroundColor:'purple',
+
+              paddingVertical: moderateScale(5, 0.6),
+              marginTop: moderateScale(5, 0.3),
+            }}
+            isBold>
+           Items
+          </CustomText>
+
+          <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                width: moderateScale(50, 0.6),
+                height: moderateScale(50, 0.6),
+                borderRadius: moderateScale(5, 0.6),
+                backgroundColor: 'white',
+                overflow: 'hidden',
+                marginLeft: moderateScale(10, 0.6),
+              }}>
+              <CustomImage
+                source={item?.item[0]?.image[0]}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+                resizeMode={'stretch'}
+                onPress={() => {}}
+              />
+            </View>
+            <View
+              style={{
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              <CustomText
+                style={{
+                  width: windowWidth * 0.16,
+                  // textAlign: 'center',
+                  fontSize: moderateScale(14, 0.8),
+                  color: 'black',
+                }}
+                isBold>
+                {item?.sellerName}
+              </CustomText>
+              <CustomText
+                style={{
+                  color: Color.veryLightGray,
+                  fontSize: moderateScale(12, 0.6),
+                  width: windowWidth * 0.7,
+                }}>
+                {item?.description}
+              </CustomText>
+            </View>
+          </View>
+
+          <CustomText
+            style={{
+              color: Color.veryLightGray,
+              fontSize: moderateScale(13, 0.6),
+              // backgroundColor:'purple',
+              marginLeft: moderateScale(10, 0.3),
+              paddingVertical: moderateScale(5, 0.6),
+              marginTop: moderateScale(5, 0.3),
+            }}
+            isBold>
+            {moment(item?.dateOfBooking).format('D MMMM')}
+          </CustomText>
+        </View>
+        <View></View>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(10,.6),
+          }}
+          isBold>
+          Name :
+          <CustomText style={{color: Color.black}}>{item?.userName}</CustomText>
+        </CustomText>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(20,.6),
+          }}
+          isBold>
+          Contact :
+          <CustomText style={{color: Color.black}}>{item?.contact}</CustomText>
+        </CustomText>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(20,.6),
+          }}
+          isBold>
+          Address :
+          <CustomText style={{color: Color.black}}>{item?.address}</CustomText>
+        </CustomText>
+        <CustomText
+          style={{
+            color: 'black',
+            fontSize: moderateScale(12, 0.6),
+            // backgroundColor:'purple',
+            marginLeft: moderateScale(20, 0.3),
+            // paddingVertical:moderateScale(20,.6),
+          }}
+          isBold>
+          Total Amount :
+          <CustomText style={{color: Color.black}}>{item?.price} Rs</CustomText>
+        </CustomText>
+      </View>
+    </View>
+  );
+};
 
 const Chuncks = ({color, item}) => {
   return (
-    <TouchableOpacity activeOpacity={0.9}>
+    <View activeOpacity={0.9}>
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
@@ -659,7 +1136,7 @@ const Chuncks = ({color, item}) => {
           Tap to preview
         </CustomText>
       </LinearGradient>
-    </TouchableOpacity>
+    </View>
   );
 };
 

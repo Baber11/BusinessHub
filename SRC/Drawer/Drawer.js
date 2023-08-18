@@ -14,9 +14,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setUserLogoutAuth} from '../Store/slices/auth';
+import {SetUserRole, setUserLogoutAuth} from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
 import navigationService from '../navigationService';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 const Drawer = () => {
   const navigation = useNavigation();
@@ -53,6 +54,7 @@ const Drawer = () => {
       onPress: () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
+        dispatch(SetUserRole(''))
       },
     },
   ];
@@ -65,6 +67,14 @@ const Drawer = () => {
         navigation.navigate('CustomerDashboard');
       },
     },
+    // {
+    //   name: 'Bookings',
+    //   iconName: 'book',
+    //   iconType: FontAwesome,
+    //   onPress: () => {
+    //     navigation.navigate('Bookings');
+    //   },
+    // },
     {
       name: 'change password',
       iconName: 'lock',
@@ -73,14 +83,7 @@ const Drawer = () => {
         navigation.navigate('ChangePassword');
       },
     },
-    // {
-    //   name: 'Myorders',
-    //   iconName: 'package',
-    //   iconType: Feather,
-    //   onPress: () => {
-    //     navigation.navigate('Myorders');
-    //   },
-    // },
+
     {
       name: 'Log out',
       iconName: 'logout',
@@ -88,6 +91,7 @@ const Drawer = () => {
       onPress: () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
+        dispatch(SetUserRole(''))
       },
     },
   ];
@@ -98,6 +102,14 @@ const Drawer = () => {
       iconType: Entypo,
       onPress: () => {
         navigation.navigate('Orders');
+      },
+    },
+    {
+      name: 'Products',
+      iconName: 'box',
+      iconType: Feather,
+      onPress: () => {
+        navigation.navigate('SellerProduct');
       },
     },
     {
@@ -127,6 +139,7 @@ const Drawer = () => {
       onPress: () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
+        dispatch(SetUserRole(''))
       },
     },
   ];
@@ -224,36 +237,32 @@ const Drawer = () => {
           }}>
           {data.map((item, index) => (
             <>
-              {(token == null && item?.name == 'Home') ? (
-                <TouchableOpacity
+              <TouchableOpacity
+                onPress={item?.onPress}
+                style={{
+                  width: windowWidth * 0.5,
+                  // borderBottomWidth: 0.5,
+                  borderColor: Color.black,
+                  margin: moderateScale(15, 0.3),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Icon
+                  name={item?.iconName}
+                  as={item?.iconType}
+                  size={moderateScale(20, 0.3)}
+                  color={Color.black}
                   onPress={item?.onPress}
+                />
+                <CustomText
                   style={{
-                    width: windowWidth * 0.5,
-                    // borderBottomWidth: 0.5,
-                    borderColor: Color.black,
-                    margin: moderateScale(15, 0.3),
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    fontSize: moderateScale(14, 0.6),
+                    color: Color.black,
+                    marginLeft: moderateScale(10, 0.3),
                   }}>
-                  <Icon
-                    name={item?.iconName}
-                    as={item?.iconType}
-                    size={moderateScale(20, 0.3)}
-                    color={Color.black}
-                    onPress={item?.onPress}
-                  />
-                  <CustomText
-                    style={{
-                      fontSize: moderateScale(14, 0.6),
-                      color: Color.black,
-                      marginLeft: moderateScale(10, 0.3),
-                    }}>
-                    {item.name}
-                  </CustomText>
-                </TouchableOpacity>
-              ) : (
-                <></>
-              )}
+                  {item.name}
+                </CustomText>
+              </TouchableOpacity>
             </>
           ))}
         </View>

@@ -57,6 +57,7 @@ const CustomButton = (props) => {
           backgroundColor: bgColor,
           borderColor: borderColor,
           marginTop: marginTop || 0,
+          // alignItems:'center',
           marginBottom: marginBottom || 0,
         },
         elevation &&{
@@ -201,10 +202,11 @@ const styles = StyleSheet.create({
     paddingLeft: I18nManager.isRTL ? 5 : 0,
   },
   iconCustom: {
-    color: "#C0C0C0",
-    fontSize: moderateScale(20,0.6),
-    paddingRight: 20,
-    paddingLeft: I18nManager.isRTL ? 20 : 0,
+    color: "white",
+    fontSize: moderateScale(17,0.6),
+    marginRight:moderateScale(5,.3),
+    // paddingRight: 10,
+    // paddingLeft: I18nManager.isRTL ? 20 : 0,
   },
 });
 

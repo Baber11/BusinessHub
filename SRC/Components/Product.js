@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomImage from './CustomImage';
@@ -12,12 +12,17 @@ import {AddToCart, RemoveToCart, setLiked} from '../Store/slices/common';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
 
-const Product = ({item}) => {
+const Product = ({item, seller}) => {
+  console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
+  
   const dispatch = useDispatch();
-  const[like, setLike] = useState(item?.like);
+  const [like, setLike] = useState(item?.like);
 
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
+  console.log(
+    '🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:',
+    cartData,
+  );
 
   const addedItem = item => {
     // console.log('add DATA===>', cartData);
@@ -34,15 +39,17 @@ const Product = ({item}) => {
   return (
     <View key={item?.id}>
       <TouchableOpacity
-
         onLongPress={() => {
           setLike(!like);
           // dispatch(setLiked({id : item?.id , liked : !item?.like}))
         }}
         activeOpacity={0.8}
         onPress={() => {
-          if (!tempitem) {
-            addedItem(item);
+          if(!seller){
+
+            if (!tempitem) {
+              addedItem(item);
+            }
           }
         }}
         style={{
@@ -68,8 +75,10 @@ const Product = ({item}) => {
             // dispatch(setLiked({id : item?.id , liked : !item?.like}))
           }}
           onPress={() => {
-            if (!tempitem) {
-              addedItem(item);
+            if (!seller) {
+              if (!tempitem) {
+                addedItem(item);
+              }
             }
           }}
           activeOpacity={0.8}
@@ -80,29 +89,19 @@ const Product = ({item}) => {
             borderRadius: 5,
             marginTop: moderateScale(15, 0.3),
           }}>
-          {/* {like && (
-            <Icon
-              name={'heart'}
-              as={Entypo}
-              size={moderateScale(25, 0.3)}
-              color={'#ff0000'}
-              style={{
-                position: 'absolute',
-                zIndex: 1,
-              }}
-            />
-          )} */}
           <CustomImage
             onLongPress={() => {
               setLike(!like);
               // dispatch(setLiked({id : item?.id , liked : !item?.like}))
             }}
             onPress={() => {
-              if (!tempitem) {
-                addedItem(item);
+              if (!seller) {
+                if (!tempitem) {
+                  addedItem(item);
+                }
               }
             }}
-            source={item.img}
+            source={item?.img}
             resizeMode={'cover'}
             style={{
               height: '100%',
@@ -157,7 +156,12 @@ const Product = ({item}) => {
 
         <CustomText
           onPress={() => {
-            navigationService.navigate('ProductDetails', {item});
+            // navigationService.navigate('ProductDetails',{item,seller:true})
+            if (seller) {
+              navigationService.navigate('OrderDetails', {item,details:true});
+            } else {
+              navigationService.navigate('ProductDetails', {item});
+            }
           }}
           style={{
             textAlign: 'right',
@@ -166,7 +170,7 @@ const Product = ({item}) => {
             position: 'absolute',
             bottom: moderateScale(10, 0.3),
             right: moderateScale(15, 0.3),
-            fontSize: moderateScale(11,0.6),
+            fontSize: moderateScale(11, 0.6),
           }}>
           View Details
         </CustomText>
@@ -179,11 +183,11 @@ const Product = ({item}) => {
           text={'Remove'}
           textColor={Color.white}
           width={windowWidth * 0.28}
-          marginTop={moderateScale(10,.3)}
-          marginBottom={moderateScale(10,.3)}
+          marginTop={moderateScale(10, 0.3)}
+          marginBottom={moderateScale(10, 0.3)}
           height={windowHeight * 0.04}
           bgColor={Color.themeColor}
-          fontSize={moderateScale(12,.6)}
+          fontSize={moderateScale(12, 0.6)}
           borderRadius={moderateScale(5, 0.3)}
         />
       )}

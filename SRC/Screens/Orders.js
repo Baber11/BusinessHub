@@ -61,6 +61,7 @@ const Orders = () => {
       selectedSize: 'S',
       cotton: 3,
       totalQty: 18,
+      date:'2023-8-16',
       images: [
         require('../Assets/Images/Image.png'),
         require('../Assets/Images/Mask.png'),
@@ -108,7 +109,7 @@ const Orders = () => {
     },
     {
       id: 2,
-
+      date:'2023-8-15',
       orderId: 12392830,
       price: 12000,
       numOfItems: 5,
@@ -178,6 +179,7 @@ const Orders = () => {
     },
     {
       id: 3,
+      date:'2023-8-12',
 
       orderId: 1238109238,
       price: 8000,
@@ -249,6 +251,7 @@ const Orders = () => {
     },
     {
       id: 4,
+      date:'2023-8-9',
       orderId: 2368263789,
       price: 9500,
       numOfItems: 2,
@@ -322,6 +325,7 @@ const Orders = () => {
       id: 1,
       orderId: 3237687,
       price: 1200,
+      date:'2023-8-5',
       qty: 1,
       status: 'Delivered',
       Title: 'Oversize Dress',
@@ -388,6 +392,7 @@ const Orders = () => {
     {
       id: 2,
       orderId: 12392830,
+      date:'2023-8-2',
       price: 12000,
       numOfItems: 5,
       status: 'Cancelled',
@@ -461,6 +466,7 @@ const Orders = () => {
       numOfItems: 3,
       status: 'Delivered',
       Title: 'Oversize Dress',
+      date:'2023-7-27',
       subTitle: 'Oversize',
 
       img: require('../Assets/Images/Image.png'),
@@ -526,6 +532,7 @@ const Orders = () => {
     {
       id: 4,
       orderId: 2368263789,
+      date:'2023-7-24',
       price: 9500,
       numOfItems: 2,
       status: 'Cancelled',
@@ -616,7 +623,7 @@ const Orders = () => {
         </CustomText>
         <ScrollView
           contentContainerStyle={{
-            padding: moderateScale(10, 0.6),
+            // padding: moderateScale(10, 0.6),
             alignItems: 'center',
             flexDirection: 'row',
           }}
@@ -653,7 +660,10 @@ const Orders = () => {
           numColumns={1}
           data={previousOrders}
           contentContainerStyle={{
+            // backgroundColor:'black',
+            width:windowWidth,
             alignSelf: 'center',
+            alignItems:'center',
             marginTop: moderateScale(10, 0.3),
           }}
           renderItem={({item, index}) => {
@@ -681,7 +691,8 @@ const OrderCard = ({item}) => {
         style={{
           alignItems: 'center',
           backgroundColor: 'white',
-          marginRight: moderateScale(10, 0.3),
+          // marginRight: moderateScale(10, 0.3),
+          marginHorizontal:moderateScale(10,.3),
           width: windowWidth * 0.95,
           height: windowHeight * 0.15,
           borderRadius: moderateScale(20, 0.6),
@@ -737,16 +748,11 @@ const OrderCard = ({item}) => {
                 padding: moderateScale(5, 0.6),
                 // position: 'absolute',
                 // top: -15,
-                backgroundColor:
-                  item?.status == 'Cancelled'
-                    ? 'red'
-                    : item?.status == 'Delivered'
-                    ? 'green'
-                    : 'orange',
-                color: Color.black,
+                
+                color: Color.veryLightGray,
               }}
               isBold>
-              {`${item?.status}`}
+              {moment(item?.date).fromNow()}
             </CustomText>
           </View>
 

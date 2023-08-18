@@ -192,7 +192,7 @@ const styles = ScaledSheet.create({
     borderBottomWidth: moderateScale(1, 0.3),
     borderColor: Color.lightGrey,
     // borderWidth:1,
-    marginTop: moderateScale(6, 0.3),
+    marginTop: moderateScale(15, 0.3),
     // borderRadius: moderateScale(20, 0.3),
     paddingLeft: moderateScale(32, 0.3),
     width: width * 0.81,

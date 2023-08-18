@@ -27,8 +27,9 @@ import TextInputWithTitle from '../Components/TextInputWithTitle';
 import moment from 'moment';
 
 const ProductDetails = props => {
-  const item = props.route.params.item;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  const item = props?.route?.params?.item;
+  // const seller = props?.route?.params?.seller;
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item,seller);
   const cartData = useSelector(state => state.commonReducer.cart);
   console.log(
     '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',

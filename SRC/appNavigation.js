@@ -22,19 +22,26 @@ import AdminDashboard from './Screens/AdminDashboard';
 import CustomerDashboard from './Screens/CustomerDashboard';
 import ProductDetails from './Screens/ProductDetails';
 import CartScreen from './Screens/CartScreen';
-import HomeScreenOther from './Screens/HomeScreenOther';
 import Orders from './Screens/Orders';
 import OrderDetails from './Screens/OrderDetails';
+import SellerProduct from './Screens/SellerProducts';
+import AddProduct from './Screens/AddProduct';
+import AddServices from './Screens/AddServices';
+import ServiceDetails from './Screens/ServiceDetails';
+import Bookings from './Screens/Bookings';
 
 const AppNavigator = () => {
   // const isLogin = false;
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
   const role = useSelector(state => state.authReducer.role);
-  console.log("🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:", role)
+  console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
 
-  console.log("🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:", walkThrough)
-  
+  console.log(
+    '🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:',
+    walkThrough,
+  );
+
   const isVerified = useSelector(state => state.authReducer.isVerified);
   const token = useSelector(state => state.authReducer.token);
   console.log('🚀 ~ file: appNavigation.js:33 ~ AppNavigator ~ token:', token);
@@ -46,24 +53,33 @@ const AppNavigator = () => {
   const RootNavLogged = createNativeStackNavigator();
 
   const AppNavigatorContainer = () => {
-    const HomeScreen = role == 'admin' ? 'MyDrawer' : role == 'customer' ? 'HomeScreenOther' : 'HomeScreenOther' 
+    const HomeScreen =
+      role == 'admin'
+        ? 'MyDrawer'
+        : role == 'customer'
+        ? 'HomeScreenOther'
+        : 'HomeScreenOther';
     const firstScreen =
-    token != null
-    ? 'MyDrawer' :
-    !walkThrough && token!= null ? 
-    'WalkThroughScreen' :
-     'GetStarted';
+      token != null
+        ? 'MyDrawer'
+        : !walkThrough && token != null
+        ? 'WalkThroughScreen'
+        : 'GetStarted';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
-         <RootNav.Screen name="LoginScreen" component={LoginScreen} />
-         {/* <RootNav.Screen name="HomeScreen" component={HomeScreen} /> */}
+          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          {/* <RootNav.Screen name="SellerProduct" component={SellerProduct} /> */}
+          <RootNav.Screen name="AddProduct" component={AddProduct} />
+          {/* <RootNav.Screen name="HomeScreen" component={HomeScreen} /> */}
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="ProductDetails" component={ProductDetails} />
+          <RootNav.Screen name="AddServices" component={AddServices} />
+          <RootNav.Screen name="ServiceDetails" component={ServiceDetails} />
           <RootNav.Screen name="OrderDetails" component={OrderDetails} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
@@ -71,11 +87,12 @@ const AppNavigator = () => {
           <RootNav.Screen name="ChangePassword" component={ChangePassword} />
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
-          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen
+            name="WalkThroughScreen"
+            component={WalkThroughScreen}
+          />
           {/* <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} /> */}
           {/* <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} /> */}
-
-
         </RootNav.Navigator>
       </NavigationContainer>
     );
@@ -87,38 +104,40 @@ const AppNavigator = () => {
 export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
   const role = useSelector(state => state.authReducer.role);
-  const firstScreen = role == 'admin' ? 'HomeScreen': role == 'vendor'? 'Orders':'CustomerDashboard';
+  const firstScreen =
+    role == 'admin'
+      ? 'HomeScreen'
+      : role == 'vendor'
+      ? 'Orders'
+      : 'CustomerDashboard';
 
   return (
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
       initialRouteName={firstScreen}
       screenOptions={{
-        headerShown: false,      
+        headerShown: false,
       }}>
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
-      <DrawerNavigation.Screen
-        name="Orders"
-        component={Orders}
-       
-      />
+
+      <DrawerNavigation.Screen name="Orders" component={Orders} />
+      {/* <DrawerNavigation.Screen name="Bookings" component={Bookings} /> */}
+
       <DrawerNavigation.Screen
         name="ChangePassword"
         component={ChangePassword}
-       
       />
 
       <DrawerNavigation.Screen
         name="AdminDashboard"
         component={AdminDashboard}
-       
       />
+      <DrawerNavigation.Screen name="SellerProduct" component={SellerProduct} />
+
       <DrawerNavigation.Screen
         name="CustomerDashboard"
         component={CustomerDashboard}
-       
       />
-       
     </DrawerNavigation.Navigator>
   );
 };

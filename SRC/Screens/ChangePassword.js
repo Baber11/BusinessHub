@@ -27,72 +27,66 @@ import {ActivityIndicator} from 'react-native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import CardContainer from '../Components/CardContainer';
 // import CustomHeader from '../Components/CustomHeader';
-import { Icon } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-import { setUserToken } from '../Store/slices/auth';
+import {Icon} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {setUserToken} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const ChangePassword = props => {
-  const navigationN = useNavigation()
+  const navigationN = useNavigation();
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
   const dispatch = useDispatch();
-  const [currentPassword , setCurrentPassword] = useState('');
-  const [newPassword , setNewPassword] = useState('');
-  const [confirmNewPassword , setConfirmNewPassword] = useState('');
-
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
-
- 
 
   return (
     <>
       <CustomStatusBar
-       backgroundColor={
-        Color.white
-      }
+        backgroundColor={Color.white}
         barStyle={'dark-content'}
       />
-         <LinearGradient
+      <LinearGradient
         style={{
           width: windowWidth,
           height: windowHeight,
         }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-         colors={[Color.themeColor2,Color.themeColor2]}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        colors={['#D2E4E4', '#D2E4E4']}
         // locations ={[0, 0.5, 0.6]}
-        >
-            <TouchableOpacity
-            activeOpacity={0.8}
+      >
+        <TouchableOpacity
+          activeOpacity={0.8}
           style={{
-            position : 'absolute',
-            top : moderateScale(20,0.3),
-            left : moderateScale(20,0.3),
+            position: 'absolute',
+            top: moderateScale(20, 0.3),
+            left: moderateScale(20, 0.3),
             height: moderateScale(30, 0.3),
             width: moderateScale(30, 0.3),
             borderRadius: moderateScale(5, 0.3),
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor:'white',
-            zIndex : 1
+            backgroundColor: 'white',
+            zIndex: 1,
           }}>
-         
-            <Icon
-              name={'arrowleft'}
-              as={AntDesign}
-              size={moderateScale(22, 0.3)}
-              color={Color.themeColor}
-              onPress={()=>{
-                navigationN.goBack()
-              }}
-            />
-            </TouchableOpacity>
+          <Icon
+            name={'arrowleft'}
+            as={AntDesign}
+            size={moderateScale(22, 0.3)}
+            color={Color.themeColor}
+            onPress={() => {
+              navigationN.goBack();
+            }}
+          />
+        </TouchableOpacity>
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -106,6 +100,7 @@ const ChangePassword = props => {
             style={{
               paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
+              // backgroundColor:'white',
             }}>
             <CustomText isBold style={styles.txt2}>
               Change Password
@@ -121,7 +116,7 @@ const ChangePassword = props => {
               placeholder={'Current Passwrod'}
               setText={setCurrentPassword}
               value={currentPassword}
-              viewHeight={0.07}
+              viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.7}
               // border={1}
@@ -140,7 +135,7 @@ const ChangePassword = props => {
               placeholder={'Enter New Password'}
               setText={setNewPassword}
               value={newPassword}
-              viewHeight={0.07}
+              viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.7}
               // border={1}
@@ -158,7 +153,7 @@ const ChangePassword = props => {
               placeholder={'Confirm your new password'}
               setText={setConfirmNewPassword}
               value={confirmNewPassword}
-              viewHeight={0.07}
+              viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.7}
               // border={1}
@@ -183,18 +178,17 @@ const ChangePassword = props => {
               height={windowHeight * 0.06}
               marginTop={moderateScale(20, 0.3)}
               onPress={() => {
-              dispatch(setUserToken({token : 'sadasdawdadas'}))
+                dispatch(setUserToken({token: 'sadasdawdadas'}));
               }}
-              bgColor={SelecteduserRole == 'Qbid member' ? Color.blue : Color.themeColor
-            }
+              bgColor={
+                SelecteduserRole == 'Qbid member'
+                  ? Color.blue
+                  : Color.themeColor
+              }
               // borderColor={Color.white}
               // borderWidth={2}
               borderRadius={moderateScale(30, 0.3)}
             />
-
-           
-             
-            
           </CardContainer>
         </KeyboardAwareScrollView>
       </LinearGradient>

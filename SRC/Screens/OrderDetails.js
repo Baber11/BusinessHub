@@ -28,6 +28,7 @@ import moment from 'moment';
 
 const OrderDetails = props => {
   const item = props.route.params.item;
+  const details = props.route.params.details;
   console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
@@ -212,9 +213,9 @@ const OrderDetails = props => {
                   color: '#1B1721',
                   fontSize: moderateScale(14, 0.6),
                 }}>
-                {' '}
+              
                 Quantity:
-                {item?.qty}
+                {details ? item?.totalQty : item?.qty}
               </CustomText>
             </View>
           </View>
@@ -355,9 +356,12 @@ const OrderDetails = props => {
             renderItem={({item, index}) => {
               return <CommentsSection item={item} />;
             }}
+            ListEmptyComponent={
+              <CustomText style={{fontSize:moderateScale(15,.6), color:Color.veryLightGray}}>No Reviews</CustomText>
+            }
           />
         </View>
-        <View
+       {item?.buyer &&( <View
           style={{
             width: windowWidth * 0.95,
             borderRadius: moderateScale(10, 0.6),
@@ -418,8 +422,8 @@ const OrderDetails = props => {
             }}>
             Address : {item?.buyer?.address}
           </CustomText>
-        </View>
-        <View
+        </View>)}
+       {!details && <View
           style={{
             width: windowWidth * 0.95,
             height: windowHeight * 0.1,
@@ -442,7 +446,7 @@ const OrderDetails = props => {
             isBold>
             {item?.price * item?.qty}.0 Rs
           </CustomText>
-        </View>
+        </View>}
       </ScrollView>
     </>
   );
