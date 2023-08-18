@@ -25,7 +25,7 @@ const CartScreen = ({route}) => {
   const cartData = useSelector(state => state.commonReducer.cart);
   console.log('the data is ========>> >> ', cartData);
   const [finalAmount, setFinalAmount] = useState(0);
-  const [productsForCard, setProdctsForCart] = useState([]);
+  // const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
 
   const checkOut = () => {
@@ -39,25 +39,34 @@ const CartScreen = ({route}) => {
         : Alert.alert('Please select the color and sizes for all items');
     }
     else{
+      dispatch(
+        Order({
+          orderId: Math.floor(Math.random() * 1000000000),
+          Image: require('../Assets/Images/logo.png'),
+          Quantiity: cartData?.length,
+          total: 134,
+          order: cartData,
+        }),
+      );
       dispatch(EmptyCart());
       navigationService.navigate('CustomerDashboard');
     }
   };
 
-  useEffect(() => {
-    setProdctsForCart([]);
-    cartData.map((item, index) => {
-      return setProdctsForCart(prev => [
-        ...prev,
-        {
-          product_id: item?.id,
-          selectedColor: item?.selectedColor,
-          selectedSize: item?.selectedSize,
-          selectedQuantity: item?.qty,
-        },
-      ]);
-    });
-  }, []);
+  // useEffect(() => {
+  //   setProdctsForCart([]);
+  //   cartData.map((item, index) => {
+  //     return setProdctsForCart(prev => [
+  //       ...prev,
+  //       {
+  //         product_id: item?.id,
+  //         selectedColor: item?.selectedColor,
+  //         selectedSize: item?.selectedSize,
+  //         selectedQuantity: item?.qty,
+  //       },
+  //     ]);
+  //   });
+  // }, []);
 
   return (
     <>
