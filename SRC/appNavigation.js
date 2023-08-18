@@ -29,6 +29,9 @@ import AddProduct from './Screens/AddProduct';
 import AddServices from './Screens/AddServices';
 import ServiceDetails from './Screens/ServiceDetails';
 import Bookings from './Screens/Bookings';
+import Myorders from './Screens/Myorders';
+import OrderDetailScreen from './Screens/OrderDetailScreen';
+
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -87,10 +90,9 @@ const AppNavigator = () => {
           <RootNav.Screen name="ChangePassword" component={ChangePassword} />
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
-          <RootNav.Screen
-            name="WalkThroughScreen"
-            component={WalkThroughScreen}
-          />
+          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen name="OrderDetailScreen" component={OrderDetailScreen} />
+        
           {/* <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} /> */}
           {/* <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} /> */}
         </RootNav.Navigator>
@@ -127,6 +129,12 @@ export const MyDrawer = () => {
         name="ChangePassword"
         component={ChangePassword}
       />
+      <DrawerNavigation.Screen
+        name="Myorders"
+        component={Myorders}
+       
+      />
+      
 
       <DrawerNavigation.Screen
         name="AdminDashboard"
@@ -138,6 +146,8 @@ export const MyDrawer = () => {
         name="CustomerDashboard"
         component={CustomerDashboard}
       />
+      
+       
     </DrawerNavigation.Navigator>
   );
 };

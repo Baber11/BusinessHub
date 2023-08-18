@@ -7,6 +7,7 @@ const initialState = {
   financeBreakDown: [],
   cart:[],
   notification: false,
+  order : [],
  
   selectedRole: '',
 };
@@ -52,6 +53,10 @@ const CommonSlice = createSlice({
 
     EmptyCart(State, action) {
       State.cart = [];
+    },
+
+    Order(State, action) {
+      State.order.push(action.payload)
     },
 
     increamentQuantity(state, action) {
@@ -128,7 +133,8 @@ export const {
   setColor,
   decrementQuantity, 
   increamentQuantity, 
-  EmptyCart
+  EmptyCart,
+  Order
 } = CommonSlice.actions;
 
 export default CommonSlice.reducer;

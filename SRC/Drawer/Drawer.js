@@ -67,14 +67,14 @@ const Drawer = () => {
         navigation.navigate('CustomerDashboard');
       },
     },
-    // {
-    //   name: 'Bookings',
-    //   iconName: 'book',
-    //   iconType: FontAwesome,
-    //   onPress: () => {
-    //     navigation.navigate('Bookings');
-    //   },
-    // },
+    {
+      name: 'Myorders',
+      iconName: 'shopping-outline',
+      iconType: MaterialCommunityIcons,
+      onPress: () => {
+        navigation.navigate('Myorders');
+      },
+    },
     {
       name: 'change password',
       iconName: 'lock',

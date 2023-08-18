@@ -11,20 +11,14 @@ import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
 import CartItem from '../Components/CartItem';
-import CustomText from '../Components/CustomText';
 import {useState} from 'react';
-import numeral from 'numeral';
 import {useDispatch, useSelector} from 'react-redux';
-import {Alert, Icon} from 'native-base';
 import CustomButton from '../Components/CustomButton';
-import {ActivityIndicator} from 'react-native';
-import {EmptyCart, setWholeCart} from '../Store/slices/common';
+import {EmptyCart, Order} from '../Store/slices/common';
 import navigationService from '../navigationService';
 import {useEffect} from 'react';
-import {Get, Post} from '../Axios/AxiosInterceptorFunction';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import Feather from 'react-native-vector-icons/Feather';
 
 const CartScreen = ({route}) => {
   const dispatch = useDispatch();
