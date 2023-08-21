@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  BackHandler,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -17,7 +23,7 @@ import CustomTable from '../Components/CustomTable';
 import moment from 'moment';
 import {Get} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
@@ -26,7 +32,7 @@ const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-
+  const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
@@ -635,6 +641,22 @@ const CustomerDashboard = () => {
     },
   ];
 
+  useEffect(() => {
+    const backhandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (token != null) {
+          BackHandler.exitApp();
+        }
+        else{
+          navigation.goBack()
+        }
+        return true;
+      },
+    );
+    return () => backhandler.remove();
+  }, []);
+
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
@@ -696,7 +718,10 @@ const CustomerDashboard = () => {
                     backgroundColor: 'white',
                   }}
                   onPress={() => {
-                    navigationService.navigate('ServiceDetails', {item, seller:false});
+                    navigationService.navigate('ServiceDetails', {
+                      item,
+                      seller: false,
+                    });
                   }}>
                   <View
                     style={{

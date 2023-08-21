@@ -42,6 +42,46 @@ const AddServices = props => {
 
   const navigation = useNavigation();
 
+  const addService = () => {
+    {
+      const body = {
+        images: images.slice(1),
+        Title: title,
+        category: category,
+        charges: parseFloat(charges),
+        description: description,
+      };
+
+      for (let key in body) {
+        if (key == 'images') {
+          if (body[key].length == 0) {
+            return Platform.OS == 'android'
+              ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
+              : Alert.alert('Add atleast one image');
+          }
+        }
+        else if(key == 'charges') {
+          if (isNaN(body[key])) {
+            return Platform.OS == 'android'
+              ? ToastAndroid.show(
+                  'Charges should be number',
+                  ToastAndroid.SHORT,
+                )
+              : Alert.alert('Charges is required');
+          }
+        }
+        else if(body[key] == '') {
+          console.log(key);
+          return Platform.OS == 'android'
+            ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
+            : Alert.alert(`${key} is required`);
+        }
+      }
+      console.log('🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:', body);
+      navigation.goBack();
+    }
+  };
+
   useEffect(() => {
     if (Object.keys(image).length > 0) {
       setImages(prev => [...prev, image?.uri]);
@@ -52,7 +92,7 @@ const AddServices = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']}  />
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -271,32 +311,7 @@ const AddServices = props => {
       <View style={styles.bottomContainer}>
         <CustomButton
           isBold
-          onPress={() => {
-            const body = {
-              name: title,
-              category: category,
-              charges: charges,
-              description: description,
-            };
-            for (let key in body) {
-              // if (key == 'charges') {
-              //   typeof body[key] != 'number' && Platform.OS == 'android'
-              //     ? ToastAndroid.show('Charges should be number', ToastAndroid.SHORT)
-              //     : Alert.alert('Charges is required');
-              // }
-              if (body[key] == '') {
-                console.log(key);
-                return Platform.OS == 'android'
-                  ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
-                  : Alert.alert(`${key} is required`);
-              }
-            }
-            console.log(
-              '🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:',
-              body,
-            );
-            navigation.goBack();
-          }}
+          onPress={() => addService()}
           text={'Save'}
           textColor={Color.white}
           width={windowWidth * 0.8}

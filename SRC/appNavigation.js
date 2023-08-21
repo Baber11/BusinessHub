@@ -87,7 +87,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
-          <RootNav.Screen name="ChangePassword" component={ChangePassword} />
+          {/* <RootNav.Screen name="ChangePassword" component={ChangePassword} /> */}
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />

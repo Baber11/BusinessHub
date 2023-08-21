@@ -63,8 +63,8 @@ const Bookings = () => {
       contact: '283623918739',
       address: 'dfjasljfkjksjglks',
       image: [
-        require('../Assets/Images/haircut.png'),
-        require('../Assets/Images/haircut.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask.png'),
       ],
       description:
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
@@ -81,8 +81,8 @@ const Bookings = () => {
       contact: '283623918739',
       address: 'dfjasljfkjksjglks',
       image: [
-        require('../Assets/Images/haircut.png'),
-        require('../Assets/Images/haircut.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask.png'),
       ],
       description:
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',

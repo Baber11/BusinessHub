@@ -50,6 +50,9 @@ const CartScreen = ({route}) => {
       );
       dispatch(EmptyCart());
       navigationService.navigate('CustomerDashboard');
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Order Confirmed', ToastAndroid.SHORT)
+        : Alert.alert('Order Confirmed');
     }
   };
 
@@ -71,7 +74,7 @@ const CartScreen = ({route}) => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart />
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} />
 
       <FlatList
         showsVerticalScrollIndicator={false}

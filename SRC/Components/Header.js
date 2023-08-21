@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import { Icon} from 'native-base';
+import {Icon} from 'native-base';
 import {
   View,
   Platform,
   Dimensions,
   TouchableOpacity,
   ToastAndroid,
-  Alert
+  Alert,
 } from 'react-native';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -56,17 +56,22 @@ const Header = props => {
     {label: 'Logout', value: 'Logout'},
   ];
 
-  const Confirm =  ()=>{
-    Alert.alert('Action required','Login to Continue', [
+  const Confirm = () => {
+    Alert.alert('Action required', 'Login to Continue', [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'Login', onPress: () => { navigationService.navigate('LoginScreen') }},
+      {
+        text: 'Login',
+        onPress: () => {
+          navigationService.navigate('LoginScreen');
+        },
+      },
     ]);
     return true;
-  }
+  };
 
   return (
     <LinearGradient
@@ -124,15 +129,15 @@ const Header = props => {
       />
 
       {/* <CustomText isBold style={{color : Color.white , fontSize : moderateScale(20,0.6)}} >Hola!!</CustomText> */}
-      {(!hideUser && cart) ? (
+      {!hideUser && cart ? (
         <View
           style={{
             // backgroundColor: 'red',
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingTop: moderateScale(6,0.6),
+            paddingTop: moderateScale(6, 0.6),
           }}>
-          {cartData?.length > 0  &&(
+          {cartData?.length > 0 && (
             <View
               style={{
                 width: moderateScale(14, 0.6),
@@ -161,11 +166,10 @@ const Header = props => {
             size={moderateScale(25, 0.3)}
             color={Color.black}
             onPress={() => {
-              if(token==null){
-                Confirm()
+              if (token == null) {
+                Confirm();
                 // navigationService.navigate('LoginScreen')
-              }
-              else if (cartData?.length > 0) {
+              } else if (cartData?.length > 0) {
                 navigationService.navigate('CartScreen');
               } else {
                 return Platform.OS == 'android'

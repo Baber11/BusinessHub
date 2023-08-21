@@ -55,6 +55,7 @@ const ServiceDetails = props => {
   );
   const [yourComment, setYourComment] = useState('');
   const [bookingModal, setBookingModal] = useState(false);
+  const [calendar, setCalendar] = useState(false);
   const [date, setDate] = useState('');
 
   const Confirm = () => {
@@ -97,8 +98,6 @@ const ServiceDetails = props => {
       Confirm();
     }
   };
-
-  
 
   return (
     <>
@@ -401,6 +400,72 @@ const ServiceDetails = props => {
                 </View>
               </>
             )}
+
+            {/* {calendar && ( */}
+              <>
+               <CustomText
+                  isBold
+                  style={{
+                    fontSize: moderateScale(14, 0.6),
+                    marginTop: moderateScale(10, 0.3),
+                    color: '#201E1D',
+                    width: windowWidth * 0.9,
+                    marginLeft: moderateScale(10, 0.3),
+                  }}>
+                  Book a date
+                </CustomText>
+                <Calendar
+                  style={{
+                    width: windowWidth * 0.8,
+                    marginBottom : moderateScale(40,0.3),
+                    // backgroundColor : 'red'
+                  }}
+                  minDate={moment().format()}
+                  onDayPress={day => {
+                    console.log('day========>>>>>', day);
+                    setDate(day?.dateString);
+                  }}
+                  theme={{
+                    textSectionTitleColor: Color.themeColor,
+                    selectedDayBackgroundColor: Color.themeColor,
+                    selectedDayTextColor: Color.white,
+                    todayTextColor: Color.themeColor,
+                    dayTextColor: Color.black,
+                    dayTextColor: Color.black,
+                    textDisabledColor: '#d9e1e8',
+                    arrowColor: Color.themeColor,
+                    monthTextColor: Color.veryLightGray,
+                    indicatorColor: Color.themeColor,
+                    textMonthFontWeight: 'bold',
+                    textDayHeaderFontWeight: 'bold',
+                    textDayFontSize: moderateScale(12, 0.3),
+                    textMonthFontSize: moderateScale(16, 0.3),
+                    textDayHeaderFontSize: moderateScale(14, 0.3),
+                  }}
+                  markedDates={{
+                    ...{
+                      [date]: {
+                        selected: true,
+                        color: Color.themeColor,
+                        textColor: '#000000',
+                        marked: true,
+                      },
+                    },
+                  }}
+                />
+                {/* <CustomButton
+          isBold
+        
+          text={'Confirm'}
+          textColor={Color.white}
+          width={windowWidth * 0.4}
+          height={windowHeight * 0.05}
+          fontSize={moderateScale(14, 0.6)}
+          bgColor={Color.themeColor}
+          borderRadius={moderateScale(30, 0.3)}
+        /> */}
+              </>
+            {/* )} */}
           </View>
         }
       </ScrollView>
@@ -410,10 +475,44 @@ const ServiceDetails = props => {
           <CustomButton
             isBold
             onPress={() => {
-              if(token==null){
+              if (token == null) {
                 Confirm()
+                // if () {
+                //   setCalendar(true);
+                // }
+              } else {
+                if (date == '') {
+                  return Platform.OS == 'android'
+                    ? ToastAndroid.show(
+                        'Please select a date',
+                        ToastAndroid.SHORT,
+                      )
+                    : Alert.alert('Please select a date');
+                } else {
+                  console.log('item dispatching......', {
+                    order: item,
+                    date: date,
+                    orderId: Math.floor(Math.random() * 1000000000),
+                  });
+                  dispatch(
+                    setServiceBooking({
+                      order: [item],
+                      date: date,
+                      total: item?.price,
+                      Image: require('../Assets/Images/logo.png'),
+                      orderId: Math.floor(Math.random() * 1000000000),
+                    }),
+                  );
+                  Platform.OS == 'android'
+                    ? ToastAndroid.show(
+                        'Your Booking has been confirmed',
+                        ToastAndroid.SHORT,
+                      )
+                    : Alert.alert('Your Booking has been confirmed');
+                    navigationService.navigate('Myorders')
+                  // setCalendar(false);
+                }
               }
-              setBookingModal(true);
             }}
             text={'Book Now'}
             textColor={Color.white}
@@ -428,89 +527,6 @@ const ServiceDetails = props => {
           />
         </View>
       )}
-      <Modal
-        isVisible={bookingModal}
-        onBackdropPress={() => {
-          setBookingModal(false);
-        }}
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'white',
-        }}>
-        <View>
-          <Calendar
-            style={{
-              width: windowWidth * 0.9,
-            }}
-            minDate={moment().format()}
-            onDayPress={day => {
-              console.log('day========>>>>>', day);
-              setDate(day?.dateString);
-            }}
-            theme={{
-              textSectionTitleColor: Color.themeColor,
-              selectedDayBackgroundColor: Color.themeColor,
-              selectedDayTextColor: Color.white,
-              todayTextColor: Color.themeColor,
-              dayTextColor: Color.black,
-              dayTextColor: Color.black,
-              textDisabledColor: '#d9e1e8',
-              arrowColor: Color.themeColor,
-              monthTextColor: Color.veryLightGray,
-              indicatorColor: Color.themeColor,
-              textMonthFontWeight: 'bold',
-              textDayHeaderFontWeight: 'bold',
-              textDayFontSize: moderateScale(12, 0.3),
-              textMonthFontSize: moderateScale(16, 0.3),
-              textDayHeaderFontSize: moderateScale(14, 0.3),
-            }}
-            markedDates={{
-              ...{
-                [date]: {
-                  selected: true,
-                  color: Color.themeColor,
-                  textColor: '#000000',
-                  marked: true,
-                },
-              },
-            }}
-          />
-          <CustomButton
-            isBold
-            onPress={() => {
-              if (date == '') {
-                return Platform.OS == 'android'
-                  ? ToastAndroid.show(
-                      'Please select a date',
-                      ToastAndroid.SHORT,
-                    )
-                  : Alert.alert('Please select a date');
-              } else {
-                console.log('item dispatching......', {
-                  ...item,
-                  date: date,
-                });
-                dispatch(setServiceBooking({...item, date: date}));
-                Platform.OS == 'android'
-                  ? ToastAndroid.show(
-                      'Your Booking has been confirmed',
-                      ToastAndroid.SHORT,
-                    )
-                  : Alert.alert('Your Booking has been confirmed');
-                setBookingModal(false);
-              }
-            }}
-            text={'Confirm'}
-            textColor={Color.white}
-            width={windowWidth * 0.8}
-            height={windowHeight * 0.07}
-            fontSize={moderateScale(16, 0.6)}
-            bgColor={Color.themeColor}
-            borderRadius={moderateScale(30, 0.3)}
-          />
-        </View>
-      </Modal>
     </>
   );
 };

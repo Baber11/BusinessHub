@@ -10,7 +10,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomButton from '../Components/CustomButton';
 import {useSelector, useDispatch} from 'react-redux';
-
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import {useIsFocused} from '@react-navigation/native';
@@ -51,22 +50,51 @@ const AddProduct = props => {
   const addProduct = () => {
     console.log('Here=======');
     const body = {
-      // images: images.slice(1),
+      images: images.slice(1),
       Title: title,
-      subTitle: subTitle,
-      totalQty: quantity,
-      price: price,
+      Category: subTitle,
+      totalQty: parseInt(quantity),
+      price: parseFloat(price),
       size: sizes,
       colors: colors,
     };
-    if (images.length == 0) {
-      return Platform.OS == 'android'
-        ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
-        : Alert.alert('Add atleast one image');
-    }
+   
     for (let key in body) {
       console.log('Key===========', key);
-      if (body[key] == '') {
+      if(key == 'images'){
+        if (body[key].length == 0) {
+          // console.log('Image length============>>>>>>>>',body[key].length)
+          return Platform.OS == 'android'
+            ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
+            : Alert.alert('Add atleast one image');
+        }
+      }
+      else if(key == 'price' || key == 'totalQty') {
+        if (isNaN(body[key])) {
+          return Platform.OS == 'android'
+            ? ToastAndroid.show(
+                `${key} should be number`,
+                ToastAndroid.SHORT,
+              )
+            : Alert.alert(`${key} should be number`);
+        }
+      }
+      else if(key == 'size'){
+        console.log('seze============>>>',body[key].length)
+        if(!body[key].length){
+          return Platform.OS == 'android'
+            ? ToastAndroid.show('Add atleast one size', ToastAndroid.SHORT)
+            : Alert.alert('Add atleast one size');
+        }
+      }
+      else if(key == 'colors'){
+        if(!body[key].length){
+          return Platform.OS == 'android'
+            ? ToastAndroid.show('Add atleast one color', ToastAndroid.SHORT)
+            : Alert.alert('Add atleast one color');
+        }
+      }
+      else if (body[key] == '') {
         return Platform.OS == 'android'
           ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
           : Alert.alert('All Fields are required');
@@ -86,7 +114,7 @@ const AddProduct = props => {
     if (size != '') {
       if (sizes.includes(size)) {
         Platform.OS == 'android'
-          ? ToastAndroid.show('Already added')
+          ? ToastAndroid.show('Already added',ToastAndroid.SHORT)
           : Alert.alert('already added');
       } else {
         setSizes(prev => [...prev, size]);
@@ -341,7 +369,7 @@ const AddProduct = props => {
             elevation
             // backgroundColor={'white'}
           />
-          {sizes.length > 0 && (
+          {sizes?.length > 0 && (
             <View
               style={{
                 flexDirection: 'row',
@@ -352,7 +380,7 @@ const AddProduct = props => {
                 width: windowWidth * 0.95,
                 //   marginLeft: moderateScale(20, 0.3),
               }}>
-              {sizes.map(item => {
+              {sizes?.map(item => {
                 return (
                   <View
                     style={{
@@ -394,7 +422,7 @@ const AddProduct = props => {
 
           <CustomButton
             onPress={() => {
-              if (colors.length < 7) {
+              if (colors.length < 6) {
                 setColorModal(true);
               } else {
                 Platform.OS == 'android'

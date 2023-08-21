@@ -31,6 +31,7 @@ import {Icon} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {setUserToken} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
+import Header from '../Components/Header';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -53,17 +54,23 @@ const ChangePassword = props => {
         backgroundColor={Color.white}
         barStyle={'dark-content'}
       />
+      <Header
+        // showBack={true}
+        headerColor={['#CBE4E8', '#D2E4E4']}
+       
+      />
+
       <LinearGradient
         style={{
           width: windowWidth,
-          height: windowHeight,
+          height: windowHeight*0.9,
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         colors={['#D2E4E4', '#D2E4E4']}
         // locations ={[0, 0.5, 0.6]}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.8}
           style={{
             position: 'absolute',
@@ -86,15 +93,15 @@ const ChangePassword = props => {
               navigationN.goBack();
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            paddingBottom: moderateScale(20, 0.3),
+            // paddingBottom: moderateScale(20, 0.3),
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            height: windowHeight,
+            height: windowHeight*0.9,
           }}>
           <CardContainer
             style={{

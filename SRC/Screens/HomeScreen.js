@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View,BackHandler} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -17,7 +17,7 @@ import CustomTable from '../Components/CustomTable';
 import moment from 'moment';
 import {Get} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
   const token = useSelector(state => state.authReducer.token);
@@ -26,6 +26,7 @@ const HomeScreen = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
+  const navigation = useNavigation();
   // const [totalUser , setTotalUser] = useState(0);
   // const [ActiveUser , setActiveUser] = useState(0);
   // const [DeactiveUser , setDeactiveUser] = useState(0);
@@ -55,6 +56,26 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getUser();
+
+  }, []);
+
+  useEffect(() => {
+    const backhandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        // if (token != null) {
+          console.log('data here 1')
+
+          BackHandler.exitApp();
+        // } else {
+        //   console.log('data here 1')
+
+        //   // navigation.goBack();
+        // }
+        return true;
+      },
+    );
+    return () => backhandler.remove();
   }, []);
 
   return (

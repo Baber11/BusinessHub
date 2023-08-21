@@ -21,11 +21,15 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {setUserData} from '../Store/slices/common';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
+import { useNavigation } from '@react-navigation/native';
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
+ 
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigation = useNavigation()
 
 
   const dispatch = useDispatch();
@@ -64,8 +68,13 @@ const LoginScreen = () => {
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
       dispatch(SetUserRole(response?.data?.user_info?.role))
+      
 
     }
+    // dispatch(setUserData(response?.data?.user_info));
+      // dispatch(setUserToken({token: 'dfhksdjlsk'}));
+      // dispatch(SetUserRole('customer'))
+
   };
 
   return (

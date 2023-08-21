@@ -1,19 +1,18 @@
-import {View, Text,} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import CustomText from '../Components/CustomText';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
 import CustomImage from './CustomImage';
 import Color from '../Assets/Utilities/Color';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-
-const Myorder = ({item}) => {
-  console.log("orderCMP",item)
-  const navigation = useNavigation()
+const MyOrderCard = ({item , type}) => {
+  console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item)
   
+  const navigation = useNavigation();
+
   return (
-    
     <View
       style={{
         width: windowWidth * 0.93,
@@ -25,15 +24,15 @@ const Myorder = ({item}) => {
         alignItems: 'center',
         paddingHorizontal: moderateScale(15, 0.6),
         alignSelf: 'center',
-        shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 2,
-},
-shadowOpacity: 0.25,
-shadowRadius: 3.84,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
 
-elevation: 5,
+        elevation: 5,
         // marginBottom : moderateScale(10,0.3)
       }}>
       <View
@@ -44,10 +43,10 @@ elevation: 5,
           borderWidth: 1,
           borderColor: Color.themeColor,
           overflow: 'hidden',
-          backgroundColor : 'white'
+          backgroundColor: 'white',
         }}>
         <CustomImage
-          source={item.Image}
+          source={item.Image? item?.Image : item?.image}
           style={{
             height: '100%',
             width: '100%',
@@ -63,25 +62,29 @@ elevation: 5,
           marginLeft: moderateScale(10, 0.3),
         }}>
         <CustomText
-        // isBold
-        numberOfLines={1}
+          // isBold
+          numberOfLines={1}
           style={{
             color: '#2f2f2f',
             fontSize: moderateScale(13, 0.6),
           }}>
-          OrderId :  {item.orderId}
+          OrderId : {item.orderId}
         </CustomText>
-        <CustomText
-        numberOfLines={1}
-
-            style={{
-              color: '#000',
-              fontSize: moderateScale(12, 0.6),
-            }}>
-            Quantity : {item?.Quantiity}
-          </CustomText>
-      
-
+        {item?.Quantiity ? (<CustomText
+          numberOfLines={1}
+          style={{
+            color: '#000',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          Quantity : {item?.Quantiity}
+        </CustomText>):(<CustomText
+          numberOfLines={1}
+          style={{
+            color: '#000',
+            fontSize: moderateScale(12, 0.6),
+          }}>Service : {item?.order[0]?.Title}</CustomText>)}
+        
+         
         <View
           style={{
             flexDirection: 'row',
@@ -89,32 +92,28 @@ elevation: 5,
             width: windowWidth * 0.62,
             marginTop: moderateScale(5, 0.3),
           }}>
-         
           <CustomText
-        numberOfLines={1}
+            numberOfLines={1}
+            style={{
+              color: '#000',
+              fontSize: moderateScale(15, 0.6),
+            }}>
+            Price : ${item.total ? item?.total : item?.price}
+          </CustomText>
 
-          style={{
-            color: '#000',
-            fontSize: moderateScale(15, 0.6),
-          }}>
-          Price : ${item.total}
-        </CustomText>
-
-  
           <CustomText
-          isBold
-           onPress={()=> navigation.navigate('OrderDetailScreen',{item})}
+            isBold
+            onPress={() => navigation.navigate('OrderDetailScreen', {item : item , type : type})}
             style={{
               color: '#000',
               fontSize: moderateScale(12, 0.6),
             }}>
-           Details
+            Details
           </CustomText>
-          
         </View>
       </View>
     </View>
   );
 };
 
-export default Myorder;
+export default MyOrderCard;
