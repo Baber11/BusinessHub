@@ -115,7 +115,7 @@ const SearchContainer = ({
               // style={{backgroundColor : 'red'}}
               /> */}
 
-              <View
+              {/* <View
                 style={{
                   height: windowWidth * 0.09,
                   width: windowWidth * 0.09,
@@ -129,7 +129,7 @@ const SearchContainer = ({
                   source={require('../Assets/Images/filter.png')}
                   style={{height: '100%', width: '100%'}}
                 />
-              </View>
+              </View> */}
             </>
           )}
         </View>

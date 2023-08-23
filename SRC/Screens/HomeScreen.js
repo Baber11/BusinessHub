@@ -18,14 +18,18 @@ import moment from 'moment';
 import {Get} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import SearchbarComponent from '../Components/SearchbarComponent';
 
 const HomeScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
+
+
+  
+
   // const [totalUser , setTotalUser] = useState(0);
   // const [ActiveUser , setActiveUser] = useState(0);
   // const [DeactiveUser , setDeactiveUser] = useState(0);
@@ -58,6 +62,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
+    
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
       <Header
@@ -104,6 +109,9 @@ const HomeScreen = () => {
           />
         </View>
 
+       
+        
+
         <CustomTable
           data={users}
           setData={setUsers}
@@ -122,6 +130,7 @@ const HomeScreen = () => {
             width: windowWidth * 0.2,
           }}
         />
+        
       </ScrollView>
     </>
   );

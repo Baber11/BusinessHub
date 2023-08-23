@@ -21,6 +21,7 @@ import {useIsFocused} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
+import SearchbarComponent from '../Components/SearchbarComponent';
 
 const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
@@ -30,6 +31,7 @@ const CustomerDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
+  const [newData, setNewData] = useState(newArrivals);
   const [selectedService, setSelectedService] = useState('');
   console.log(
     '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
@@ -497,6 +499,7 @@ const CustomerDashboard = () => {
           }}>
           Services
         </CustomText>
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -580,6 +583,17 @@ const CustomerDashboard = () => {
           })}
         </ScrollView>
 
+
+        <SearchbarComponent
+          setNewData={setNewData}
+          placeHolderColor={'#000'}
+          placeholderName={'Enter Product Name'}
+          array={newArrivals}
+          arrayItem={'Product'}
+          fontSize={13}
+          SearchStyle={{width:windowWidth*0.95}}
+        />
+
         <CustomText
           isBold
           style={{
@@ -594,7 +608,7 @@ const CustomerDashboard = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={newArrivals}
+          data={newData}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
