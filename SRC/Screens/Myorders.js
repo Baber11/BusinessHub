@@ -10,6 +10,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import MyOrderCard from '../Components/MyorderComponent';
+import SearchbarComponent from '../Components/SearchbarComponent';
 
 const Myorders = () => {
   const navigation = useNavigation();
@@ -72,6 +73,20 @@ const Myorders = () => {
         // showLogout
         hideUser
       />
+      <View
+        style={{
+          height: windowHeight * 0.9,
+          width: windowWidth,
+          backgroundColor: Color.themeColor2,
+          alignItems: 'center',
+        }}>
+        <SearchbarComponent
+          setNewData={setNewData}
+          placeHolderColor={'#D3D3D3'}
+          placeholderName={'Enter Order Id'}
+          array={orderData}
+          arrayItem={'order'}
+        />
 
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -139,6 +154,7 @@ const Myorders = () => {
           );
         }}
       />
+      </View>
     </>
   );
 };

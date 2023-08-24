@@ -1,5 +1,5 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View,ActivityIndicator} from 'react-native';
+import React,{useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 // import {windowHeight, windowWidth} from '../Assets/Utilities/Utils';
 import CustomText from './CustomText';
@@ -11,6 +11,7 @@ import CustomImage from './CustomImage';
 import CustomButton from './CustomButton';
 import { Post } from '../Axios/AxiosInterceptorFunction';
 import { useSelector } from 'react-redux';
+import SearchbarComponent from './SearchbarComponent';
 
 const CustomTable = ({
   data,
@@ -21,6 +22,8 @@ const CustomTable = ({
   onPress,
   setData ,
 }) => {
+  const [newData, setNewData] = useState(data);
+  const [loading, setLoading] = useState(false);
   const token = useSelector(state=>state.authReducer.token)
 
   const actionPreform = async(item , index )=>{
@@ -31,16 +34,31 @@ const CustomTable = ({
       status : statusToBe
     }
   // console.log("🚀 ~ file: CustomTable.js:32 ~ actionPreform ~ body:", body  ,index)
+    setLoading(true)
     const response = await Post(url , body , apiHeader(token))
+    setLoading(false)
     if(response?.data?.success){
       console.log('response' , response?.data)
       setData((prev)=>[...prev],(data[index].status = statusToBe))
     }
 
+
   }
 
+  console.log("OSAMA ==>>>>",data)
   
   return (
+     <>
+        <SearchbarComponent
+          setNewData={setNewData}
+          placeHolderColor={'#000'}
+          placeholderName={'Search User Name'}
+          array={data}
+          arrayItem={'User'}
+          fontSize={13}
+          SearchStyle={{width:windowWidth*0.95}}
+        /> 
+        
     <View style={[styles.container, customStyle && customStyle]}>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -48,9 +66,8 @@ const CustomTable = ({
         scrollEnabled={true}
         contentContainerStyle={{
           paddingBottom: moderateScale(20, 0.3),
-          //   backgroundColor: 'red',
         }}
-        data={data}
+        data={newData}
         renderItem={(item, index1) => {
           // console.log("🚀 ~ file: CustomTable.js:101 ~ index1:", item , index1)
             const data1 = {name:item?.item?.name, Contact:item?.item?.phone, role: item?.item?.role, status: item?.item?.status}
@@ -68,7 +85,9 @@ const CustomTable = ({
                 
                 <CustomButton
                 isBold
-                text={data1[x] == 'active' ? 'Deactiveate' : 'Activate'}
+                text={ 
+              
+                  data1[x] == 'active' ? 'Deactiveate' : 'Activate'}
                 textColor={Color.white}
                 width={windowWidth * 0.18}
                 marginTop={moderateScale(10,.3)}
@@ -82,6 +101,7 @@ const CustomTable = ({
                   console.log(item?.id)
                   actionPreform(item?.item ,item?.index )
                 }}
+                disabled={loading}
 
               />
                 
@@ -160,6 +180,7 @@ const CustomTable = ({
 
       />
     </View>
+    </>
   );
 };
 
