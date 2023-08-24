@@ -105,7 +105,7 @@ const Drawer = () => {
       },
     },
     {
-      name: 'Products',
+      name: 'Catalog',
       iconName: 'box',
       iconType: Feather,
       onPress: () => {

@@ -38,21 +38,20 @@ const CustomerDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
-  const [newData, setNewData] = useState(newArrivals);
   const [selectedService, setSelectedService] = useState('');
   console.log(
     '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
     isFocused,
-  );
-
-  const Services = [
-    {
-      id: 1,
-      Title: 'Stitching',
-      subTitle: 'stiching',
-      price: 200,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      image: require('../Assets/Images/dummyman4.png'),
+    );
+    
+    const Services = [
+      {
+        id: 1,
+        Title: 'Stitching',
+        subTitle: 'stiching',
+        price: 200,
+        description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+        image: require('../Assets/Images/dummyman4.png'),
       images: [
         require('../Assets/Images/Mask2.png'),
         require('../Assets/Images/Mask2.png'),
@@ -643,6 +642,9 @@ const CustomerDashboard = () => {
       ],
     },
   ];
+  const [newData, setNewData] = useState(newArrivals);
+  console.log("🚀 ~ file: CustomerDashboard.js:646 ~ newData:", newData)
+
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(

@@ -270,6 +270,7 @@ const OrderDetails = props => {
                         item?.selectedSize == size
                           ? Color.themeColor
                           : '#F4F5F6',
+                      marginHorizontal:moderateScale(5,.3),    
                     },
                   ]}>
                   <CustomText
@@ -529,7 +530,11 @@ const styles = StyleSheet.create({
 
   ColorLine1: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    // backgroundColor:'black',
+    width:windowWidth,
+    paddingHorizontal:moderateScale(10,.6),
+    
+    // justifyContent: 'space-evenly',
     alignItems: 'center',
     width: windowWidth * 0.7,
     marginTop: moderateScale(15, 0.3),

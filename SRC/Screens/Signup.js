@@ -205,7 +205,7 @@ const Signup = () => {
             placeholderColor={Color.veryLightGray}
             elevation
           />
-            <TextInputWithTitle
+            {/* <TextInputWithTitle
             iconName={'address'}
             iconType={Entypo}
             LeftIcon={true}
@@ -223,9 +223,8 @@ const Signup = () => {
             color={Color.black}
             placeholderColor={Color.veryLightGray}
             elevation
-            />
-            {/* </> */}
-          {/* } */}
+            /> */}
+           
 
           <TextInputWithTitle
             iconName={'key-outline'}

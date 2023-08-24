@@ -101,7 +101,7 @@ const Product = ({item, seller}) => {
                 }
               }
             }}
-            source={item?.img}
+            source={ item?.img ? item?.img :{uri:item?.images[0]}}
             resizeMode={'cover'}
             style={{
               height: '100%',

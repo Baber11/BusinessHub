@@ -20,6 +20,7 @@ const Myorders = () => {
   const bookings = useSelector(state => state.commonReducer.bookings);
   console.log('🚀 ~ file: Myorders.js:18 ~ Myorders ~ bookings:', bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
+  // const [newData, setnewData] = useState()
   console.log(
     '🚀 ~ file: Myorders.js:19 ~ Myorders ~ selectedTab:',
     selectedTab,
@@ -80,19 +81,20 @@ const Myorders = () => {
           backgroundColor: Color.themeColor2,
           alignItems: 'center',
         }}>
-        <SearchbarComponent
+        {/* <SearchbarComponent
           setNewData={setNewData}
           placeHolderColor={'#D3D3D3'}
           placeholderName={'Enter Order Id'}
           array={orderData}
           arrayItem={'order'}
-        />
+        /> */}
 
       <FlatList
         showsVerticalScrollIndicator={false}
         data={selectedTab == 'Products' ? orderData : bookings}
         contentContainerStyle={{
           paddingBottom: moderateScale(20, 0.3),
+          width:windowWidth,
           minHeight: windowHeight * 0.9,
           paddingTop: moderateScale(20, 0.3),
         }}

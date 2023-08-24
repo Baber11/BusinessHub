@@ -67,7 +67,7 @@ const AppNavigator = () => {
         ? 'MyDrawer'
         : !walkThrough && token != null
         ? 'WalkThroughScreen'
-        : 'GetS tarted';
+        : 'GetStarted';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>

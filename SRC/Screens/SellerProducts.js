@@ -33,6 +33,14 @@ const SellerProduct = (props) => {
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
 
+  const sellerProducts = useSelector(state => state.commonReducer.sellerProducts);
+  console.log("🚀 ~ file: SellerProducts.js:37 ~ sellerProducts:", sellerProducts)
+
+  const [products, setProducts] = useState(sellerProducts.filter(item=>{
+    return(item?.userId == userData.id)
+  }))
+  console.log("🚀 ~ file: SellerProducts.js:42 ~ products:", products)
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [users, setUsers] = useState([]);
@@ -353,7 +361,7 @@ const SellerProduct = (props) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={allProducts}
+          data={products[0]?.products}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),

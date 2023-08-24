@@ -9,7 +9,7 @@ const initialState = {
   bookings:[],
   notification: false,
   order : [],
- 
+  sellerProducts:[],
   selectedRole: '',
 };
 
@@ -117,7 +117,21 @@ const CommonSlice = createSlice({
       
       state.bookings.push(action.payload)
 
+    },
+
+    setAddProducts(state, action){
+      console.log("🚀 ~ file: common.js:123 ~ setAddProducts ~ action:", action.payload)
+
+      const item = state.sellerProducts.find(item=> item?.userId == action.payload.userId)
+      if(item){
+        item.products.push(action.payload.item)
+      }else{
+        state.sellerProducts.push({userId:action.payload.userId,products:[action.payload.item] })
+      }
+      
+
     }
+
     
   },
 });
@@ -140,6 +154,7 @@ export const {
   increamentQuantity, 
   EmptyCart,
   setServiceBooking,
+  setAddProducts,
   Order
 } = CommonSlice.actions;
 

@@ -12,7 +12,7 @@ import CustomButton from '../Components/CustomButton';
 import {useSelector, useDispatch} from 'react-redux';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import CommentsSection from '../Components/CommentsSection';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -24,11 +24,13 @@ import {TriangleColorPicker} from 'react-native-color-picker';
 import Modal from 'react-native-modal';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import navigationService from '../navigationService';
+import { setAddProducts } from '../Store/slices/common';
 
 const AddProduct = props => {
   const item = props?.route?.params?.item;
   console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
+  console.log("🚀 ~ file: AddProduct.js:33 ~ AddProduct ~ user:", user)
   const [index, setIndex] = useState(1);
   const [images, setImages] = useState(['plus']);
   console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
@@ -46,9 +48,11 @@ const AddProduct = props => {
   const [colorModal, setColorModal] = useState(false);
   const [size, setSize] = useState('');
   const sizesArray = ['XS', 'S', 'M', 'L', 'XL'];
+const dispatch = useDispatch()
+const navigation = useNavigation()
 
   const addProduct = () => {
-    console.log('Here=======');
+    // console.log('Here=======');
     const body = {
       images: images.slice(1),
       Title: title,
@@ -102,7 +106,14 @@ const AddProduct = props => {
     }
     console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', body);
 
-    navigationService.navigate('SellerProduct',{item:{...body,images:images.slice(0)}})
+    dispatch(setAddProducts({userId: user?.id, item:{...body}}))
+    navigation.goBack()
+
+    
+
+
+
+    // navigationService.navigate('SellerProduct',{item:{...body,images:images.slice(0)}})
   };
 
   useEffect(() => {
