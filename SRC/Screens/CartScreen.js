@@ -19,11 +19,13 @@ import navigationService from '../navigationService';
 import {useEffect} from 'react';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
+import { useNavigation } from '@react-navigation/native';
 
 const CartScreen = ({route}) => {
+  const navigation = useNavigation()
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log('the data is ========>> >> ', cartData);
+  console.log('Osama the data is ========>> >> ', cartData);
   const [finalAmount, setFinalAmount] = useState(0);
   // const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
@@ -39,17 +41,18 @@ const CartScreen = ({route}) => {
         : Alert.alert('Please select the color and sizes for all items');
     }
     else{
+      const body = {
+        orderId: Math.floor(Math.random() * 1000000000),
+        Image: require('../Assets/Images/logo.png'),
+        Quantiity: cartData?.length,
+        total: 134,
+        order: cartData,
+      } 
       dispatch(
-        Order({
-          orderId: Math.floor(Math.random() * 1000000000),
-          Image: require('../Assets/Images/logo.png'),
-          Quantiity: cartData?.length,
-          total: 134,
-          order: cartData,
-        }),
+        Order(body),
       );
       dispatch(EmptyCart());
-      navigationService.navigate('CustomerDashboard');
+      navigationService.navigate('PaymentInvoice',{body: body});
       Platform.OS == 'android'
         ? ToastAndroid.show('Order Confirmed', ToastAndroid.SHORT)
         : Alert.alert('Order Confirmed');

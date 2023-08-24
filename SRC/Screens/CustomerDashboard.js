@@ -34,7 +34,7 @@ const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
@@ -42,16 +42,16 @@ const CustomerDashboard = () => {
   console.log(
     '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
     isFocused,
-    );
-    
-    const Services = [
-      {
-        id: 1,
-        Title: 'Stitching',
-        subTitle: 'stiching',
-        price: 200,
-        description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-        image: require('../Assets/Images/dummyman4.png'),
+  );
+
+  const Services = [
+    {
+      id: 1,
+      Title: 'Stitching',
+      subTitle: 'stiching',
+      price: 200,
+      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+      image: require('../Assets/Images/dummyman4.png'),
       images: [
         require('../Assets/Images/Mask2.png'),
         require('../Assets/Images/Mask2.png'),
@@ -643,8 +643,7 @@ const CustomerDashboard = () => {
     },
   ];
   const [newData, setNewData] = useState(newArrivals);
-  console.log("🚀 ~ file: CustomerDashboard.js:646 ~ newData:", newData)
-
+  console.log('🚀 ~ file: CustomerDashboard.js:646 ~ newData:', newData);
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -652,9 +651,8 @@ const CustomerDashboard = () => {
       () => {
         if (token != null) {
           BackHandler.exitApp();
-        }
-        else{
-          navigation.goBack()
+        } else {
+          navigation.goBack();
         }
         return true;
       },
@@ -771,7 +769,6 @@ const CustomerDashboard = () => {
           })}
         </ScrollView>
 
-
         <SearchbarComponent
           setNewData={setNewData}
           placeHolderColor={'#000'}
@@ -779,7 +776,7 @@ const CustomerDashboard = () => {
           array={newArrivals}
           arrayItem={'Product'}
           fontSize={13}
-          SearchStyle={{width:windowWidth*0.95}}
+          SearchStyle={{width: windowWidth * 0.95}}
         />
 
         <CustomText
@@ -796,13 +793,43 @@ const CustomerDashboard = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={newData}
+          data={newArrivals}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
           }}
           renderItem={({item, index}) => {
             return <Product item={item} />;
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <>
+                <View
+                  style={{
+                    width: windowWidth * 0.79,
+                    height: windowHeight * 0.25,
+                    marginTop: moderateScale(30, 0.3),
+                  }}>
+                  <CustomImage
+                    source={require('../Assets/Images/4.png')}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode={'contain'}
+                  />
+                </View>
+                <CustomText
+                  isBold
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontSize:moderateScale(13,0.6)
+                  }}>
+                  ERROR 404 DATA NOT FOUND
+                </CustomText>
+              </>
+            );
           }}
         />
       </ScrollView>

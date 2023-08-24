@@ -31,6 +31,7 @@ import ServiceDetails from './Screens/ServiceDetails';
 import Bookings from './Screens/Bookings';
 import Myorders from './Screens/Myorders';
 import OrderDetailScreen from './Screens/OrderDetailScreen';
+import PaymentInvoice from './Screens/PaymentInvoice';
 
 
 const AppNavigator = () => {
@@ -75,6 +76,7 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="PaymentInvoice" component={PaymentInvoice} />
           {/* <RootNav.Screen name="SellerProduct" component={SellerProduct} /> */}
           <RootNav.Screen name="AddProduct" component={AddProduct} />
           {/* <RootNav.Screen name="HomeScreen" component={HomeScreen} /> */}
