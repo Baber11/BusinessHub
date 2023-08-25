@@ -68,7 +68,7 @@ const Myorders = () => {
  
   return (
     <>
-      <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
+    <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
 
       <Header
         headerColor={['#D2E4E4', '#D2E4E4']}
@@ -84,9 +84,10 @@ const Myorders = () => {
         }}>
         <SearchbarComponent
           setNewData={setNewData}
-          placeHolderColor={'#D3D3D3'}
-          placeholderName={'Enter Order Id'}
+          placeHolderColor={'#000'}
+          placeholderName={'Search your Order Id'}
           array={orderData}
+          fontSize={13}
           arrayItem={'order'}
         />
 
@@ -100,7 +101,7 @@ const Myorders = () => {
           paddingTop: moderateScale(20, 0.3),
         }}
         style={{
-          backgroundColor: 'white',
+          // backgroundColor: 'white',
         }}
         renderItem={({item, index}) => {
           // console.log('DATA34', item);
@@ -168,7 +169,7 @@ const Myorders = () => {
                   alignSelf:'center',
                   // backgroundColor:'red'
                 }}>
-                <CustomImagemage
+                <CustomImage
                   source={require('../Assets/Images/4.png')}
                   style={{
                     width: '100%',

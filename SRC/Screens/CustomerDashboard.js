@@ -774,7 +774,7 @@ const CustomerDashboard = () => {
           array={newArrivals}
           arrayItem={'Product'}
           fontSize={13}
-          SearchStyle={{width: windowWidth * 0.95}}
+          SearchStyle={{width: windowWidth * 0.95,marginLeft:moderateScale(10,0.3)}}
         />
 
         <CustomText

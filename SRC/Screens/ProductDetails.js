@@ -529,6 +529,7 @@ const ProductDetails = props => {
             renderItem={({item, index}) => {
               return <CommentsSection item={item} />;
             }}
+            
           />
           <CustomText
             isBold
