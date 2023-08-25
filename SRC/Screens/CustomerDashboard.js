@@ -39,10 +39,10 @@ const CustomerDashboard = () => {
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
-  const sellerProducts = useSelector(
-    state => state.commonReducer.sellerProducts,
+  console.log(
+    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
+    isFocused,
   );
-  
 
   const Services = [
     {
@@ -800,6 +800,37 @@ const CustomerDashboard = () => {
           }}
           renderItem={({item, index}) => {
             return <Product item={item} />;
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <>
+                <View
+                  style={{
+                    width: windowWidth * 0.79,
+                    height: windowHeight * 0.25,
+                    marginTop: moderateScale(30, 0.3),
+                    alignSelf:'center'
+                  }}>
+                  <CustomImage
+                    source={require('../Assets/Images/4.png')}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode={'contain'}
+                  />
+                </View>
+                <CustomText
+                  isBold
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontSize:moderateScale(13,0.6)
+                  }}>
+                  ERROR 404 DATA NOT FOUND
+                </CustomText>
+              </>
+            );
           }}
         />
       </ScrollView>

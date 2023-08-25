@@ -31,10 +31,8 @@ const CustomTable = ({
 }) => {
   const [newData, setNewData] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [selectedTab, setSelectedTab] = useState('');
   const token = useSelector(state => state.authReducer.token);
-  const RecordPerPage = 8;
-
-  
 
   const actionPreform = async (item, index) => {
     const url = 'auth/user/update';
@@ -48,12 +46,12 @@ const CustomTable = ({
     const response = await Post(url, body, apiHeader(token));
     setLoading(false);
     if (response?.data?.success) {
-      // console.log('response', response?.data);
+      console.log('response', response?.data);
       setData(prev => [...prev], (data[index].status = statusToBe));
     }
   };
 
-  // console.log('OSAMA ==>>>>', data);
+  console.log('OSAMA ==>>>>', data);
 
   return (
     <>
@@ -66,6 +64,50 @@ const CustomTable = ({
         fontSize={13}
         SearchStyle={{width: windowWidth * 0.95}}
       />
+
+      <View
+        style={{
+          flexDirection: 'row',
+          width: windowWidth * 0.7,
+          borderWidth: 1,
+          borderColor: Color.themeColor,
+          alignSelf: 'center',
+          justifyContent: 'space-between',
+          borderRadius: moderateScale(10, 0.6),
+          overflow: 'hidden',
+          marginTop:moderateScale(20,0.3)
+        }}>
+        <CustomText
+          style={{
+            width: windowWidth * 0.35,
+            textAlign: 'center',
+            paddingVertical: moderateScale(10, 0.6),
+            borderRadius: moderateScale(10, 0.6),
+            color: selectedTab == 'Buyer' ? 'white' : Color.themeColor,
+            backgroundColor:
+              selectedTab == 'Buyer' ? Color.themeColor : 'transparent',
+          }}
+          onPress={() => {
+            setSelectedTab('Buyer');
+          }}>
+          Buyer
+        </CustomText>
+        <CustomText
+          style={{
+            width: windowWidth * 0.35,
+            borderRadius: moderateScale(10, 0.6),
+            paddingVertical: moderateScale(10, 0.6),
+            textAlign: 'center',
+            color: selectedTab == 'Seller' ? 'white' : Color.themeColor,
+            backgroundColor:
+              selectedTab == 'Seller' ? Color.themeColor : 'transparent',
+          }}
+          onPress={() => {
+            setSelectedTab('Seller');
+          }}>
+          Seller
+        </CustomText>
+      </View>
 
       <View style={[styles.container, customStyle && customStyle]}>
         <FlatList
@@ -157,7 +199,16 @@ const CustomTable = ({
                   alignItems: 'center',
                   // backgroundColor : 'green'
                 }}>
-               
+                {/* <CustomImage
+              resizeMode={'contain'}
+              source={require('../Assets/Images/notfound.png')}
+              style={{
+                width: windowWidth * 0.5,
+                height: windowHeight * 0.2,
+                // backgroundColor : 'red',
+                alignSelf: 'center',
+              }}
+              /> */}
                 <CustomText
                   style={{
                     fontSize: moderateScale(16, 0.3),
