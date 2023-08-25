@@ -264,7 +264,7 @@ const ServiceDetails = props => {
                 fontSize: 24,
                 width: windowWidth * 0.24,
               }}>
-              ${item?.price}.00
+              ${item?.charges}.00
             </CustomText>
           </View>
         </View>

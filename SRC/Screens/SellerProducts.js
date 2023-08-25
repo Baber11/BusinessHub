@@ -40,6 +40,7 @@ const SellerProduct = props => {
     state => state.commonReducer.sellerProducts,
   );
   const sellerService = useSelector(state => state.commonReducer.sellerService);
+  console.log("🚀 ~ file: SellerProducts.js:43 ~ SellerProduct ~ sellerService:", sellerService)
   const [products, setProducts] = useState(
     sellerProducts.filter(item => {
       return item?.userId == userData.id;
@@ -205,19 +206,13 @@ const SellerProduct = props => {
 
   // }, [isFocused])
 
-useEffect(() => {
-  setProducts(sellerProducts.filter(item=>{
-    return(item?.sellerId == userData?.id)
-  }))
-
-
-}, [isFocused])
-
-
-
-
-
-  
+  useEffect(() => {
+    setProducts(
+      sellerProducts.filter(item => {
+        return item?.sellerId == userData?.id;
+      }),
+    );
+  }, [isFocused]);
 
   return (
     <>
@@ -281,146 +276,155 @@ useEffect(() => {
             padding: moderateScale(10, 0.6),
             // marginTop: moderateScale(10, 0.3),
             alignItems: 'center',
-
             flexDirection: 'row',
-            // backgroundColor:'purple',
-            // marginBottom: moderateScale(60, 0.3),
-            // justifyContent: 'space-between',
           }}
           horizontal
-          showsHorizontalScrollIndicator={false}
-          // style={styles.categoryContainer}
-        >
-          {sellerService
-            .filter((item, index) => item?.serviceOwner?.id == userData?.id)
-            .map((item, index) => {
-              return (
-                <>
-                  <TouchableOpacity
-                    key={item?.userid}
-                    style={{
-                      flexDirection: 'row',
-                      // alignItems: 'center',
-                      // justifyContent : 'center',
-                      width: windowWidth * 0.9,
-                      height: windowHeight * 0.15,
-                      paddingVertical: moderateScale(10, 0.6),
-                      paddingRight: moderateScale(10, 0.6),
+          showsHorizontalScrollIndicator={false}>
+          {sellerService?.filter(
+            (item, index) => item?.serviceOwner?.id == userData?.id,
+          ).length > 0 ? (
+            sellerService
+              ?.filter((item, index) => item?.serviceOwner?.id == userData?.id)
+              .map((item, index) => {
+                return (
+                  <>
+                    <TouchableOpacity
+                      key={item?.userid}
+                      style={{
+                        flexDirection: 'row',
+                        width: windowWidth * 0.9,
+                        height: windowHeight * 0.15,
+                        paddingVertical: moderateScale(10, 0.6),
+                        paddingRight: moderateScale(10, 0.6),
 
-                      borderRadius: moderateScale(20, 0.6),
-                      borderColor: Color.veryLightGray,
-                      borderWidth: 1,
-                      //  width: windowWidth * 0.16,
-                      marginHorizontal: moderateScale(5, 0.3),
-                      backgroundColor: 'white',
-                    }}
-                    onPress={() => {
-                      navigationService.navigate('ServiceDetails', {
-                        item,
-                        seller: true,
-                      });
-                    }}>
-                    <View
-                      style={{
-                        width: windowWidth * 0.3,
-                        height: windowHeight * 0.12,
-                        borderRadius: moderateScale(5, 0.6),
+                        borderRadius: moderateScale(20, 0.6),
+                        borderColor: Color.veryLightGray,
+                        borderWidth: 1,
+                        //  width: windowWidth * 0.16,
+                        marginHorizontal: moderateScale(5, 0.3),
                         backgroundColor: 'white',
-                        overflow: 'hidden',
-                        marginLeft: moderateScale(10, 0.6),
+                      }}
+                      onPress={() => {
+                        navigationService.navigate('ServiceDetails', {
+                          item,
+                          seller: true,
+                        });
                       }}>
-                      <CustomImage
-                        source={{uri: item?.images[0]?.image?.uri}}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                        }}
-                        resizeMode={'stretch'}
-                        onPress={() => {
-                          setSelectedService(item?.Title);
-                          // item?.onPress();
-                          navigationService.navigate('ServiceDetails');
-                        }}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        marginLeft: moderateScale(10, 0.3),
-                      }}>
-                      <CustomText
-                        numberOfLines={1}
-                        style={{
-                          fontSize: moderateScale(16, 0.6),
-                          width: windowWidth * 0.45,
-                          // textAlign: 'center',
-                          color: 'black',
-                        }}>
-                        {item?.Title}
-                      </CustomText>
-                      <CustomText
-                        numberOfLines={1}
-                        style={{
-                          fontSize: moderateScale(13, 0.6),
-                          width: windowWidth * 0.45,
-                          // width: windowWidth * 0.16,
-                          // textAlign: 'center',
-                          color: 'black',
-                        }}>
-                        {item?.category}
-                      </CustomText>
-                      <CustomText isBold>
-                        starting from Rs {item?.charges}
-                      </CustomText>
                       <View
                         style={{
-                          flexDirection: 'row',
+                          width: windowWidth * 0.3,
+                          height: windowHeight * 0.12,
+                          borderRadius: moderateScale(5, 0.6),
+                          backgroundColor: 'white',
+                          overflow: 'hidden',
+                          marginLeft: moderateScale(10, 0.6),
                         }}>
-                        <CustomButton
+                        <CustomImage
+                          source={{uri: item?.images[0]?.image?.uri}}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                          }}
+                          resizeMode={'stretch'}
                           onPress={() => {
-                            // navigationService.navigate('AddProduct');
+                            setSelectedService(item?.Title);
+                            // item?.onPress();
+                            navigationService.navigate('ServiceDetails');
                           }}
-                          text={'Edit'}
-                          textColor={Color.white}
-                          iconName={'pencil'}
-                          iconType={Entypo}
-                          // width={windowWidth * 0.28}
-                          height={windowHeight * 0.035}
-                          fontSize={moderateScale(10, 0.6)}
-                          marginTop={moderateScale(4, 0.3)}
-                          bgColor={Color.yellow}
-                          borderRadius={moderateScale(20, 0.3)}
-                          iconStyle={{
-                            fontSize: moderateScale(14, 0.6),
-                          }}
-                          marginRight={moderateScale(5,0.3)}
-
-                          isBold
-                        />
-                          <CustomButton
-                          onPress={() => {
-                            // navigationService.navigate('AddProduct');
-                          }}
-                          text={'View'}
-                          textColor={Color.white}
-                          iconName={'eye'}
-                          iconType={Entypo}
-                          // width={windowWidth * 0.28}
-                          height={windowHeight * 0.035}
-                          fontSize={moderateScale(10, 0.6)}
-                          marginTop={moderateScale(4, 0.3)}
-                          bgColor={Color.yellow}
-                          borderRadius={moderateScale(20, 0.3)}
-                          iconStyle={{
-                            fontSize: moderateScale(14, 0.6),
-                          }}
-                          isBold
                         />
                       </View>
-                    </View>
-                  </TouchableOpacity>
-                </>
-              );
-            })}
+                      <View
+                        style={{
+                          marginLeft: moderateScale(10, 0.3),
+                        }}>
+                        <CustomText
+                          numberOfLines={1}
+                          style={{
+                            fontSize: moderateScale(16, 0.6),
+                            width: windowWidth * 0.45,
+                            // textAlign: 'center',
+                            color: 'black',
+                          }}>
+                          {item?.Title}
+                        </CustomText>
+                        <CustomText
+                          numberOfLines={1}
+                          style={{
+                            fontSize: moderateScale(13, 0.6),
+                            width: windowWidth * 0.45,
+                            // width: windowWidth * 0.16,
+                            // textAlign: 'center',
+                            color: 'black',
+                          }}>
+                          {item?.category}
+                        </CustomText>
+                        <CustomText isBold>
+                          starting from Rs {item?.charges}
+                        </CustomText>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                          }}>
+                          <CustomButton
+                            onPress={() => {
+                              // navigationService.navigate('AddProduct');
+                            }}
+                            text={'Edit'}
+                            textColor={Color.white}
+                            iconName={'pencil'}
+                            iconType={Entypo}
+                            // width={windowWidth * 0.28}
+                            height={windowHeight * 0.035}
+                            fontSize={moderateScale(10, 0.6)}
+                            marginTop={moderateScale(4, 0.3)}
+                            bgColor={Color.yellow}
+                            borderRadius={moderateScale(20, 0.3)}
+                            iconStyle={{
+                              fontSize: moderateScale(14, 0.6),
+                            }}
+                            marginRight={moderateScale(5, 0.3)}
+                            isBold
+                          />
+                          <CustomButton
+                            onPress={() => {
+                              // navigationService.navigate('AddProduct');
+                            }}
+                            text={'View'}
+                            textColor={Color.white}
+                            iconName={'eye'}
+                            iconType={Entypo}
+                            // width={windowWidth * 0.28}
+                            height={windowHeight * 0.035}
+                            fontSize={moderateScale(10, 0.6)}
+                            marginTop={moderateScale(4, 0.3)}
+                            bgColor={Color.yellow}
+                            borderRadius={moderateScale(20, 0.3)}
+                            iconStyle={{
+                              fontSize: moderateScale(14, 0.6),
+                            }}
+                            isBold
+                          />
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                );
+              })
+          ) : (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                width: windowWidth * 0.9,
+                height: windowHeight * 0.2,
+              }}>
+              <CustomText
+                style={{fontSize: moderateScale(20, 0.6), color: 'black'}}>
+                No services yet
+              </CustomText>
+            </View>
+          )}
         </ScrollView>
 
         <View
@@ -467,6 +471,23 @@ useEffect(() => {
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  width: windowWidth * 0.9,
+                  height: windowHeight * 0.2,
+                }}>
+                <CustomText
+                  style={{fontSize: moderateScale(20, 0.6), color: 'black'}}>
+                  No Products yet
+                </CustomText>
+              </View>
+            );
           }}
           renderItem={({item, index}) => {
             return <Product item={item} seller={true} />;

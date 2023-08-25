@@ -28,12 +28,16 @@ import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
 import SearchbarComponent from '../Components/SearchbarComponent';
+import CustomButton from '../Components/CustomButton';
+import Entypo from 'react-native-vector-icons/Entypo'
 // import SearchbarComponent from '../Components/SearchbarComponent';
 
 const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  const sellerServices = useSelector(state => state.commonReducer.sellerService)
+  console.log("🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:", sellerServices)
   const sellerProducts = useSelector(state=> state.commonReducer.sellerProducts)
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
@@ -669,6 +673,7 @@ const CustomerDashboard = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
+          alignItems:'center'
         }}
         style={{
           minHeight: windowHeight * 0.9,
@@ -678,6 +683,8 @@ const CustomerDashboard = () => {
           isBold
           style={{
             fontSize: moderateScale(20, 0.6),
+            textAlign:'left',
+            width:windowWidth,
             marginTop: moderateVerticalScale(20, 0.6),
             marginLeft: moderateScale(20, 0.3),
           }}>
@@ -692,6 +699,7 @@ const CustomerDashboard = () => {
             alignItems: 'center',
 
             flexDirection: 'row',
+            marginBottom:moderateScale(10,.6)
             // backgroundColor:'purple',
             // marginBottom: moderateScale(60, 0.3),
             // justifyContent: 'space-between',
@@ -700,45 +708,41 @@ const CustomerDashboard = () => {
           showsHorizontalScrollIndicator={false}
           // style={styles.categoryContainer}
         >
-          {Services.map((item, index) => {
-            // console.log(
-            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-            //   item,
-            // );
+          {sellerServices.map((item, index) => {
             return (
               <>
                 <TouchableOpacity
-                  key={item?.id}
+                  key={item?.userid}
                   style={{
                     flexDirection: 'row',
-                    alignItems: 'center',
-                    // justifyContent : 'center',
-                    width: windowWidth * 0.45,
-                    paddingVertical: moderateScale(5, 0.6),
+                    width: windowWidth * 0.9,
+                    height: windowHeight * 0.15,
+                    paddingVertical: moderateScale(10, 0.6),
+                    paddingRight: moderateScale(10, 0.6),
+
                     borderRadius: moderateScale(20, 0.6),
                     borderColor: Color.veryLightGray,
                     borderWidth: 1,
-                    //  width: windowWidth * 0.16,
+                    
                     marginHorizontal: moderateScale(5, 0.3),
                     backgroundColor: 'white',
                   }}
                   onPress={() => {
                     navigationService.navigate('ServiceDetails', {
                       item,
-                      seller: false,
                     });
                   }}>
                   <View
                     style={{
-                      width: moderateScale(50, 0.6),
-                      height: moderateScale(50, 0.6),
+                      width: windowWidth * 0.3,
+                      height: windowHeight * 0.12,
                       borderRadius: moderateScale(5, 0.6),
                       backgroundColor: 'white',
                       overflow: 'hidden',
                       marginLeft: moderateScale(10, 0.6),
                     }}>
                     <CustomImage
-                      source={item?.image}
+                      source={{uri: item?.images[0]?.image?.uri}}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -746,23 +750,42 @@ const CustomerDashboard = () => {
                       resizeMode={'stretch'}
                       onPress={() => {
                         setSelectedService(item?.Title);
-                        navigationService.navigate('ServiceDetails', {item});
+                        // item?.onPress();
+                        navigationService.navigate('ServiceDetails',{item});
                       }}
                     />
                   </View>
                   <View
                     style={{
                       marginLeft: moderateScale(10, 0.3),
+                      justifyContent:'center'
+                      // backgroundColor:'black'
                     }}>
                     <CustomText
+                      numberOfLines={1}
                       style={{
-                        width: windowWidth * 0.16,
+                        fontSize: moderateScale(16, 0.6),
+                        width: windowWidth * 0.45,
                         // textAlign: 'center',
                         color: 'black',
                       }}>
                       {item?.Title}
                     </CustomText>
-                    <CustomText isBold>Rs {item?.price}</CustomText>
+                    <CustomText
+                      numberOfLines={1}
+                      style={{
+                        fontSize: moderateScale(13, 0.6),
+                        width: windowWidth * 0.45,
+                        // width: windowWidth * 0.16,
+                        // textAlign: 'center',
+                        color: 'black',
+                      }}>
+                      {item?.category}
+                    </CustomText>
+                    <CustomText isBold>
+                      starting from Rs {item?.charges}
+                    </CustomText>
+                  
                   </View>
                 </TouchableOpacity>
               </>
@@ -784,6 +807,8 @@ const CustomerDashboard = () => {
           isBold
           style={{
             fontSize: moderateScale(20, 0.6),
+            textAlign:'left',
+            width:windowWidth,
             marginTop: moderateVerticalScale(20, 0.6),
             marginLeft: moderateScale(20, 0.3),
             // backgroundColor:'black'

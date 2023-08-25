@@ -283,7 +283,10 @@ const AddServices = props => {
       <View style={styles.bottomContainer}>
         <CustomButton
           isBold
-          onPress={() => addService()}
+          onPress={() =>{
+          console.log('Here============')  
+            addService()
+          }}
           text={'Save'}
           textColor={Color.white}
           width={windowWidth * 0.8}
