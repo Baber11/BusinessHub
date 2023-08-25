@@ -6,7 +6,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 // import {windowHeight, windowWidth} from '../Assets/Utilities/Utils';
 import CustomText from './CustomText';
@@ -19,6 +19,7 @@ import CustomButton from './CustomButton';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
 import SearchbarComponent from './SearchbarComponent';
+import { useIsFocused } from '@react-navigation/native';
 
 const CustomTable = ({
   data,
@@ -29,9 +30,12 @@ const CustomTable = ({
   onPress,
   setData,
 }) => {
-  const [newData, setNewData] = useState(data);
+  const isFocused = useIsFocused()
+  console.log("🚀 ~ file: CustomTable.js:32 ~ data:", data)
+  const [newData, setNewData] = useState([]);
+  console.log("🚀 ~ file: CustomTable.js:33 ~ newData:", newData)
   const [loading, setLoading] = useState(false);
-  const [selectedTab, setSelectedTab] = useState('');
+  const [selectedTab, setSelectedTab] = useState('Buyer');
   const token = useSelector(state => state.authReducer.token);
 
   const actionPreform = async (item, index) => {
@@ -51,79 +55,107 @@ const CustomTable = ({
     }
   };
 
-  console.log('OSAMA ==>>>>', data);
+  // console.log('OSAMA ==>>>>', data);
+  useEffect(() => {
+    if(data){
+      setNewData(data)
+    }
+  }, [isFocused , data])
+  
 
   return (
     <>
-      <SearchbarComponent
-        setNewData={setNewData}
-        placeHolderColor={'#000'}
-        placeholderName={'Search User Name'}
-        array={data}
-        arrayItem={'User'}
-        fontSize={13}
-        SearchStyle={{width: windowWidth * 0.95}}
-      />
-
       <View
         style={{
+          // height : windowHeight * 0.1,
           flexDirection: 'row',
-          width: windowWidth * 0.7,
-          borderWidth: 1,
-          borderColor: Color.themeColor,
-          alignSelf: 'center',
-          justifyContent: 'space-between',
-          borderRadius: moderateScale(10, 0.6),
-          overflow: 'hidden',
-          marginTop:moderateScale(20,0.3)
-        }}>
-        <CustomText
-          style={{
-            width: windowWidth * 0.35,
-            textAlign: 'center',
-            paddingVertical: moderateScale(10, 0.6),
-            borderRadius: moderateScale(10, 0.6),
-            color: selectedTab == 'Buyer' ? 'white' : Color.themeColor,
-            backgroundColor:
-              selectedTab == 'Buyer' ? Color.themeColor : 'transparent',
-          }}
-          onPress={() => {
-            setSelectedTab('Buyer');
-          }}>
-          Buyer
-        </CustomText>
-        <CustomText
-          style={{
-            width: windowWidth * 0.35,
-            borderRadius: moderateScale(10, 0.6),
-            paddingVertical: moderateScale(10, 0.6),
-            textAlign: 'center',
-            color: selectedTab == 'Seller' ? 'white' : Color.themeColor,
-            backgroundColor:
-              selectedTab == 'Seller' ? Color.themeColor : 'transparent',
-          }}
-          onPress={() => {
-            setSelectedTab('Seller');
-          }}>
-          Seller
-        </CustomText>
-      </View>
+          // alignItems : 'center',
+          // backgroundColor : 'red',
+          marginTop : moderateScale(20,0.3),
+          width : windowWidth * 0.95,
+         justifyContent : 'space-between',
+         alignSelf : 'center',
+         alignItems : 'center'
 
+        }}>
+        <SearchbarComponent
+          setNewData={setNewData}
+          placeHolderColor={'#000'}
+          placeholderName={'Search User Name'}
+          array={data}
+          arrayItem={'User'}
+          fontSize={13}
+          SearchStyle={{width: windowWidth * 0.7,
+          
+          borderColor : '#033b41'}}
+        />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            width: windowWidth * 0.2,
+            borderWidth: 1,
+            borderColor: '#033b41',
+            // alignSelf: 'flex-end',
+            justifyContent: 'space-between',
+            borderRadius: moderateScale(10, 0.6),
+            overflow: 'hidden',
+            // marginTop: moderateScale(20, 0.3),
+            // marginRight: moderateScale(10, 0.3),
+          }}>
+          <CustomText
+            style={{
+              width: windowWidth * 0.1,
+              textAlign: 'center',
+              paddingVertical: moderateScale(10, 0.6),
+              fontSize: moderateScale(10, 0.6),
+              // borderRadius: moderateScale(10, 0.6),
+              color: selectedTab == 'Buyer' ? 'white' : '#033b41',
+              backgroundColor:
+                selectedTab == 'Buyer' ? '#033b41' : 'transparent',
+            }}
+            onPress={() => {
+              setSelectedTab('Buyer');
+            }}>
+            Buyer
+          </CustomText>
+          <CustomText
+            style={{
+              width: windowWidth * 0.1,
+              // borderRadius: moderateScale(10, 0.6),
+              paddingVertical: moderateScale(10, 0.6),
+              fontSize: moderateScale(10, 0.6),
+              textAlign: 'center',
+              color: selectedTab == 'Seller' ? 'white' : '#033b41',
+              backgroundColor:
+                selectedTab == 'Seller' ? '#033b41' : 'transparent',
+            }}
+            onPress={() => {
+              setSelectedTab('Seller');
+            }}>
+            Seller
+          </CustomText>
+        </View>
+      </View>
       <View style={[styles.container, customStyle && customStyle]}>
         <FlatList
           showsVerticalScrollIndicator={false}
           nestedScrollEnabled={true}
           scrollEnabled={true}
           contentContainerStyle={{
-            paddingBottom: moderateScale(20, 0.3),
+            // paddingBottom: moderateScale(20, 0.3),
           }}
-          data={newData}
+          data={ newData.filter(data =>
+            selectedTab == 'Buyer'
+              ? data?.role.toLowerCase() == 'vendor'
+              : data?.role.toLowerCase() == 'customer',
+          )}
           renderItem={(item, index1) => {
             // console.log("🚀 ~ file: CustomTable.js:101 ~ index1:", item , index1)
             const data1 = {
               name: item?.item?.name,
-              Contact: item?.item?.phone,
-              role: item?.item?.role,
+              email: item?.item?.email,
+              // role: item?.item?.role,
               status: item?.item?.status,
             };
             return (
@@ -134,11 +166,17 @@ const CustomTable = ({
                 style={styles.row}>
                 {Object.keys(data1).map((x, index) => {
                   return x == 'status' ? (
+                    <View style={{
+                      width : windowWidth * 0.3 ,
+                      // alignItems : 'flex-end',
+                      // backgroundColor : 'green'
+                    }}> 
+                      
                     <CustomButton
                       isBold
-                      text={data1[x] == 'active' ? 'Deactiveate' : 'Activate'}
+                      text={data1[x] == 'active' ? 'De activate' : 'Activate'}
                       textColor={Color.white}
-                      width={windowWidth * 0.18}
+                      // width={windowWidth * 0.2}
                       marginTop={moderateScale(10, 0.3)}
                       marginBottom={moderateScale(10, 0.3)}
                       height={windowHeight * 0.04}
@@ -151,7 +189,9 @@ const CustomTable = ({
                         actionPreform(item?.item, item?.index);
                       }}
                       disabled={loading}
+                      alignSelf ={'flex-end'}
                     />
+                      </View>
                   ) : (
                     <CustomText
                       numberOfLines={2}
@@ -231,13 +271,13 @@ export default CustomTable;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: moderateScale(20, 0.3),
+    // marginTop: moderateScale(5, 0.3),
     overflow: 'hidden',
     backgroundColor: 'white',
-    borderRadius: moderateScale(20, 0.3),
+    // borderRadius: moderateScale(5, 0.3),
     width: windowWidth * 0.9,
     alignSelf: 'center',
-    height: windowHeight * 0.6,
+    // height: windowHeight * 0.6,
     // paddingVertical: moderateScale(10, 0.3),
     shadowColor: '#000',
     shadowOffset: {
@@ -264,6 +304,7 @@ const styles = StyleSheet.create({
     color: '#000',
     // textAlign: 'flex-start',
     textAlign: 'center',
+    // backgroundColor : 'red'
   },
   header: {
     height: windowHeight * 0.1,

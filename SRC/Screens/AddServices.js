@@ -26,12 +26,14 @@ import Modal from 'react-native-modal';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {bindActionCreators} from 'redux';
 import navigationService from '../navigationService';
+import { setServices } from '../Store/slices/common';
 
 const AddServices = props => {
   const item = props?.route?.params?.item;
   console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
-  const [images, setImages] = useState(['plus']);
+  console.log("🚀 ~ file: AddServices.js:34 ~ AddServices ~ user:", user)
+  const [images, setImages] = useState([]);
   console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
@@ -41,15 +43,16 @@ const AddServices = props => {
   const [image, setImage] = useState({});
 
   const navigation = useNavigation();
-
+  const dispatch = useDispatch()
   const addService = () => {
-    {
+    
       const body = {
-        images: images.slice(1),
+        images: images,
         Title: title,
         category: category,
         charges: parseFloat(charges),
         description: description,
+        serviceOwner : user
       };
 
       for (let key in body) {
@@ -59,8 +62,7 @@ const AddServices = props => {
               ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
               : Alert.alert('Add atleast one image');
           }
-        }
-        else if(key == 'charges') {
+        } else if (key == 'charges') {
           if (isNaN(body[key])) {
             return Platform.OS == 'android'
               ? ToastAndroid.show(
@@ -69,8 +71,7 @@ const AddServices = props => {
                 )
               : Alert.alert('Charges is required');
           }
-        }
-        else if(body[key] == '') {
+        } else if (body[key] == '') {
           console.log(key);
           return Platform.OS == 'android'
             ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
@@ -78,13 +79,14 @@ const AddServices = props => {
         }
       }
       console.log('🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:', body);
+      dispatch(setServices(body))
       navigation.goBack();
-    }
+    
   };
 
   useEffect(() => {
     if (Object.keys(image).length > 0) {
-      setImages(prev => [...prev, image?.uri]);
+      setImages(prev => [...prev, {image : image , articleNumber : Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000}]);
       setImage({});
     }
   }, [image]);
@@ -117,10 +119,10 @@ const AddServices = props => {
               fontSize: moderateScale(13, 0.6),
               color: Color.black,
               textAlign: 'left',
-              marginLeft: moderateScale(30, 0.3),
+              // marginLeft: moderateScale(30, 0.3),
               marginTop: moderateScale(10, 0.3),
               //   backgroundColor: 'black',
-              width: windowWidth * 0.95,
+              width: windowWidth * 0.9,
             }}
             isBold>
             Add Sample Images
@@ -129,11 +131,12 @@ const AddServices = props => {
             style={{
               fontSize: moderateScale(11, 0.6),
               color: Color.veryLightGray,
-              marginLeft: moderateScale(30, 0.3),
+              // marginLeft: moderateScale(30, 0.3),
+              lineHeight : moderateScale(16,0.3),
               //   backgroundColor: 'black',
-              width: windowWidth * 0.95,
+              width: windowWidth * 0.9,
             }}>
-            Add upto 5 images. First image is your product's cover that will be
+            Add Images for catelogue images. First image is your product's cover that will be
             highlighted everywhere
           </CustomText>
           <View
@@ -141,98 +144,73 @@ const AddServices = props => {
               flexDirection: 'row',
               justifyContent: 'flex-start',
               marginTop: moderateScale(10, 0.3),
-              // marginHorizontal:moderateScale(20,.3),
-              //   backgroundColor: 'orange',
+
               width: windowWidth * 0.95,
+              flexWrap: 'wrap',
               // paddingHorizontal: moderateScale(10, 0.6),
             }}>
-            {images.length > 0 && (
-              <FlatList
-                data={images}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={
-                  {
-                    // backgroundColor:'purple'
-                  }
-                }
-                renderItem={({item, index}) => {
-                  console.log(
-                    '🚀 ~ file: AddProduct.js:133 ~ AddProduct ~ item:',
-                    item,
-                  );
-                  return (
-                    <>
-                      {index == 0 ? (
-                        images?.length < 6 ? (
-                          <TouchableOpacity
-                            style={{
-                              width: windowWidth * 0.2,
-                              height: windowHeight * 0.08,
-                              marginHorizontal: moderateScale(10, 0.3),
-                              // backgroundColor: 'red',
-                              borderRadius: moderateScale(10, 0.6),
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderColor: Color.veryLightGray,
-                              borderWidth: 1,
-                            }}
-                            onPress={() => {
-                              setImagePickerModal(true);
-                            }}>
-                            <Icon name={'plus'} as={AntDesign} size={5} />
-                          </TouchableOpacity>
-                        ) : (
-                          <></>
-                        )
-                      ) : (
-                        <View
-                          style={{
-                            width: windowWidth * 0.2,
-                            height: windowHeight * 0.08,
-                            backgroundColor: 'black',
-                            borderRadius: moderateScale(10, 0.6),
-                            marginHorizontal: moderateScale(5, 0.3),
+            {images.length > 0 &&
+              images.map((item, index) => {
+                // console.log("🚀 ~ file: AddServices.js:149 ~ images.map ~ item:", item)
+                return (
+                  <View
+                    style={{
+                      width: windowWidth * 0.2,
+                      height: windowHeight * 0.08,
+                      backgroundColor: 'black',
+                      borderRadius: moderateScale(10, 0.6),
+                      marginHorizontal: moderateScale(20, 0.3),
 
-                            // alignItems: 'center',
-                            justifyContent: 'center',
-                            borderColor: Color.veryLightGray,
-                            borderWidth: 1,
-                            overflow: 'hidden',
-                            marginRight: moderateScale(10, 0.6),
-                          }}>
-                          <CustomImage
-                            source={{uri: item}}
-                            style={{width: '100%', height: '100%'}}
-                          />
-                        </View>
-                      )}
-                    </>
-                  );
-                }}
-              />
-            )}
+                      // alignItems: 'center',
+                      justifyContent: 'center',
+                      borderColor: Color.veryLightGray,
+                      borderWidth: 1,
+                      overflow: 'hidden',
+                      marginRight: moderateScale(10, 0.6),
+                      marginBottom : moderateScale(10,0.3)
+                    }}>
+                    <CustomImage
+                      source={{uri: item?.image?.uri}}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                );
+              })}
+            <TouchableOpacity
+              style={{
+                width: windowWidth * 0.2,
+                height: windowHeight * 0.08,
+                marginHorizontal: moderateScale(20, 0.3),
+                // backgroundColor: 'red',
+                borderRadius: moderateScale(10, 0.6),
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderColor: Color.veryLightGray,
+                borderWidth: 1,
+              }}
+              onPress={() => {
+                setImagePickerModal(true);
+              }}>
+              <Icon name={'plus'} as={AntDesign} size={5} />
+            </TouchableOpacity>
           </View>
           <CustomText
             style={{
               fontSize: moderateScale(13, 0.6),
               color: Color.black,
               textAlign: 'left',
-              marginLeft: moderateScale(30, 0.3),
+              // marginLeft: moderateScale(30, 0.3),
               marginTop: moderateScale(10, 0.3),
               //   backgroundColor: 'black',
-              width: windowWidth * 0.95,
+              width: windowWidth * 0.9,
             }}
             isBold>
             Enter Service Details
           </CustomText>
 
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
-            titleText={'Title'}
-            placeholder={'Title'}
+            titleText={'Shop Name'}
+            placeholder={'Shop Name'}
             setText={setTitle}
             value={title}
             viewHeight={0.07}
@@ -247,9 +225,6 @@ const AddServices = props => {
             elevation
           />
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
             titleText={'Category'}
             placeholder={'Category'}
             setText={setCategory}
@@ -267,11 +242,8 @@ const AddServices = props => {
           />
 
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
-            titleText={'Charges'}
-            placeholder={'Charges'}
+            titleText={'charges starting from'}
+            placeholder={'charges starting from'}
             setText={setCharges}
             value={charges}
             viewHeight={0.07}

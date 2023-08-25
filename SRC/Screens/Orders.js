@@ -651,10 +651,10 @@ const Orders = () => {
           // style={styles.categoryContainer}
         >
           {latestOrders.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
+            // console.log(
+            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
+            //   item,
+            // );
             return (
               <OrderCard
                 item={item}

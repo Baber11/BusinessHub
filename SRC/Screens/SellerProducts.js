@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ToastAndroid,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -22,44 +28,41 @@ import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import CustomButton from '../Components/CustomButton';
 import navigationService from '../navigationService';
-import Entypo from 'react-native-vector-icons/Entypo'
+import Entypo from 'react-native-vector-icons/Entypo';
 
-const SellerProduct = (props) => {
-
-  const [item, setItem] = useState(props?.route?.params?.item ? props?.route?.params?.item : {} )
-
-  console.log("🚀 ~ file: SellerProducts.js:28 ~ item:", item)
+const SellerProduct = props => {
+  const [item, setItem] = useState(
+    props?.route?.params?.item ? props?.route?.params?.item : {},
+  );
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-
-  const sellerProducts = useSelector(state => state.commonReducer.sellerProducts);
-  console.log("🚀 ~ file: SellerProducts.js:37 ~ sellerProducts:", sellerProducts)
-
-  const [products, setProducts] = useState(sellerProducts.filter(item=>{
-    return(item?.userId == userData.id)
-  }))
-  console.log("🚀 ~ file: SellerProducts.js:42 ~ products:", products)
-
+  const sellerProducts = useSelector(
+    state => state.commonReducer.sellerProducts,
+  );
+  const sellerService = useSelector(state => state.commonReducer.sellerService);
+  const [products, setProducts] = useState(
+    sellerProducts.filter(item => {
+      return item?.userId == userData.id;
+    }),
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
-
   const Services = [
     {
       id: 1,
       Title: 'Stitching',
-      subTitle:'stiching',
-      price:200,
-      description:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+      subTitle: 'stiching',
+      price: 200,
+      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
       image: require('../Assets/Images/dummyman4.png'),
-      images: [require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png')],
+      images: [
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
       onPress: () => {
         console.log('here');
         navigationService.navigate('Dresses');
@@ -67,36 +70,48 @@ const SellerProduct = (props) => {
     },
     {
       id: 2,
-      subTitle:'stiching',
+      subTitle: 'stiching',
       Title: 'Painting',
-      description:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      price:300,
+      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+      price: 300,
       image: require('../Assets/Images/dummyUser2.png'),
-      images: [require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png')],
+      images: [
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
       onPress: () => {
         console.log('here');
       },
     },
     {
       id: 3,
-      subTitle:'stiching',
-      description:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+      subTitle: 'stiching',
+      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
       Title: 'jeans',
-      price:600,
+      price: 600,
       image: require('../Assets/Images/dummyman1.png'),
-      images: [require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png')],
+      images: [
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
       onPress: () => {
         console.log('here');
       },
     },
     {
       id: 4,
-      subTitle:'stiching',
-      description:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+      subTitle: 'stiching',
+      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
       Title: 'shoes',
-      price:400,
+      price: 400,
       image: require('../Assets/Images/dummyUser1.png'),
-      images: [require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png')],
+      images: [
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
 
       onPress: () => {
         console.log('here');
@@ -104,10 +119,14 @@ const SellerProduct = (props) => {
     },
     {
       id: 5,
-      subTitle:'stiching',
+      subTitle: 'stiching',
       Title: 'shoes',
       image: require('../Assets/Images/dummyman4.png'),
-      images: [require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png')],
+      images: [
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
 
       onPress: () => {
         console.log('here');
@@ -181,19 +200,15 @@ const SellerProduct = (props) => {
   // useEffect(() => {
   //   if(Object.keys(item).length>0){
   //     setAllProducts(prev=>[item,...prev])
-     
+
   //   }
 
-    
-  
-    
   // }, [isFocused])
-  
 
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
-      <Header headerColor={['#D2E4E4', '#D2E4E4']}  />
+      <Header headerColor={['#D2E4E4', '#D2E4E4']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -207,7 +222,7 @@ const SellerProduct = (props) => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingHorizontal:moderateScale(10,.6),
+            paddingHorizontal: moderateScale(10, 0.6),
             paddingVertical: moderateScale(10, 0.6),
             alignItems: 'center',
             // backgroundColor: 'purple',
@@ -222,14 +237,23 @@ const SellerProduct = (props) => {
             Services
           </CustomText>
           <CustomButton
-            onPress={() => { navigationService.navigate('AddServices')}}
+            onPress={() => {
+              sellerService?.some(
+                item => item?.serviceOwner?.id == userData?.id,
+              )
+                ? ToastAndroid.show(
+                    'Service is already added',
+                    ToastAndroid.SHORT,
+                  )
+                : navigationService.navigate('AddServices');
+            }}
             text={'service'}
             textColor={Color.white}
             iconName={'plus'}
             iconType={Entypo}
             width={windowWidth * 0.28}
             height={windowHeight * 0.04}
-            fontSize={moderateScale(12,.6)}
+            fontSize={moderateScale(12, 0.6)}
             // marginTop={moderateScale(10, 0.3)}
             bgColor={Color.yellow}
             borderRadius={moderateScale(20, 0.3)}
@@ -253,81 +277,143 @@ const SellerProduct = (props) => {
           showsHorizontalScrollIndicator={false}
           // style={styles.categoryContainer}
         >
-          {Services.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
-            return (
-              <>
-                <TouchableOpacity
-                  key={item?.id}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    // justifyContent : 'center',
-                    width: windowWidth * 0.45,
-                    paddingVertical: moderateScale(5, 0.6),
-                    borderRadius: moderateScale(20, 0.6),
-                    borderColor: Color.veryLightGray,
-                    borderWidth: 1,
-                    //  width: windowWidth * 0.16,
-                    marginHorizontal: moderateScale(5, 0.3),
-                    backgroundColor: 'white',
-                  }}
-                  onPress={()=>{
-                    navigationService.navigate('ServiceDetails',{item, seller:true})
-                  }}
-                >
-                  <View
+          {sellerService
+            .filter((item, index) => item?.serviceOwner?.id == userData?.id)
+            .map((item, index) => {
+              return (
+                <>
+                  <TouchableOpacity
+                    key={item?.userid}
                     style={{
-                      width: moderateScale(50, 0.6),
-                      height: moderateScale(50, 0.6),
-                      borderRadius: moderateScale(5, 0.6),
-                      backgroundColor: 'white',
-                      overflow: 'hidden',
-                      marginLeft: moderateScale(10, 0.6),
-                    }}>
-                    <CustomImage
-                      source={item?.image}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      resizeMode={'stretch'}
-                      onPress={() => {
-                        setSelectedService(item?.Title);
-                        // item?.onPress();
-                        navigationService.navigate('ServiceDetails',)
+                      flexDirection: 'row',
+                      // alignItems: 'center',
+                      // justifyContent : 'center',
+                      width: windowWidth * 0.9,
+                      height: windowHeight * 0.15,
+                      paddingVertical: moderateScale(10, 0.6),
+                      paddingRight: moderateScale(10, 0.6),
 
-                      }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginLeft: moderateScale(10, 0.3),
+                      borderRadius: moderateScale(20, 0.6),
+                      borderColor: Color.veryLightGray,
+                      borderWidth: 1,
+                      //  width: windowWidth * 0.16,
+                      marginHorizontal: moderateScale(5, 0.3),
+                      backgroundColor: 'white',
+                    }}
+                    onPress={() => {
+                      navigationService.navigate('ServiceDetails', {
+                        item,
+                        seller: true,
+                      });
                     }}>
-                    <CustomText
+                    <View
                       style={{
-                        width: windowWidth * 0.16,
-                        // textAlign: 'center',
-                        color: 'black',
+                        width: windowWidth * 0.3,
+                        height: windowHeight * 0.12,
+                        borderRadius: moderateScale(5, 0.6),
+                        backgroundColor: 'white',
+                        overflow: 'hidden',
+                        marginLeft: moderateScale(10, 0.6),
                       }}>
-                      {item?.Title}
-                    </CustomText>
-                    <CustomText isBold>Rs 25</CustomText>
-                  </View>
-                </TouchableOpacity>
-              </>
-            );
-          })}
+                      <CustomImage
+                        source={{uri: item?.images[0]?.image?.uri}}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                        }}
+                        resizeMode={'stretch'}
+                        onPress={() => {
+                          setSelectedService(item?.Title);
+                          // item?.onPress();
+                          navigationService.navigate('ServiceDetails');
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        marginLeft: moderateScale(10, 0.3),
+                      }}>
+                      <CustomText
+                        numberOfLines={1}
+                        style={{
+                          fontSize: moderateScale(16, 0.6),
+                          width: windowWidth * 0.45,
+                          // textAlign: 'center',
+                          color: 'black',
+                        }}>
+                        {item?.Title}
+                      </CustomText>
+                      <CustomText
+                        numberOfLines={1}
+                        style={{
+                          fontSize: moderateScale(13, 0.6),
+                          width: windowWidth * 0.45,
+                          // width: windowWidth * 0.16,
+                          // textAlign: 'center',
+                          color: 'black',
+                        }}>
+                        {item?.category}
+                      </CustomText>
+                      <CustomText isBold>
+                        starting from Rs {item?.charges}
+                      </CustomText>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                        }}>
+                        <CustomButton
+                          onPress={() => {
+                            // navigationService.navigate('AddProduct');
+                          }}
+                          text={'Edit'}
+                          textColor={Color.white}
+                          iconName={'pencil'}
+                          iconType={Entypo}
+                          // width={windowWidth * 0.28}
+                          height={windowHeight * 0.035}
+                          fontSize={moderateScale(10, 0.6)}
+                          marginTop={moderateScale(4, 0.3)}
+                          bgColor={Color.yellow}
+                          borderRadius={moderateScale(20, 0.3)}
+                          iconStyle={{
+                            fontSize: moderateScale(14, 0.6),
+                          }}
+                          marginRight={moderateScale(5,0.3)}
+
+                          isBold
+                        />
+                          <CustomButton
+                          onPress={() => {
+                            // navigationService.navigate('AddProduct');
+                          }}
+                          text={'View'}
+                          textColor={Color.white}
+                          iconName={'eye'}
+                          iconType={Entypo}
+                          // width={windowWidth * 0.28}
+                          height={windowHeight * 0.035}
+                          fontSize={moderateScale(10, 0.6)}
+                          marginTop={moderateScale(4, 0.3)}
+                          bgColor={Color.yellow}
+                          borderRadius={moderateScale(20, 0.3)}
+                          iconStyle={{
+                            fontSize: moderateScale(14, 0.6),
+                          }}
+                          isBold
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              );
+            })}
         </ScrollView>
 
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingHorizontal:moderateScale(10,.6),
+            paddingHorizontal: moderateScale(10, 0.6),
             paddingVertical: moderateScale(10, 0.6),
             alignItems: 'center',
             // backgroundColor: 'purple',
@@ -342,14 +428,16 @@ const SellerProduct = (props) => {
             Products
           </CustomText>
           <CustomButton
-            onPress={() => {navigationService.navigate('AddProduct')}}
+            onPress={() => {
+              navigationService.navigate('AddProduct');
+            }}
             text={'Product'}
             textColor={Color.white}
             iconName={'plus'}
             iconType={Entypo}
             width={windowWidth * 0.28}
             height={windowHeight * 0.04}
-            fontSize={moderateScale(12,.6)}
+            fontSize={moderateScale(12, 0.6)}
             // marginTop={moderateScale(10, 0.3)}
             bgColor={Color.yellow}
             borderRadius={moderateScale(20, 0.3)}

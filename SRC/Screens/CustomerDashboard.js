@@ -702,10 +702,10 @@ const CustomerDashboard = () => {
           // style={styles.categoryContainer}
         >
           {Services.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
+            // console.log(
+            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
+            //   item,
+            // );
             return (
               <>
                 <TouchableOpacity

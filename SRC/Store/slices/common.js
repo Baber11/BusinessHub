@@ -10,6 +10,7 @@ const initialState = {
   notification: false,
   order : [],
   sellerProducts:[],
+  sellerService :[],
   selectedRole: '',
 };
 
@@ -130,7 +131,13 @@ const CommonSlice = createSlice({
       }
       
 
-    }
+    },
+    setServices(state, action){
+      console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
+      
+      state.sellerService.push(action.payload)
+
+    },
 
     
   },
@@ -155,6 +162,7 @@ export const {
   EmptyCart,
   setServiceBooking,
   setAddProducts,
+  setServices,
   Order
 } = CommonSlice.actions;
 

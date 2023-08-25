@@ -23,9 +23,10 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 const HomeScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
+  // console.log("🚀 ~ file: HomeScreen.js:29 ~ HomeScreen ~ users:", users)
   const navigation = useNavigation();
 
 
@@ -42,7 +43,7 @@ const HomeScreen = () => {
     isFocused,
   );
 
-  const dummyArray1 = ['Name', 'Contact', 'Role', 'Status'];
+  const dummyArray1 = ['Name', 'Email', 'Status'];
 
   const getUser = async () => {
     const url = 'auth/user';
@@ -138,17 +139,18 @@ const HomeScreen = () => {
           setData={setUsers}
           tableFields={dummyArray1}
           headingStyle={{
-            width: windowWidth * 0.2,
+            width: windowWidth * 0.3,
             // backgroundColor: 'red',
           }}
           customStyle={{
             // backgroundColor: 'red',
-            marginBottom: moderateScale(70, 0.3),
-            height: windowHeight * 0.7,
-            width: windowWidth * 0.95,
+            // marginBottom: moderateScale(10, 0.3),
+            marginTop : moderateScale(20,0.3),
+            // height: windowHeight * 0.7,
+            width: windowWidth,
           }}
           dataStyle={{
-            width: windowWidth * 0.2,
+            width: windowWidth * 0.3,
           }}
         />
         
@@ -161,7 +163,17 @@ export default HomeScreen;
 
 const Chuncks = ({amount, title, iconName}) => {
   return (
-    <TouchableOpacity activeOpacity={0.9}>
+//     <TouchableOpacity activeOpacity={0.9} style={{
+//       shadowColor: "#000",
+// shadowOffset: {
+// 	width: 0,
+// 	height: 2,
+// },
+// shadowOpacity: 0.25,
+// shadowRadius: 3.84,
+
+// elevation: 5,
+//     }}>
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
@@ -204,7 +216,7 @@ const Chuncks = ({amount, title, iconName}) => {
           {title}
         </CustomText>
       </LinearGradient>
-    </TouchableOpacity>
+    // </TouchableOpacity>
   );
 };
 
@@ -216,6 +228,16 @@ const styles = ScaledSheet.create({
     borderRadius: moderateScale(15, 0.6),
     alignItems: 'center',
     marginTop: moderateScale(20, 0.3),
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.25,
+shadowRadius: 3.84,
+
+elevation: 15,
+    
     // paddingLeft: moderateScale(15, 0.6),
     // paddingTop: moderateScale(10, 0.6),
     // backgroundColor : 'red'
