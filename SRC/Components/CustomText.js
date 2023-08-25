@@ -9,7 +9,7 @@ const CustomText = (props) => {
       onPress={onPress}
       style={[
         {
-          // textTransform: "capitalize",
+          textTransform: "capitalize",
           // textTransform: "capitalize",
           color: Color.black,
         },

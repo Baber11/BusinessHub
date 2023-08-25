@@ -62,7 +62,7 @@ const SearchbarComponent = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: moderateScale(10, 0.6),
+        // paddingHorizontal: moderateScale(10, 0.6),
       }}>
       <View
         style={[
@@ -71,7 +71,7 @@ const SearchbarComponent = ({
           borderWidth: 1,
           borderColor: Color.veryLightGray,
           borderRadius: moderateScale(20, 0.3),
-          marginTop: moderateScale(20, 0.3),
+          // marginTop: moderateScale(20, 0.3),
           // marginLeft:moderateScale(20,0.3),
           flexDirection: 'row',
           alignItems: 'center',

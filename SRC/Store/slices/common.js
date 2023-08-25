@@ -11,6 +11,7 @@ const initialState = {
   notification: false,
   order : [],
   sellerProducts:[],
+  sellerService :[],
   selectedRole: '',
 };
 
@@ -127,7 +128,13 @@ const CommonSlice = createSlice({
        state.sellerProducts.push({sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
       
 
-    }
+    },
+    setServices(state, action){
+      console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
+      
+      state.sellerService.push(action.payload)
+
+    },
 
     
   },
@@ -152,6 +159,7 @@ export const {
   EmptyCart,
   setServiceBooking,
   setAddProducts,
+  setServices,
   Order
 } = CommonSlice.actions;
 
