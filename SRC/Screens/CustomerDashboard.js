@@ -691,9 +691,6 @@ const CustomerDashboard = () => {
             alignItems: 'center',
 
             flexDirection: 'row',
-            // backgroundColor:'purple',
-            // marginBottom: moderateScale(60, 0.3),
-            // justifyContent: 'space-between',
           }}
           horizontal
           showsHorizontalScrollIndicator={false}
