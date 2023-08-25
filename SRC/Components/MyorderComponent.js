@@ -8,7 +8,7 @@ import Color from '../Assets/Utilities/Color';
 import {useNavigation} from '@react-navigation/native';
 
 const MyOrderCard = ({item , type}) => {
-  console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item)
+  // console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item)
   
   const navigation = useNavigation();
 

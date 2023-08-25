@@ -23,10 +23,11 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 const HomeScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const navigation = useNavigation();
+
 
 
   
@@ -37,12 +38,12 @@ const HomeScreen = () => {
   // console.log("🚀 ~ file: HomeScreen.js:30 ~ HomeScreen ~ totalUser:", totalUser , ActiveUser , DeactiveUser)
 
   const isFocused = useIsFocused();
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
+  // console.log(
+  //   '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
+  //   isFocused,
+  // );
 
-  const dummyArray1 = ['Name', 'Contact', 'Role', 'Status'];
+  const dummyArray1 = ['Name', 'Email', 'Role', 'Status'];
 
   const getUser = async () => {
     const url = 'auth/user';
@@ -68,7 +69,7 @@ const HomeScreen = () => {
       'hardwareBackPress',
       () => {
         // if (token != null) {
-          console.log('data here 1')
+          // console.log('data here 1')
 
           BackHandler.exitApp();
         // } else {
@@ -211,7 +212,7 @@ const Chuncks = ({amount, title, iconName}) => {
 const styles = ScaledSheet.create({
   container: {
     width: windowWidth * 0.3,
-    height: windowHeight * 0.16,
+    // height: windowHeight * 0.16,
     paddingVertical: moderateScale(10, 0.6),
     borderRadius: moderateScale(15, 0.6),
     alignItems: 'center',

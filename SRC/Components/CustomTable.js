@@ -1,5 +1,12 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View,ActivityIndicator} from 'react-native';
-import React,{useState} from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 // import {windowHeight, windowWidth} from '../Assets/Utilities/Utils';
 import CustomText from './CustomText';
@@ -9,8 +16,8 @@ import numeral from 'numeral';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomImage from './CustomImage';
 import CustomButton from './CustomButton';
-import { Post } from '../Axios/AxiosInterceptorFunction';
-import { useSelector } from 'react-redux';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import {useSelector} from 'react-redux';
 import SearchbarComponent from './SearchbarComponent';
 
 const CustomTable = ({
@@ -20,166 +27,152 @@ const CustomTable = ({
   headingStyle,
   dataStyle,
   onPress,
-  setData ,
+  setData,
 }) => {
   const [newData, setNewData] = useState(data);
   const [loading, setLoading] = useState(false);
-  const token = useSelector(state=>state.authReducer.token)
+  const token = useSelector(state => state.authReducer.token);
+  const RecordPerPage = 8;
 
-  const actionPreform = async(item , index )=>{
-    const url = 'auth/user/update'
-    const statusToBe = item?.status == 'active' ? 'inactive' : 'active'
-    const body ={ 
-      id : item?.id,
-      status : statusToBe
-    }
-  // console.log("🚀 ~ file: CustomTable.js:32 ~ actionPreform ~ body:", body  ,index)
-    setLoading(true)
-    const response = await Post(url , body , apiHeader(token))
-    setLoading(false)
-    if(response?.data?.success){
-      console.log('response' , response?.data)
-      setData((prev)=>[...prev],(data[index].status = statusToBe))
-    }
-
-
-  }
-
-  console.log("OSAMA ==>>>>",data)
   
+
+  const actionPreform = async (item, index) => {
+    const url = 'auth/user/update';
+    const statusToBe = item?.status == 'active' ? 'inactive' : 'active';
+    const body = {
+      id: item?.id,
+      status: statusToBe,
+    };
+    // console.log("🚀 ~ file: CustomTable.js:32 ~ actionPreform ~ body:", body  ,index)
+    setLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setLoading(false);
+    if (response?.data?.success) {
+      // console.log('response', response?.data);
+      setData(prev => [...prev], (data[index].status = statusToBe));
+    }
+  };
+
+  // console.log('OSAMA ==>>>>', data);
+
   return (
-     <>
-        <SearchbarComponent
-          setNewData={setNewData}
-          placeHolderColor={'#000'}
-          placeholderName={'Search User Name'}
-          array={data}
-          arrayItem={'User'}
-          fontSize={13}
-          SearchStyle={{width:windowWidth*0.95}}
-        /> 
-        
-    <View style={[styles.container, customStyle && customStyle]}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        nestedScrollEnabled={true}
-        scrollEnabled={true}
-        contentContainerStyle={{
-          paddingBottom: moderateScale(20, 0.3),
-        }}
-        data={newData}
-        renderItem={(item, index1) => {
-          // console.log("🚀 ~ file: CustomTable.js:101 ~ index1:", item , index1)
-            const data1 = {name:item?.item?.name, Contact:item?.item?.phone, role: item?.item?.role, status: item?.item?.status}
-          return (
-            <TouchableOpacity
-            key={index1}
-              activeOpacity={0.9}
-              onPress={onPress && onPress}
-              style={styles.row}
-            >
-              {Object.keys(data1).map((x, index) => {
-                return(
-
-                x == 'status' ?
-                
-                <CustomButton
-                isBold
-                text={ 
-              
-                  data1[x] == 'active' ? 'Deactiveate' : 'Activate'}
-                textColor={Color.white}
-                width={windowWidth * 0.18}
-                marginTop={moderateScale(10,.3)}
-                marginBottom={moderateScale(10,.3)}
-                height={windowHeight * 0.04}
-                bgColor={data1[x] == 'active' ? Color.red : 'green'}
-                fontSize={moderateScale(9,.6)}
-                borderRadius={moderateScale(5, 0.3)}
-                marginRight={moderateScale(5, 0.3)}
-                onPress={()=>{
-                  console.log(item?.id)
-                  actionPreform(item?.item ,item?.index )
-                }}
-                disabled={loading}
-
-              />
-                
-                :
-              
-
-                  <CustomText
-                    numberOfLines={2}
-                    style={[styles.text, dataStyle && dataStyle]}
-                  >
-                    {typeof data[x] == 'number'
-                      ? numeral(data1[x]).format('$0,0a')
-                      : data1[x]  }
-                  </CustomText>
-                )
-              }
-              )}
-            </TouchableOpacity>
-          );
-        }}
-   
-        ListHeaderComponent={() => {
-          return (
-            <View style={styles.header}>
-              {tableFields.map((x, index) => {
-                return (
-                  <CustomText
-                    numberOfLines={2}
-                    style={[
-                      styles.text,
-                      {
-                        color: Color.white,
-                        fontSize: moderateScale(15, 0.3),
-                        fontWeight: '600',
-                      },
-                      headingStyle && headingStyle,
-                    ]}
-                    isBold
-                  >
-                    {x}
-                  </CustomText>
-                );
-              })}
-            </View>
-          );
-        }}
-        ListEmptyComponent={()=>{
-          return(
-
-            <View style={{
-              width : windowWidth ,
-              height : windowHeight * 0.4 ,
-              justifyContent : 'center',
-              alignItems : 'center',
-              // backgroundColor : 'green'
-            }}>
-               {/* <CustomImage
-              resizeMode={'contain'}
-              source={require('../Assets/Images/notfound.png')}
-              style={{
-                width: windowWidth * 0.5,
-                height: windowHeight * 0.2,
-                // backgroundColor : 'red',
-                alignSelf: 'center',
-              }}
-              /> */}
-              <CustomText style={{
-                fontSize : moderateScale(16,0.3),
-                color : Color.black
-                
-                // backgroundColor : 'yellow'
-            }}>No users yet</CustomText>
-          </View>
-            )
-        }}
-
+    <>
+      <SearchbarComponent
+        setNewData={setNewData}
+        placeHolderColor={'#000'}
+        placeholderName={'Search User Name'}
+        array={data}
+        arrayItem={'User'}
+        fontSize={13}
+        SearchStyle={{width: windowWidth * 0.95}}
       />
-    </View>
+
+      <View style={[styles.container, customStyle && customStyle]}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
+          scrollEnabled={true}
+          contentContainerStyle={{
+            paddingBottom: moderateScale(20, 0.3),
+          }}
+          data={newData}
+          renderItem={(item, index1) => {
+            // console.log("🚀 ~ file: CustomTable.js:101 ~ index1:", item , index1)
+            const data1 = {
+              name: item?.item?.name,
+              email: item?.item?.email,
+              role: item?.item?.role,
+              status: item?.item?.status,
+            };
+            return (
+              <TouchableOpacity
+                key={index1}
+                activeOpacity={0.9}
+                onPress={onPress && onPress}
+                style={styles.row}>
+                {Object.keys(data1).map((x, index) => {
+                  return x == 'status' ? (
+                    <CustomButton
+                      isBold
+                      text={data1[x] == 'active' ? 'Deactivate' : 'Activate'}
+                      textColor={Color.white}
+                      width={windowWidth * 0.18}
+                      marginTop={moderateScale(10, 0.3)}
+                      marginBottom={moderateScale(10, 0.3)}
+                      height={windowHeight * 0.04}
+                      bgColor={data1[x] == 'active' ? Color.red : 'green'}
+                      fontSize={moderateScale(9, 0.6)}
+                      borderRadius={moderateScale(5, 0.3)}
+                      marginRight={moderateScale(5, 0.3)}
+                      onPress={() => {
+                        console.log(item?.id);
+                        actionPreform(item?.item, item?.index);
+                      }}
+                      disabled={loading}
+                    />
+                  ) : (
+                    <CustomText
+                      numberOfLines={2}
+                      style={[styles.text, dataStyle && dataStyle]}>
+                      {typeof data[x] == 'number'
+                        ? numeral(data1[x]).format('$0,0a')
+                        : data1[x]}
+                    </CustomText>
+                  );
+                })}
+              </TouchableOpacity>
+            );
+          }}
+          ListHeaderComponent={() => {
+            return (
+              <View style={styles.header}>
+                {tableFields.map((x, index) => {
+                  return (
+                    <CustomText
+                      numberOfLines={2}
+                      style={[
+                        styles.text,
+                        {
+                          color: Color.white,
+                          fontSize: moderateScale(15, 0.3),
+                          fontWeight: '600',
+                        },
+                        headingStyle && headingStyle,
+                      ]}
+                      isBold>
+                      {x}
+                    </CustomText>
+                  );
+                })}
+              </View>
+            );
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <View
+                style={{
+                  width: windowWidth,
+                  height: windowHeight * 0.4,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor : 'green'
+                }}>
+               
+                <CustomText
+                  style={{
+                    fontSize: moderateScale(16, 0.3),
+                    color: Color.black,
+
+                    // backgroundColor : 'yellow'
+                  }}>
+                  No users yet
+                </CustomText>
+              </View>
+            );
+          }}
+        />
+      </View>
+    
     </>
   );
 };

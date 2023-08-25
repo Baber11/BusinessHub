@@ -20,10 +20,10 @@ const OrderDetailScreen = props => {
   //   flatListRef,
   // );
   const onViewableItemsChanged = ({viewableItems}) => {
-    console.log(
-      '🚀 ~ file: Walkthrough.js:62 ~ Walkthrough ~ viewableItems',
-      viewableItems,
-    );
+    // console.log(
+    //   '🚀 ~ file: Walkthrough.js:62 ~ Walkthrough ~ viewableItems',
+    //   viewableItems,
+    // );
     setIndex(viewableItems[0]?.index);
   };
 
@@ -35,10 +35,10 @@ const OrderDetailScreen = props => {
   const viewabilityConfigCallbackPairs = useRef([{onViewableItemsChanged}]);
 
   const scrollToIndex = index => {
-    console.log(
-      '🚀 ~ file: BottomSheetSelect.js:50 ~ scrollToIndex ~ index:',
-      index,
-    );
+    // console.log(
+    //   '🚀 ~ file: BottomSheetSelect.js:50 ~ scrollToIndex ~ index:',
+    //   index,
+    // );
     flatListRef.current.scrollToIndex({animated: true, index});
   };
 
@@ -73,7 +73,7 @@ const OrderDetailScreen = props => {
   const item = props.route.params.item;
   const type = props.route.params.type;
 
-  console.log('Item Data======>>>>>>>>>>>>>>>>>>', item?.date);
+  // console.log('Item Data======>>>>>>>>>>>>>>>>>>', item?.date);
   return (
     <ImageBackground
       source={require('../Assets/Images/imageBackground.png')}
@@ -99,7 +99,7 @@ const OrderDetailScreen = props => {
           flexGrow: 0,
         }}
         renderItem={({item, index}) => {
-          console.log('Item images', item);
+          // console.log('Item images', item);
           return (
             <View
               style={{
@@ -134,7 +134,7 @@ const OrderDetailScreen = props => {
                   backgroundColor: 'transparent',
                 }}>
                 <CustomImage
-                  source={item?.images ? item?.images[0] : item?.img}
+                  source={{uri:item?.images ? item?.images[0] : item?.img}}
                   style={{
                     height: '100%',
                     width: '100%',
@@ -361,7 +361,7 @@ const OrderDetailScreen = props => {
             // bottom: moderateScale(30, 0.6),
           }}>
           {item?.order.map((x, i) => {
-            console.log('index, i ', index, i);
+            // console.log('index, i ', index, i);
             return (
               <View
                 style={{

@@ -29,10 +29,10 @@ import navigationService from '../navigationService';
 
 const AddServices = props => {
   const item = props?.route?.params?.item;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [images, setImages] = useState(['plus']);
-  console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
+  // console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [charges, setCharges] = useState();
@@ -71,13 +71,13 @@ const AddServices = props => {
           }
         }
         else if(body[key] == '') {
-          console.log(key);
+          // console.log(key);
           return Platform.OS == 'android'
             ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
             : Alert.alert(`${key} is required`);
         }
       }
-      console.log('🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:', body);
+      // console.log('🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:', body);
       navigation.goBack();
     }
   };
@@ -157,10 +157,10 @@ const AddServices = props => {
                   }
                 }
                 renderItem={({item, index}) => {
-                  console.log(
-                    '🚀 ~ file: AddProduct.js:133 ~ AddProduct ~ item:',
-                    item,
-                  );
+                  // console.log(
+                  //   '🚀 ~ file: AddProduct.js:133 ~ AddProduct ~ item:',
+                  //   item,
+                  // );
                   return (
                     <>
                       {index == 0 ? (

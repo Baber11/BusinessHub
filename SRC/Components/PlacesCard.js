@@ -7,7 +7,7 @@ import CustomImage from './CustomImage'
 import { moderateScale } from 'react-native-size-matters'
 
 const PlacesCard = ({item}) => {
-  console.log("🚀 ~ file: PlacesCard.js:10 ~ PlacesCard ~ item:", item)
+  // console.log("🚀 ~ file: PlacesCard.js:10 ~ PlacesCard ~ item:", item)
   return (
     <View
     style={styles.container}>

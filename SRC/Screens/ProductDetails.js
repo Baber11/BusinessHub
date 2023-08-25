@@ -29,12 +29,12 @@ import moment from 'moment';
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
   // const seller = props?.route?.params?.seller;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item,seller);
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log(
-    '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
-    cartData,
-  );
+  // console.log(
+  //   '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
+  //   cartData,
+  // );
   const user = useSelector(state => state.commonReducer.userData);
   const cartitem = cartData?.find((x, index) => x?.id == item?.id);
   // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
@@ -43,37 +43,25 @@ const ProductDetails = props => {
   const [Selectedcolor, SetSelectedColor] = useState(
     cartitem ? cartitem?.selectedColor : '',
   );
-  console.log(
-    '🚀 ~ file: DressesDetail.js:30 ~ DressesDetail ~ Selectedcolor:',
-    Selectedcolor,
-  );
+
   const [Selectedsize, setSelectedSize] = useState(
     cartitem ? cartitem?.selectedSize : '',
   );
-  console.log(
-    '🚀 ~ file: DressesDetail.js:35 ~ DressesDetail ~ Selectedsize:',
-    Selectedsize,
-  );
-  // const [like, setLike] = useState(cartitem ? cartitem.like : item?.like);
-  // console.log('🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ liked:', like);
+ 
+ 
 
   const [index, setIndex] = useState(1);
   const [quantity, setQuantity] = useState(
-    cartitem ? cartitem?.qty : item?.qty,
+    cartitem ? cartitem?.qty : item?.qty ? item?.qty :1,
   );
   const [cotton, setcotton] = useState(
-    cartitem ? cartitem?.cotton : item?.cotton,
+    cartitem ? cartitem?.cotton : item?.cotton ? item?.cotton : 1,
   );
   const [comments, setComments] = useState(
     item?.comments ? item?.comments : [],
   );
   const [yourComment, setYourComment] = useState('');
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:',
-  //   cartData,
-  // );
-
-  // const [image1, setimage1] = useState(second)
+  
 
   const addedItem = item => {
     dispatch(AddToCart(item));
@@ -87,9 +75,7 @@ const ProductDetails = props => {
     require('../Assets/Images/Mask.png'),
   ];
 
-  // console.log('', cartData);
-
-  // console.log("🚀 ~ file: DressesDetail.js:58 ~ DressesDetail ~ cartitem:", cartitem)
+ 
   const [finalItem, setFinalItem] = useState(
     cartitem != undefined ? cartitem : item,
   );
@@ -98,7 +84,7 @@ const ProductDetails = props => {
     colors: item?.colors,
     cotton: cotton,
     id: item?.id,
-    img: item?.img,
+    images: item?.images,
     // like: like,
     price: item?.price,
     qty: quantity,
@@ -135,7 +121,7 @@ const ProductDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index - 1]}
+                    source={{uri:item?.images[index - 1]}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -172,9 +158,9 @@ const ProductDetails = props => {
               }}>
               <CustomImage
                 source={
-                  item?.images.length == 1
+                 {uri: item?.images.length == 1
                     ? item?.images[index - 1]
-                    : item?.images[index]
+                    : item?.images[index]}
                 }
                 style={{
                   height: '100%',
@@ -213,7 +199,7 @@ const ProductDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index + 1]}
+                    source={{uri:item?.images[index + 1]}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -294,9 +280,9 @@ const ProductDetails = props => {
               style={{
                 color: Color.themeColor,
                 fontSize: 24,
-                width: windowWidth * 0.24,
+                width: windowWidth * 0.23,
               }}>
-              ${finalItem?.price}.00
+              ${finalItem?.price}.0
             </CustomText>
 
             <View style={styles.conterContainer}>
@@ -364,7 +350,7 @@ const ProductDetails = props => {
                     SetSelectedColor(color);
                     dispatch(setColor({id: item?.id, colors: color}));
                   }}
-                  style={[styles.colorContainer, {backgroundColor: color}]}>
+                  style={[styles.colorContainer, {backgroundColor: color,marginHorizontal:moderateScale(5,.3),}]}>
                   {Selectedcolor == color && (
                     <Icon
                       name={'check'}
@@ -407,6 +393,7 @@ const ProductDetails = props => {
                     {
                       backgroundColor:
                         Selectedsize == size ? Color.themeColor : '#F4F5F6',
+                        marginHorizontal:moderateScale(5,.3),
                     },
                   ]}>
                   <CustomText
@@ -622,7 +609,9 @@ const ProductDetails = props => {
         <CustomButton
           disabled={cartitem?.qty > 0 ? true : false}
           isBold
-          onPress={() => addedItem(body)}
+          onPress={() => {
+            console.log('Body========>>>>>', body)
+            addedItem(body)}}
           text={cartitem?.qty > 0 ? 'Already Added':'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
@@ -673,7 +662,7 @@ const styles = StyleSheet.create({
     borderRadius: (windowWidth * 0.1) / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: moderateScale(15, 0.3),
+    // marginLeft: moderateScale(15, 0.3),
   },
   icon: {
     width: windowWidth * 0.06,
@@ -716,9 +705,10 @@ const styles = StyleSheet.create({
 
   ColorLine1: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    paddingHorizontal:moderateScale(10,.6),
+    // justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: windowWidth * 0.7,
+    // width: windowWidth * 0.7,
     marginTop: moderateScale(15, 0.3),
     marginBottom: moderateScale(15, 0.3),
   },

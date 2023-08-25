@@ -28,16 +28,16 @@ const SellerProduct = (props) => {
 
   const [item, setItem] = useState(props?.route?.params?.item ? props?.route?.params?.item : {} )
 
-  console.log("🚀 ~ file: SellerProducts.js:28 ~ item:", item)
+  // console.log("🚀 ~ file: SellerProducts.js:28 ~ item:", item)
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
 
   const sellerProducts = useSelector(state => state.commonReducer.sellerProducts);
   console.log("🚀 ~ file: SellerProducts.js:37 ~ sellerProducts:", sellerProducts)
 
   const [products, setProducts] = useState(sellerProducts.filter(item=>{
-    return(item?.userId == userData.id)
+    return(item?.sellerId == userData?.id)
   }))
   console.log("🚀 ~ file: SellerProducts.js:42 ~ products:", products)
 
@@ -46,10 +46,10 @@ const SellerProduct = (props) => {
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
+  // console.log(
+  //   '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
+  //   isFocused,
+  // );
 
   const Services = [
     {
@@ -188,6 +188,19 @@ const SellerProduct = (props) => {
   
     
   // }, [isFocused])
+
+useEffect(() => {
+  setProducts(sellerProducts.filter(item=>{
+    return(item?.sellerId == userData?.id)
+  }))
+
+
+}, [isFocused])
+
+
+
+
+
   
 
   return (
@@ -361,7 +374,7 @@ const SellerProduct = (props) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={products[0]?.products}
+          data={products}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),

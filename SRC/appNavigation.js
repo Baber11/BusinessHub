@@ -32,7 +32,6 @@ import Bookings from './Screens/Bookings';
 import Myorders from './Screens/Myorders';
 import OrderDetailScreen from './Screens/OrderDetailScreen';
 
-
 const AppNavigator = () => {
   // const isLogin = false;
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
@@ -62,12 +61,12 @@ const AppNavigator = () => {
         : role == 'customer'
         ? 'HomeScreenOther'
         : 'HomeScreenOther';
-    const firstScreen =
-      token != null
-        ? 'MyDrawer'
-        : !walkThrough && token != null
-        ? 'WalkThroughScreen'
-        : 'GetStarted';
+    const firstScreen = 
+      !walkThrough
+      ? 'WalkThroughScreen'
+      : token == null
+      ? 'GetStarted'
+      :'MyDrawer';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
@@ -75,9 +74,7 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
-          {/* <RootNav.Screen name="SellerProduct" component={SellerProduct} /> */}
           <RootNav.Screen name="AddProduct" component={AddProduct} />
-          {/* <RootNav.Screen name="HomeScreen" component={HomeScreen} /> */}
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="ProductDetails" component={ProductDetails} />
@@ -87,12 +84,17 @@ const AppNavigator = () => {
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
-          {/* <RootNav.Screen name="ChangePassword" component={ChangePassword} /> */}
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
-          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
-          <RootNav.Screen name="OrderDetailScreen" component={OrderDetailScreen} />
-        
+          <RootNav.Screen
+            name="WalkThroughScreen"
+            component={WalkThroughScreen}
+          />
+          <RootNav.Screen
+            name="OrderDetailScreen"
+            component={OrderDetailScreen}
+          />
+
           {/* <RootNav.Screen name="HomeScreenOther" component={HomeScreenOther} /> */}
           {/* <RootNav.Screen name="CustomerDashboard" component={CustomerDashboard} /> */}
         </RootNav.Navigator>
@@ -120,7 +122,7 @@ export const MyDrawer = () => {
       screenOptions={{
         headerShown: false,
       }}>
-        <DrawerNavigation.Screen
+      <DrawerNavigation.Screen
         name="CustomerDashboard"
         component={CustomerDashboard}
       />
@@ -133,22 +135,13 @@ export const MyDrawer = () => {
         name="ChangePassword"
         component={ChangePassword}
       />
-        <DrawerNavigation.Screen
-        name="Myorders"
-        component={Myorders}
-       
-      />
-      
+      <DrawerNavigation.Screen name="Myorders" component={Myorders} />
 
       <DrawerNavigation.Screen
         name="AdminDashboard"
         component={AdminDashboard}
       />
       <DrawerNavigation.Screen name="SellerProduct" component={SellerProduct} />
-
-      
-      
-       
     </DrawerNavigation.Navigator>
   );
 };

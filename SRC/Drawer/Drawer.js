@@ -24,10 +24,10 @@ const Drawer = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.commonReducer.userData);
   const token = useSelector(state => state.authReducer.token);
-  console.log('🚀 ~ file: Drawer.js:19 ~ Drawer ~ token:', token);
+  // console.log('🚀 ~ file: Drawer.js:19 ~ Drawer ~ token:', token);
 
   const role = useSelector(state => state.authReducer.role);
-  console.log('🚀 ~ file: Drawer.js:29 ~ Drawer ~ role:', role);
+  // console.log('🚀 ~ file: Drawer.js:29 ~ Drawer ~ role:', role);
 
   const adminData = [
     {
