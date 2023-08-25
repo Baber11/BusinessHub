@@ -25,7 +25,7 @@ const CartScreen = ({route}) => {
   const navigation = useNavigation()
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log('Osama the data is ========>> >> ', cartData);
+  // console.log('the data is ========>> >> ', cartData);
   const [finalAmount, setFinalAmount] = useState(0);
   // const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;

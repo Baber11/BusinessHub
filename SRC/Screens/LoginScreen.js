@@ -63,11 +63,11 @@ const LoginScreen = (props) => {
     const response = await Post(url, body, apiHeader());
     setIsLoading(false);
 
-    console.log('LoginResponse============>>>>>>>', response?.data);
+    // console.log('LoginResponse============>>>>>>>', response?.data);
     if (response?.data?.success) {
       dispatch(setUserData(response?.data?.user_info));
-      dispatch(setUserToken({token: response?.data?.token}));
       dispatch(SetUserRole(response?.data?.user_info?.role))
+      dispatch(setUserToken({token: response?.data?.token}));
       
 
     }

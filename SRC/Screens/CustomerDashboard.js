@@ -33,7 +33,8 @@ import SearchbarComponent from '../Components/SearchbarComponent';
 const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  const sellerProducts = useSelector(state=> state.commonReducer.sellerProducts)
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -643,7 +644,7 @@ const CustomerDashboard = () => {
     },
   ];
   const [newData, setNewData] = useState(newArrivals);
-  console.log('🚀 ~ file: CustomerDashboard.js:646 ~ newData:', newData);
+  // console.log('🚀 ~ file: CustomerDashboard.js:646 ~ newData:', newData);
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -697,10 +698,10 @@ const CustomerDashboard = () => {
           // style={styles.categoryContainer}
         >
           {Services.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
+            // console.log(
+            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
+            //   item,
+            // );
             return (
               <>
                 <TouchableOpacity
@@ -790,7 +791,7 @@ const CustomerDashboard = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={newArrivals}
+          data={sellerProducts}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),

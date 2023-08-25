@@ -25,7 +25,7 @@ const SearchbarComponent = ({
   alignSelf,
   SearchStyle,
 }) => {
-  console.log("🚀 ~ file: SearchbarComponent.js:28 ~ array:", array)
+  // console.log("🚀 ~ file: SearchbarComponent.js:28 ~ array:", array)
   // const [isModalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState('');
   const orderData = useSelector(state => state.commonReducer.order);
@@ -37,16 +37,16 @@ const SearchbarComponent = ({
   //   setModalVisible(!isModalVisible);
 
   const OnSearch = text => {
-    console.log("🚀 ~ file: SearchbarComponent.js:40 ~ OnSearch ~ text:", text)
+    // console.log("🚀 ~ file: SearchbarComponent.js:40 ~ OnSearch ~ text:", text)
     let tempdata = array.filter(item => {
-      console.log("🚀 ~ file: SearchbarComponent.js:42 ~ tempdata ~ item:", item)
+      // console.log("🚀 ~ file: SearchbarComponent.js:42 ~ tempdata ~ item:", item)
       // const onMap = arrayItem == 'order' ? item?.orderId : item?.Title
       return (arrayItem == 'order'
         ? item?.orderId.toString().indexOf(text) > -1
         : arrayItem == 'Product' ? item?.Title?.toLowerCase().indexOf(text?.toLowerCase()) > -1
         : item?.name?.toLowerCase().indexOf(text?.toLowerCase()) > -1)
     });
-    console.log('TempData======>>>',tempdata);
+    // console.log('TempData======>>>',tempdata);
 
     setNewData(tempdata);
   };
@@ -62,7 +62,7 @@ const SearchbarComponent = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: moderateScale(10, 0.6),
+        // paddingHorizontal: moderateScale(10, 0.6),
       }}>
       <View
         style={[
@@ -71,7 +71,7 @@ const SearchbarComponent = ({
           borderWidth: 1,
           borderColor: Color.veryLightGray,
           borderRadius: moderateScale(20, 0.3),
-          marginTop: moderateScale(20, 0.3),
+          // marginTop: moderateScale(20, 0.3),
           // marginLeft:moderateScale(20,0.3),
           flexDirection: 'row',
           alignItems: 'center',

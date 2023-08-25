@@ -28,20 +28,20 @@ import { setAddProducts } from '../Store/slices/common';
 
 const AddProduct = props => {
   const item = props?.route?.params?.item;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
-  console.log("🚀 ~ file: AddProduct.js:33 ~ AddProduct ~ user:", user)
+  // console.log("🚀 ~ file: AddProduct.js:33 ~ AddProduct ~ user:", user)
   const [index, setIndex] = useState(1);
   const [images, setImages] = useState(['plus']);
-  console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
+  // console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
   const [title, setTitle] = useState('');
   const [subTitle, setSubTitle] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [colors, setColors] = useState([]);
-  console.log('🚀 ~ file: AddProduct.js:41 ~ AddProduct ~ colors:', colors);
+  // console.log('🚀 ~ file: AddProduct.js:41 ~ AddProduct ~ colors:', colors);
   const [sizes, setSizes] = useState([]);
-  console.log('🚀 ~ file: AddProduct.js:44 ~ AddProduct ~ sizes:', sizes);
+  // console.log('🚀 ~ file: AddProduct.js:44 ~ AddProduct ~ sizes:', sizes);
   const [cotton, setCotton] = useState([]);
   const [imagePickerModal, setImagePickerModal] = useState(false);
   const [image, setImage] = useState({});
@@ -64,7 +64,7 @@ const navigation = useNavigation()
     };
    
     for (let key in body) {
-      console.log('Key===========', key);
+      // console.log('Key===========', key);
       if(key == 'images'){
         if (body[key].length == 0) {
           // console.log('Image length============>>>>>>>>',body[key].length)
@@ -84,7 +84,7 @@ const navigation = useNavigation()
         }
       }
       else if(key == 'size'){
-        console.log('seze============>>>',body[key].length)
+        // console.log('seze============>>>',body[key].length)
         if(!body[key].length){
           return Platform.OS == 'android'
             ? ToastAndroid.show('Add atleast one size', ToastAndroid.SHORT)
@@ -104,9 +104,9 @@ const navigation = useNavigation()
           : Alert.alert('All Fields are required');
       }
     }
-    console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', body);
+    // console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', body);
 
-    dispatch(setAddProducts({userId: user?.id, item:{...body}}))
+    dispatch(setAddProducts({userId: user?.id, item:{qty: 1,selectedColor:'', selectedSize:'',...body}}))
     navigation.goBack()
 
     
@@ -203,10 +203,10 @@ const navigation = useNavigation()
                   }
                 }
                 renderItem={({item, index}) => {
-                  console.log(
-                    '🚀 ~ file: AddProduct.js:133 ~ AddProduct ~ item:',
-                    item,
-                  );
+                  // console.log(
+                  //   '🚀 ~ file: AddProduct.js:133 ~ AddProduct ~ item:',
+                  //   item,
+                  // );
                   return (
                     <>
                       {index == 0 ? (

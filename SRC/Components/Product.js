@@ -13,16 +13,17 @@ import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
 
 const Product = ({item, seller}) => {
-  console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
+  // console.log("🚀 ~ file: Product.js:16 ~ Product ~ item:", item)
+  // console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
   
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
 
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log(
-    '🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:',
-    cartData,
-  );
+  // console.log(
+  //   '🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:',
+  //   cartData,
+  // );
 
   const addedItem = item => {
     // console.log('add DATA===>', cartData);
@@ -35,6 +36,7 @@ const Product = ({item, seller}) => {
     dispatch(RemoveToCart(item));
   };
   const tempitem = cartData?.find((x, index) => x?.id == item?.id);
+  // console.log("🚀 ~ file: Product.js:39 ~ Product ~ tempitem:", tempitem)
   // console.log('QTY+++', tempitem);
   return (
     <View key={item?.id}>
@@ -46,7 +48,6 @@ const Product = ({item, seller}) => {
         activeOpacity={0.8}
         onPress={() => {
           if(!seller){
-
             if (!tempitem) {
               addedItem(item);
             }
@@ -132,7 +133,7 @@ const Product = ({item, seller}) => {
             color: '#464342',
             marginTop: moderateScale(10, 0.3),
           }}>
-          {item.Title}
+          {item?.Title}
         </CustomText>
 
         <CustomText
@@ -142,7 +143,7 @@ const Product = ({item, seller}) => {
             height: windowHeight * 0.03,
             color: '#a2a2a2',
           }}>
-          {item.subTitle}
+          {item?.subTitle}
         </CustomText>
 
         <CustomText
@@ -151,7 +152,7 @@ const Product = ({item, seller}) => {
             width: windowWidth * 0.35,
             color: Color.themeColor,
           }}>
-          $ {item.price}
+          $ {item?.price}
         </CustomText>
 
         <CustomText
@@ -176,7 +177,7 @@ const Product = ({item, seller}) => {
         </CustomText>
       </TouchableOpacity>
 
-      {tempitem != undefined && tempitem?.qty > 0 && (
+      {tempitem != undefined && (
         <CustomButton
           isBold
           onPress={() => removeItem(item)}

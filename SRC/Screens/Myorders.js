@@ -17,15 +17,15 @@ const Myorders = () => {
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
   const orderData = useSelector(state => state.commonReducer.order);
-  console.log('🚀 ~ file: Myorders.js:17 ~ Myorders ~ orderData:', orderData);
+  // console.log('🚀 ~ file: Myorders.js:17 ~ Myorders ~ orderData:', orderData);
   const bookings = useSelector(state => state.commonReducer.bookings);
-  console.log('🚀 ~ file: Myorders.js:18 ~ Myorders ~ bookings:', bookings);
+  // console.log('🚀 ~ file: Myorders.js:18 ~ Myorders ~ bookings:', bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
-  // const [newData, setnewData] = useState()
-  console.log(
-    '🚀 ~ file: Myorders.js:19 ~ Myorders ~ selectedTab:',
-    selectedTab,
-  );
+  const [newData, setNewData] = useState(selectedTab == 'Products' ? orderData : bookings)
+  // console.log(
+  //   '🚀 ~ file: Myorders.js:19 ~ Myorders ~ selectedTab:',
+  //   selectedTab,
+  // );
 
   const Data1 = [
     {
@@ -82,17 +82,17 @@ const Myorders = () => {
           backgroundColor: Color.themeColor2,
           alignItems: 'center',
         }}>
-        {/* <SearchbarComponent
+        <SearchbarComponent
           setNewData={setNewData}
           placeHolderColor={'#D3D3D3'}
           placeholderName={'Enter Order Id'}
           array={orderData}
           arrayItem={'order'}
-        /> */}
+        />
 
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={selectedTab == 'Products' ? orderData : bookings}
+        data={newData}
         contentContainerStyle={{
           paddingBottom: moderateScale(20, 0.3),
           width:windowWidth,
@@ -103,7 +103,7 @@ const Myorders = () => {
           backgroundColor: 'white',
         }}
         renderItem={({item, index}) => {
-          console.log('DATA34', item);
+          // console.log('DATA34', item);
           return <MyOrderCard item={item} type = {selectedTab != 'Products'} />;
         }}
         ListHeaderComponent={() => {

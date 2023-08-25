@@ -25,16 +25,16 @@ import navigationService from '../navigationService';
 const Bookings = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
+  // console.log(
+  //   '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
+  //   isFocused,
+  // );
   const serviceBookings = [
     {
       id: 1,
@@ -222,444 +222,7 @@ const Bookings = () => {
     },
   ];
 
-  const Services = [
-    {
-      id: 1,
-      Title: 'Stitching',
-      subTitle: 'stiching',
-      price: 200,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      image: require('../Assets/Images/dummyman4.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      onPress: () => {
-        console.log('here');
-        navigationService.navigate('Dresses');
-      },
-    },
-    {
-      id: 2,
-      subTitle: 'stiching',
-      Title: 'Painting',
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      price: 300,
-      image: require('../Assets/Images/dummyUser2.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      id: 3,
-      subTitle: 'stiching',
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      Title: 'jeans',
-      price: 600,
-      image: require('../Assets/Images/dummyman1.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      id: 4,
-      subTitle: 'stiching',
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      Title: 'shoes',
-      price: 400,
-      image: require('../Assets/Images/dummyUser1.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      id: 5,
-      subTitle: 'stiching',
-      Title: 'shoes',
-      price: 450,
-      image: require('../Assets/Images/dummyman4.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-
-      onPress: () => {
-        console.log('here');
-      },
-    },
-  ];
-
-  const newArrivals = [
-    {
-      id: 1,
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      price: 14.0,
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 2,
-      Title: 'Blue Dress',
-      subTitle: 'Slim Fit',
-      price: 15.0,
-      img: require('../Assets/Images/Image.png'),
-      like: false,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 3,
-      Title: 'Elegant Dress',
-      subTitle: 'Slim Fit',
-      price: 4.5,
-      img: require('../Assets/Images/image3.png'),
-      like: true,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 4,
-      Title: 'White Dress',
-      subTitle: 'Oversize',
-      price: 6.9,
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask3.png'),
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 5,
-      Title: 'Red Dress',
-      subTitle: 'Oversize',
-      price: 8.94,
-      img: require('../Assets/Images/Image.png'),
-      like: false,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [require('../Assets/Images/Mask2.png')],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 6,
-      Title: 'Black Dress',
-      subTitle: 'Oversize',
-      price: 18.5,
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-  ];
+  
 
   return (
     <>
@@ -700,10 +263,10 @@ const Bookings = () => {
           // style={styles.categoryContainer}
         >
           {serviceBookings.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
+            // console.log(
+            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
+            //   item,
+            // );
             return (
               <>
                 <ServiceCard item={item} />
@@ -731,10 +294,10 @@ const Bookings = () => {
             marginTop: moderateScale(5, 0.3),
           }}
           renderItem={({item, index}) => {
-            console.log(
-              '🚀 ~ file: Bookings.js:719 ~ {serviceBookings.map ~ item:',
-              item,
-            );
+            // console.log(
+            //   '🚀 ~ file: Bookings.js:719 ~ {serviceBookings.map ~ item:',
+            //   item,
+            // );
 
             return <ProductCard item={item} />;
           }}
@@ -895,7 +458,7 @@ const ServiceCard = ({item}) => {
 };
 
 const ProductCard = ({item}) => {
-  console.log('🚀 ~ file: Bookings.js:878 ~ ProductCard ~ item:', item);
+  // console.log('🚀 ~ file: Bookings.js:878 ~ ProductCard ~ item:', item);
 
   return (
     <View

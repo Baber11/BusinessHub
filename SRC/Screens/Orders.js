@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View,BackHandler} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  BackHandler,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -26,598 +32,54 @@ const Orders = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  const orders = useSelector(state => state.commonReducer.order);
+  // console.log('🚀 ~ file: Orders.js:30 ~ orders:', orders);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedOrder, setSelectedOrder] = useState('');
+  const [myOrder, setMyOrder] = useState([]);
+  console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
   const navigation = useNavigation();
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
+  // console.log(
+  //   '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
+  //   isFocused,
+  // );
+  const oneDayAgo = moment().subtract(1, 'day');
 
-  const latestOrders = [
-    {
-      id: 1,
-      orderId: 3237687,
-      price: 12000,
-      qty: 1,
-      status: 'Processed',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      selectedColor: '#4e86c2',
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      selectedSize: 'S',
-      cotton: 3,
-      totalQty: 18,
-      date:'2023-8-16',
-      images: [
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com'
+  const Orders = () => {
+    orders.map(item =>
+      item.order.map(
+        order =>
+          order?.sellerId == userData?.id && (setMyOrder(prev=>[...prev , order])),
+      ),
+    );
+  };
 
-      },
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 2,
-      date:'2023-8-15',
-      orderId: 12392830,
-      price: 12000,
-      numOfItems: 5,
-      status: 'Shipped',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 3,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: 'M',
-      selectedColor: '#313436',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com'
-        
-      },
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 3,
-      date:'2023-8-12',
+  const twentyFourHoursAgo = moment().subtract(24, 'hours');
 
-      orderId: 1238109238,
-      price: 8000,
-      numOfItems: 3,
-      status: 'Processed',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
+  // const ordersPlacedInPast24Hours = orders.filter(order => {
+  //   const orderDate = moment(order.orderDate);
+  //   return orderDate.isAfter(twentyFourHoursAgo);
+  // }); 
+  // console.log("🚀 ~ file: Orders.js:66 ~ ordersPlacedInPast24Hours ~ ordersPlacedInPast24Hours:", ordersPlacedInPast24Hours)
+ 
 
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 2,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: 'L',
-      selectedColor: '#2c4973',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com'
-        
-      },
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 4,
-      date:'2023-8-9',
-      orderId: 2368263789,
-      price: 9500,
-      numOfItems: 2,
-      status: 'Shipped',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 2,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: 'M',
-      selectedColor: '#1ABFBC',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com',
-      },
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-  ];
-
-  const previousOrders = [
-    {
-      id: 1,
-      orderId: 3237687,
-      price: 1200,
-      date:'2023-8-5',
-      qty: 1,
-      status: 'Delivered',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      selectedColor: '#4e86c2',
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      selectedSize: 'S',
-      cotton: 3,
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com',
-      },
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 2,
-      orderId: 12392830,
-      date:'2023-8-2',
-      price: 12000,
-      numOfItems: 5,
-      status: 'Cancelled',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 3,
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com',
-      },
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: 'M',
-      selectedColor: '#313436',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 3,
-      orderId: 1238109238,
-      price: 8000,
-      numOfItems: 3,
-      status: 'Delivered',
-      Title: 'Oversize Dress',
-      date:'2023-7-27',
-      subTitle: 'Oversize',
-
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 2,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: 'L',
-      selectedColor: '#2c4973',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com',
-      },
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-    {
-      id: 4,
-      orderId: 2368263789,
-      date:'2023-7-24',
-      price: 9500,
-      numOfItems: 2,
-      status: 'Cancelled',
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 2,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '#1ABFBC',
-      selectedColor: 'M',
-      totalQty: 18,
-      buyer:{
-        name:'XYZ',
-        contact:'439847298',
-        address:"Karachi pakistan",
-        email:'xyz@gmail.com',
-      },
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      comments: [
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser.png'),
-          time: '2 days ago',
-          text: 'I just love love & love my purchase. Highly recommended from my side',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman1.png'),
-          time: '2 weeks ago',
-          text: 'Excellent Product Same as shown in the photos',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyman4.png'),
-          time: '3 weeks ago',
-          text: 'The quality of this product is very good. I realy like this. My experience with this product is realy good.',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser1.png'),
-          time: '2 months ago',
-          text: 'Quality is not good',
-        },
-        {
-          userName: 'ABC',
-          image: require('../Assets/Images/dummyUser2.png'),
-          time: '3 weeks ago',
-          text: 'Bad service',
-        },
-      ],
-    },
-  ];
   
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        // if (token != null) {
-          BackHandler.exitApp();
-        // }
-        // else{
-        //   navigation.goBack()
-        // }
+        BackHandler.exitApp();
         return true;
-      }
+      },
     );
+    // getOrders();
+    Orders();
     return () => backhandler.remove();
   }, []);
-
 
   return (
     <>
@@ -625,51 +87,83 @@ const Orders = () => {
         backgroundColor={['#CBE4E8', '#D2E4E4']}
         barStyle={'dark-content'}
       />
-      <Header headerColor={['#CBE4E8', '#D2E4E4']}  />
+      <Header headerColor={['#CBE4E8', '#D2E4E4']} />
       <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
           backgroundColor: '#CBE4E8',
+          minHeight: windowHeight * 0.9,
         }}>
-        <CustomText
-          isBold
+        <View
           style={{
-            fontSize: moderateScale(20, 0.6),
-            marginTop: moderateVerticalScale(20, 0.6),
-            marginLeft: moderateScale(20, 0.3),
-          }}>
-          Latest Orders
-        </CustomText>
-        <ScrollView
-          contentContainerStyle={{
-            // padding: moderateScale(10, 0.6),
+            height: windowHeight * 0.3,
+            justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'row',
-          }}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          // style={styles.categoryContainer}
-        >
-          {latestOrders.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
-            return (
-              <OrderCard
-                item={item}
-                selectedOrder={selectedOrder}
-                setSelectedOrder={setSelectedOrder}
-              />
-            );
-          })}
-        </ScrollView>
+          }}>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(20, 0.6),
+              marginTop: moderateVerticalScale(20, 0.6),
+              width: windowWidth,
+              paddingHorizontal: moderateScale(10, 0.6),
+            }}>
+            Latest Orders
+          </CustomText>
 
+          <FlatList
+            numColumns={1}
+            data={myOrder}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            contentContainerStyle={{
+              // backgroundColor:'black',
+              height: windowHeight * 0.2,
+              alignItems: 'center',
+            }}
+            ListEmptyComponent={() => {
+              return (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <CustomText
+                    style={{
+                      fontSize: moderateScale(20, 0.6),
+                      textAlign: 'center',
+                      color: Color.veryLightGray,
+                    }}>
+                    No Items
+                  </CustomText>
+                </View>
+              );
+            }}
+            renderItem={({item, index}) => {
+              // console.log(
+              //   '🚀 ~ file: Orders.js:691 ~ {orders?.map ~ item:',
+              //   item,
+              // );
+              return (
+                <OrderCard
+                  item={item}
+                  selectedOrder={selectedOrder}
+                  setSelectedOrder={setSelectedOrder}
+                />
+              );
+            }}
+          />
+        </View>
         <CustomText
           isBold
           style={{
             fontSize: moderateScale(20, 0.6),
-            marginLeft: moderateScale(20, 0.3),
+            // marginLeft: moderateScale(20, 0.3),
+            // backgroundColor:'black',
+            width: windowWidth,
+            paddingHorizontal: moderateScale(10, 0.5),
+            marginTop: moderateScale(10, 0.3),
           }}>
           History
         </CustomText>
@@ -677,21 +171,44 @@ const Orders = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={1}
-          data={previousOrders}
+          data={myOrder}
           contentContainerStyle={{
             // backgroundColor:'black',
-            width:windowWidth,
-            alignSelf: 'center',
-            alignItems:'center',
+            // width:windowWidth,
+            // alignSelf: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
             marginTop: moderateScale(10, 0.3),
           }}
           renderItem={({item, index}) => {
+            // console.log(
+            //   '🚀 ~ file: Orders.js:691 ~ {orders?.map ~ item:',
+            //   item,
+            // );
             return (
               <OrderCard
                 item={item}
                 selectedOrder={selectedOrder}
                 setSelectedOrder={setSelectedOrder}
               />
+            );
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <CustomText
+                  style={{
+                    fontSize: moderateScale(20, 0.6),
+                    textAlign: 'center',
+                    color: Color.veryLightGray,
+                  }}>
+                  No Items
+                </CustomText>
+              </View>
             );
           }}
         />
@@ -703,6 +220,7 @@ const Orders = () => {
 export default Orders;
 
 const OrderCard = ({item}) => {
+  // console.log('🚀 ~ file: Orders.js:708 ~ OrderCard ~ item:', item);
   return (
     <>
       <TouchableOpacity
@@ -711,7 +229,7 @@ const OrderCard = ({item}) => {
           alignItems: 'center',
           backgroundColor: 'white',
           // marginRight: moderateScale(10, 0.3),
-          marginHorizontal:moderateScale(10,.3),
+          marginHorizontal: moderateScale(10, 0.3),
           width: windowWidth * 0.95,
           height: windowHeight * 0.15,
           borderRadius: moderateScale(20, 0.6),
@@ -719,19 +237,25 @@ const OrderCard = ({item}) => {
           marginVertical: moderateScale(10, 0.6),
         }}
         onPress={() => {
-          navigationService.navigate('OrderDetails', {item: item, details:true});
+          navigationService.navigate('OrderDetails', {
+            item: item,
+            details: false,
+          });
         }}>
         <View
           style={{
             width: windowWidth * 0.2,
-            height: windowHeight * 0.12,
+            height: windowWidth * 0.2,
+            borderRadius: (windowWidth * 0.2) / 2,
+
             marginLeft: moderateScale(10, 0.3),
-            backgroundColor: 'black',
+            overflow: 'hidden',
+            // backgroundColor: 'gray',
             borderRadius: moderateScale(10, 0.6),
             overflow: 'hidden',
           }}>
           <CustomImage
-            source={item?.images[0]}
+            source={require('../Assets/Images/logo.png')}
             style={{width: '100%', height: '100%'}}
             resizeMode={'cover'}
           />
@@ -752,26 +276,10 @@ const OrderCard = ({item}) => {
               style={{
                 textAlign: 'left',
                 color: 'black',
-                fontSize: moderateScale(12, 0.6),
+                fontSize: moderateScale(14, 0.6),
               }}
-              isBold>
-              Order ID : {item?.orderId}
-            </CustomText>
-            <CustomText
-              style={{
-                // width: windowWidth * 0.3,
-                // right: -10,
-                textAlign: 'center',
-                fontSize: moderateScale(12, 0.6),
-                borderRadius: moderateScale(10, 0.6),
-                padding: moderateScale(5, 0.6),
-                // position: 'absolute',
-                // top: -15,
-                
-                color: Color.veryLightGray,
-              }}
-              isBold>
-              {moment(item?.date).fromNow()}
+              >
+              Order ID :{Math.floor(Math.random() * 1000000000)}
             </CustomText>
           </View>
 
@@ -780,23 +288,37 @@ const OrderCard = ({item}) => {
               textAlign: 'left',
               color: Color.black,
               width: windowWidth * 0.3,
-              fontSize: moderateScale(12, 0.6),
+              fontSize: moderateScale(13, 0.6),
             }}
             isBold>
-            Qty : {item?.qty}
+            Quantity : {item?.qty}
           </CustomText>
           <CustomText
             style={{
               textAlign: 'left',
               color: Color.black,
               marginTop: moderateScale(5, 0.3),
-              fontSize: moderateScale(12, 0.6),
+              fontSize: moderateScale(13, 0.6),
               width: windowWidth * 0.28,
             }}
-            isBold>
-            {item?.price} Rs
+            >
+            {item?.price * item?.qty} Rs
           </CustomText>
         </View>
+        <CustomText
+          style={{
+            position: 'absolute',
+            top: 5,
+            right: 10,
+            textAlign: 'center',
+            fontSize: moderateScale(12, 0.6),
+            borderRadius: moderateScale(10, 0.6),
+            padding: moderateScale(5, 0.6),
+            color: Color.veryLightGray,
+          }}
+          >
+          {moment(item?.date).fromNow()}
+        </CustomText>
       </TouchableOpacity>
     </>
   );

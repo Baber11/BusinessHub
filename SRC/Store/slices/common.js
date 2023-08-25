@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import moment from 'moment';
 
 const initialState = {
   userData: {},
@@ -10,6 +11,7 @@ const initialState = {
   notification: false,
   order : [],
   sellerProducts:[],
+  sellerService :[],
   selectedRole: '',
 };
 
@@ -44,7 +46,7 @@ const CommonSlice = createSlice({
     AddToCart(state, action) {
       const itemId = action.payload.id;
 
-      state.cart.push(action.payload);
+      state.cart.push({date:moment(),...action.payload});
     },
 
     RemoveToCart(state, action) {
@@ -120,17 +122,19 @@ const CommonSlice = createSlice({
     },
 
     setAddProducts(state, action){
-      console.log("🚀 ~ file: common.js:123 ~ setAddProducts ~ action:", action.payload)
+     console.log('Data===============>>', state.sellerProducts)
 
-      const item = state.sellerProducts.find(item=> item?.userId == action.payload.userId)
-      if(item){
-        item.products.push(action.payload.item)
-      }else{
-        state.sellerProducts.push({userId:action.payload.userId,products:[action.payload.item] })
-      }
+     console.log('Dat==================>>>>>>>', {sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
+       state.sellerProducts.push({sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
       
 
-    }
+    },
+    setServices(state, action){
+      console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
+      
+      state.sellerService.push(action.payload)
+
+    },
 
     
   },
@@ -155,6 +159,7 @@ export const {
   EmptyCart,
   setServiceBooking,
   setAddProducts,
+  setServices,
   Order
 } = CommonSlice.actions;
 

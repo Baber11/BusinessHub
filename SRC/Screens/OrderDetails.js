@@ -29,7 +29,7 @@ import moment from 'moment';
 const OrderDetails = props => {
   const item = props.route.params.item;
   const details = props.route.params.details;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
 
@@ -44,7 +44,7 @@ const OrderDetails = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} cart={!details} />
+      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -66,7 +66,7 @@ const OrderDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index - 1]}
+                    source={{uri: item?.images[index - 1]}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -103,9 +103,9 @@ const OrderDetails = props => {
               }}>
               <CustomImage
                 source={
-                  item?.images.length == 1
+                 {uri: item?.images.length == 1
                     ? item?.images[index - 1]
-                    : item?.images[index]
+                    : item?.images[index]}
                 }
                 style={{
                   height: '100%',
@@ -144,7 +144,7 @@ const OrderDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index + 1]}
+                    source={{uri: item?.images[index + 1]}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -487,7 +487,8 @@ const styles = StyleSheet.create({
     borderRadius: (windowWidth * 0.1) / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: moderateScale(15, 0.3),
+    marginHorizontal:moderateScale(5,.3),
+    // marginLeft: moderateScale(15, 0.3),
   },
   icon: {
     width: windowWidth * 0.06,
@@ -520,26 +521,23 @@ const styles = StyleSheet.create({
 
   ColorLine: {
     flexDirection: 'row',
+    paddingHorizontal:moderateScale(10,.6),
     // justifyContent: 'space-evenly',
     // alignItems: 'center',
     // flexWrap:'no-wrap',
     // width: windowWidth * 0.8,
-    marginTop: moderateScale(15, 0.3),
-    marginBottom: moderateScale(15, 0.3),
+   marginVertical:moderateScale(10,.6)
   },
 
   ColorLine1: {
     flexDirection: 'row',
-    // backgroundColor:'black',
     width:windowWidth,
     paddingHorizontal:moderateScale(10,.6),
-    
-    // justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: windowWidth * 0.7,
-    marginTop: moderateScale(15, 0.3),
-    marginBottom: moderateScale(15, 0.3),
-  },
+    // width: windowWidth * 0.7,
+   marginVertical:moderateScale(10,.6)
+
+    },
 
   bottomBanner: {
     width: windowWidth,

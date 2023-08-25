@@ -75,7 +75,7 @@ const AdminDashboard = () => {
     const response = await Get(url,token);
     setIsLoading(false)
     if(response!= undefined){
-        console.log('auth user response======>>>>>>>>>>', response?.data)
+        // console.log('auth user response======>>>>>>>>>>', response?.data)
     }
 
   }

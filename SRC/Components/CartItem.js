@@ -22,9 +22,10 @@ import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
+  // console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log(item?.img)
-  console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
+  // console.log(item?.img)
+  // console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
   const dispatch = useDispatch();
 
   return (
@@ -46,7 +47,7 @@ const CartItem = ({item, fromCheckout}) => {
           
           />
           <CustomImage
-            source={item?.img}
+            source={{uri:item?.images[0]}}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -63,7 +64,7 @@ const CartItem = ({item, fromCheckout}) => {
               width: windowWidth * 0.45,
               marginTop: moderateScale(5, 0.3),
             }}>
-            {item?.selectedSize != '' ? (
+            {item?.selectedSize ? (
               <CustomText>Selected Size : {item?.selectedSize}</CustomText>
             ) : (
               // <></>
