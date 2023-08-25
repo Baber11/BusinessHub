@@ -127,7 +127,6 @@ const PaymentInvoice = props => {
            }}
             style={{
             maxHeight: windowHeight * 0.2,
-
             }}>
             {Invoice.order.map(item => {
               return (

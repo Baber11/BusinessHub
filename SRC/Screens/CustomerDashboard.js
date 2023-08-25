@@ -809,6 +809,7 @@ const CustomerDashboard = () => {
                     width: windowWidth * 0.79,
                     height: windowHeight * 0.25,
                     marginTop: moderateScale(30, 0.3),
+                    alignSelf:'center'
                   }}>
                   <CustomImage
                     source={require('../Assets/Images/4.png')}
