@@ -259,7 +259,7 @@ const ProductDetails = props => {
                 />
               ) : (
                 <Icon
-                  name={'heart-outlined'}
+                  name={'heart-outlined'}  
                   as={Entypo}
                   size={moderateScale(25, 0.3)}
                   color={'black'}
@@ -529,6 +529,7 @@ const ProductDetails = props => {
             renderItem={({item, index}) => {
               return <CommentsSection item={item} />;
             }}
+            
           />
           <CustomText
             isBold

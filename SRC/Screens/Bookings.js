@@ -301,6 +301,40 @@ const Bookings = () => {
 
             return <ProductCard item={item} />;
           }}
+
+          ListEmptyComponent={() => {
+            return (
+              <>
+                <View
+                  style={{
+                    width: windowWidth * 0.8,
+                    height: windowHeight * 0.4,
+                    marginTop: moderateScale(30, 0.3),
+                    alignSelf:'center',
+                    // backgroundColor:'red'
+                  }}>
+                  <CustomImage
+                    source={require('../Assets/Images/4.png')}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode={'contain'}
+                  />
+                </View>
+                <CustomText
+                  isBold
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontSize:moderateScale(15,0.6),
+                    marginTop:moderateScale(-50,0.3)
+                  }}>
+                  ERROR 404 DATA NOT FOUND
+                </CustomText>
+              </>
+            );
+          }}
         />
       </ScrollView>
     </>

@@ -52,7 +52,8 @@ const Orders = () => {
     orders.map(item =>
       item.order.map(
         order =>
-          order?.sellerId == userData?.id && (setMyOrder(prev=>[...prev , order])),
+          order?.sellerId == userData?.id &&
+          setMyOrder(prev => [...prev, order]),
       ),
     );
   };
@@ -62,11 +63,8 @@ const Orders = () => {
   // const ordersPlacedInPast24Hours = orders.filter(order => {
   //   const orderDate = moment(order.orderDate);
   //   return orderDate.isAfter(twentyFourHoursAgo);
-  // }); 
+  // });
   // console.log("🚀 ~ file: Orders.js:66 ~ ordersPlacedInPast24Hours ~ ordersPlacedInPast24Hours:", ordersPlacedInPast24Hours)
- 
-
-  
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -119,23 +117,40 @@ const Orders = () => {
             horizontal
             contentContainerStyle={{
               // backgroundColor:'black',
-              height: windowHeight * 0.2,
+              // height: windowHeight * 0.2,
               alignItems: 'center',
             }}
             ListEmptyComponent={() => {
               return (
                 <View
                   style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    width: windowWidth * 0.7,
+                    alignSelf: 'center',
                   }}>
+                  <View
+                    style={{
+                      width: windowWidth * 0.6,
+                      height: windowHeight * 0.2,
+                      alignSelf: 'center',
+                      marginTop:moderateScale(10,0.3)
+                    }}>
+                    <CustomImage
+                      source={require('../Assets/Images/4.png')}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      resizeMode={'contain'}
+                    />
+                  </View>
+
                   <CustomText
                     style={{
-                      fontSize: moderateScale(20, 0.6),
                       textAlign: 'center',
-                      color: Color.veryLightGray,
+                      color: 'black',
+                      fontSize: moderateScale(13, 0.6),
                     }}>
-                    No Items
+                    ERROR 404 DATA NOT FOUND
                   </CustomText>
                 </View>
               );
@@ -195,20 +210,34 @@ const Orders = () => {
           }}
           ListEmptyComponent={() => {
             return (
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+              <>
+                <View
+                  style={{
+                    width: windowWidth * 0.8,
+                    height: windowHeight * 0.3,
+                    marginTop: moderateScale(30, 0.3),
+                    alignSelf: 'center',
+                    // backgroundColor:'red'
+                  }}>
+                  <CustomImage
+                    source={require('../Assets/Images/4.png')}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode={'contain'}
+                  />
+                </View>
                 <CustomText
                   style={{
-                    fontSize: moderateScale(20, 0.6),
                     textAlign: 'center',
-                    color: Color.veryLightGray,
+                    color: 'black',
+                    fontSize: moderateScale(13, 0.6),
+                    marginTop: moderateScale(-15, 0.3),
                   }}>
-                  No Items
+                  ERROR 404 DATA NOT FOUND
                 </CustomText>
-              </View>
+              </>
             );
           }}
         />
@@ -277,8 +306,7 @@ const OrderCard = ({item}) => {
                 textAlign: 'left',
                 color: 'black',
                 fontSize: moderateScale(14, 0.6),
-              }}
-              >
+              }}>
               Order ID :{Math.floor(Math.random() * 1000000000)}
             </CustomText>
           </View>
@@ -300,8 +328,7 @@ const OrderCard = ({item}) => {
               marginTop: moderateScale(5, 0.3),
               fontSize: moderateScale(13, 0.6),
               width: windowWidth * 0.28,
-            }}
-            >
+            }}>
             {item?.price * item?.qty} Rs
           </CustomText>
         </View>
@@ -315,8 +342,7 @@ const OrderCard = ({item}) => {
             borderRadius: moderateScale(10, 0.6),
             padding: moderateScale(5, 0.6),
             color: Color.veryLightGray,
-          }}
-          >
+          }}>
           {moment(item?.date).fromNow()}
         </CustomText>
       </TouchableOpacity>
