@@ -472,23 +472,7 @@ const SellerProduct = props => {
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
           }}
-          ListEmptyComponent={() => {
-            return (
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  width: windowWidth * 0.9,
-                  height: windowHeight * 0.2,
-                }}>
-                <CustomText
-                  style={{fontSize: moderateScale(20, 0.6), color: 'black'}}>
-                  No Products yet
-                </CustomText>
-              </View>
-            );
-          }}
+          
           renderItem={({item, index}) => {
             return <Product item={item} seller={true} />;
           }}
