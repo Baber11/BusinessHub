@@ -205,19 +205,13 @@ const SellerProduct = props => {
 
   // }, [isFocused])
 
-useEffect(() => {
-  setProducts(sellerProducts.filter(item=>{
-    return(item?.sellerId == userData?.id)
-  }))
-
-
-}, [isFocused])
-
-
-
-
-
-  
+  useEffect(() => {
+    setProducts(
+      sellerProducts.filter(item => {
+        return item?.sellerId == userData?.id;
+      }),
+    );
+  }, [isFocused]);
 
   return (
     <>
@@ -392,11 +386,10 @@ useEffect(() => {
                           iconStyle={{
                             fontSize: moderateScale(14, 0.6),
                           }}
-                          marginRight={moderateScale(5,0.3)}
-
+                          marginRight={moderateScale(5, 0.3)}
                           isBold
                         />
-                          <CustomButton
+                        <CustomButton
                           onPress={() => {
                             // navigationService.navigate('AddProduct');
                           }}
@@ -470,6 +463,38 @@ useEffect(() => {
           }}
           renderItem={({item, index}) => {
             return <Product item={item} seller={true} />;
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <>
+                <View
+                  style={{
+                    width: windowWidth * 0.9,
+                    height: windowHeight * 0.4,
+                    marginTop: moderateScale(30, 0.3),
+                    alignSelf: 'center',
+
+                  }}>
+                  <CustomImage
+                    source={require('../Assets/Images/4.png')}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode={'contain'}
+                  />
+                </View>
+                <CustomText
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontSize: moderateScale(16, 0.6),
+                    marginTop: moderateScale(-40, 0.3),
+                  }}>
+                  ERROR 404 DATA NOT FOUND
+                </CustomText>
+              </>
+            );
           }}
         />
       </ScrollView>

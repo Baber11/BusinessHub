@@ -259,7 +259,7 @@ const ProductDetails = props => {
                 />
               ) : (
                 <Icon
-                  name={'heart-outlined'}
+                  name={'heart-outlined'}  
                   as={Entypo}
                   size={moderateScale(25, 0.3)}
                   color={'black'}
