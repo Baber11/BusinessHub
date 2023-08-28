@@ -18,7 +18,7 @@ import navigationService from '../navigationService';
 const PaymentInvoice = props => {
   const Invoice = props.route.params.body;
 
-  console.log('ALPHA8888000====>', Invoice);
+  console.log('PAYMENT INVOICE ========>>>>>>', Invoice);
 
   return (
     <>
@@ -63,7 +63,7 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>OrderId</CustomText>
+            <CustomText>Order Id</CustomText>
             <CustomText>{Invoice?.orderId}</CustomText>
           </View>
           <View
@@ -73,7 +73,7 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>BillTo</CustomText>
+            <CustomText>Bill To</CustomText>
             <CustomText>William Andrew </CustomText>
           </View>
           <View
@@ -83,7 +83,7 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>AmountDueTo</CustomText>
+            <CustomText>Amount Due To</CustomText>
             <CustomText>${Invoice.order[0].price}</CustomText>
           </View>
           <View
@@ -93,10 +93,11 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>PaymentDueTo</CustomText>
+            <CustomText>Payment Due To</CustomText>
             <CustomText>19 March 2023</CustomText>
           </View>
         </View>
+
 
         <View
           style={{

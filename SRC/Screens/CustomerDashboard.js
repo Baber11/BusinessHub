@@ -647,7 +647,7 @@ const CustomerDashboard = () => {
       ],
     },
   ];
-  const [newData, setNewData] = useState(newArrivals);
+  const [newData, setNewData] = useState(sellerProducts);
   // console.log('🚀 ~ file: CustomerDashboard.js:646 ~ newData:', newData);
 
   useEffect(() => {
@@ -797,7 +797,7 @@ const CustomerDashboard = () => {
           setNewData={setNewData}
           placeHolderColor={'#000'}
           placeholderName={'Enter Product Name'}
-          array={newArrivals}
+          array={sellerProducts}
           arrayItem={'Product'}
           fontSize={13}
           SearchStyle={{width: windowWidth * 0.95,marginLeft:moderateScale(10,0.3)}}
@@ -819,7 +819,7 @@ const CustomerDashboard = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={sellerProducts}
+          data={newData}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),

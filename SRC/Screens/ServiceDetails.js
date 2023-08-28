@@ -40,6 +40,7 @@ import navigationService from '../navigationService';
 
 const ServiceDetails = props => {
   const item = props?.route?.params?.item;
+  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.images[0]?.image.uri)
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
   console.log(
@@ -128,7 +129,7 @@ const ServiceDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index - 1]}
+                    source={{uri :item?.images[index - 1]?.image?.uri}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -164,9 +165,9 @@ const ServiceDetails = props => {
               }}>
               <CustomImage
                 source={
-                  item?.images.length == 1
-                    ? item?.images[index - 1]
-                    : item?.images[index]
+                  {uri :item?.images.length == 1
+                    ? item?.images[index - 1]?.image?.uri
+                    : item?.images[index]?.image?.uri}
                 }
                 style={{
                   height: '100%',
@@ -205,7 +206,7 @@ const ServiceDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index + 1]}
+                    source={{uri : item?.images[index + 1]?.image?.uri}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -401,8 +402,7 @@ const ServiceDetails = props => {
               </>
             )}
 
-            {/* {calendar && ( */}
-              <>
+              {!seller && <> 
                <CustomText
                   isBold
                   style={{
@@ -453,19 +453,8 @@ const ServiceDetails = props => {
                     },
                   }}
                 />
-                {/* <CustomButton
-          isBold
-        
-          text={'Confirm'}
-          textColor={Color.white}
-          width={windowWidth * 0.4}
-          height={windowHeight * 0.05}
-          fontSize={moderateScale(14, 0.6)}
-          bgColor={Color.themeColor}
-          borderRadius={moderateScale(30, 0.3)}
-        /> */}
-              </>
-            {/* )} */}
+               
+              </>}
           </View>
         }
       </ScrollView>

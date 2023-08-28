@@ -200,6 +200,9 @@ const Signup = () => {
               elevation
             />
               <TouchableOpacity
+              onPress={()=>{
+                setShowNumberModal(true)
+              }}
                 activeOpacity={0.9}
                 style={[styles.birthday, {justifyContent: 'flex-start',}]}>
                 <CountryPicker
@@ -226,8 +229,8 @@ const Signup = () => {
                   as={FontAwesome}
                   size={moderateScale(20, 0.6)}
                   color={Color.themeDarkGray}
-                  onPress={() => {
-                    // setShowNumberModal(true);
+                  onPress={()=>{
+                    setShowNumberModal(true)
                   }}
                   style={{
                     position: 'absolute',

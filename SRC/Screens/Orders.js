@@ -33,7 +33,7 @@ const Orders = () => {
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
   const orders = useSelector(state => state.commonReducer.order);
-  // console.log('🚀 ~ file: Orders.js:30 ~ orders:', orders);
+  console.log('🚀 ~ file: Orders.js:30 ~ orders:', orders);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -49,11 +49,15 @@ const Orders = () => {
   const oneDayAgo = moment().subtract(1, 'day');
 
   const Orders = () => {
+    setMyOrder([])
     orders.map(item =>
       item.order.map(
         order =>
           order?.sellerId == userData?.id &&
-          setMyOrder(prev => [...prev, order]),
+          setMyOrder(prev => [
+            ...prev,
+            {orderId: item.orderId, Image: item?.Image, ...order},
+          ]),
       ),
     );
   };
@@ -75,9 +79,13 @@ const Orders = () => {
       },
     );
     // getOrders();
-    Orders();
+
     return () => backhandler.remove();
   }, []);
+  useEffect(() => {
+    // setMyOrder({})
+    Orders();
+  }, [orders]);
 
   return (
     <>
@@ -132,7 +140,7 @@ const Orders = () => {
                       width: windowWidth * 0.6,
                       height: windowHeight * 0.2,
                       alignSelf: 'center',
-                      marginTop:moderateScale(10,0.3)
+                      marginTop: moderateScale(10, 0.3),
                     }}>
                     <CustomImage
                       source={require('../Assets/Images/4.png')}
@@ -156,15 +164,13 @@ const Orders = () => {
               );
             }}
             renderItem={({item, index}) => {
-              // console.log(
-              //   '🚀 ~ file: Orders.js:691 ~ {orders?.map ~ item:',
-              //   item,
-              // );
               return (
+                // <MyOrderCard item={item} />
                 <OrderCard
                   item={item}
                   selectedOrder={selectedOrder}
                   setSelectedOrder={setSelectedOrder}
+                  width={windowWidth * 0.8}
                 />
               );
             }}
@@ -196,10 +202,6 @@ const Orders = () => {
             marginTop: moderateScale(10, 0.3),
           }}
           renderItem={({item, index}) => {
-            // console.log(
-            //   '🚀 ~ file: Orders.js:691 ~ {orders?.map ~ item:',
-            //   item,
-            // );
             return (
               <OrderCard
                 item={item}
@@ -249,157 +251,122 @@ const Orders = () => {
 export default Orders;
 
 const OrderCard = ({item}) => {
-  // console.log('🚀 ~ file: Orders.js:708 ~ OrderCard ~ item:', item);
+  console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
   return (
-    <>
-      <TouchableOpacity
-        key={item?.id}
+    <View
+      key={item?.id}
+      style={{
+        width: windowWidth * 0.9,
+        paddingVertical: moderateScale(10, 0.6),
+        marginHorizontal: moderateScale(5, 0.3),
+        backgroundColor: '#f9fafd',
+        borderRadius: moderateScale(20, 0.3),
+        marginTop: moderateScale(12, 0.3),
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: moderateScale(15, 0.6),
+        marginVertical: moderateScale(10, 0.6),
+
+        alignSelf: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+        // marginBottom : moderateScale(10,0.3)
+      }}>
+      <View
         style={{
-          alignItems: 'center',
+          width: windowWidth * 0.2,
+          height: windowWidth * 0.2,
+          borderRadius: (windowWidth * 0.2) / 2,
+          borderWidth: 1,
+          borderColor: Color.themeColor,
+          overflow: 'hidden',
           backgroundColor: 'white',
-          // marginRight: moderateScale(10, 0.3),
-          marginHorizontal: moderateScale(10, 0.3),
-          width: windowWidth * 0.95,
-          height: windowHeight * 0.15,
-          borderRadius: moderateScale(20, 0.6),
-          flexDirection: 'row',
-          marginVertical: moderateScale(10, 0.6),
-        }}
-        onPress={() => {
-          navigationService.navigate('OrderDetails', {
-            item: item,
-            details: false,
-          });
         }}>
-        <View
+        <CustomImage
+          source={item.Image ? item?.Image : item?.image}
           style={{
-            width: windowWidth * 0.2,
-            height: windowWidth * 0.2,
-            borderRadius: (windowWidth * 0.2) / 2,
+            height: '100%',
+            width: '100%',
+          }}
+          resizeMode={'cover'}
+        />
+      </View>
 
-            marginLeft: moderateScale(10, 0.3),
-            overflow: 'hidden',
-            // backgroundColor: 'gray',
-            borderRadius: moderateScale(10, 0.6),
-            overflow: 'hidden',
-          }}>
-          <CustomImage
-            source={require('../Assets/Images/logo.png')}
-            style={{width: '100%', height: '100%'}}
-            resizeMode={'cover'}
-          />
-        </View>
-        <View
+      <View
+        style={{
+          width: windowWidth * 0.4,
+          justifyContent: 'center',
+          marginLeft: moderateScale(10, 0.3),
+        }}>
+        <CustomText
+          // isBold
+          numberOfLines={1}
           style={{
-            marginLeft: moderateScale(20, 0.3),
-            width: windowWidth * 0.6,
+            color: '#2f2f2f',
+            fontSize: moderateScale(13, 0.6),
           }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              // marginBottom:moderateScale(10,.3),
-            }}>
-            <CustomText
-              style={{
-                textAlign: 'left',
-                color: 'black',
-                fontSize: moderateScale(14, 0.6),
-              }}>
-              Order ID :{Math.floor(Math.random() * 1000000000)}
-            </CustomText>
-          </View>
-
+          Order Id : {item?.orderId}
+        </CustomText>
+        {item?.qty ? (
           <CustomText
+            numberOfLines={1}
             style={{
-              textAlign: 'left',
-              color: Color.black,
-              width: windowWidth * 0.3,
-              fontSize: moderateScale(13, 0.6),
-            }}
-            isBold>
+              color: '#000',
+              fontSize: moderateScale(12, 0.6),
+            }}>
             Quantity : {item?.qty}
           </CustomText>
+        ) : (
           <CustomText
+            numberOfLines={1}
             style={{
-              textAlign: 'left',
-              color: Color.black,
-              marginTop: moderateScale(5, 0.3),
-              fontSize: moderateScale(13, 0.6),
-              width: windowWidth * 0.28,
+              color: '#000',
+              fontSize: moderateScale(12, 0.6),
             }}>
-            {item?.price * item?.qty} Rs
+            Service : {item?.Category}
           </CustomText>
-        </View>
-        <CustomText
-          style={{
-            position: 'absolute',
-            top: 5,
-            right: 10,
-            textAlign: 'center',
-            fontSize: moderateScale(12, 0.6),
-            borderRadius: moderateScale(10, 0.6),
-            padding: moderateScale(5, 0.6),
-            color: Color.veryLightGray,
-          }}>
-          {moment(item?.date).fromNow()}
-        </CustomText>
-      </TouchableOpacity>
-    </>
-  );
-};
+        )}
 
-const Chuncks = ({color, item}) => {
-  return (
-    <TouchableOpacity activeOpacity={0.9}>
-      <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        colors={color}
-        style={styles.container}>
         <View
           style={{
-            width: moderateScale(30, 0.6),
-            height: moderateScale(30, 0.6),
-            borderRadius: moderateScale(15, 0.6),
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: windowWidth * 0.62,
+            marginTop: moderateScale(5, 0.3),
           }}>
-          <Icon
-            name={item.logo}
-            as={FontAwesome5}
-            size={moderateScale(12, 0.6)}
-          />
+          <CustomText
+            numberOfLines={1}
+            style={{
+              color: '#000',
+              fontSize: moderateScale(15, 0.6),
+            }}>
+            Price : ${item.total ? item?.total : item?.price}
+          </CustomText>
+
+          <CustomText
+            isBold
+            onPress={() => {
+              navigationService.navigate('OrderDetails', {
+                item: item,
+                details: false,
+              });
+            }}
+            style={{
+              color: '#000',
+              fontSize: moderateScale(12, 0.6),
+            }}>
+            Details
+          </CustomText>
         </View>
-        <CustomText
-          isBold
-          style={{
-            color: Color.white,
-            marginTop: moderateScale(15, 0.6),
-          }}>
-          RS {item?.amount}
-        </CustomText>
-        <CustomText
-          style={{
-            color: Color.white,
-            fontSize: moderateScale(10, 0.6),
-            textTransform: 'none',
-          }}>
-          {item?.title}
-        </CustomText>
-        <CustomText
-          style={{
-            color: Color.white,
-            fontSize: moderateScale(9, 0.6),
-            textTransform: 'none',
-            marginTop: moderateScale(10, 0.6),
-          }}>
-          Tap to preview
-        </CustomText>
-      </LinearGradient>
-    </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -426,3 +393,105 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+// const OrderCard = ({item, width}) => {
+//   // console.log('🚀 ~ file: Orders.js:708 ~ OrderCard ~ item:', item);
+//   return (
+//     <>
+//       <TouchableOpacity
+//
+//         style={{
+//           alignItems: 'center',
+//           backgroundColor: 'white',
+//           // marginRight: moderateScale(10, 0.3),
+//           marginHorizontal: moderateScale(10, 0.3),
+//           width: width,
+//           height: windowHeight * 0.15,
+//           borderRadius: moderateScale(20, 0.6),
+//           flexDirection: 'row',
+//           marginVertical: moderateScale(10, 0.6),
+//         }}
+//         onPress={() => {
+//           navigationService.navigate('OrderDetails', {
+//             item: item,
+//             details: false,
+//           });
+//         }}>
+//         <View
+//           style={{
+//             width: windowWidth * 0.2,
+//             height: windowWidth * 0.2,
+//             borderRadius: (windowWidth * 0.2) / 2,
+
+//             marginLeft: moderateScale(10, 0.3),
+//             overflow: 'hidden',
+//             // backgroundColor: 'gray',
+//             borderRadius: moderateScale(10, 0.6),
+//             overflow: 'hidden',
+//           }}>
+//           <CustomImage
+//             source={require('../Assets/Images/logo.png')}
+//             style={{width: '100%', height: '100%'}}
+//             resizeMode={'cover'}
+//           />
+//         </View>
+//         <View
+//           style={{
+//             marginLeft: moderateScale(20, 0.3),
+//             width: windowWidth * 0.6,
+//           }}>
+//           <View
+//             style={{
+//               flexDirection: 'row',
+//               justifyContent: 'space-between',
+//               alignItems: 'center',
+//               // marginBottom:moderateScale(10,.3),
+//             }}>
+//             <CustomText
+//               style={{
+//                 textAlign: 'left',
+//                 color: 'black',
+//                 fontSize: moderateScale(14, 0.6),
+//               }}>
+//               Order ID :{Math.floor(Math.random() * 1000000000)}
+//             </CustomText>
+//           </View>
+
+//           <CustomText
+//             style={{
+//               textAlign: 'left',
+//               color: Color.black,
+//               width: windowWidth * 0.3,
+//               fontSize: moderateScale(13, 0.6),
+//             }}
+//             isBold>
+//             Quantity : {item?.qty}
+//           </CustomText>
+//           <CustomText
+//             style={{
+//               textAlign: 'left',
+//               color: Color.black,
+//               marginTop: moderateScale(5, 0.3),
+//               fontSize: moderateScale(13, 0.6),
+//               width: windowWidth * 0.28,
+//             }}>
+//             {item?.price * item?.qty} Rs
+//           </CustomText>
+//         </View>
+//         <CustomText
+//           style={{
+//             position: 'absolute',
+//             top: 5,
+//             right: 10,
+//             textAlign: 'center',
+//             fontSize: moderateScale(12, 0.6),
+//             borderRadius: moderateScale(10, 0.6),
+//             padding: moderateScale(5, 0.6),
+//             color: Color.veryLightGray,
+//           }}>
+//           {moment(item?.date).fromNow()}
+//         </CustomText>
+//       </TouchableOpacity>
+//     </>
+//   );
+// };

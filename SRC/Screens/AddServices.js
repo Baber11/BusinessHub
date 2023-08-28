@@ -30,16 +30,16 @@ import { setServices } from '../Store/slices/common';
 
 const AddServices = props => {
   const item = props?.route?.params?.item;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  console.log("🚀 ~ file: AddServices.js:33 ~ AddServices ~ item:", item)
   const user = useSelector(state => state.commonReducer.userData);
   console.log("🚀 ~ file: AddServices.js:34 ~ AddServices ~ user:", user)
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(item?.images ? item?.images : []);
   console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [charges, setCharges] = useState();
+  const [title, setTitle] = useState(item?.Title ? item?.Title : '');
+  const [category, setCategory] = useState(item?.category ? item?.category :'');
+  const [charges, setCharges] = useState(item?.charges ? item?.charges : '');
   const [imagePickerModal, setImagePickerModal] = useState(false);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(item?.description ? item?.description :'');
   const [image, setImage] = useState({});
 
   const navigation = useNavigation();
@@ -151,7 +151,7 @@ const AddServices = props => {
             }}>
             {images.length > 0 &&
               images.map((item, index) => {
-                // console.log("🚀 ~ file: AddServices.js:149 ~ images.map ~ item:", item)
+                console.log("🚀 ~ file: AddServices.js:149 ~ images.map ~ item:", item)
                 return (
                   <View
                     style={{
@@ -170,13 +170,13 @@ const AddServices = props => {
                       marginBottom : moderateScale(10,0.3)
                     }}>
                     <CustomImage
-                      source={{uri: item?.image?.uri}}
+                      source={{uri: item?.uri? item?.uri : item?.image?.uri}}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
                 );
               })}
-            <TouchableOpacity
+            {images.length<5 && <TouchableOpacity
               style={{
                 width: windowWidth * 0.2,
                 height: windowHeight * 0.08,
@@ -192,7 +192,7 @@ const AddServices = props => {
                 setImagePickerModal(true);
               }}>
               <Icon name={'plus'} as={AntDesign} size={5} />
-            </TouchableOpacity>
+            </TouchableOpacity>}
           </View>
           <CustomText
             style={{

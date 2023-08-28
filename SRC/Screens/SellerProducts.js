@@ -22,13 +22,15 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomTable from '../Components/CustomTable';
 import moment from 'moment';
 import {Get} from '../Axios/AxiosInterceptorFunction';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import CustomButton from '../Components/CustomButton';
 import navigationService from '../navigationService';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { deleteService } from '../Store/slices/common';
 
 const SellerProduct = props => {
   const [item, setItem] = useState(
@@ -51,6 +53,7 @@ const SellerProduct = props => {
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
+  const dispatch = useDispatch()
   const Services = [
     {
       id: 1,
@@ -197,6 +200,7 @@ const SellerProduct = props => {
       like: false,
     },
   ]);
+  const [selectedItem, setSelectedItem] = useState({})
 
   // useEffect(() => {
   //   if(Object.keys(item).length>0){
@@ -329,7 +333,7 @@ const SellerProduct = props => {
                           onPress={() => {
                             setSelectedService(item?.Title);
                             // item?.onPress();
-                            navigationService.navigate('ServiceDetails');
+                            navigationService.navigate('ServiceDetails', {item: item, seller:true});
                           }}
                         />
                       </View>
@@ -367,7 +371,8 @@ const SellerProduct = props => {
                           }}>
                           <CustomButton
                             onPress={() => {
-                              // navigationService.navigate('AddProduct');
+
+                              navigationService.navigate('AddServices', {item});
                             }}
                             text={'Edit'}
                             textColor={Color.white}
@@ -387,12 +392,12 @@ const SellerProduct = props => {
                           />
                           <CustomButton
                             onPress={() => {
-                              // navigationService.navigate('AddProduct');
+                              dispatch(deleteService(item))
                             }}
-                            text={'View'}
+                            text={'Delete'}
                             textColor={Color.white}
-                            iconName={'eye'}
-                            iconType={Entypo}
+                            iconName={'delete'}
+                            iconType={MaterialIcons}
                             // width={windowWidth * 0.28}
                             height={windowHeight * 0.035}
                             fontSize={moderateScale(10, 0.6)}

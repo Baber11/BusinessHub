@@ -28,20 +28,16 @@ import { setAddProducts } from '../Store/slices/common';
 
 const AddProduct = props => {
   const item = props?.route?.params?.item;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  console.log("🚀 ~ file: AddProduct.js:31 ~ AddProduct ~ item:", item)
   const user = useSelector(state => state.commonReducer.userData);
-  // console.log("🚀 ~ file: AddProduct.js:33 ~ AddProduct ~ user:", user)
   const [index, setIndex] = useState(1);
-  const [images, setImages] = useState(['plus']);
-  // console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
-  const [title, setTitle] = useState('');
-  const [subTitle, setSubTitle] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [colors, setColors] = useState([]);
-  // console.log('🚀 ~ file: AddProduct.js:41 ~ AddProduct ~ colors:', colors);
-  const [sizes, setSizes] = useState([]);
-  // console.log('🚀 ~ file: AddProduct.js:44 ~ AddProduct ~ sizes:', sizes);
+  const [images, setImages] = useState(item?.images ? item?.images : ['plus']);
+  const [title, setTitle] = useState(item?.Title ? item?.Title :'');
+  const [subTitle, setSubTitle] = useState(item?.Category ? item?.Category : '');
+  const [price, setPrice] = useState(item?.price ? item?.price : 0);
+  const [quantity, setQuantity] = useState(item?.qty ? item?.qty :0);
+  const [colors, setColors] = useState(item?.colors ? item?.colors : []);
+  const [sizes, setSizes] = useState(item?.size ? item?.size :[]);
   const [cotton, setCotton] = useState([]);
   const [imagePickerModal, setImagePickerModal] = useState(false);
   const [image, setImage] = useState({});

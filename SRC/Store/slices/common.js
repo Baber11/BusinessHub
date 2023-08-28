@@ -123,18 +123,54 @@ const CommonSlice = createSlice({
 
     setAddProducts(state, action){
      console.log('Data===============>>', state.sellerProducts)
+     console.log('Data===============>>', action.payload)
 
-     console.log('Dat==================>>>>>>>', {sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
-       state.sellerProducts.push({sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
+      console.log('Dat==================>>>>>>>', {sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
+      // const item = state.sellerProducts.find(item=> item?.id == action.payload.id )
+    //  if(item){
+    //   console.log('item========',item)
+    //   // item.
+    //  }
       
-
+      state.sellerProducts.push({sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
     },
+
     setServices(state, action){
+      console.log("🚀 ~ file: common.js:133 ~ setServices ~ state:", state.sellerService)
       console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
+
+      const item= state.sellerService.find(item => {
+        // console.log(item?.serviceOwner.id, action.payload.id)
+        return item.serviceOwner.id == action.payload.serviceOwner.id
+      })
+      console.log("🚀 ~ file: common.js:137 ~ setServices ~ item:", item)
+      if(item){
+        item.Title = action.payload.Title
+        item.category = action.payload.category;
+        item.charges = action.payload.charges;
+        item.description = action.payload.description;
+        item.images = action.payload.images;
+        item.categoriesserviceOwner = action.payload.serviceOwner
+      }
+      else{
+        state.sellerService.push(action.payload)
+      }
+
       
-      state.sellerService.push(action.payload)
+      
+      
+      // if(action.payload)
+      // if(state.sellerService.length==1){
+      //   state.sellerService.push(action.payload)
+      // }else{
+      //   state.sellerService.push(action.payload)
+
+      // }
 
     },
+    deleteService(state, action){
+      state.sellerService = state.sellerService.filter(item=> item.serviceOwner.id != action.payload.serviceOwner.id)
+    }
 
     
   },
@@ -160,6 +196,7 @@ export const {
   setServiceBooking,
   setAddProducts,
   setServices,
+  deleteService,
   Order
 } = CommonSlice.actions;
 

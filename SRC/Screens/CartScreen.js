@@ -20,6 +20,8 @@ import {useEffect} from 'react';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import { useNavigation } from '@react-navigation/native';
+import CustomImage from '../Components/CustomImage';
+import CustomText from '../Components/CustomText';
 
 const CartScreen = ({route}) => {
   const navigation = useNavigation()
@@ -109,9 +111,9 @@ const CartScreen = ({route}) => {
                 fontSize={moderateScale(16, 0.6)}
                 // marginBottom={moderateScale(10,.3)}
                 // marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeBgColor}
+                bgColor={Color.themeColor}
                 borderRadius={moderateScale(30, 0.3)}
-                isGradient
+                // isGradient
               />
             </View>
           );
