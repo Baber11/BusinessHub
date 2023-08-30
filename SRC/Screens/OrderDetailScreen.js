@@ -184,7 +184,7 @@ const OrderDetailScreen = props => {
                     position: 'absolute',
                     right: 10,
                   }}>
-                  ${item?.price}
+                  PKR{item?.price}
                 </CustomText>
               </View>
 

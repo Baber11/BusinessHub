@@ -22,7 +22,7 @@ import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
-  // console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
+  console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
   // console.log(item?.img)
   // console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
@@ -56,7 +56,7 @@ const CartItem = ({item, fromCheckout}) => {
           />
         </View>
         <View style={styles.other1}>
-          <CustomText style={styles.text1}>{item?.name}</CustomText>
+          <CustomText style={styles.text1}>{item?.Title}</CustomText>
           <View
             style={{
               flexDirection: 'row',
@@ -152,8 +152,9 @@ const CartItem = ({item, fromCheckout}) => {
               },
             ]}>
             <CustomText style={styles.amount}>
-              {numeral(item?.price * item?.qty).format('$0,0.00')}
+              {(item?.price * item?.qty)} PKR
             </CustomText>
+            
             {/* {
               fromCheckout ? 
               <CustomText

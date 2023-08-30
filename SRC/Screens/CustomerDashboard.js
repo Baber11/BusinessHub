@@ -735,6 +735,7 @@ const CustomerDashboard = () => {
             return (
               <>
                 <TouchableOpacity
+                activeOpacity={0.8}
                   key={item?.userid}
                   style={{
                     flexDirection: 'row',
@@ -743,7 +744,7 @@ const CustomerDashboard = () => {
                     paddingVertical: moderateScale(10, 0.6),
                     paddingRight: moderateScale(10, 0.6),
 
-                    borderRadius: moderateScale(20, 0.6),
+                    borderRadius: moderateScale(10, 0.6),
                     borderColor: Color.veryLightGray,
                     borderWidth: 1,
 

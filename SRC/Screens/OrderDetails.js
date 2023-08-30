@@ -203,7 +203,7 @@ const OrderDetails = props => {
                 fontSize: 24,
                 width: windowWidth * 0.3,
               }}>
-              ${item?.price}.00
+             {item?.price}.00 PKR
             </CustomText>
 
             <View style={styles.conterContainer}>

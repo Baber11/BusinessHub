@@ -11,8 +11,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, RemoveToCart, setLiked} from '../Store/slices/common';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
+import numeral from 'numeral'
 
-const Product = ({item, seller}) => {
+const Product = ({item, seller , customStyle}) => {
   // console.log("🚀 ~ file: Product.js:16 ~ Product ~ item:", item)
   // console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
   
@@ -53,23 +54,26 @@ const Product = ({item, seller}) => {
             }
           }
         }}
-        style={{
-          width: windowWidth * 0.45,
-          height: windowHeight * 0.35,
+        style={[{
+          width:  windowWidth * 0.44,
+          paddingVertical:moderateScale(10,0.3),
+          // height: windowHeight * 0.34,
           backgroundColor: '#fff',
           margin: moderateScale(5, 0.3),
           borderRadius: 5,
           alignItems: 'center',
-          shadowColor: '#000',
+        
+        },tempitem != undefined && {
+          shadowColor: "#000",
           shadowOffset: {
             width: 0,
-            height: 2,
+            height: 7,
           },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
+          shadowOpacity: 0.43,
+          shadowRadius: 9.51,
+          
+          elevation: 15,
+        }]}>
         <TouchableOpacity
           onLongPress={() => {
             setLike(!like);
@@ -84,11 +88,11 @@ const Product = ({item, seller}) => {
           }}
           activeOpacity={0.8}
           style={{
-            width: windowWidth * 0.35,
+            width: '90%',
             height: windowHeight * 0.22,
             overflow: 'hidden',
             borderRadius: 5,
-            marginTop: moderateScale(15, 0.3),
+            // marginTop: moderateScale(15, 0.3),
           }}>
           <CustomImage
             onLongPress={() => {
@@ -125,10 +129,11 @@ const Product = ({item, seller}) => {
         </TouchableOpacity>
 
         <CustomText
+         numberOfLines={1}
           isBold
           style={{
             textAlign: 'left',
-            width: windowWidth * 0.35,
+            width: '90%',
             height: windowHeight * 0.03,
             color: '#464342',
             marginTop: moderateScale(10, 0.3),
@@ -136,23 +141,33 @@ const Product = ({item, seller}) => {
           {item?.Title}
         </CustomText>
 
-        <CustomText
+        {/* <CustomText
           style={{
             textAlign: 'left',
-            width: windowWidth * 0.35,
+            width: windowWidth *0 0.35,
             height: windowHeight * 0.03,
             color: '#a2a2a2',
           }}>
           {item?.subTitle}
-        </CustomText>
+        </CustomText> */}
 
+<View style={{
+  flexDirection : 'row',
+  width : '90%',
+  justifyContent : 'space-between',
+  alignItems : 'center'
+}}>
         <CustomText
           style={{
-            textAlign: 'left',
-            width: windowWidth * 0.35,
+            // backgroundColor : 'red',
+            // textAlign: 'left',
+            width: windowWidth * 0.2,
             color: Color.themeColor,
+            fontSize: moderateScale(11, 0.6),
+          
           }}>
-          $ {item?.price}
+          Rs {numeral(item?.price).format('0,0')}
+          {/* {item?.price} */}
         </CustomText>
 
         <CustomText
@@ -166,15 +181,16 @@ const Product = ({item, seller}) => {
           }}
           style={{
             textAlign: 'right',
-            width: windowWidth * 0.35,
+            // width: windowWidth * 0.35,
             color: '#2C2928',
-            position: 'absolute',
-            bottom: moderateScale(10, 0.3),
-            right: moderateScale(15, 0.3),
+            // position: 'absolute',
+            // bottom: moderateScale(0, 0.3),
+            // right: moderateScale(2, 0.3),
             fontSize: moderateScale(11, 0.6),
           }}>
           View Details
         </CustomText>
+        </View>
       </TouchableOpacity>
 
       {tempitem != undefined && (

@@ -19,10 +19,12 @@ import navigationService from '../navigationService';
 import {useEffect} from 'react';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import CustomImage from '../Components/CustomImage';
+import CustomText from '../Components/CustomText';
 
 const CartScreen = ({route}) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
   // console.log('the data is ========>> >> ', cartData);
@@ -33,26 +35,26 @@ const CartScreen = ({route}) => {
   const checkOut = () => {
     if (
       cartData.some(item => {
-        return (item.selectedSize == '' || item?.selectedColor == '');
+        return item.selectedSize == '' || item?.selectedColor == '';
       })
     ) {
       return Platform.OS == 'android'
-        ? ToastAndroid.show('Please select the color and sizes for all items', ToastAndroid.SHORT)
+        ? ToastAndroid.show(
+            'Please select the color and sizes for all items',
+            ToastAndroid.SHORT,
+          )
         : Alert.alert('Please select the color and sizes for all items');
-    }
-    else{
+    } else {
       const body = {
         orderId: Math.floor(Math.random() * 1000000000),
         Image: require('../Assets/Images/logo.png'),
         Quantiity: cartData?.length,
         total: 134,
         order: cartData,
-      } 
-      dispatch(
-        Order(body),
-      );
+      };
+      dispatch(Order(body));
       dispatch(EmptyCart());
-      navigationService.navigate('PaymentInvoice',{body: body});
+      navigationService.navigate('PaymentInvoice', {body: body});
       Platform.OS == 'android'
         ? ToastAndroid.show('Order Confirmed', ToastAndroid.SHORT)
         : Alert.alert('Order Confirmed');
@@ -76,47 +78,40 @@ const CartScreen = ({route}) => {
 
   return (
     <>
-      <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} />
+      <CustomStatusBar backgroundColor={'#CBE4E8'} barStyle={'dark-content'} />
+      <Header showBack={true} headerColor={['#CBE4E8', '#CBE4E8']} />
+    <View style={{
+      width : windowWidth ,
+      height : windowHeight * 0.9 ,
+      backgroundColor: '#CBE4E8',
+    }}>
 
+    
       <FlatList
         showsVerticalScrollIndicator={false}
         data={cartData}
         style={{
-          height: '90%',
-          backgroundColor: 'white',
+          height:  windowHeight * 0.9,
+          
+       
           width: windowWidth,
+          // minHeight : windowHeight * 0.,
+          // flexGrow : 0,
+          // marginBottom :100,
         }}
         contentContainerStyle={{
           alignItems: 'center',
-          paddingBottom: moderateScale(20, 0.3),
+          paddingBottom: moderateScale(100, 0.3),
+          paddingTop: moderateScale(20, 0.3),
         }}
         renderItem={({item, index}) => {
           return <CartItem item={item} fromCheckout={true} />;
         }}
-        ListFooterComponent={() => {
-          return (
-            <View>
-              <CustomButton
-                isBold
-                onPress={() => {
-                  checkOut();
-                }}
-                text={'Pay'}
-                textColor={Color.white}
-                width={windowWidth * 0.8}
-                height={windowHeight * 0.07}
-                fontSize={moderateScale(16, 0.6)}
-                // marginBottom={moderateScale(10,.3)}
-                // marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeBgColor}
-                borderRadius={moderateScale(30, 0.3)}
-                isGradient
-              />
-            </View>
-          );
-        }}
+        // ListFooterComponent={() => {
+        //   return (
         
+        //   );
+        // }}
         ListEmptyComponent={() => {
           return (
             <>
@@ -125,7 +120,7 @@ const CartScreen = ({route}) => {
                   width: windowWidth * 0.8,
                   height: windowHeight * 0.4,
                   marginTop: moderateScale(30, 0.3),
-                  alignSelf:'center',
+                  alignSelf: 'center',
                   // backgroundColor:'red'
                 }}>
                 <CustomImage
@@ -142,8 +137,8 @@ const CartScreen = ({route}) => {
                 style={{
                   textAlign: 'center',
                   color: 'black',
-                  fontSize:moderateScale(15,0.6),
-                  marginTop:moderateScale(-50,0.3)
+                  fontSize: moderateScale(15, 0.6),
+                  marginTop: moderateScale(-50, 0.3),
                 }}>
                 ERROR 404 DATA NOT FOUND
               </CustomText>
@@ -151,6 +146,30 @@ const CartScreen = ({route}) => {
           );
         }}
       />
+          <View style={{
+            position : 'absolute' ,
+            bottom : moderateScale(30,0.6),
+            width : windowWidth,
+            alignItems : 'center'
+          }}>
+              <CustomButton
+                isBold
+                onPress={() => {
+                  checkOut();
+                }}
+                text={'Pay'}
+                textColor={Color.white}
+                width={windowWidth * 0.8}
+                height={windowHeight * 0.07}
+                fontSize={moderateScale(16, 0.6)}
+                // marginBottom={moderateScale(10,.3)}
+                // marginTop={moderateScale(20, 0.3)}
+                bgColor={Color.themeColor}
+                borderRadius={moderateScale(30, 0.3)}
+                // isGradient
+              />
+            </View>
+      </View>
     </>
   );
 };

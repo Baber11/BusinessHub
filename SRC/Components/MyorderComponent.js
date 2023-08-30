@@ -98,7 +98,7 @@ const MyOrderCard = ({item , type}) => {
               color: '#000',
               fontSize: moderateScale(15, 0.6),
             }}>
-            Price : ${item.total ? item?.total : item?.price}
+            Price : PKR {item.total ? item?.total : item?.price}
           </CustomText>
 
           <CustomText
