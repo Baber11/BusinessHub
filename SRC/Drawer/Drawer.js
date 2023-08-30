@@ -76,6 +76,14 @@ const Drawer = () => {
       },
     },
     {
+      name: 'My Account',
+      iconName: 'account',
+      iconType: MaterialCommunityIcons,
+      onPress: () => {
+        navigation.navigate('MyAccounts');
+      },
+    },
+    {
       name: 'Change Password',
       iconName: 'lock',
       iconType: Entypo,
@@ -83,6 +91,7 @@ const Drawer = () => {
         navigation.navigate('ChangePassword');
       },
     },
+    
 
     {
       name: 'Log out',
@@ -112,6 +121,15 @@ const Drawer = () => {
         navigation.navigate('SellerProduct');
       },
     },
+    {
+      name: 'My Account',
+      iconName: 'account',
+      iconType: MaterialCommunityIcons,
+      onPress: () => {
+        navigation.navigate('MyAccounts');
+      },
+    },
+    
     {
       name: 'Change Password',
       iconName: 'lock',

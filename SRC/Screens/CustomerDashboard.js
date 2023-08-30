@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   BackHandler,
+  RefreshControl,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
@@ -29,16 +30,23 @@ import Product from '../Components/Product';
 import navigationService from '../navigationService';
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CustomButton from '../Components/CustomButton';
-import Entypo from 'react-native-vector-icons/Entypo'
+import Entypo from 'react-native-vector-icons/Entypo';
 // import SearchbarComponent from '../Components/SearchbarComponent';
 
 const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-  const sellerServices = useSelector(state => state.commonReducer.sellerService)
-  console.log("🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:", sellerServices)
-  const sellerProducts = useSelector(state=> state.commonReducer.sellerProducts)
+  const sellerServices = useSelector(
+    state => state.commonReducer.sellerService,
+  );
+  console.log(
+    '🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:',
+    sellerServices,
+  );
+  const sellerProducts = useSelector(
+    state => state.commonReducer.sellerProducts,
+  );
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -648,6 +656,7 @@ const CustomerDashboard = () => {
     },
   ];
   const [newData, setNewData] = useState(newArrivals);
+  // const [isrefreshing, setIsRefreshing] = useState(false);
   // console.log('🚀 ~ file: CustomerDashboard.js:646 ~ newData:', newData);
 
   useEffect(() => {
@@ -665,15 +674,29 @@ const CustomerDashboard = () => {
     return () => backhandler.remove();
   }, []);
 
+  // const handleRefresh = () => {
+  //   setIsRefreshing(true)
+  //   setTimeout(() => {
+  //     setIsRefreshing(false);
+  //   }, 2000);
+  // };
+
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
       <Header headerColor={['#D2E4E4', '#D2E4E4']} cart />
+
       <ScrollView
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={isrefreshing}
+        //     onRefresh={() => handleRefresh()}
+        //   />
+        // }
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
-          alignItems:'center'
+          alignItems: 'center',
         }}
         style={{
           minHeight: windowHeight * 0.9,
@@ -683,8 +706,8 @@ const CustomerDashboard = () => {
           isBold
           style={{
             fontSize: moderateScale(20, 0.6),
-            textAlign:'left',
-            width:windowWidth,
+            textAlign: 'left',
+            width: windowWidth,
             marginTop: moderateVerticalScale(20, 0.6),
             marginLeft: moderateScale(20, 0.3),
           }}>
@@ -699,7 +722,7 @@ const CustomerDashboard = () => {
             alignItems: 'center',
 
             flexDirection: 'row',
-            marginBottom:moderateScale(10,.6)
+            marginBottom: moderateScale(10, 0.6),
             // backgroundColor:'purple',
             // marginBottom: moderateScale(60, 0.3),
             // justifyContent: 'space-between',
@@ -723,7 +746,7 @@ const CustomerDashboard = () => {
                     borderRadius: moderateScale(20, 0.6),
                     borderColor: Color.veryLightGray,
                     borderWidth: 1,
-                    
+
                     marginHorizontal: moderateScale(5, 0.3),
                     backgroundColor: 'white',
                   }}
@@ -751,14 +774,14 @@ const CustomerDashboard = () => {
                       onPress={() => {
                         setSelectedService(item?.Title);
                         // item?.onPress();
-                        navigationService.navigate('ServiceDetails',{item});
+                        navigationService.navigate('ServiceDetails', {item});
                       }}
                     />
                   </View>
                   <View
                     style={{
                       marginLeft: moderateScale(10, 0.3),
-                      justifyContent:'center'
+                      justifyContent: 'center',
                       // backgroundColor:'black'
                     }}>
                     <CustomText
@@ -785,7 +808,6 @@ const CustomerDashboard = () => {
                     <CustomText isBold>
                       starting from Rs {item?.charges}
                     </CustomText>
-                  
                   </View>
                 </TouchableOpacity>
               </>
@@ -800,15 +822,18 @@ const CustomerDashboard = () => {
           array={newArrivals}
           arrayItem={'Product'}
           fontSize={13}
-          SearchStyle={{width: windowWidth * 0.95,marginLeft:moderateScale(10,0.3)}}
+          SearchStyle={{
+            width: windowWidth * 0.95,
+            marginLeft: moderateScale(10, 0.3),
+          }}
         />
 
         <CustomText
           isBold
           style={{
             fontSize: moderateScale(20, 0.6),
-            textAlign:'left',
-            width:windowWidth,
+            textAlign: 'left',
+            width: windowWidth,
             marginTop: moderateVerticalScale(20, 0.6),
             marginLeft: moderateScale(20, 0.3),
             // backgroundColor:'black'
@@ -835,7 +860,7 @@ const CustomerDashboard = () => {
                     width: windowWidth * 0.79,
                     height: windowHeight * 0.25,
                     marginTop: moderateScale(30, 0.3),
-                    alignSelf:'center'
+                    alignSelf: 'center',
                   }}>
                   <CustomImage
                     source={require('../Assets/Images/4.png')}
@@ -851,7 +876,7 @@ const CustomerDashboard = () => {
                   style={{
                     textAlign: 'center',
                     color: 'black',
-                    fontSize:moderateScale(13,0.6)
+                    fontSize: moderateScale(13, 0.6),
                   }}>
                   ERROR 404 DATA NOT FOUND
                 </CustomText>

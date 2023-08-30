@@ -32,6 +32,7 @@ import Bookings from './Screens/Bookings';
 import Myorders from './Screens/Myorders';
 import OrderDetailScreen from './Screens/OrderDetailScreen';
 import PaymentInvoice from './Screens/PaymentInvoice';
+import MyAccounts from './Screens/MyAccounts';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -130,6 +131,7 @@ export const MyDrawer = () => {
         component={CustomerDashboard}
       />
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
+      <DrawerNavigation.Screen name="MyAccounts" component={MyAccounts} />
 
       <DrawerNavigation.Screen name="Orders" component={Orders} />
       {/* <DrawerNavigation.Screen name="Bookings" component={Bookings} /> */}

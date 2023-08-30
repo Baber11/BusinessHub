@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View,BackHandler} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View,BackHandler,RefreshControl} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -26,12 +26,19 @@ const HomeScreen = () => {
   // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
+  const [isrefreshing, setIsRefreshing] = useState(false);
   // console.log("🚀 ~ file: HomeScreen.js:29 ~ HomeScreen ~ users:", users)
   const navigation = useNavigation();
 
 
 
-  
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 2000);
+    
+  };
 
   // const [totalUser , setTotalUser] = useState(0);
   // const [ActiveUser , setActiveUser] = useState(0);
@@ -95,6 +102,12 @@ const HomeScreen = () => {
       />
 
       <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={isrefreshing}
+            onRefresh={() => onRefresh()}
+          />
+        }
         showsVerticalScrollIndicator={false}
         style={{
           minHeight: windowHeight * 0.9,

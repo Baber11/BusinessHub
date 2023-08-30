@@ -37,6 +37,8 @@ const CustomTable = ({
   const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Buyer');
   const token = useSelector(state => state.authReducer.token);
+  
+
 
   const actionPreform = async (item, index) => {
     const url = 'auth/user/update';
@@ -54,6 +56,9 @@ const CustomTable = ({
       setData(prev => [...prev], (data[index].status = statusToBe));
     }
   };
+
+
+  
 
   // console.log('OSAMA ==>>>>', data);
   useEffect(() => {
