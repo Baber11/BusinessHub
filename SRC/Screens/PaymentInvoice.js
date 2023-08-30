@@ -83,8 +83,8 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>Amount Due To</CustomText>
-            <CustomText>${Invoice.order[0].price}</CustomText>
+            <CustomText>AmountDueTo</CustomText>
+            <CustomText>PKR {Invoice.order[0].price}</CustomText>
           </View>
           <View
             style={{
@@ -141,7 +141,7 @@ const PaymentInvoice = props => {
                   <CustomText>
                     {item.Title} x {item.qty}
                   </CustomText>
-                  <CustomText>${item.price}</CustomText>
+                  <CustomText>PKR{item.price}</CustomText>
                 </View>
               );
             })}
@@ -162,8 +162,9 @@ const PaymentInvoice = props => {
             width: windowWidth * 0.9,
             marginTop: moderateScale(20, 0.3),
           }}>
-          <CustomText isBold>Total (USD) </CustomText>
-          <CustomText isBold>${Invoice.total}</CustomText>
+          <CustomText isBold>Total (RUP
+          EES) </CustomText>
+          <CustomText isBold>PKR {Invoice.total}</CustomText>
         </View>
 
         <TouchableOpacity

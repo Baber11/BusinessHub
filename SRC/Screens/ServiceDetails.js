@@ -263,9 +263,9 @@ const ServiceDetails = props => {
               style={{
                 color: Color.themeColor,
                 fontSize: 24,
-                width: windowWidth * 0.24,
+                width: windowWidth * 0.31,
               }}>
-              ${item?.charges}.00
+              {item?.charges}.00 PKR 
             </CustomText>
           </View>
         </View>

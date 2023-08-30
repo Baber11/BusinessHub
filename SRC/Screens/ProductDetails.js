@@ -47,12 +47,10 @@ const ProductDetails = props => {
   const [Selectedsize, setSelectedSize] = useState(
     cartitem ? cartitem?.selectedSize : '',
   );
- 
- 
 
   const [index, setIndex] = useState(1);
   const [quantity, setQuantity] = useState(
-    cartitem ? cartitem?.qty : item?.qty ? item?.qty :1,
+    cartitem ? cartitem?.qty : item?.qty ? item?.qty : 1,
   );
   const [cotton, setcotton] = useState(
     cartitem ? cartitem?.cotton : item?.cotton ? item?.cotton : 1,
@@ -61,7 +59,6 @@ const ProductDetails = props => {
     item?.comments ? item?.comments : [],
   );
   const [yourComment, setYourComment] = useState('');
-  
 
   const addedItem = item => {
     dispatch(AddToCart(item));
@@ -75,7 +72,6 @@ const ProductDetails = props => {
     require('../Assets/Images/Mask.png'),
   ];
 
- 
   const [finalItem, setFinalItem] = useState(
     cartitem != undefined ? cartitem : item,
   );
@@ -121,7 +117,7 @@ const ProductDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri:item?.images[index - 1]}}
+                    source={{uri: item?.images[index - 1]}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -157,11 +153,12 @@ const ProductDetails = props => {
                 backgroundColor: 'black',
               }}>
               <CustomImage
-                source={
-                 {uri: item?.images.length == 1
-                    ? item?.images[index - 1]
-                    : item?.images[index]}
-                }
+                source={{
+                  uri:
+                    item?.images.length == 1
+                      ? item?.images[index - 1]
+                      : item?.images[index],
+                }}
                 style={{
                   height: '100%',
                   height: '100%',
@@ -199,7 +196,7 @@ const ProductDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri:item?.images[index + 1]}}
+                    source={{uri: item?.images[index + 1]}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -280,9 +277,9 @@ const ProductDetails = props => {
               style={{
                 color: Color.themeColor,
                 fontSize: 24,
-                width: windowWidth * 0.23,
+                width: windowWidth * 0.38,
               }}>
-              ${finalItem?.price}.0
+              {finalItem?.price}.0 PKR
             </CustomText>
 
             <View style={styles.conterContainer}>
@@ -350,7 +347,13 @@ const ProductDetails = props => {
                     SetSelectedColor(color);
                     dispatch(setColor({id: item?.id, colors: color}));
                   }}
-                  style={[styles.colorContainer, {backgroundColor: color,marginHorizontal:moderateScale(5,.3),}]}>
+                  style={[
+                    styles.colorContainer,
+                    {
+                      backgroundColor: color,
+                      // marginHorizontal: moderateScale(5, 0.3),
+                    },
+                  ]}>
                   {Selectedcolor == color && (
                     <Icon
                       name={'check'}
@@ -393,7 +396,7 @@ const ProductDetails = props => {
                     {
                       backgroundColor:
                         Selectedsize == size ? Color.themeColor : '#F4F5F6',
-                        marginHorizontal:moderateScale(5,.3),
+                      // marginHorizontal:moderateScale(5,.3),
                     },
                   ]}>
                   <CustomText
@@ -409,16 +412,16 @@ const ProductDetails = props => {
             })}
           </View>
 
-          <CustomText
+          {/* <CustomText
             style={{
               fontSize: moderateScale(12, 0.6),
               color: '#8e9194',
               width: windowWidth * 0.28,
             }}>
             Composition
-          </CustomText>
+          </CustomText> */}
 
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -494,7 +497,7 @@ const ProductDetails = props => {
                 </CustomText>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
 
         <View
@@ -529,7 +532,6 @@ const ProductDetails = props => {
             renderItem={({item, index}) => {
               return <CommentsSection item={item} />;
             }}
-            
           />
           <CustomText
             isBold
@@ -588,9 +590,8 @@ const ProductDetails = props => {
                     time: moment().format(' hh:mm:ss a'),
                   },
                 ]);
-                setYourComment('')
-              }
-            }
+                setYourComment('');
+              }}
               text={'Add'}
               textColor={Color.white}
               width={windowWidth * 0.15}
@@ -611,18 +612,19 @@ const ProductDetails = props => {
           disabled={cartitem?.qty > 0 ? true : false}
           isBold
           onPress={() => {
-            console.log('Body========>>>>>', body)
-            addedItem(body)}}
-          text={cartitem?.qty > 0 ? 'Already Added':'ADD TO CART'}
+            console.log('Body========>>>>>', body);
+            addedItem(body);
+          }}
+          text={cartitem?.qty > 0 ? 'Added' : 'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
           fontSize={moderateScale(16, 0.6)}
           // marginBottom={moderateScale(10,.3)}
           // marginTop={moderateScale(20, 0.3)}
-          bgColor={Color.themeBgColor}
+          bgColor={Color.themeColor}
           borderRadius={moderateScale(30, 0.3)}
-          isGradient
+          // isGradient
         />
       </View>
     </>
@@ -702,11 +704,13 @@ const styles = StyleSheet.create({
     // width: windowWidth * 0.8,
     marginTop: moderateScale(15, 0.3),
     marginBottom: moderateScale(15, 0.3),
+    paddingHorizontal: moderateScale(10, 0.6),
+
   },
 
   ColorLine1: {
     flexDirection: 'row',
-    paddingHorizontal:moderateScale(10,.6),
+    paddingHorizontal: moderateScale(10, 0.6),
     // justifyContent: 'space-evenly',
     alignItems: 'center',
     // width: windowWidth * 0.7,

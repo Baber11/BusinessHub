@@ -43,7 +43,10 @@ const SellerProduct = props => {
   );
   console.log("🚀 ~ file: SellerProducts.js:44 ~ SellerProduct ~ sellerProducts:", sellerProducts)
   const sellerService = useSelector(state => state.commonReducer.sellerService);
-  console.log("🚀 ~ file: SellerProducts.js:43 ~ SellerProduct ~ sellerService:", sellerService)
+  console.log(
+    '🚀 ~ file: SellerProducts.js:43 ~ SellerProduct ~ sellerService:',
+    sellerService,
+  );
   const [products, setProducts] = useState(
     sellerProducts.filter(item => {
       return item?.userId == userData.id;
@@ -411,15 +414,32 @@ const SellerProduct = props => {
           ) : (
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'center',
-                width: windowWidth * 0.9,
-                height: windowHeight * 0.2,
+                width: windowWidth*0.9,
+                alignItems:'center'
               }}>
+              <View
+                style={{
+                  width: windowWidth * 0.6,
+                  height: windowHeight * 0.2,
+                  alignSelf: 'center',
+                }}>
+                <CustomImage
+                  source={require('../Assets/Images/4.png')}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  resizeMode={'contain'}
+                />
+              </View>
+
               <CustomText
-                style={{fontSize: moderateScale(20, 0.6), color: 'black'}}>
-                No services yet
+                style={{
+                  textAlign: 'center',
+                  color: 'black',
+                  fontSize: moderateScale(13, 0.6),
+                }}>
+                ERROR 404 DATA NOT FOUND
               </CustomText>
             </View>
           )}
@@ -470,7 +490,6 @@ const SellerProduct = props => {
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
           }}
-          
           renderItem={({item, index}) => {
             return <Product item={item} seller={true} />;
           }}
@@ -479,11 +498,10 @@ const SellerProduct = props => {
               <>
                 <View
                   style={{
-                    width: windowWidth * 0.9,
-                    height: windowHeight * 0.4,
-                    marginTop: moderateScale(30, 0.3),
+                    width: windowWidth * 0.8,
+                    height: windowHeight * 0.32,
+                    marginTop: moderateScale(20, 0.3),
                     alignSelf: 'center',
-
                   }}>
                   <CustomImage
                     source={require('../Assets/Images/4.png')}
@@ -498,8 +516,8 @@ const SellerProduct = props => {
                   style={{
                     textAlign: 'center',
                     color: 'black',
-                    fontSize: moderateScale(16, 0.6),
-                    marginTop: moderateScale(-40, 0.3),
+                    fontSize: moderateScale(13, 0.6),
+                    marginTop: moderateScale(-25, 0.3),
                   }}>
                   ERROR 404 DATA NOT FOUND
                 </CustomText>
