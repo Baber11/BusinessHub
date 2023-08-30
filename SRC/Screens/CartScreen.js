@@ -35,15 +35,15 @@ const CartScreen = ({route}) => {
   const checkOut = () => {
     if (
       cartData.some(item => {
-        return item.selectedSize == '' || item?.selectedColor == '';
+        return item?.selectedColor == '';
       })
     ) {
       return Platform.OS == 'android'
         ? ToastAndroid.show(
-            'Please select the color and sizes for all items',
+            'Please select the color for all items',
             ToastAndroid.SHORT,
           )
-        : Alert.alert('Please select the color and sizes for all items');
+        : Alert.alert('Please select the color for all items');
     } else {
       const body = {
         orderId: Math.floor(Math.random() * 1000000000),
@@ -107,28 +107,28 @@ const CartScreen = ({route}) => {
         renderItem={({item, index}) => {
           return <CartItem item={item} fromCheckout={true} />;
         }}
-        ListFooterComponent={() => {
-          return (
-            <View>
-              <CustomButton
-                isBold
-                onPress={() => {
-                  checkOut();
-                }}
-                text={'Pay'}
-                textColor={Color.white}
-                width={windowWidth * 0.8}
-                height={windowHeight * 0.07}
-                fontSize={moderateScale(16, 0.6)}
-                // marginBottom={moderateScale(10,.3)}
-                // marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeColor}
-                borderRadius={moderateScale(30, 0.3)}
-                // isGradient
-              />
-            </View>
-          );
-        }}
+        // ListFooterComponent={() => {
+        //   return (
+        //     <View>
+        //       <CustomButton
+        //         isBold
+        //         onPress={() => {
+        //           checkOut();
+        //         }}
+        //         text={'Pay'}
+        //         textColor={Color.white}
+        //         width={windowWidth * 0.8}
+        //         height={windowHeight * 0.07}
+        //         fontSize={moderateScale(16, 0.6)}
+        //         // marginBottom={moderateScale(10,.3)}
+        //         // marginTop={moderateScale(20, 0.3)}
+        //         bgColor={Color.themeColor}
+        //         borderRadius={moderateScale(30, 0.3)}
+        //         // isGradient
+        //       />
+        //     </View>
+        //   );
+        // }}
         
         //   );
         // }}

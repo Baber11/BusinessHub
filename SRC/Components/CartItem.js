@@ -68,7 +68,7 @@ const CartItem = ({item, fromCheckout}) => {
               <CustomText>Selected Size : {item?.selectedSize}</CustomText>
             ) : (
               // <></>
-             item?.size.map((item1, index) => {
+             item?.size?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}

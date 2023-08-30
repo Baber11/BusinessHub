@@ -177,9 +177,10 @@ const SellerProduct = props => {
                           }}
                           resizeMode={'stretch'}
                           onPress={() => {
-                            setSelectedService(item?.Title);
-                            // item?.onPress();
-                            navigationService.navigate('ServiceDetails', {item: item, seller:true});
+                            navigationService.navigate('ServiceDetails', {
+                              item,
+                              seller: true,
+                            });
                           }}
                         />
                       </View>
@@ -239,6 +240,7 @@ const SellerProduct = props => {
                           <CustomButton
                             onPress={() => {
                               dispatch(deleteService(item))
+                              
                             }}
                             text={'Delete'}
                             textColor={Color.white}

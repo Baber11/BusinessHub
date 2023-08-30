@@ -20,6 +20,8 @@ const Myorders = () => {
   const bookings = useSelector(state => state.commonReducer.bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
   const [newData, setNewData] = useState(selectedTab == 'Products' ? orderData : bookings)
+
+  
  
   return (
     <>
@@ -48,7 +50,7 @@ const Myorders = () => {
 
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={newData}
+        data={selectedTab == 'Products' ? orderData : bookings }
         contentContainerStyle={{
           paddingBottom: moderateScale(20, 0.3),
           width:windowWidth,

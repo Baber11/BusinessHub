@@ -8,7 +8,7 @@ import Color from '../Assets/Utilities/Color';
 import {useNavigation} from '@react-navigation/native';
 
 const MyOrderCard = ({item , type}) => {
-  // console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item)
+  console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item)
   
   const navigation = useNavigation();
 
@@ -98,7 +98,7 @@ const MyOrderCard = ({item , type}) => {
               color: '#000',
               fontSize: moderateScale(15, 0.6),
             }}>
-            Price : PKR {item.total ? item?.total : item?.price}
+            Price : PKR {item?.total ? item?.total : `${item?.order[0]?.charges}` }
           </CustomText>
 
           <CustomText

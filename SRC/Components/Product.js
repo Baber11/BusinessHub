@@ -89,7 +89,12 @@ const Product = ({item, seller , customStyle}) => {
               if (!tempitem) {
                 addedItem(item);
               }
-            }
+            }else{  
+              navigationService.navigate('OrderDetails', {
+                item,
+                details: true,
+              });
+          }
           }}
           activeOpacity={0.8}
           style={{
@@ -109,7 +114,13 @@ const Product = ({item, seller , customStyle}) => {
                 if (!tempitem) {
                   addedItem(item);
                 }
-              }
+              }else{  
+                navigationService.navigate('OrderDetails', {
+                  item,
+                  details: true,
+                });
+              
+            }
             }}
             source={item?.img ? item?.img : {uri: item?.images[0]}}
             resizeMode={'cover'}
