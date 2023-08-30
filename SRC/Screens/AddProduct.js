@@ -58,7 +58,6 @@ const AddProduct = props => {
       Category: subTitle,
       totalQty: parseInt(quantity),
       price: parseFloat(price),
-      size: sizes,
       colors: colors,
     };
 
@@ -76,13 +75,6 @@ const AddProduct = props => {
           return Platform.OS == 'android'
             ? ToastAndroid.show(`${key} should be number`, ToastAndroid.SHORT)
             : Alert.alert(`${key} should be number`);
-        }
-      } else if (key == 'size') {
-        // console.log('seze============>>>',body[key].length)
-        if (!body[key].length) {
-          return Platform.OS == 'android'
-            ? ToastAndroid.show('Add atleast one size', ToastAndroid.SHORT)
-            : Alert.alert('Add atleast one size');
         }
       } else if (key == 'colors') {
         if (!body[key].length) {
@@ -103,6 +95,7 @@ const AddProduct = props => {
         qty: 1,
         selectedColor: '',
         selectedSize: '',
+        size: sizes,
         ...body,
       },
     });
@@ -237,7 +230,6 @@ const AddProduct = props => {
                   width: windowWidth * 0.2,
                   height: windowHeight * 0.08,
                   marginHorizontal: moderateScale(20, 0.3),
-                  // backgroundColor: 'red',
                   borderRadius: moderateScale(10, 0.6),
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -266,9 +258,7 @@ const AddProduct = props => {
           </CustomText>
 
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
+            
             titleText={'Title'}
             placeholder={'Title'}
             setText={setTitle}
@@ -285,9 +275,7 @@ const AddProduct = props => {
             elevation
           />
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
+           
             titleText={'Sub Title'}
             placeholder={'Category'}
             setText={setSubTitle}
@@ -304,9 +292,6 @@ const AddProduct = props => {
             elevation
           />
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
             titleText={'Total Quantity'}
             placeholder={'Total Quantity'}
             setText={setQuantity}
@@ -323,9 +308,7 @@ const AddProduct = props => {
             elevation
           />
           <TextInputWithTitle
-            // iconName={'email'}
-            // iconType={Fontisto}
-            // LeftIcon={true}
+           
             titleText={'Price'}
             placeholder={'Price'}
             setText={setPrice}
@@ -478,7 +461,7 @@ const AddProduct = props => {
           onPress={() => {
             addProduct();
           }}
-          text={'Save'}
+          text={item ? 'Update' : 'Save'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}

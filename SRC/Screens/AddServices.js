@@ -287,7 +287,7 @@ const AddServices = props => {
           console.log('Here============')  
             addService()
           }}
-          text={'Save'}
+          text={item ? 'Update':'Save'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}

@@ -159,8 +159,8 @@ const Product = ({item, seller , customStyle}) => {
         <CustomText
           style={{
             // backgroundColor : 'red',
-            // textAlign: 'left',
-            width: windowWidth * 0.2,
+            textAlign: 'left',
+            width: windowWidth * 0.4,
             color: Color.themeColor,
             fontSize: moderateScale(11, 0.6),
           

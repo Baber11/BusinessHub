@@ -110,15 +110,15 @@ const Drawer = () => {
       iconName: 'home',
       iconType: Entypo,
       onPress: () => {
-        navigation.navigate('Orders');
+        navigation.navigate('SellerProduct');
       },
     },
     {
-      name: 'Catalog',
+      name: 'Orders',
       iconName: 'box',
       iconType: Feather,
       onPress: () => {
-        navigation.navigate('SellerProduct');
+        navigation.navigate('Orders');
       },
     },
     {

@@ -116,7 +116,7 @@ export const MyDrawer = () => {
     role == 'admin'
       ? 'HomeScreen'
       : role == 'vendor'
-      ? 'Orders'
+      ? 'SellerProduct'
       : 'CustomerDashboard';
 
   return (

@@ -17,54 +17,9 @@ const Myorders = () => {
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
   const orderData = useSelector(state => state.commonReducer.order);
-  // console.log('🚀 ~ file: Myorders.js:17 ~ Myorders ~ orderData:', orderData);
   const bookings = useSelector(state => state.commonReducer.bookings);
-  // console.log('🚀 ~ file: Myorders.js:18 ~ Myorders ~ bookings:', bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
   const [newData, setNewData] = useState(selectedTab == 'Products' ? orderData : bookings)
-  // console.log(
-  //   '🚀 ~ file: Myorders.js:19 ~ Myorders ~ selectedTab:',
-  //   selectedTab,
-  // );
-
-  const Data1 = [
-    {
-      id: 1,
-      name: 'Sushi',
-      Title: 'Minish Dish',
-      price: '34',
-      image: require('../Assets/Images/Mask2.png'),
-    },
-    {
-      id: 2,
-      name: 'Salad',
-      Title: 'Menchi Katusha',
-      price: '44',
-      image: require('../Assets/Images/Mask3.png'),
-    },
-    {
-      id: 3,
-      name: 'Tikka',
-      Title: 'Drawing Food',
-      price: '64',
-      image: require('../Assets/Images/Mask3.png'),
-    },
-    {
-      id: 4,
-      name: 'Meat',
-      Title: 'Beef Food',
-      price: '84',
-      image: require('../Assets/Images/Mask3.png'),
-    },
-    {
-      id: 5,
-      name: 'Meat',
-      Title: 'Beef Food',
-      price: '84',
-      image: require('../Assets/Images/Mask3.png'),
-    },
-  ];
-
  
   return (
     <>

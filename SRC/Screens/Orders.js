@@ -45,7 +45,7 @@ const Orders = () => {
   const oneDayAgo = moment().subtract(1, 'day');
 
   const Orders = () => {
-    setMyOrder([])
+    setMyOrder([]);
     orders.map(item =>
       item.order.map(
         order =>
@@ -62,16 +62,17 @@ const Orders = () => {
   //   console.log()
   // })
 
-  const dateDiff =(item)=>{
-    const currentDate = moment()
-    const newDate = moment(item)
-    console.log('Date difference=========',currentDate.diff(newDate, 'h'))
-    return currentDate.diff(newDate, 'h')
-  }
+  const dateDiff = item => {
+    const currentDate = moment();
+    const newDate = moment(item);
+    console.log('Date difference=========', currentDate.diff(newDate, 'h'));
+    return currentDate.diff(newDate, 'h');
+  };
 
-  const recentOrders = ()=>{
-    
-  }
+  const recentOrders = () => {
+    const history = myOrder.filter(item => dateDiff(item?.date) > 24);
+    console.log('🚀 ~ file: Orders.js:74 ~ recentOrders ~ history:', history);
+  };
 
   const twentyFourHoursAgo = moment().subtract(24, 'hours');
 
@@ -94,9 +95,8 @@ const Orders = () => {
     return () => backhandler.remove();
   }, []);
   useEffect(() => {
-    // setMyOrder({})
     Orders();
-    // dateDiff()
+    recentOrders();
   }, [orders]);
 
   return (
@@ -132,12 +132,13 @@ const Orders = () => {
 
           <FlatList
             numColumns={1}
-            data={myOrder.filter(item=>dateDiff(item.date) <24)}
+            data={myOrder.filter(item => dateDiff(item.date) < 24)}
             showsHorizontalScrollIndicator={false}
             horizontal
             contentContainerStyle={{
               // backgroundColor:'black',
               // height: windowHeight * 0.2,
+              marginHorizontal:moderateScale(10,.3),
               alignItems: 'center',
             }}
             ListEmptyComponent={() => {
@@ -182,7 +183,7 @@ const Orders = () => {
                   item={item}
                   selectedOrder={selectedOrder}
                   setSelectedOrder={setSelectedOrder}
-                  width={windowWidth * 0.8}
+                  width={windowWidth * 0.85}
                 />
               );
             }}
@@ -204,11 +205,8 @@ const Orders = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={1}
-          data={myOrder.filter(item=>dateDiff(item.date) > 24)}
+          data={myOrder.filter(item => dateDiff(item?.date) > 24)}
           contentContainerStyle={{
-            // backgroundColor:'black',
-            // width:windowWidth,
-            // alignSelf: 'center',
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: moderateScale(10, 0.3),
@@ -216,6 +214,7 @@ const Orders = () => {
           renderItem={({item, index}) => {
             return (
               <OrderCard
+                // width = {windowWidth*0.8}
                 item={item}
                 selectedOrder={selectedOrder}
                 setSelectedOrder={setSelectedOrder}
@@ -262,13 +261,13 @@ const Orders = () => {
 
 export default Orders;
 
-const OrderCard = ({item}) => {
+const OrderCard = ({item, width}) => {
   console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
   return (
     <View
       key={item?.id}
       style={{
-        width: windowWidth * 0.9,
+        width: width ? width :  windowWidth * 0.95,
         paddingVertical: moderateScale(10, 0.6),
         marginHorizontal: moderateScale(5, 0.3),
         backgroundColor: '#f9fafd',
@@ -346,13 +345,7 @@ const OrderCard = ({item}) => {
           </CustomText>
         )}
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: windowWidth * 0.62,
-            marginTop: moderateScale(5, 0.3),
-          }}>
+      
           <CustomText
             numberOfLines={1}
             style={{
@@ -362,7 +355,9 @@ const OrderCard = ({item}) => {
             Price : ${item.total ? item?.total : item?.price}
           </CustomText>
 
-          <CustomText
+          
+      </View>
+      <CustomText
             isBold
             onPress={() => {
               navigationService.navigate('OrderDetails', {
@@ -371,13 +366,14 @@ const OrderCard = ({item}) => {
               });
             }}
             style={{
+              position:'absolute',
+              right:10,
+              bottom:10,
               color: '#000',
               fontSize: moderateScale(12, 0.6),
             }}>
             Details
           </CustomText>
-        </View>
-      </View>
     </View>
   );
 };

@@ -33,10 +33,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { deleteService } from '../Store/slices/common';
 
 const SellerProduct = props => {
-  const [item, setItem] = useState(
-    props?.route?.params?.item ? props?.route?.params?.item : {},
-  );
-  const token = useSelector(state => state.authReducer.token);
+  // const [item, setItem] = useState(
+  //   props?.route?.params?.item ? props?.route?.params?.item : {},
+  // );
+  // const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   const sellerProducts = useSelector(
     state => state.commonReducer.sellerProducts,
@@ -52,160 +52,10 @@ const SellerProduct = props => {
       return item?.userId == userData.id;
     }),
   );
-  const [isLoading, setIsLoading] = useState(false);
 
-  const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
-  const [selectedService, setSelectedService] = useState('');
   const dispatch = useDispatch()
-  const Services = [
-    {
-      id: 1,
-      Title: 'Stitching',
-      subTitle: 'stiching',
-      price: 200,
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      image: require('../Assets/Images/dummyman4.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      onPress: () => {
-        console.log('here');
-        navigationService.navigate('Dresses');
-      },
-    },
-    {
-      id: 2,
-      subTitle: 'stiching',
-      Title: 'Painting',
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      price: 300,
-      image: require('../Assets/Images/dummyUser2.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      id: 3,
-      subTitle: 'stiching',
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      Title: 'jeans',
-      price: 600,
-      image: require('../Assets/Images/dummyman1.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      id: 4,
-      subTitle: 'stiching',
-      description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
-      Title: 'shoes',
-      price: 400,
-      image: require('../Assets/Images/dummyUser1.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-
-      onPress: () => {
-        console.log('here');
-      },
-    },
-    {
-      id: 5,
-      subTitle: 'stiching',
-      Title: 'shoes',
-      image: require('../Assets/Images/dummyman4.png'),
-      images: [
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-
-      onPress: () => {
-        console.log('here');
-      },
-    },
-  ];
-  const [allProducts, setAllProducts] = useState([
-    {
-      id: 1,
-      Title: 'T-Shirts',
-      price: '90',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      colors: ['#4e86e1', '#2c4973', '#1ABFBC', '#C8C', '#313436'],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      totalQty: 18,
-      totalCotton: 5,
-      like: false,
-    },
-    {
-      id: 2,
-      Title: 'T-Shirts',
-      price: '20',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      colors: ['#4e86e1', '#2c4973', '#2A4333', 'black', '#313436'],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      totalQty: 18,
-      like: false,
-    },
-    {
-      id: 3,
-      Title: 'T-Shirts',
-      price: '20',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      colors: ['#4e86e1', '#2c4973', '#2A4333', 'black', '#313436'],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      totalQty: 18,
-      like: false,
-    },
-    {
-      id: 4,
-      Title: 'T-Shirts',
-      price: '20',
-      subTitle: 'Oversize',
-      img: require('../Assets/Images/Image.png'),
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-      colors: ['#4e86e1', '#2c4973', '#2A4333', 'black', '#313436'],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      totalQty: 18,
-      like: false,
-    },
-  ]);
-  const [selectedItem, setSelectedItem] = useState({})
-
+ 
   useEffect(() => {
     setProducts(
       sellerProducts.filter(item => {
