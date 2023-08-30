@@ -42,10 +42,6 @@ const Orders = () => {
   const [myOrder, setMyOrder] = useState([]);
   console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
   const navigation = useNavigation();
-  // console.log(
-  //   '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-  //   isFocused,
-  // );
   const oneDayAgo = moment().subtract(1, 'day');
 
   const Orders = () => {
@@ -61,6 +57,21 @@ const Orders = () => {
       ),
     );
   };
+
+  // myOrder.filter(item => {
+  //   console.log()
+  // })
+
+  const dateDiff =(item)=>{
+    const currentDate = moment()
+    const newDate = moment(item)
+    console.log('Date difference=========',currentDate.diff(newDate, 'h'))
+    return currentDate.diff(newDate, 'h')
+  }
+
+  const recentOrders = ()=>{
+    
+  }
 
   const twentyFourHoursAgo = moment().subtract(24, 'hours');
 
@@ -85,6 +96,7 @@ const Orders = () => {
   useEffect(() => {
     // setMyOrder({})
     Orders();
+    // dateDiff()
   }, [orders]);
 
   return (
@@ -120,7 +132,7 @@ const Orders = () => {
 
           <FlatList
             numColumns={1}
-            data={myOrder}
+            data={myOrder.filter(item=>dateDiff(item.date) <24)}
             showsHorizontalScrollIndicator={false}
             horizontal
             contentContainerStyle={{
@@ -192,7 +204,7 @@ const Orders = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={1}
-          data={myOrder}
+          data={myOrder.filter(item=>dateDiff(item.date) > 24)}
           contentContainerStyle={{
             // backgroundColor:'black',
             // width:windowWidth,

@@ -24,33 +24,36 @@ import {TriangleColorPicker} from 'react-native-color-picker';
 import Modal from 'react-native-modal';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import navigationService from '../navigationService';
-import { setAddProducts } from '../Store/slices/common';
+import {setAddProducts} from '../Store/slices/common';
 
 const AddProduct = props => {
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: AddProduct.js:31 ~ AddProduct ~ item:", item)
+  console.log('🚀 ~ file: AddProduct.js:31 ~ AddProduct ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
-  const [images, setImages] = useState(item?.images ? item?.images : ['plus']);
-  const [title, setTitle] = useState(item?.Title ? item?.Title :'');
-  const [subTitle, setSubTitle] = useState(item?.Category ? item?.Category : '');
-  const [price, setPrice] = useState(item?.price ? item?.price : 0);
-  const [quantity, setQuantity] = useState(item?.qty ? item?.qty :0);
+  const [images, setImages] = useState(item?.images ? item?.images : []);
+  const [title, setTitle] = useState(item?.Title ? item?.Title : '');
+  const [subTitle, setSubTitle] = useState(
+    item?.Category ? item?.Category : '',
+  );
+  const [price, setPrice] = useState(item?.price ? `${item?.price}` : '');
+  console.log('🚀 ~ file: AddProduct.js:38 ~ AddProduct ~ price:', price);
+  const [quantity, setQuantity] = useState(item?.qty ? `${item?.qty}` : '');
   const [colors, setColors] = useState(item?.colors ? item?.colors : []);
-  const [sizes, setSizes] = useState(item?.size ? item?.size :[]);
+  const [sizes, setSizes] = useState(item?.size ? item?.size : []);
   const [cotton, setCotton] = useState([]);
   const [imagePickerModal, setImagePickerModal] = useState(false);
   const [image, setImage] = useState({});
   const [colorModal, setColorModal] = useState(false);
   const [size, setSize] = useState('');
   const sizesArray = ['XS', 'S', 'M', 'L', 'XL'];
-const dispatch = useDispatch()
-const navigation = useNavigation()
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const addProduct = () => {
     // console.log('Here=======');
     const body = {
-      images: images.slice(1),
+      images: images,
       Title: title,
       Category: subTitle,
       totalQty: parseInt(quantity),
@@ -58,56 +61,65 @@ const navigation = useNavigation()
       size: sizes,
       colors: colors,
     };
-   
+
     for (let key in body) {
       // console.log('Key===========', key);
-      if(key == 'images'){
+      if (key == 'images') {
         if (body[key].length == 0) {
           // console.log('Image length============>>>>>>>>',body[key].length)
           return Platform.OS == 'android'
             ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
             : Alert.alert('Add atleast one image');
         }
-      }
-      else if(key == 'price' || key == 'totalQty') {
+      } else if (key == 'price' || key == 'totalQty') {
         if (isNaN(body[key])) {
           return Platform.OS == 'android'
-            ? ToastAndroid.show(
-                `${key} should be number`,
-                ToastAndroid.SHORT,
-              )
+            ? ToastAndroid.show(`${key} should be number`, ToastAndroid.SHORT)
             : Alert.alert(`${key} should be number`);
         }
-      }
-      else if(key == 'size'){
+      } else if (key == 'size') {
         // console.log('seze============>>>',body[key].length)
-        if(!body[key].length){
+        if (!body[key].length) {
           return Platform.OS == 'android'
             ? ToastAndroid.show('Add atleast one size', ToastAndroid.SHORT)
             : Alert.alert('Add atleast one size');
         }
-      }
-      else if(key == 'colors'){
-        if(!body[key].length){
+      } else if (key == 'colors') {
+        if (!body[key].length) {
           return Platform.OS == 'android'
             ? ToastAndroid.show('Add atleast one color', ToastAndroid.SHORT)
             : Alert.alert('Add atleast one color');
         }
-      }
-      else if (body[key] == '') {
+      } else if (body[key] == '') {
         return Platform.OS == 'android'
           ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
           : Alert.alert('All Fields are required');
       }
     }
-    // console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', body);
+    console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', {
+      userId: user?.id,
+      item: {
+        id: item?.id ? item?.id : -1,
+        qty: 1,
+        selectedColor: '',
+        selectedSize: '',
+        ...body,
+      },
+    });
 
-    dispatch(setAddProducts({userId: user?.id, item:{qty: 1,selectedColor:'', selectedSize:'',...body}}))
-    navigation.goBack()
-
-    
-
-
+    dispatch(
+      setAddProducts({
+        userId: user?.id,
+        item: {
+          id: item?.id ? item?.id : -1,
+          qty: 1,
+          selectedColor: '',
+          selectedSize: '',
+          ...body,
+        },
+      }),
+    );
+    navigation.goBack();
 
     // navigationService.navigate('SellerProduct',{item:{...body,images:images.slice(0)}})
   };
@@ -121,7 +133,7 @@ const navigation = useNavigation()
     if (size != '') {
       if (sizes.includes(size)) {
         Platform.OS == 'android'
-          ? ToastAndroid.show('Already added',ToastAndroid.SHORT)
+          ? ToastAndroid.show('Already added', ToastAndroid.SHORT)
           : Alert.alert('already added');
       } else {
         setSizes(prev => [...prev, size]);
@@ -178,116 +190,65 @@ const navigation = useNavigation()
             Add upto 5 images. First image is your product's cover that will be
             highlighted everywhere
           </CustomText>
+
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'flex-start',
               marginTop: moderateScale(10, 0.3),
-              // marginHorizontal:moderateScale(20,.3),
-              //   backgroundColor: 'orange',
+
               width: windowWidth * 0.95,
+              flexWrap: 'wrap',
               // paddingHorizontal: moderateScale(10, 0.6),
             }}>
-            {images.length > 0 && (
-              <FlatList
-                data={images}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={
-                  {
-                    // backgroundColor:'purple'
-                  }
-                }
-                renderItem={({item, index}) => {
-                  // console.log(
-                  //   '🚀 ~ file: AddProduct.js:133 ~ AddProduct ~ item:',
-                  //   item,
-                  // );
-                  return (
-                    <>
-                      {index == 0 ? (
-                        images?.length < 6 ? (
-                          <TouchableOpacity
-                            style={{
-                              width: windowWidth * 0.2,
-                              height: windowHeight * 0.08,
-                              marginHorizontal: moderateScale(10, 0.3),
-                              // backgroundColor: 'red',
-                              borderRadius: moderateScale(10, 0.6),
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              borderColor: Color.veryLightGray,
-                              borderWidth: 1,
-                            }}
-                            onPress={() => {
-                              setImagePickerModal(true);
-                            }}>
-                            <Icon name={'plus'} as={AntDesign} size={5} />
-                          </TouchableOpacity>
-                        ) : (
-                          <></>
-                        )
-                      ) : (
-                        <View
-                          style={{
-                            width: windowWidth * 0.2,
-                            height: windowHeight * 0.08,
-                            backgroundColor: 'black',
-                            borderRadius: moderateScale(10, 0.6),
-                            marginHorizontal: moderateScale(5, 0.3),
+            {images.length > 0 &&
+              images.map((item, index) => {
+                console.log(
+                  '🚀 ~ file: AddServices.js:149 ~ images.map ~ item:',
+                  item,
+                );
+                return (
+                  <View
+                    style={{
+                      width: windowWidth * 0.2,
+                      height: windowHeight * 0.08,
+                      backgroundColor: 'black',
+                      borderRadius: moderateScale(10, 0.6),
+                      marginHorizontal: moderateScale(20, 0.3),
 
-                            // alignItems: 'center',
-                            justifyContent: 'center',
-                            borderColor: Color.veryLightGray,
-                            borderWidth: 1,
-                            overflow: 'hidden',
-                            marginRight: moderateScale(10, 0.6),
-                          }}>
-                          <CustomImage
-                            source={{uri: item}}
-                            style={{width: '100%', height: '100%'}}
-                          />
-                        </View>
-                      )}
-                    </>
-                  );
+                      // alignItems: 'center',
+                      justifyContent: 'center',
+                      borderColor: Color.veryLightGray,
+                      borderWidth: 1,
+                      overflow: 'hidden',
+                      marginRight: moderateScale(10, 0.6),
+                      marginBottom: moderateScale(10, 0.3),
+                    }}>
+                    <CustomImage
+                      source={{uri: item}}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                );
+              })}
+            {images.length < 5 && (
+              <TouchableOpacity
+                style={{
+                  width: windowWidth * 0.2,
+                  height: windowHeight * 0.08,
+                  marginHorizontal: moderateScale(20, 0.3),
+                  // backgroundColor: 'red',
+                  borderRadius: moderateScale(10, 0.6),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderColor: Color.veryLightGray,
+                  borderWidth: 1,
                 }}
-                
-                ListEmptyComponent={() => {
-                  return (
-                    <>
-                      <View
-                        style={{
-                          width: windowWidth * 0.8,
-                          height: windowHeight * 0.4,
-                          marginTop: moderateScale(30, 0.3),
-                          alignSelf:'center',
-                          // backgroundColor:'red'
-                        }}>
-                        <CustomImage
-                          source={require('../Assets/Images/4.png')}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                          }}
-                          resizeMode={'contain'}
-                        />
-                      </View>
-                      <CustomText
-                        isBold
-                        style={{
-                          textAlign: 'center',
-                          color: 'black',
-                          fontSize:moderateScale(15,0.6),
-                          marginTop:moderateScale(-50,0.3)
-                        }}>
-                        ERROR 404 DATA NOT FOUND
-                      </CustomText>
-                    </>
-                  );
-                }}
-              />
-
+                onPress={() => {
+                  setImagePickerModal(true);
+                }}>
+                <Icon name={'plus'} as={AntDesign} size={5} />
+              </TouchableOpacity>
             )}
           </View>
           <CustomText

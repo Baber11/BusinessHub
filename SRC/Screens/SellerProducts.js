@@ -41,6 +41,7 @@ const SellerProduct = props => {
   const sellerProducts = useSelector(
     state => state.commonReducer.sellerProducts,
   );
+  console.log("🚀 ~ file: SellerProducts.js:44 ~ SellerProduct ~ sellerProducts:", sellerProducts)
   const sellerService = useSelector(state => state.commonReducer.sellerService);
   console.log("🚀 ~ file: SellerProducts.js:43 ~ SellerProduct ~ sellerService:", sellerService)
   const [products, setProducts] = useState(
@@ -202,21 +203,13 @@ const SellerProduct = props => {
   ]);
   const [selectedItem, setSelectedItem] = useState({})
 
-  // useEffect(() => {
-  //   if(Object.keys(item).length>0){
-  //     setAllProducts(prev=>[item,...prev])
-
-  //   }
-
-  // }, [isFocused])
-
   useEffect(() => {
     setProducts(
       sellerProducts.filter(item => {
         return item?.sellerId == userData?.id;
       }),
     );
-  }, [isFocused]);
+  }, [isFocused, sellerProducts]);
 
   return (
     <>

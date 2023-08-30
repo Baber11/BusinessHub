@@ -39,6 +39,7 @@ const CustomerDashboard = () => {
   const sellerServices = useSelector(state => state.commonReducer.sellerService)
   console.log("🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:", sellerServices)
   const sellerProducts = useSelector(state=> state.commonReducer.sellerProducts)
+  console.log("🚀 ~ file: CustomerDashboard.js:42 ~ CustomerDashboard ~ sellerProducts:", sellerProducts)
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);

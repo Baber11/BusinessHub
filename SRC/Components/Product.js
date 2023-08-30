@@ -8,7 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {Icon} from 'native-base';
 import navigationService from '../navigationService';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddToCart, RemoveToCart, setLiked} from '../Store/slices/common';
+import {AddToCart, RemoveToCart, deleteProducts, setLiked} from '../Store/slices/common';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -24,10 +24,6 @@ const Product = ({item, seller}) => {
   const Role = useSelector(state => state.authReducer.role);
   console.log("🚀 ~ file: Product.js:25 ~ Product ~ Role:", Role)
 
-  // console.log(
-  //   '🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:',
-  //   cartData,
-  // );
 
   const addedItem = item => {
     // console.log('add DATA===>', cartData);
@@ -55,7 +51,13 @@ const Product = ({item, seller}) => {
               addedItem(item);
             }
           }
-        }}
+          else{  
+              navigationService.navigate('OrderDetails', {
+                item,
+                details: true,
+              });
+            
+          }}}
         style={{
           width: windowWidth * 0.45,
           // height: windowHeight * 0.35,
@@ -184,7 +186,7 @@ const Product = ({item, seller}) => {
             View Details
           </CustomText>
         )}
-        {/* {Role == "vendor" &&  <View
+        {Role == "vendor" &&  <View
           style={{
             flexDirection: 'row',
           }}>
@@ -210,7 +212,7 @@ const Product = ({item, seller}) => {
           />
           <CustomButton
             onPress={() => {
-              dispatch(deleteService(item));
+              dispatch(deleteProducts(item));
             }}
             text={'Delete'}
             textColor={Color.white}
@@ -227,10 +229,10 @@ const Product = ({item, seller}) => {
             }}
             isBold
           />
-        </View>} */}
+        </View>}
       </TouchableOpacity>
 
-      {tempitem != undefined && (
+      {tempitem != undefined && !seller &&(
         <CustomButton
           isBold
           onPress={() => removeItem(item)}

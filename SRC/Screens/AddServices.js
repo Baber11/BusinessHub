@@ -37,7 +37,7 @@ const AddServices = props => {
   console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
   const [title, setTitle] = useState(item?.Title ? item?.Title : '');
   const [category, setCategory] = useState(item?.category ? item?.category :'');
-  const [charges, setCharges] = useState(item?.charges ? item?.charges : '');
+  const [charges, setCharges] = useState(item?.charges ? `${item?.charges}` : '');
   const [imagePickerModal, setImagePickerModal] = useState(false);
   const [description, setDescription] = useState(item?.description ? item?.description :'');
   const [image, setImage] = useState({});
