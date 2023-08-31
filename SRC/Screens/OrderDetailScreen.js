@@ -1,4 +1,4 @@
-import {View, ImageBackground, TouchableOpacity , FlatList} from 'react-native';
+import {View, ImageBackground, TouchableOpacity, FlatList} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
@@ -71,6 +71,7 @@ const OrderDetailScreen = props => {
   ];
 
   const item = props.route.params.item;
+
   const type = props.route.params.type;
 
   // console.log('Item Data======>>>>>>>>>>>>>>>>>>', item?.date);
@@ -99,6 +100,7 @@ const OrderDetailScreen = props => {
           flexGrow: 0,
         }}
         renderItem={({item, index}) => {
+          console.log("🚀 ~ file: OrderDetailScreen.js:103 ~ OrderDetailScreen ~ item:", item)
           // console.log('Item images', item);
           return (
             <View
@@ -134,7 +136,7 @@ const OrderDetailScreen = props => {
                   backgroundColor: 'transparent',
                 }}>
                 <CustomImage
-                  source={{uri:item?.images ? item?.images[0] : item?.img}}
+                  source={{uri: item?.images[0]?.image?.uri ? item?.images[0]?.image?.uri : item?.images ? item?.images[0] :  item?.order[0]?.images[0]}}
                   style={{
                     height: '100%',
                     width: '100%',
@@ -184,7 +186,7 @@ const OrderDetailScreen = props => {
                     position: 'absolute',
                     right: 10,
                   }}>
-                  PKR{item?.price}
+                  PKR {item?.price ? item?.price : item?.charges}
                 </CustomText>
               </View>
 
@@ -199,7 +201,7 @@ const OrderDetailScreen = props => {
                     }}>
                     <CustomText
                       style={{
-                        color: Color.ver,
+                        color: Color.veryLightGray,
                         fontSize: moderateScale(12, 0.6),
                       }}>
                       Size
@@ -226,7 +228,7 @@ const OrderDetailScreen = props => {
                   paddingHorizontal: moderateScale(18, 0.6),
                 }}>
                 <CustomText
-                  style={{color: Color.ver, fontSize: moderateScale(12, 0.6)}}>
+                  style={{color: Color.veryLightGray, fontSize: moderateScale(12, 0.6)}}>
                   Category
                 </CustomText>
 
@@ -252,7 +254,7 @@ const OrderDetailScreen = props => {
                     }}>
                     <CustomText
                       style={{
-                        color: Color.ver,
+                        color: Color.veryLightGray,
                         fontSize: moderateScale(12, 0.6),
                       }}>
                       Reservation date
@@ -340,40 +342,39 @@ const OrderDetailScreen = props => {
             </View>
           );
         }}
-
-         ListEmptyComponent={() => {
-                  return (
-                    <>
-                      <View
-                        style={{
-                          width: windowWidth * 0.8,
-                          height: windowHeight * 0.4,
-                          marginTop: moderateScale(30, 0.3),
-                          alignSelf:'center',
-                          // backgroundColor:'red'
-                        }}>
-                        <CustomImage
-                          source={require('../Assets/Images/4.png')}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                          }}
-                          resizeMode={'contain'}
-                        />
-                      </View>
-                      <CustomText
-                        isBold
-                        style={{
-                          textAlign: 'center',
-                          color: 'black',
-                          fontSize:moderateScale(15,0.6),
-                          marginTop:moderateScale(-50,0.3)
-                        }}>
-                        ERROR 404 DATA NOT FOUND
-                      </CustomText>
-                    </>
-                  );
-                }}
+        ListEmptyComponent={() => {
+          return (
+            <>
+              <View
+                style={{
+                  width: windowWidth * 0.8,
+                  height: windowHeight * 0.4,
+                  marginTop: moderateScale(30, 0.3),
+                  alignSelf: 'center',
+                  // backgroundColor:'red'
+                }}>
+                <CustomImage
+                  source={require('../Assets/Images/4.png')}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  resizeMode={'contain'}
+                />
+              </View>
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'center',
+                  color: 'black',
+                  fontSize: moderateScale(15, 0.6),
+                  marginTop: moderateScale(-50, 0.3),
+                }}>
+                ERROR 404 DATA NOT FOUND
+              </CustomText>
+            </>
+          );
+        }}
         // ListFooterComponent={({item , index})=>{
         //   console.log('index is ================>' , item)
         //   return(
@@ -400,9 +401,13 @@ const OrderDetailScreen = props => {
               <View
                 style={{
                   width:
-                    index == i ? moderateScale(10, 0.6) : moderateScale(10, 0.6),
+                    index == i
+                      ? moderateScale(10, 0.6)
+                      : moderateScale(10, 0.6),
                   height:
-                    index == i ? moderateScale(10, 0.6) : moderateScale(10, 0.6),
+                    index == i
+                      ? moderateScale(10, 0.6)
+                      : moderateScale(10, 0.6),
                   borderRadius:
                     index == i ? moderateScale(5, 0.6) : moderateScale(5, 0.6),
                   backgroundColor:

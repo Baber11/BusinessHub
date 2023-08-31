@@ -6,12 +6,12 @@ const initialState = {
   categories: [],
   categoryProperties: [],
   financeBreakDown: [],
-  cart:[],
-  bookings:[],
+  cart: [],
+  bookings: [],
   notification: false,
-  order : [],
-  sellerProducts:[],
-  sellerService :[],
+  order: [],
+  sellerProducts: [],
+  sellerService: [],
   selectedRole: '',
 };
 
@@ -46,7 +46,7 @@ const CommonSlice = createSlice({
     AddToCart(state, action) {
       const itemId = action.payload.id;
 
-      state.cart.push({date:moment(),...action.payload});
+      state.cart.push({date: moment(), ...action.payload});
     },
 
     RemoveToCart(state, action) {
@@ -59,7 +59,7 @@ const CommonSlice = createSlice({
     },
 
     Order(State, action) {
-      State.order.push(action.payload)
+      State.order.push(action.payload);
     },
 
     increamentQuantity(state, action) {
@@ -114,29 +114,93 @@ const CommonSlice = createSlice({
         item.like = action.payload.liked;
       }
     },
-    setServiceBooking(state, action){
-      console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
-      
-      state.bookings.push(action.payload)
-
+    setServiceBooking(state, action) {
+      console.log(
+        '🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:',
+        action.payload,
+      );
+      state.bookings.push(action.payload);
     },
 
-    setAddProducts(state, action){
-     console.log('Data===============>>', state.sellerProducts)
+    setAddProducts(state, action) {
+      console.log('Data===============>>=====', state.sellerProducts);
+      console.log('Data===============>>', action.payload);
 
-     console.log('Dat==================>>>>>>>', {sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
-       state.sellerProducts.push({sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
-      
-
+      // console.log('Dat==================>>>>>>>', {sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
+      const item = state.sellerProducts.find(
+        item => item?.id == action.payload.item.id,
+      );
+      if (item) {
+        item.Category = action.payload.item?.Category;
+        item.Title = action.payload.item.Title;
+        item.colors = action.payload.item.colors;
+        // item.id = action.payload.item.colors;
+        item.images = action.payload.item.images;
+        item.price = action.payload.item.price;
+        // item.qty = action.payload.item.qty;
+        item.size = action.payload.item.size;
+        item.totalQty = action.payload.item.totalQty;
+      } else {
+        state.sellerProducts.push({
+          sellerId: action.payload.userId,
+          ...action.payload.item,
+          id: state.sellerProducts.length + 1,
+        });
+      }
     },
-    setServices(state, action){
-      console.log("🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:", action.payload)
-      
-      state.sellerService.push(action.payload)
 
+    deleteProducts(state, action) {
+
+      console.log(
+        '🚀 ~ file: common.js:147 ~ deleteProducts ~ action:',
+        action.payload,
+      );
+
+      console.log('Data===============>>=====', state.sellerProducts);
+      state.sellerProducts = state.sellerProducts.filter(
+        item => item.id != action.payload.id,
+      );
     },
 
-    
+    setServices(state, action) {
+      console.log(
+        '🚀 ~ file: common.js:133 ~ setServices ~ state:',
+        state.sellerService,
+      );
+      console.log(
+        '🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:',
+        action.payload,
+      );
+
+      const item = state.sellerService.find(item => {
+        // console.log(item?.serviceOwner.id, action.payload.id)
+        return item.serviceOwner.id == action.payload.serviceOwner.id;
+      });
+      console.log('🚀 ~ file: common.js:137 ~ setServices ~ item:', item);
+      if (item) {
+        item.Title = action.payload.Title;
+        item.category = action.payload.category;
+        item.charges = action.payload.charges;
+        item.description = action.payload.description;
+        item.images = action.payload.images;
+        item.categoriesserviceOwner = action.payload.serviceOwner;
+      } else {
+        state.sellerService.push(action.payload);
+      }
+
+      // if(action.payload)
+      // if(state.sellerService.length==1){
+      //   state.sellerService.push(action.payload)
+      // }else{
+      //   state.sellerService.push(action.payload)
+
+      // }
+    },
+    deleteService(state, action) {
+      state.sellerService = state.sellerService.filter(
+        item => item.serviceOwner.id != action.payload.serviceOwner.id,
+      );
+    },
   },
 });
 
@@ -148,19 +212,21 @@ export const {
   setFinanceBreakDown,
   setNotification,
   setSelectedRole,
-  AddToCart, 
-  RemoveToCart, 
+  AddToCart,
+  RemoveToCart,
   setLiked,
-  setCotton, 
-  setSize, 
+  setCotton,
+  setSize,
   setColor,
-  decrementQuantity, 
-  increamentQuantity, 
+  decrementQuantity,
+  increamentQuantity,
   EmptyCart,
   setServiceBooking,
   setAddProducts,
   setServices,
-  Order
+  deleteService,
+  deleteProducts,
+  Order,
 } = CommonSlice.actions;
 
 export default CommonSlice.reducer;

@@ -30,7 +30,7 @@ import {
 } from '../Store/slices/common';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import CommentsSection from '../Components/CommentsSection';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -40,12 +40,15 @@ import navigationService from '../navigationService';
 
 const ServiceDetails = props => {
   const item = props?.route?.params?.item;
+  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item)
+  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
   console.log(
     '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
     seller,
   );
+  const navigation = useNavigation()
   const user = useSelector(state => state.commonReducer.userData);
   const dispatch = useDispatch();
   const focused = useIsFocused();
@@ -128,7 +131,7 @@ const ServiceDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index - 1]}
+                    source={{uri :item?.images[index - 1]?.image?.uri}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -164,9 +167,9 @@ const ServiceDetails = props => {
               }}>
               <CustomImage
                 source={
-                  item?.images.length == 1
-                    ? item?.images[index - 1]
-                    : item?.images[index]
+                  {uri :item?.images.length == 1
+                    ? item?.images[index - 1]?.image?.uri
+                    : item?.images[index]?.image?.uri}
                 }
                 style={{
                   height: '100%',
@@ -205,7 +208,7 @@ const ServiceDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index + 1]}
+                    source={{uri : item?.images[index + 1]?.image?.uri}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -401,8 +404,7 @@ const ServiceDetails = props => {
               </>
             )}
 
-            {/* {calendar && ( */}
-              <>
+              {!seller && <> 
                <CustomText
                   isBold
                   style={{
@@ -453,19 +455,8 @@ const ServiceDetails = props => {
                     },
                   }}
                 />
-                {/* <CustomButton
-          isBold
-        
-          text={'Confirm'}
-          textColor={Color.white}
-          width={windowWidth * 0.4}
-          height={windowHeight * 0.05}
-          fontSize={moderateScale(14, 0.6)}
-          bgColor={Color.themeColor}
-          borderRadius={moderateScale(30, 0.3)}
-        /> */}
-              </>
-            {/* )} */}
+               
+              </>}
           </View>
         }
       </ScrollView>
@@ -509,7 +500,9 @@ const ServiceDetails = props => {
                         ToastAndroid.SHORT,
                       )
                     : Alert.alert('Your Booking has been confirmed');
-                    navigationService.navigate('Myorders')
+                    navigation.goBack()
+                    
+                    // navigationService.navigate('Myorders')
                   // setCalendar(false);
                 }
               }

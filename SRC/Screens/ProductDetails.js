@@ -29,7 +29,6 @@ import moment from 'moment';
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
   // const seller = props?.route?.params?.seller;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const cartData = useSelector(state => state.commonReducer.cart);
   // console.log(
   //   '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
@@ -49,6 +48,10 @@ const ProductDetails = props => {
   );
 
   const [index, setIndex] = useState(1);
+  console.log(
+    '🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:',
+    item?.images[index-1],
+  );
   const [quantity, setQuantity] = useState(
     cartitem ? cartitem?.qty : item?.qty ? item?.qty : 1,
   );
@@ -351,7 +354,7 @@ const ProductDetails = props => {
                     styles.colorContainer,
                     {
                       backgroundColor: color,
-                      // marginHorizontal: moderateScale(5, 0.3),
+                      marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
                   {Selectedcolor == color && (
@@ -367,19 +370,21 @@ const ProductDetails = props => {
             })}
           </View>
 
-          <CustomText
-            isBold
-            style={{
-              fontSize: moderateScale(14, 0.6),
-              color: '#201E1D',
-              width: windowWidth * 0.17,
-              marginLeft: moderateScale(10, 0.3),
-            }}>
-            Size
-          </CustomText>
+          {item?.size.length > 0 && (
+            <CustomText
+              isBold
+              style={{
+                fontSize: moderateScale(14, 0.6),
+                color: '#201E1D',
+                width: windowWidth * 0.17,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              Size
+            </CustomText>
+          )}
 
           <View style={styles.ColorLine1}>
-            {item?.size.map(size => {
+            {item?.size?.map(size => {
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -396,7 +401,7 @@ const ProductDetails = props => {
                     {
                       backgroundColor:
                         Selectedsize == size ? Color.themeColor : '#F4F5F6',
-                      // marginHorizontal:moderateScale(5,.3),
+                      marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
                   <CustomText
@@ -705,7 +710,6 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(15, 0.3),
     marginBottom: moderateScale(15, 0.3),
     paddingHorizontal: moderateScale(10, 0.6),
-
   },
 
   ColorLine1: {

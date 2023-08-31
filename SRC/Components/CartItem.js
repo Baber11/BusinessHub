@@ -24,8 +24,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const CartItem = ({item, fromCheckout}) => {
   console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
-  // console.log(item?.img)
-  // console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
   const dispatch = useDispatch();
 
   return (
@@ -67,8 +65,7 @@ const CartItem = ({item, fromCheckout}) => {
             {item?.selectedSize ? (
               <CustomText>Selected Size : {item?.selectedSize}</CustomText>
             ) : (
-              // <></>
-             item?.size.map((item1, index) => {
+             item?.size?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -154,19 +151,7 @@ const CartItem = ({item, fromCheckout}) => {
             <CustomText style={styles.amount}>
               {(item?.price * item?.qty)} PKR
             </CustomText>
-            
-            {/* {
-              fromCheckout ? 
-              <CustomText
-              isBold
-              style={{
-                marginHorizontal: moderateScale(5, 0.3),
-                fontSize: moderateScale(12, 0.3),
-              }}>
-              Quantity : {item?.qty}
-            </CustomText>
-              : */}
-            
+                        
             <View
               style={{
                 marginRight: moderateScale(15, 0.3),
@@ -200,7 +185,6 @@ const CartItem = ({item, fromCheckout}) => {
                 }}
               />
             </View>
-{/* } */}
           </View>
         </View>
       </View>

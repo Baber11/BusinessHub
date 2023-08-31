@@ -25,35 +25,21 @@ const SearchbarComponent = ({
   alignSelf,
   SearchStyle,
 }) => {
-  // console.log("🚀 ~ file: SearchbarComponent.js:28 ~ array:", array)
-  // const [isModalVisible, setModalVisible] = useState(false);
+  console.log("🚀 ~ file: SearchbarComponent.js:28 ~ arrayItem:", arrayItem)
+  console.log("🚀 ~ file: SearchbarComponent.js:28 ~ array:", array)
   const [search, setSearch] = useState('');
   const orderData = useSelector(state => state.commonReducer.order);
-  // console.log('order data =====>', typeof orderData[0]?.arrayItem.toString());
-
-  // const searchref = useRef();
-
-  // const toggleModal = () => {
-  //   setModalVisible(!isModalVisible);
 
   const OnSearch = text => {
-    // console.log("🚀 ~ file: SearchbarComponent.js:40 ~ OnSearch ~ text:", text)
     let tempdata = array.filter(item => {
-      // console.log("🚀 ~ file: SearchbarComponent.js:42 ~ tempdata ~ item:", item)
-      // const onMap = arrayItem == 'order' ? item?.orderId : item?.Title
       return (arrayItem == 'order'
         ? item?.orderId.toString().indexOf(text) > -1
         : arrayItem == 'Product' ? item?.Title?.toLowerCase().indexOf(text?.toLowerCase()) > -1
         : item?.name?.toLowerCase().indexOf(text?.toLowerCase()) > -1)
     });
-    // console.log('TempData======>>>',tempdata);
 
     setNewData(tempdata);
   };
-
-  // useEffect(()=>{
-  //  setNewData(orderData)
-  // },[])
 
   return (
     <View
@@ -62,7 +48,6 @@ const SearchbarComponent = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        // paddingHorizontal: moderateScale(10, 0.6),
       }}>
       <View
         style={[
@@ -71,18 +56,14 @@ const SearchbarComponent = ({
           borderWidth: 1,
           borderColor: Color.veryLightGray,
           borderRadius: moderateScale(20, 0.3),
-          // marginTop: moderateScale(20, 0.3),
-          // marginLeft:moderateScale(20,0.3),
           flexDirection: 'row',
           alignItems: 'center',
           paddingLeft: moderateScale(10, 0.6)},
           SearchStyle
         ]}>
-        {/* <TouchableOpacity activeOpacity={0.6}> */}
         <Feather name="search" size={25} color="#000" />
-        {/* </TouchableOpacity> */}
-
         <TextInput
+          style={{color:'black'}}          
           placeholder={placeholderName ? placeholderName : 'Search item here'}
           placeholderTextColor={placeHolderColor ? placeHolderColor : '#000'}
           fontSize={fontSize ? fontSize : 14}
@@ -97,47 +78,6 @@ const SearchbarComponent = ({
 
     </View>
 
-    // <Modal
-    //   animationIn="fadeIn"
-    //   isVisible={isModalVisible}
-    //   onBackdropPress={() => toggleModal()}>
-    //   <View
-    //     style={{
-    //       height: 140,
-    //       width: 250,
-    //       backgroundColor: '#fff',
-    //       borderRadius: 10,
-    //       alignSelf: 'center',
-    //     }}>
-    //     <TouchableOpacity
-    //       style={{
-    //         borderBottomWidth: 1,
-    //         borderColor: '#000',
-    //         marginTop: 10,
-    //         paddingVertical: 5,
-    //       }}>
-    //       <CustomText style={{fontSize: 17, color: '#000', marginLeft: 10}}>
-    //         Sort By Name
-    //       </CustomText>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity
-    //       style={{
-    //         borderBottomWidth: 1,
-    //         borderColor: '#000',
-    //         marginTop: 10,
-    //         paddingVertical: 5,
-    //       }}>
-    //       <CustomText style={{fontSize: 17, color: '#000', marginLeft: 10}}>
-    //         Low To High Price
-    //       </CustomText>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity style={{marginTop: 10, paddingVertical: 5}}>
-    //       <CustomText style={{fontSize: 17, color: '#000', marginLeft: 10}}>
-    //         High To Low Price
-    //       </CustomText>
-    //     </TouchableOpacity>
-    //   </View>
-    // </Modal>
   );
 };
 

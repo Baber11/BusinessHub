@@ -29,7 +29,7 @@ import moment from 'moment';
 const OrderDetails = props => {
   const item = props.route.params.item;
   const details = props.route.params.details;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
 
@@ -248,7 +248,7 @@ const OrderDetails = props => {
             })}
           </View>
 
-          <CustomText
+         {item?.size.length > 0 && <CustomText
             isBold
             style={{
               fontSize: moderateScale(14, 0.6),
@@ -257,10 +257,10 @@ const OrderDetails = props => {
               marginLeft: moderateScale(10, 0.3),
             }}>
             Size
-          </CustomText>
+          </CustomText>}
 
           <View style={styles.ColorLine1}>
-            {item?.size.map(size => {
+            {item?.size?.map(size => {
               return (
                 <View
                   style={[
@@ -286,43 +286,7 @@ const OrderDetails = props => {
             })}
           </View>
 
-          <CustomText
-            style={{
-              fontSize: moderateScale(12, 0.6),
-              color: '#8e9194',
-              width: windowWidth * 0.28,
-            }}>
-            Composition
-          </CustomText>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: moderateScale(5, 0.6),
-              alignItems: 'center',
-            }}>
-            <CustomText
-              isBold
-              style={{
-                color: '#2F2B29',
-                fontSize: 16,
-                width: windowWidth * 0.36,
-              }}>
-              Organic Cotton
-            </CustomText>
-
-            <View style={styles.conterContainer}>
-              <CustomText
-                isBold
-                style={{
-                  color: '#2F2B29',
-                  fontSize: 18,
-                }}>
-                {item?.cotton}
-              </CustomText>
-            </View>
-          </View>
+         
         </View>
 
         <View
@@ -445,7 +409,7 @@ const OrderDetails = props => {
           <CustomText
             style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
             isBold>
-            {item?.price * item?.qty}.0 Rs
+            PKR {item?.price * item?.qty}.0 
           </CustomText>
         </View>}
       </ScrollView>

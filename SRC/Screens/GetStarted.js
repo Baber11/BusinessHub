@@ -20,13 +20,11 @@ const GetStarted = () => {
         style={{
           width: windowWidth,
           alignItems: 'center',
-          //   justifyContent: 'center',
           height: windowHeight,
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         colors={[Color.themeColor2, Color.themeColor2]}
-        // locations ={[0, 0.5, 0.6]}
       >
         <CustomText isBold style={{
           fontSize : moderateScale(24,0.6),
@@ -47,14 +45,12 @@ const GetStarted = () => {
             style={{
               width: '100%',
               height: '100%',
-              // marginTop: moderateScale(25, 0.3),
             }}
           />
         </View>
 
         <View
           style={{
-            // backgroundColor: 'white',
             bottom: 0,
             position: 'absolute',
             width: windowWidth * 0.98,
@@ -78,7 +74,6 @@ const GetStarted = () => {
             bgColor={Color.white}
             borderColor={Color.yellow}
             borderWidth={1}
-            // borderRadius={moderateScale(30, 0.3)}
           />
           <CustomButton
             text={
@@ -98,7 +93,6 @@ const GetStarted = () => {
             bgColor={Color.yellow}
             borderColor={Color.white}
             borderWidth={1}
-            // borderRadius={moderateScale(30, 0.3)}
           />
         </View>
       </LinearGradient>

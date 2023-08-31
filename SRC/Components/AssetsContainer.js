@@ -12,9 +12,7 @@ import Color from '../Assets/Utilities/Color';
 
 const AssetsContainer = ({item}) => {
   const [activetab,setActiveTab] = useState(false)
-
  
-  
   return (
  
       <View style={styles.main}>
