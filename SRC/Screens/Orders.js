@@ -138,7 +138,8 @@ const Orders = () => {
             contentContainerStyle={{
               // backgroundColor:'black',
               // height: windowHeight * 0.2,
-              marginHorizontal:moderateScale(10,.3),
+              // marginHorizontal:moderateScale(10,.3),
+              paddingHorizontal:moderateScale(10,.6),
               alignItems: 'center',
             }}
             ListEmptyComponent={() => {
@@ -276,7 +277,7 @@ const OrderCard = ({item, width}) => {
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: moderateScale(15, 0.6),
-        marginVertical: moderateScale(10, 0.6),
+        // marginVertical: moderateScale(10, 0.6),
 
         alignSelf: 'center',
         shadowColor: '#000',
@@ -352,7 +353,7 @@ const OrderCard = ({item, width}) => {
               color: '#000',
               fontSize: moderateScale(15, 0.6),
             }}>
-            Price : ${item.total ? item?.total : item?.price}
+            Price : PKR {item.total ? item?.total : item?.price}
           </CustomText>
 
           

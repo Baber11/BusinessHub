@@ -25,7 +25,8 @@ const SearchbarComponent = ({
   alignSelf,
   SearchStyle,
 }) => {
-  // console.log("🚀 ~ file: SearchbarComponent.js:28 ~ array:", array)
+  console.log("🚀 ~ file: SearchbarComponent.js:28 ~ arrayItem:", arrayItem)
+  console.log("🚀 ~ file: SearchbarComponent.js:28 ~ array:", array)
   // const [isModalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState('');
   const orderData = useSelector(state => state.commonReducer.order);
@@ -83,6 +84,7 @@ const SearchbarComponent = ({
         {/* </TouchableOpacity> */}
 
         <TextInput
+          style={{color:'black'}}          
           placeholder={placeholderName ? placeholderName : 'Search item here'}
           placeholderTextColor={placeHolderColor ? placeHolderColor : '#000'}
           fontSize={fontSize ? fontSize : 14}

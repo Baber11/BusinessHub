@@ -137,9 +137,9 @@ const CommonSlice = createSlice({
         // item.id = action.payload.item.colors;
         item.images = action.payload.item.images;
         item.price = action.payload.item.price;
-        item.qty = action.payload.item.qty;
+        // item.qty = action.payload.item.qty;
         item.size = action.payload.item.size;
-        // item.totalQty = action.payload.item.totalQty;
+        item.totalQty = action.payload.item.totalQty;
       } else {
         state.sellerProducts.push({
           sellerId: action.payload.userId,

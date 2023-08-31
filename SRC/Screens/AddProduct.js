@@ -38,7 +38,7 @@ const AddProduct = props => {
   );
   const [price, setPrice] = useState(item?.price ? `${item?.price}` : '');
   console.log('🚀 ~ file: AddProduct.js:38 ~ AddProduct ~ price:', price);
-  const [quantity, setQuantity] = useState(item?.qty ? `${item?.qty}` : '');
+  const [quantity, setQuantity] = useState(item?.totalQty ? `${item?.totalQty}` : '');
   const [colors, setColors] = useState(item?.colors ? item?.colors : []);
   const [sizes, setSizes] = useState(item?.size ? item?.size : []);
   const [cotton, setCotton] = useState([]);
@@ -108,6 +108,7 @@ const AddProduct = props => {
           qty: 1,
           selectedColor: '',
           selectedSize: '',
+          size: sizes,
           ...body,
         },
       }),

@@ -30,7 +30,7 @@ import {
 } from '../Store/slices/common';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import CommentsSection from '../Components/CommentsSection';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -40,13 +40,15 @@ import navigationService from '../navigationService';
 
 const ServiceDetails = props => {
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.images[0]?.image.uri)
+  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item)
+  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
   console.log(
     '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
     seller,
   );
+  const navigation = useNavigation()
   const user = useSelector(state => state.commonReducer.userData);
   const dispatch = useDispatch();
   const focused = useIsFocused();
@@ -498,7 +500,9 @@ const ServiceDetails = props => {
                         ToastAndroid.SHORT,
                       )
                     : Alert.alert('Your Booking has been confirmed');
-                    navigationService.navigate('Myorders')
+                    navigation.goBack()
+                    
+                    // navigationService.navigate('Myorders')
                   // setCalendar(false);
                 }
               }

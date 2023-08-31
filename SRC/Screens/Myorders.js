@@ -21,6 +21,14 @@ const Myorders = () => {
   const [selectedTab, setSelectedTab] = useState('Products');
   const [newData, setNewData] = useState(selectedTab == 'Products' ? orderData : bookings)
 
+
+  useEffect(() => {
+    
+  setNewData(selectedTab == 'Products' ? orderData : bookings)
+    
+  }, [selectedTab])
+  
+
   
  
   return (
@@ -43,14 +51,14 @@ const Myorders = () => {
           setNewData={setNewData}
           placeHolderColor={'#000'}
           placeholderName={'Search your Order Id'}
-          array={orderData}
+          array={selectedTab == 'Products' ? orderData : bookings}
           fontSize={13}
           arrayItem={'order'}
         />
 
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={selectedTab == 'Products' ? orderData : bookings }
+        data={newData}
         contentContainerStyle={{
           paddingBottom: moderateScale(20, 0.3),
           width:windowWidth,
