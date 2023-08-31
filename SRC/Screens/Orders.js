@@ -206,7 +206,7 @@ const Orders = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={1}
-          data={myOrder.filter(item => dateDiff(item?.date) > 24)}
+          data={myOrder.filter(item => dateDiff(item?.date) >= 24)}
           contentContainerStyle={{
             alignItems: 'center',
             justifyContent: 'center',

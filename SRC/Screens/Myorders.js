@@ -56,7 +56,7 @@ const Myorders = () => {
           showsVerticalScrollIndicator={false}
           data={newData}
           contentContainerStyle={{
-            paddingBottom: moderateScale(20, 0.3),
+            paddingBottom: moderateScale(40, 0.3),
             width: windowWidth,
             minHeight: windowHeight * 0.9,
             paddingTop: moderateScale(20, 0.3),
