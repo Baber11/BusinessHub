@@ -104,13 +104,11 @@ const EnterPhone = props => {
             viewHeight={0.07}
             viewWidth={0.75}
             inputWidth={0.7}
-            // border={1}
             borderColor={'#ffffff'}
             backgroundColor={'#FFFFFF'}
             marginTop={moderateScale(35, 0.3)}
             color={Color.yellow}
             placeholderColor={Color.themeLightGray}
-            // borderRadius={moderateScale(25, 0.3)}
             elevation
           />
           <CustomButton
@@ -129,9 +127,7 @@ const EnterPhone = props => {
            navigationService.navigate('VerifyNumber', {phoneNumber : phone})
              }}
             bgColor={ Color.yellow}
-            // borderColor={Color.white}
-            // borderWidth={2}
-            // borderRadius={moderateScale(30, 0.3)}
+           
           />
 
        
@@ -170,7 +166,6 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: windowWidth * 0.9,
-    // marginTop: moderateScale(10,0.3),
   },
   txt4: {
     color: Color.yellow,
