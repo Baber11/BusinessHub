@@ -118,15 +118,25 @@ const Header = props => {
           />
         )}
       </View>
-      <CustomImage
-        resizeMode={'contain'}
-        style={{
-          width: windowWidth * 0.21,
-          // backgroundColor : 'red' ,
-          height: windowHeight * 0.05,
-        }}
-        source={require('../Assets/Images/logo.png')}
-      />
+      {title ? (
+        <CustomText
+          style={{
+            fontSize: moderateScale(15, 0.6),
+            color: Color.black,
+          }}isBold>
+          Profile
+        </CustomText>
+      ) : (
+        <CustomImage
+          resizeMode={'contain'}
+          style={{
+            width: windowWidth * 0.21,
+            // backgroundColor : 'red' ,
+            height: windowHeight * 0.05,
+          }}
+          source={require('../Assets/Images/logo.png')}
+        />
+      )}
 
       {/* <CustomText isBold style={{color : Color.white , fontSize : moderateScale(20,0.6)}} >Hola!!</CustomText> */}
       {!hideUser && cart ? (
