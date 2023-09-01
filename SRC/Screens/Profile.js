@@ -40,7 +40,7 @@ const Profile = () => {
 
   const options = [
     {id: 0, name: 'personal Info', onPress: () => { navigationService.navigate('PersonalInfo')}},
-    {id: 1, name: 'Bank Account Info', onPress: () => {}},
+    {id: 1, name: 'Bank Account Info', onPress: () => {navigationService.navigate('BankDetails')}},
     {id: 2, name: 'Return Address Info', onPress: () => {}},
     {id: 3, name: 'Change Password', onPress: () => {navigationService.navigate('ChangePassword')}},
     {id: 4, name: 'Change Email Address', onPress: () => {navigationService.navigate('ChangeEmail')}},
