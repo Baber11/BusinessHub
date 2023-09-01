@@ -56,6 +56,7 @@ const ChangePassword = props => {
       />
       <Header
         showBack={true}
+        title={'Change Password'}
         headerColor={['#CBE4E8', '#D2E4E4']}
        
       />

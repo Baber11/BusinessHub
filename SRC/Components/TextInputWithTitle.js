@@ -97,7 +97,7 @@ const TextInputWithTitle = props => {
               {
                 // backgroundColor :'red',
                 textAlign: 'center',
-                color: props.color && !props.disable ? props.color : Color.veryLightGray,
+                color: (props.color && !props.disable) ? props.color : Color.veryLightGray,
                 // fontSize: moderateScale(18, 0.6),
                 // paddingLeft: Dimensions.get("window").width * 0.0175,
               },
