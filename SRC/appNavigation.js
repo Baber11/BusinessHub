@@ -33,6 +33,9 @@ import Myorders from './Screens/Myorders';
 import OrderDetailScreen from './Screens/OrderDetailScreen';
 import PaymentInvoice from './Screens/PaymentInvoice';
 import MyAccounts from './Screens/MyAccounts';
+import Profile from './Screens/Profile';
+import PersonalInfo from './Screens/PersonalInfo';
+import ChangeEmail from './Screens/ChangeEmail';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -85,8 +88,11 @@ const AppNavigator = () => {
           <RootNav.Screen name="AddServices" component={AddServices} />
           <RootNav.Screen name="ServiceDetails" component={ServiceDetails} />
           <RootNav.Screen name="OrderDetails" component={OrderDetails} />
+          <RootNav.Screen name="ChangeEmail" component={ChangeEmail} />
+          <RootNav.Screen name="ChangePassword" component={ChangePassword} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
+          <RootNav.Screen name="PersonalInfo" component={PersonalInfo} />
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
@@ -131,15 +137,16 @@ export const MyDrawer = () => {
         component={CustomerDashboard}
       />
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
+      <DrawerNavigation.Screen name="Profile" component={Profile} />
       <DrawerNavigation.Screen name="MyAccounts" component={MyAccounts} />
 
       <DrawerNavigation.Screen name="Orders" component={Orders} />
       {/* <DrawerNavigation.Screen name="Bookings" component={Bookings} /> */}
 
-      <DrawerNavigation.Screen
+      {/* <DrawerNavigation.Screen
         name="ChangePassword"
         component={ChangePassword}
-      />
+      /> */}
       <DrawerNavigation.Screen name="Myorders" component={Myorders} />
 
       <DrawerNavigation.Screen

@@ -33,18 +33,19 @@ import {setUserToken} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import Header from '../Components/Header';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
-const ChangePassword = props => {
+const ChangeEmail = props => {
+  const userData = useSelector(state => state.commonReducer.userData);
   const navigationN = useNavigation();
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
   const dispatch = useDispatch();
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [currentEmail, setCurrentEmail] = useState(
+    userData?.email ? userData?.email : '',
+  );
+  const [newEmail, setNewEmail] = useState('');
+  //   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,43 +58,18 @@ const ChangePassword = props => {
       <Header
         showBack={true}
         headerColor={['#CBE4E8', '#D2E4E4']}
-       
       />
 
       <LinearGradient
         style={{
           width: windowWidth,
-          height: windowHeight*0.9,
+          height: windowHeight * 0.9,
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         colors={['#D2E4E4', '#D2E4E4']}
         // locations ={[0, 0.5, 0.6]}
       >
-        {/* <TouchableOpacity
-          activeOpacity={0.8}
-          style={{
-            position: 'absolute',
-            top: moderateScale(20, 0.3),
-            left: moderateScale(20, 0.3),
-            height: moderateScale(30, 0.3),
-            width: moderateScale(30, 0.3),
-            borderRadius: moderateScale(5, 0.3),
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            zIndex: 1,
-          }}>
-          <Icon
-            name={'arrowleft'}
-            as={AntDesign}
-            size={moderateScale(22, 0.3)}
-            color={Color.themeColor}
-            onPress={() => {
-              navigationN.goBack();
-            }}
-          />
-        </TouchableOpacity> */}
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -101,7 +77,7 @@ const ChangePassword = props => {
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            height: windowHeight*0.9,
+            height: windowHeight * 0.9,
           }}>
           <CardContainer
             style={{
@@ -118,18 +94,36 @@ const ChangePassword = props => {
             </CustomText>
 
             <TextInputWithTitle
-              titleText={'Current Passwrod'}
+              marginTop={moderateScale(35, 0.3)}
+              titleText={'Current Email'}
               secureText={false}
-              placeholder={'Current Passwrod'}
-              setText={setCurrentPassword}
-              value={currentPassword}
+              placeholder={'Current Email'}
+              setText={setCurrentEmail}
+              value={currentEmail}
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.7}
               // border={1}
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(35, 0.3)}
+              color={Color.themeColor}
+              placeholderColor={Color.themeLightGray}
+              borderRadius={moderateScale(25, 0.3)}
+              elevation
+            />
+            <TextInputWithTitle
+              titleText={'New Email'}
+              secureText={false}
+              placeholder={'New Email'}
+              setText={setNewEmail}
+              value={newEmail}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.7}
+              // border={1}
+              borderColor={'#ffffff'}
+              backgroundColor={'#FFFFFF'}
+              marginTop={moderateScale(10, 0.3)}
               color={Color.themeColor}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
@@ -137,41 +131,24 @@ const ChangePassword = props => {
             />
 
             <TextInputWithTitle
-              titleText={'Enter New Password'}
+              titleText={'Current Passwrod'}
               secureText={false}
-              placeholder={'Enter New Password'}
-              setText={setNewPassword}
-              value={newPassword}
+              placeholder={'Current Passwrod'}
+              padding
+              setText={setPassword}
+              value={password}
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.7}
-              // border={1}
+              marginTop={moderateScale(10, 0.3)}
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(10, 0.3)}
               color={Color.themeColor}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation
             />
-            <TextInputWithTitle
-              titleText={'Confirm your new password'}
-              secureText={false}
-              placeholder={'Confirm your new password'}
-              setText={setConfirmNewPassword}
-              value={confirmNewPassword}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.7}
-              // border={1}
-              borderColor={'#ffffff'}
-              backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
-              placeholderColor={Color.themeLightGray}
-              borderRadius={moderateScale(25, 0.3)}
-              elevation
-            />
+
             <CustomButton
               text={
                 isLoading ? (
@@ -243,4 +220,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default ChangePassword;
+export default ChangeEmail;

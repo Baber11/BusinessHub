@@ -53,16 +53,7 @@ const ImagePickerModal = props => {
       quailty: 0.9,
       saveToPhotos: true,
     };
-    // {
-    //   crop
-    //     ? ImagePicker.openPicker({
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true,
-    //       }).then(image => {
-    //         console.log( 'dasdas ========>',image);
-    //       })
-    //     : 
+   
     launchImageLibrary(options, response => {
             if (Platform.OS === 'ios') {
               setShow(false);
@@ -111,11 +102,7 @@ const ImagePickerModal = props => {
       if (Platform.OS == 'ios') {
         setShow(false);
       }
-      // if (response.didCancel) {
-      // } else if (response.error) {
-      // } else if (response.customButton) {
-      //   Alert.alert(response.customButton);
-      // }
+      
       else {
         setFileObject &&
           setFileObject({

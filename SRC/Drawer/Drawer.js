@@ -58,6 +58,7 @@ const Drawer = () => {
       },
     },
   ];
+
   const customerData = [
     {
       name: 'Home',
@@ -76,21 +77,21 @@ const Drawer = () => {
       },
     },
     {
-      name: 'My Account',
+      name: 'Profile',
       iconName: 'account',
       iconType: MaterialCommunityIcons,
       onPress: () => {
-        navigation.navigate('MyAccounts');
+        navigation.navigate('Profile');
       },
     },
-    {
-      name: 'Change Password',
-      iconName: 'lock',
-      iconType: Entypo,
-      onPress: () => {
-        navigation.navigate('ChangePassword');
-      },
-    },
+    // {
+    //   name: 'Change Password',
+    //   iconName: 'lock',
+    //   iconType: Entypo,
+    //   onPress: () => {
+    //     navigation.navigate('ChangePassword');
+    //   },
+    // },
     
 
     {
@@ -104,6 +105,7 @@ const Drawer = () => {
       },
     },
   ];
+
   const sellerData = [
     {
       name: 'Home',

@@ -97,7 +97,7 @@ const TextInputWithTitle = props => {
               {
                 // backgroundColor :'red',
                 textAlign: 'center',
-                color: props.color ? props.color : Color.white,
+                color: props.color && !props.disable ? props.color : Color.veryLightGray,
                 // fontSize: moderateScale(18, 0.6),
                 // paddingLeft: Dimensions.get("window").width * 0.0175,
               },
@@ -195,7 +195,7 @@ const TextInputWithTitle = props => {
                   height: windowHeight * props.inputHeight,
                 },
                 props.disable && {
-                  color: Color.gray,
+                  color: Color.veryLightGray,
                 },
                 props.multiline && {
                   paddingTop: moderateScale(10, 0.5),
@@ -243,7 +243,7 @@ const styles = ScaledSheet.create({
     // textTransform: 'capitalize',
   },
   inputBox: {
-    paddingLeft: moderateScale(8, 0.6),
+    paddingLeft: moderateScale(20, 0.6),
     borderRadius: 8,
     // fontSize: moderateScale(25, 0.3),
     // textTransform: 'capitalize',
