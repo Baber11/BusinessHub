@@ -57,6 +57,7 @@ const ChangeEmail = props => {
       />
       <Header
         showBack={true}
+        title={'Change Email'}
         headerColor={['#CBE4E8', '#D2E4E4']}
       />
 
@@ -86,14 +87,15 @@ const ChangeEmail = props => {
               // backgroundColor:'white',
             }}>
             <CustomText isBold style={styles.txt2}>
-              Change Password
+              Change Email Address
             </CustomText>
             <CustomText style={styles.txt3}>
-              Want to change password ? don't worry, jsut take a simple step and
-              create your new password!
+              Want to change email ? don't worry, just take a simple step and
+              create your new email!
             </CustomText>
 
             <TextInputWithTitle
+              disable={true}
               marginTop={moderateScale(35, 0.3)}
               titleText={'Current Email'}
               secureText={false}
@@ -106,7 +108,7 @@ const ChangeEmail = props => {
               // border={1}
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
-              color={Color.themeColor}
+              color={Color.veryLightGray}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation
@@ -131,9 +133,9 @@ const ChangeEmail = props => {
             />
 
             <TextInputWithTitle
-              titleText={'Current Passwrod'}
+              titleText={'Passwrod'}
               secureText={false}
-              placeholder={'Current Passwrod'}
+              placeholder={'Passwrod'}
               padding
               setText={setPassword}
               value={password}

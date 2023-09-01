@@ -106,7 +106,7 @@ const Profile = () => {
         </View>
         <View
           style={{
-            justifyContent: 'center',
+            // justifyContent: 'center',
             alignItems: 'center',
             width: windowWidth,
             // backgroundColor: 'purple',
@@ -117,7 +117,7 @@ const Profile = () => {
               <View
                 style={{
                   width: windowWidth * 0.85,
-                  justifyContent: 'center',
+                //   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
                 <View
@@ -125,7 +125,7 @@ const Profile = () => {
                     width: '90%',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                      paddingVertical: moderateScale(10, 0.6),
+                      paddingTop: moderateScale(10, 0.6),
                   }}>
                   <CustomText style={{color:Color.black, fontSize:moderateScale(15,.6)}}>{item?.name}</CustomText>
                   <Icon

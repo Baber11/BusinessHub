@@ -79,13 +79,7 @@ const Header = props => {
       start={{x: 0, y: 0}}
       end={{x: 1, y: 1}}
       colors={headerColor ? headerColor : Color.themeBgColor}>
-      {/* <View
-      style={[
-        styles.header2,
-        headerColor && {
-          backgroundColor: headerColor,
-        },
-      ]}> */}
+      
 
       <View
         style={{
@@ -121,10 +115,10 @@ const Header = props => {
       {title ? (
         <CustomText
           style={{
-            fontSize: moderateScale(15, 0.6),
+            fontSize: moderateScale(18, 0.6),
             color: Color.black,
           }}isBold>
-          Profile
+          {title}
         </CustomText>
       ) : (
         <CustomImage
