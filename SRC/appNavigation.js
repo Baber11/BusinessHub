@@ -88,11 +88,10 @@ const AppNavigator = () => {
           <RootNav.Screen name="AddServices" component={AddServices} />
           <RootNav.Screen name="ServiceDetails" component={ServiceDetails} />
           <RootNav.Screen name="OrderDetails" component={OrderDetails} />
-          <RootNav.Screen name="ChangeEmail" component={ChangeEmail} />
-          <RootNav.Screen name="ChangePassword" component={ChangePassword} />
+          {/* <RootNav.Screen name="ChangeEmail" component={ChangeEmail} /> */}
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
-          <RootNav.Screen name="PersonalInfo" component={PersonalInfo} />
+          {/* <RootNav.Screen name="PersonalInfo" component={PersonalInfo} /> */}
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
@@ -143,10 +142,10 @@ export const MyDrawer = () => {
       <DrawerNavigation.Screen name="Orders" component={Orders} />
       {/* <DrawerNavigation.Screen name="Bookings" component={Bookings} /> */}
 
-      {/* <DrawerNavigation.Screen
+      <DrawerNavigation.Screen
         name="ChangePassword"
         component={ChangePassword}
-      /> */}
+      />
       <DrawerNavigation.Screen name="Myorders" component={Myorders} />
 
       <DrawerNavigation.Screen

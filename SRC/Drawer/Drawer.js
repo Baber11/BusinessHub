@@ -69,14 +69,6 @@ const Drawer = () => {
       },
     },
     {
-      name: 'My Orders',
-      iconName: 'shopping-outline',
-      iconType: MaterialCommunityIcons,
-      onPress: () => {
-        navigation.navigate('Myorders');
-      },
-    },
-    {
       name: 'Profile',
       iconName: 'account',
       iconType: MaterialCommunityIcons,
@@ -84,14 +76,23 @@ const Drawer = () => {
         navigation.navigate('Profile');
       },
     },
-    // {
-    //   name: 'Change Password',
-    //   iconName: 'lock',
-    //   iconType: Entypo,
-    //   onPress: () => {
-    //     navigation.navigate('ChangePassword');
-    //   },
-    // },
+    {
+      name: 'My Orders',
+      iconName: 'shopping-outline',
+      iconType: MaterialCommunityIcons,
+      onPress: () => {
+        navigation.navigate('Myorders');
+      },
+    },
+   
+    {
+      name: 'Change Password',
+      iconName: 'lock',
+      iconType: Entypo,
+      onPress: () => {
+        navigation.navigate('ChangePassword');
+      },
+    },
     
 
     {
