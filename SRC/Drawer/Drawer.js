@@ -125,7 +125,7 @@ const Drawer = () => {
       },
     },
     {
-      name: 'My Account',
+      name: 'Profile',
       iconName: 'account',
       iconType: MaterialCommunityIcons,
       onPress: () => {

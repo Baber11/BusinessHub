@@ -11,6 +11,7 @@ import CustomImage from '../Components/CustomImage';
 import Header from '../Components/Header';
 import {useSelector} from 'react-redux';
 import Product from '../Components/Product';
+import CustomStatusBar from '../Components/CustomStatusBar';
 
 const MyAccounts = () => {
   const sellerProducts = useSelector(
@@ -21,19 +22,9 @@ const MyAccounts = () => {
   const orderData = useSelector(state => state.commonReducer.order);
 
   console.log('DATA', sellerProducts);
-  return (
-    <ScreenBoiler
-      statusBarBackgroundColor={'white'}
-      statusBarContentStyle={'dark-content'}>
-      <LinearGradient
-        style={{
-          width: windowWidth,
-          height: windowHeight,
-        }}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        colors={[Color.themeColor2, Color.themeColor2]}>
-        <Header title={'Profile'} showBack headerColor={['#fff', '#fff']} />
+  return (<>
+    <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
+        <Header title={'Profile'}  headerColor={['#fff', '#fff']} />
 
         <View
           style={{
@@ -96,7 +87,7 @@ const MyAccounts = () => {
                 fontSize: moderateScale(14, 0.6),
                 color: Color.black,
               }}>
-              Total Order
+              Total Products
             </CustomText>
             <CustomText
               style={{
@@ -104,8 +95,7 @@ const MyAccounts = () => {
                 color: Color.black,
               }}>
               {
-                sellerProducts.filter(item => item.sellerId == userData.id)
-                  .length
+                sellerProducts.filter(item => item.sellerId == userData.id).length
               }
             </CustomText>
           </View>
@@ -117,7 +107,7 @@ const MyAccounts = () => {
                 fontSize: moderateScale(14, 0.6),
                 color: Color.black,
               }}>
-              Total Quantity
+              Total Orders
             </CustomText>
             <CustomText          
               style={{
@@ -125,7 +115,7 @@ const MyAccounts = () => {
                 color: Color.black,
               }}>
               {
-                orderData.filter(item => item.sellerId == orderData.orderId)
+                orderData.filter(item => item.sellerId == userData?.id)
                   .length
               }
             </CustomText>
@@ -185,8 +175,7 @@ const MyAccounts = () => {
             );
           }}
         />
-      </LinearGradient>
-    </ScreenBoiler>
+    </>
   );
 };
 
