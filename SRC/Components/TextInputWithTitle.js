@@ -44,9 +44,14 @@ const TextInputWithTitle = props => {
       <View
         style={[
           styles.fieldSet,
+          props?.border && {borderWidth: props.border},
+          props?.borderBottomColor && {borderBottomColor:props.borderBottomColor},
+          props?.borderBottomWidth && {borderBottomWidth:props.borderBottomWidth},
+
           {
             width: windowWidth * props.viewWidth,
-            borderWidth: props.border,
+            // borderBottomColor:props.borderBottomColor,
+            // borderBottomWidth:props.borderBottomWidth,
             // borderColor: Color.veryLightGray,
             backgroundColor: props.backgroundColor,
           },
