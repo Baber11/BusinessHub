@@ -69,18 +69,7 @@ const Orders = () => {
     return currentDate.diff(newDate, 'h');
   };
 
-  const recentOrders = () => {
-    const history = myOrder.filter(item => dateDiff(item?.date) > 24);
-    console.log('🚀 ~ file: Orders.js:74 ~ recentOrders ~ history:', history);
-  };
-
-  const twentyFourHoursAgo = moment().subtract(24, 'hours');
-
-  // const ordersPlacedInPast24Hours = orders.filter(order => {
-  //   const orderDate = moment(order.orderDate);
-  //   return orderDate.isAfter(twentyFourHoursAgo);
-  // });
-  // console.log("🚀 ~ file: Orders.js:66 ~ ordersPlacedInPast24Hours ~ ordersPlacedInPast24Hours:", ordersPlacedInPast24Hours)
+ 
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -90,13 +79,11 @@ const Orders = () => {
         return true;
       },
     );
-    // getOrders();
 
     return () => backhandler.remove();
   }, []);
   useEffect(() => {
     Orders();
-    recentOrders();
   }, [orders]);
 
   return (

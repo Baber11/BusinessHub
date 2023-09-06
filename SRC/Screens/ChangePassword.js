@@ -27,7 +27,7 @@ import {ActivityIndicator} from 'react-native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import CardContainer from '../Components/CardContainer';
 // import CustomHeader from '../Components/CustomHeader';
-import {Icon} from 'native-base';
+import {Icon, ScrollView} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {setUserToken} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
@@ -60,6 +60,7 @@ const ChangePassword = props => {
         headerColor={['#CBE4E8', '#D2E4E4']}
        
       />
+      <ScrollView showsVerticalScrollIndicator={false}>
 
       <LinearGradient
         style={{
@@ -200,6 +201,7 @@ const ChangePassword = props => {
           </CardContainer>
         </KeyboardAwareScrollView>
       </LinearGradient>
+      </ScrollView>
     </>
   );
 };
