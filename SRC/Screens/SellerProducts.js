@@ -16,12 +16,12 @@ import {
 } from 'react-native-size-matters';
 import Header from '../Components/Header';
 import CustomText from '../Components/CustomText';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomTable from '../Components/CustomTable';
 import moment from 'moment';
-import {Get} from '../Axios/AxiosInterceptorFunction';
+import {Delete, Get, Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
@@ -30,32 +30,93 @@ import CustomButton from '../Components/CustomButton';
 import navigationService from '../navigationService';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { deleteService } from '../Store/slices/common';
+// import { deleteService } from '../Store/slices/common';
 
 const SellerProduct = props => {
-  // const [item, setItem] = useState(
-  //   props?.route?.params?.item ? props?.route?.params?.item : {},
-  // );
-  // const token = useSelector(state => state.authReducer.token);
+  const token = useSelector(state=> state.authReducer.token)
   const userData = useSelector(state => state.commonReducer.userData);
   const sellerProducts = useSelector(
     state => state.commonReducer.sellerProducts,
   );
-  console.log("🚀 ~ file: SellerProducts.js:44 ~ SellerProduct ~ sellerProducts:", sellerProducts)
   const sellerService = useSelector(state => state.commonReducer.sellerService);
-  console.log(
-    '🚀 ~ file: SellerProducts.js:43 ~ SellerProduct ~ sellerService:',
-    sellerService,
-  );
+  
+  const [isLoading, setIsLoading] = useState(false)
+  const [services, setServices] = useState([])
+  // console.log("🚀 ~ file: SellerProducts.js:45 ~ SellerProduct ~ services:", services[0]?.images[0])
   const [products, setProducts] = useState(
     sellerProducts.filter(item => {
       return item?.userId == userData.id;
     }),
   );
 
+  const [addedProducts, setAddedProducts] = useState([])
   const isFocused = useIsFocused();
   const dispatch = useDispatch()
+
+  const getProducts = async ()=>{
+    const url = 'auth/product';
+    setIsLoading(true)
+    const response = await Get(url, token)
+    setIsLoading(false)
+    if(response != undefined){
+      console.log("🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:", response?.data)
+      // console.log('parsed data=========================',response?.data?.data[0]?.size)
+      // console.log('parsed data=========================',JSON.parse(response?.data?.data[9]?.size))
+      setAddedProducts(response?.data?.data)
+
+    }
+
+  }
+
+  const getServices = async ()=>{
+    const url = 'auth/service'
+    setIsLoading(true)
+    const response = await Get(url, token)
+    setIsLoading(false)
+    if(response?.data?.success){
+      console.log("🚀 ~ file: AddServices.js:114 ~ getServices ~ response:", response?.data)
+      
+      response?.data?.data ?  setServices([response?.data?.data]) : setServices([])
+      // console.log('response?.data?.data?.filter',response?.data?.data?.filter(item=> item?.user_id == userData?.id))
+      
+    }
+
+  }
+
+  const editService = async (item)=>{
+    const url = `auth/service/${item?.id}`
+    setIsLoading(true)
+    const response = await Get(url, token) 
+    setIsLoading(false)
+
+    if(response != undefined){
+
+      console.log("🚀 ~ file: SellerProducts.js:87 ~ editService ~ response:", response?.data)
+      navigationService.navigate('AddServices', {item});
  
+    }
+  }
+
+  const deleteService = async (id)=>{
+    const url = `auth/service/${id}`;
+    setIsLoading(true);
+    const response = await Delete(url, apiHeader(token)) 
+    setIsLoading(false)
+    console.log("🚀 ~ file: SellerProducts.js:98 ~ is ~ response:", response?.data)
+    if(response != undefined){
+      getServices()
+      
+    }
+  }
+
+  useEffect(() => {
+    
+    getProducts()
+    getServices()
+    
+  }, [isFocused])
+  
+
   useEffect(() => {
     setProducts(
       sellerProducts.filter(item => {
@@ -130,12 +191,10 @@ const SellerProduct = props => {
           }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {sellerService?.filter(
-            (item, index) => item?.serviceOwner?.id == userData?.id,
-          ).length > 0 ? (
-            sellerService
-              ?.filter((item, index) => item?.serviceOwner?.id == userData?.id)
+          {services?.length > 0 ? (
+            services
               .map((item, index) => {
+                console.log("🚀 ~ file: SellerProducts.js:203 ~ .map ~ item:", item)
                 return (
                   <>
                     <TouchableOpacity
@@ -170,7 +229,7 @@ const SellerProduct = props => {
                           marginLeft: moderateScale(10, 0.6),
                         }}>
                         <CustomImage
-                          source={{uri: item?.images[0]?.image?.uri}}
+                          source={{uri: item?.images[0]?.photo}}
                           style={{
                             width: '100%',
                             height: '100%',
@@ -196,7 +255,7 @@ const SellerProduct = props => {
                             // textAlign: 'center',
                             color: 'black',
                           }}>
-                          {item?.Title}
+                          {item?.shop_name}
                         </CustomText>
                         <CustomText
                           numberOfLines={1}
@@ -218,8 +277,8 @@ const SellerProduct = props => {
                           }}>
                           <CustomButton
                             onPress={() => {
+                              editService(item)
 
-                              navigationService.navigate('AddServices', {item});
                             }}
                             text={'Edit'}
                             textColor={Color.white}
@@ -239,7 +298,8 @@ const SellerProduct = props => {
                           />
                           <CustomButton
                             onPress={() => {
-                              dispatch(deleteService(item))
+                              // dispatch(deleteService(item))
+                              deleteService(item?.id)
                               
                             }}
                             text={'Delete'}
@@ -337,13 +397,13 @@ const SellerProduct = props => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={products}
+          data={addedProducts}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
           }}
           renderItem={({item, index}) => {
-            return <Product item={item} seller={true} />;
+            return <Product item={item} seller={true} setAddedProducts={setAddedProducts} addedProducts={addedProducts} />;
           }}
           ListEmptyComponent={() => {
             return (

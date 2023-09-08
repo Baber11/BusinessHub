@@ -1,6 +1,6 @@
-import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Platform, ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
@@ -26,67 +26,137 @@ import Modal from 'react-native-modal';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {bindActionCreators} from 'redux';
 import navigationService from '../navigationService';
-import { setServices } from '../Store/slices/common';
+import {setServices} from '../Store/slices/common';
+import {Get, Patch, Post} from '../Axios/AxiosInterceptorFunction';
 
 const AddServices = props => {
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: AddServices.js:33 ~ AddServices ~ item:", item)
+  console.log('🚀 ~ file: AddServices.js:33 ~ AddServices ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
-  console.log("🚀 ~ file: AddServices.js:34 ~ AddServices ~ user:", user)
+  console.log('🚀 ~ file: AddServices.js:34 ~ AddServices ~ user:', user);
+  const token = useSelector(state => state.authReducer.token);
+  const userData = useSelector(state => state.commonReducer.userData);
   const [images, setImages] = useState(item?.images ? item?.images : []);
   console.log('🚀 ~ file: AddProduct.js:36 ~ AddProduct ~ images:', images);
-  const [title, setTitle] = useState(item?.Title ? item?.Title : '');
-  const [category, setCategory] = useState(item?.category ? item?.category :'');
-  const [charges, setCharges] = useState(item?.charges ? `${item?.charges}` : '');
+  const [title, setTitle] = useState(item?.shop_name ? item?.shop_name : '');
+  const [category, setCategory] = useState(
+    item?.category ? item?.category : '',
+  );
+  const [charges, setCharges] = useState(
+    item?.charges ? `${item?.charges}` : '',
+  );
   const [imagePickerModal, setImagePickerModal] = useState(false);
-  const [description, setDescription] = useState(item?.description ? item?.description :'');
+  const [description, setDescription] = useState(
+    item?.description ? item?.description : '',
+  );
   const [image, setImage] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
-  const dispatch = useDispatch()
-  const addService = () => {
-    
-      const body = {
-        images: images,
-        Title: title,
-        category: category,
-        charges: parseFloat(charges),
-        description: description,
-        serviceOwner : user
-      };
+  const dispatch = useDispatch();
 
-      for (let key in body) {
-        if (key == 'images') {
-          if (body[key].length == 0) {
-            return Platform.OS == 'android'
-              ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
-              : Alert.alert('Add atleast one image');
-          }
-        } else if (key == 'charges') {
-          if (isNaN(body[key])) {
-            return Platform.OS == 'android'
-              ? ToastAndroid.show(
-                  'Charges should be number',
-                  ToastAndroid.SHORT,
-                )
-              : Alert.alert('Charges is required');
-          }
-        } else if (body[key] == '') {
-          console.log(key);
-          return Platform.OS == 'android'
-            ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
-            : Alert.alert(`${key} is required`);
-        }
-      }
-      console.log('🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:', body);
-      dispatch(setServices(body))
-      navigation.goBack();
+
+  const addService = async () => {
+    // const body = {
+    //   images: images,
+    //   Title: title,
+    //   category: category,
+    //   charges: parseFloat(charges),
+    //   description: description,
+    //   serviceOwner : user
+    // };
+    const body = {
+      // photo: images,
+      shop_name: title,
+      category: category,
+      charges: parseFloat(charges),
+      description: description,
+      // serviceOwner : user
+    };
+    const formData = new FormData();
+    for (let key in body) {
+      formData.append(key, body[key]);
+    }
+
+    images.map((item, index) => formData.append(`photo[${index}]`, item));
+
+   console.log("🚀 ~ file: AddServices.js:83 ~ addService ~ formData:", JSON.stringify(formData, null, 2))
     
+    for (let key in body) {
+      if (key == 'images') {
+        if (body[key].length == 0) {
+          return Platform.OS == 'android'
+            ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
+            : Alert.alert('Add atleast one image');
+        }
+      } else if (key == 'charges') {
+        if (isNaN(body[key])) {
+          return Platform.OS == 'android'
+            ? ToastAndroid.show('Charges should be number', ToastAndroid.SHORT)
+            : Alert.alert('Charges is required');
+        }
+      } else if (body[key] == '') {
+        console.log(key);
+        return Platform.OS == 'android'
+          ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
+          : Alert.alert(`${key} is required`);
+      }
+    }
+
+    const url = 'auth/service';
+    setIsLoading(true);
+    const response = await Post(url, formData, apiHeader(token));
+    setIsLoading(false);
+    console.log("🚀 ~ file: AddServices.js:109 ~ addService ~ response:", response)
+
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: AddServices.js:91 ~ addService ~ response:',
+        response?.data,
+      );
+      navigation.goBack();
+    }
+    console.log('🚀 ~ file: AddServices.js:285 ~ AddServices ~ body:', body);
+    // dispatch(setServices(body))
   };
+
+  const updateService = async (id)=>{
+    const url = `auth/service/${id}?_method=put`;
+    const body ={
+      shop_name :title,
+      category:category,
+      charges:charges,
+      description :description,
+    }
+
+    const formData = new FormData();
+    for(let key in body){
+      formData.append(key ,body[key])
+    }
+    
+    if(images?.length > item?.images?.length){
+      console.log('new images added')
+      
+      images?.slice(item?.images?.length)?.map((item, index)=> formData.append(`photo[${index}]` , item))
+      
+    }
+    console.log("🚀 ~ file: AddServices.js:132 ~ updateService ~ formData:", formData)
+    
+    setIsLoading(true)
+    const response = await Patch(url, formData, apiHeader(token))
+    setIsLoading(false)
+  }
+  
+  
+
+
+  // useEffect(() => {
+  //   getServices();
+  // }, []);
 
   useEffect(() => {
     if (Object.keys(image).length > 0) {
-      setImages(prev => [...prev, {image : image , articleNumber : Math.floor(Math.random() * (9999999 - 1000000 + 1)) + 1000000}]);
+      setImages(prev => [...prev, image]);
       setImage({});
     }
   }, [image]);
@@ -132,12 +202,12 @@ const AddServices = props => {
               fontSize: moderateScale(11, 0.6),
               color: Color.veryLightGray,
               // marginLeft: moderateScale(30, 0.3),
-              lineHeight : moderateScale(16,0.3),
+              lineHeight: moderateScale(16, 0.3),
               //   backgroundColor: 'black',
               width: windowWidth * 0.9,
             }}>
-            Add Images for catelogue images. First image is your product's cover that will be
-            highlighted everywhere
+            Add Images for catelogue images. First image is your product's cover
+            that will be highlighted everywhere
           </CustomText>
           <View
             style={{
@@ -151,7 +221,10 @@ const AddServices = props => {
             }}>
             {images.length > 0 &&
               images.map((item, index) => {
-                console.log("🚀 ~ file: AddServices.js:149 ~ images.map ~ item:", item)
+                console.log(
+                  '🚀 ~ file: AddServices.js:149 ~ images.map ~ item:',
+                  item,
+                );
                 return (
                   <View
                     style={{
@@ -167,32 +240,34 @@ const AddServices = props => {
                       borderWidth: 1,
                       overflow: 'hidden',
                       marginRight: moderateScale(10, 0.6),
-                      marginBottom : moderateScale(10,0.3)
+                      marginBottom: moderateScale(10, 0.3),
                     }}>
                     <CustomImage
-                      source={{uri: item?.uri? item?.uri : item?.image?.uri}}
+                      source={{uri: item?.photo ? item?.photo : item?.uri }}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
                 );
               })}
-            {images.length<5 && <TouchableOpacity
-              style={{
-                width: windowWidth * 0.2,
-                height: windowHeight * 0.08,
-                marginHorizontal: moderateScale(20, 0.3),
-                // backgroundColor: 'red',
-                borderRadius: moderateScale(10, 0.6),
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderColor: Color.veryLightGray,
-                borderWidth: 1,
-              }}
-              onPress={() => {
-                setImagePickerModal(true);
-              }}>
-              <Icon name={'plus'} as={AntDesign} size={5} />
-            </TouchableOpacity>}
+            {images.length < 5 && (
+              <TouchableOpacity
+                style={{
+                  width: windowWidth * 0.2,
+                  height: windowHeight * 0.08,
+                  marginHorizontal: moderateScale(20, 0.3),
+                  // backgroundColor: 'red',
+                  borderRadius: moderateScale(10, 0.6),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderColor: Color.veryLightGray,
+                  borderWidth: 1,
+                }}
+                onPress={() => {
+                  setImagePickerModal(true);
+                }}>
+                <Icon name={'plus'} as={AntDesign} size={5} />
+              </TouchableOpacity>
+            )}
           </View>
           <CustomText
             style={{
@@ -283,11 +358,15 @@ const AddServices = props => {
       <View style={styles.bottomContainer}>
         <CustomButton
           isBold
-          onPress={() =>{
-          console.log('Here============')  
-            addService()
+          onPress={() => {
+             if(item){
+              updateService(item?.id)
+             } else{
+
+               addService();
+             }
           }}
-          text={item ? 'Update':'Save'}
+          text={isLoading ? <ActivityIndicator size={moderateScale(22,.6)} color={'white'}/> :item ? 'Update' : 'Save'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}

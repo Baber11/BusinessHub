@@ -26,6 +26,7 @@ import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
 import SearchbarComponent from '../Components/SearchbarComponent';
+import { Get } from '../Axios/AxiosInterceptorFunction';
 
 
 const CustomerDashboard = () => {
@@ -41,12 +42,23 @@ const CustomerDashboard = () => {
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
+  const [allProducts, setAllProducts] = useState([])
+  console.log("🚀 ~ file: CustomerDashboard.js:46 ~ CustomerDashboard ~ allProducts:", allProducts)
 
-  const [newData, setNewData] = useState(sellerProducts);
+  const productList = async ()=>{
+    const url = 'products';
+    setIsLoading(true)
+    const response = await Get(url)
+    setIsLoading(false)
+    if(response != undefined){
+      console.log("🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:", response?.data)
+      setAllProducts(response?.data?.data?.products)
+    }
+
+  }
+
+  const [newData, setNewData] = useState(allProducts);
+  console.log("🚀 ~ file: CustomerDashboard.js:61 ~ CustomerDashboard ~ newData:", newData)
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -62,6 +74,12 @@ const CustomerDashboard = () => {
     );
     return () => backhandler.remove();
   }, []);
+
+
+  useEffect(() => {
+    productList()
+  }, [])
+  
 
 
   return (
@@ -189,7 +207,7 @@ const CustomerDashboard = () => {
           setNewData={setNewData}
           placeHolderColor={'#000'}
           placeholderName={'Enter Product Name'}
-          array={sellerProducts}
+          array={allProducts}
           arrayItem={'Product'}
           fontSize={13}
           SearchStyle={{
@@ -213,7 +231,7 @@ const CustomerDashboard = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={newData}
+          data={allProducts}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),

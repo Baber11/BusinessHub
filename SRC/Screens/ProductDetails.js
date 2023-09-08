@@ -28,12 +28,9 @@ import moment from 'moment';
 
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
-  // const seller = props?.route?.params?.seller;
+  console.log("🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
-  //   cartData,
-  // );
+  
   const user = useSelector(state => state.commonReducer.userData);
   const cartitem = cartData?.find((x, index) => x?.id == item?.id);
   // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
@@ -53,7 +50,7 @@ const ProductDetails = props => {
     item?.images[index-1],
   );
   const [quantity, setQuantity] = useState(
-    cartitem ? cartitem?.qty : item?.qty ? item?.qty : 1,
+    cartitem ? cartitem?.qty : item?.quantity ? item?.quantity : 1,
   );
   const [cotton, setcotton] = useState(
     cartitem ? cartitem?.cotton : item?.cotton ? item?.cotton : 1,
@@ -228,7 +225,7 @@ const ProductDetails = props => {
                 textAlign: 'left',
                 // backgroundColor:'orange',
               }}>
-              {finalItem?.Title}
+              {finalItem?.title}
             </CustomText>
 
             <CustomText
@@ -240,7 +237,7 @@ const ProductDetails = props => {
                 // backgroundColor:'red',
               }}
               numberOfLines={1}>
-              {finalItem?.subTitle}
+              {finalItem?.category}
             </CustomText>
 
             {/* <TouchableOpacity
@@ -343,7 +340,7 @@ const ProductDetails = props => {
           </CustomText>
 
           <View style={styles.ColorLine}>
-            {item?.colors.map(color => {
+            {JSON.parse(item?.color)?.map(color => {
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -370,7 +367,7 @@ const ProductDetails = props => {
             })}
           </View>
 
-          {item?.size.length > 0 && (
+          {item?.size?.length > 0 && (
             <CustomText
               isBold
               style={{
@@ -384,7 +381,7 @@ const ProductDetails = props => {
           )}
 
           <View style={styles.ColorLine1}>
-            {item?.size?.map(size => {
+            {JSON.parse(item?.size)?.map(size => {
               return (
                 <TouchableOpacity
                   onPress={() => {

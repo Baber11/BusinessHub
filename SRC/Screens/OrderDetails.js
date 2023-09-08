@@ -52,7 +52,7 @@ const OrderDetails = props => {
         }}>
         <View style={styles.banner}>
           <View style={styles.container}>
-            {index > 0 && item?.images.length > 1 && (
+            {index > 0 && item?.product_image?.length > 1 && (
               <>
                 <View
                   style={{
@@ -66,7 +66,7 @@ const OrderDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri: item?.images[index - 1]}}
+                    source={{uri: item?.product_image[index - 1]?.photo}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -103,9 +103,9 @@ const OrderDetails = props => {
               }}>
               <CustomImage
                 source={
-                 {uri: item?.images.length == 1
-                    ? item?.images[index - 1]
-                    : item?.images[index]}
+                 {uri: item?.product_image?.length == 1
+                    ? item?.product_image[index - 1]?.photo
+                    : item?.product_image[index]?.photo}
                 }
                 style={{
                   height: '100%',
@@ -113,7 +113,7 @@ const OrderDetails = props => {
                 }}
               />
             </View>
-            {index < item?.images.length - 1 && (
+            {index < item?.product_image?.length - 1 && (
               <>
                 <TouchableOpacity
                   onPress={() => {
@@ -144,7 +144,7 @@ const OrderDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri: item?.images[index + 1]}}
+                    source={{uri: item?.product_image[index + 1]?.photo}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -173,7 +173,7 @@ const OrderDetails = props => {
                 textAlign: 'left',
                 // backgroundColor:'orange',
               }}>
-              {item?.Title}
+              {item?.title}
             </CustomText>
 
             <CustomText
@@ -185,7 +185,7 @@ const OrderDetails = props => {
                 // backgroundColor:'red',
               }}
               numberOfLines={1}>
-              {item?.subTitle}
+              {item?.category}
             </CustomText>
           </View>
 
@@ -215,7 +215,7 @@ const OrderDetails = props => {
                 }}>
               
                 Quantity:
-                {details ? item?.totalQty : item?.qty}
+                {details ? item?.quantity : item?.quantity}
               </CustomText>
             </View>
           </View>
@@ -232,7 +232,7 @@ const OrderDetails = props => {
           </CustomText>
 
           <View style={styles.ColorLine}>
-            {item?.colors.map(color => {
+            {JSON.parse(item?.color)?.map(color => {
               return (
                 <View style={[styles.colorContainer, {backgroundColor: color}]}>
                   {item?.selectedColor == color && (
@@ -248,7 +248,7 @@ const OrderDetails = props => {
             })}
           </View>
 
-         {item?.size.length > 0 && <CustomText
+         {item?.size?.length > 0 && <CustomText
             isBold
             style={{
               fontSize: moderateScale(14, 0.6),
@@ -260,7 +260,7 @@ const OrderDetails = props => {
           </CustomText>}
 
           <View style={styles.ColorLine1}>
-            {item?.size?.map(size => {
+            {JSON.parse(item?.size)?.map(size => {
               return (
                 <View
                   style={[
@@ -409,7 +409,7 @@ const OrderDetails = props => {
           <CustomText
             style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
             isBold>
-            PKR {item?.price * item?.qty}.0 
+            PKR {item?.price * item?.quantity}.0 
           </CustomText>
         </View>}
       </ScrollView>

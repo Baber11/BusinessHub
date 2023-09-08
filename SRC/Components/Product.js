@@ -1,44 +1,78 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomImage from './CustomImage';
 import CustomText from './CustomText';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Icon} from 'native-base';
 import navigationService from '../navigationService';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddToCart, RemoveToCart, deleteProducts, setLiked} from '../Store/slices/common';
+import {
+  AddToCart,
+  RemoveToCart,
+  deleteProducts,
+  setLiked,
+} from '../Store/slices/common';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import numeral from 'numeral'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import numeral from 'numeral';
+import {Delete, Get} from '../Axios/AxiosInterceptorFunction';
 
-const Product = ({item, seller , customStyle}) => {
-  // console.log("🚀 ~ file: Product.js:16 ~ Product ~ item:", item)
+const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) => {
+  console.log('🚀 ~ file: Product.js:16 ~ Product ~ item:', item);
   // console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
+  const token = useSelector(state => state.authReducer.token);
 
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
+  const [isLoading, setIsLoading] = useState(false);
 
   const cartData = useSelector(state => state.commonReducer.cart);
   const Role = useSelector(state => state.authReducer.role);
-  console.log("🚀 ~ file: Product.js:25 ~ Product ~ Role:", Role)
-
+  console.log('🚀 ~ file: Product.js:25 ~ Product ~ Role:', Role);
 
   const addedItem = item => {
-    // console.log('add DATA===>', cartData);
-
     dispatch(AddToCart(item));
   };
 
   const removeItem = item => {
-    // console.log('REMOVE DATA', cartData);
     dispatch(RemoveToCart(item));
   };
+
+  const editProduct = async id => {
+    console.log('id===========================>>>>>', id);
+    const url = `auth/product/${id}`;
+    // setIsLoading(true);
+    const response = await Get(url, token);
+    // setIsLoading(false);
+    if (response != undefined) {
+     console.log(
+        '🚀 ~ file: AddServices.js:126 ~ editService ~ response?.data:',
+        response?.data,
+      );
+      navigationService.navigate('AddProduct', {item: response?.data?.data});
+    }
+  };
+
+  const deleteProduct = async id => {
+    const url = `auth/product/${id}`;
+    setIsLoading(true)
+    const response = await Delete(url, apiHeader(token));
+    setIsLoading(false)
+
+    if(response != undefined){
+      
+      console.log("🚀 ~ file: Product.js:65 ~ deleteService ~ response:", response?.data)
+      setAddedProducts(addedProducts.filter(product=> product?.id != item?.id))  
+      
+    }
+
+  };
+
   const tempitem = cartData?.find((x, index) => x?.id == item?.id);
-  // console.log("🚀 ~ file: Product.js:39 ~ Product ~ tempitem:", tempitem)
-  // console.log('QTY+++', tempitem);
+
   return (
     <View key={item?.id}>
       <TouchableOpacity
@@ -51,34 +85,35 @@ const Product = ({item, seller , customStyle}) => {
             if (!tempitem) {
               addedItem(item);
             }
+          } else {
+            navigationService.navigate('OrderDetails', {
+              item,
+              details: true,
+            });
           }
-          else{  
-              navigationService.navigate('OrderDetails', {
-                item,
-                details: true,
-              });
-            
-          }}}
-        style={[{
-          width: windowWidth * 0.45,
-          // height: windowHeight * 0.35,
-          paddingVertical:moderateScale(5,.6),
-          backgroundColor: '#fff',
-          margin: moderateScale(5, 0.3),
-          borderRadius: 5,
-          alignItems: 'center',
-        
-        },tempitem != undefined && {
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 7,
+        }}
+        style={[
+          {
+            width: windowWidth * 0.45,
+            // height: windowHeight * 0.35,
+            paddingVertical: moderateScale(5, 0.6),
+            backgroundColor: '#fff',
+            margin: moderateScale(5, 0.3),
+            borderRadius: 5,
+            alignItems: 'center',
           },
-          shadowOpacity: 0.43,
-          shadowRadius: 9.51,
-          
-          elevation: 15,
-        }]}>
+          tempitem != undefined && {
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 7,
+            },
+            shadowOpacity: 0.43,
+            shadowRadius: 9.51,
+
+            elevation: 15,
+          },
+        ]}>
         <TouchableOpacity
           onLongPress={() => {
             setLike(!like);
@@ -89,18 +124,19 @@ const Product = ({item, seller , customStyle}) => {
               if (!tempitem) {
                 addedItem(item);
               }
-            }else{  
+            } else {
               navigationService.navigate('OrderDetails', {
                 item,
                 details: true,
               });
-          }
+            }
           }}
           activeOpacity={0.8}
           style={{
             width: '90%',
             height: windowHeight * 0.22,
             overflow: 'hidden',
+            backgroundColor: 'black',
             borderRadius: 5,
             // marginTop: moderateScale(15, 0.3),
           }}>
@@ -114,15 +150,16 @@ const Product = ({item, seller , customStyle}) => {
                 if (!tempitem) {
                   addedItem(item);
                 }
-              }else{  
+              } else {
                 navigationService.navigate('OrderDetails', {
                   item,
                   details: true,
                 });
-              
-            }
+              }
             }}
-            source={item?.img ? item?.img : {uri: item?.images[0]}}
+            source={
+              item?.img ? item?.img : {uri: item?.product_image[0]?.photo}
+            }
             resizeMode={'cover'}
             style={{
               height: '100%',
@@ -145,7 +182,7 @@ const Product = ({item, seller , customStyle}) => {
         </TouchableOpacity>
 
         <CustomText
-         numberOfLines={1}
+          numberOfLines={1}
           isBold
           style={{
             textAlign: 'left',
@@ -154,19 +191,20 @@ const Product = ({item, seller , customStyle}) => {
             color: '#464342',
             marginTop: moderateScale(10, 0.3),
           }}>
-          {item?.Title}
+          {item?.title}
         </CustomText>
 
-        {!seller && <CustomText
-          style={{
-            textAlign: 'left',
-            width: windowWidth *0.35,
-            height: windowHeight * 0.03,
-            color: '#a2a2a2',
-          }}>
-          {item?.subTitle}
-        </CustomText>
-}
+        {!seller && (
+          <CustomText
+            style={{
+              textAlign: 'left',
+              width: windowWidth * 0.35,
+              height: windowHeight * 0.03,
+              color: '#a2a2a2',
+            }}>
+            {item?.subTitle}
+          </CustomText>
+        )}
         <CustomText
           style={{
             // backgroundColor : 'red',
@@ -174,7 +212,6 @@ const Product = ({item, seller , customStyle}) => {
             width: windowWidth * 0.4,
             color: Color.themeColor,
             fontSize: moderateScale(11, 0.6),
-          
           }}>
           Rs {numeral(item?.price).format('0,0')}
           {/* {item?.price} */}
@@ -205,53 +242,56 @@ const Product = ({item, seller , customStyle}) => {
             View Details
           </CustomText>
         )}
-        {Role == "vendor" &&  <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <CustomButton
-            onPress={() => {
-              navigationService.navigate('AddProduct', {item});
-            }}
-            text={'Edit'}
-            textColor={Color.white}
-            iconName={'pencil'}
-            iconType={Entypo}
-            // width={windowWidth * 0.28}
-            height={windowHeight * 0.035}
-            fontSize={moderateScale(10, 0.6)}
-            marginTop={moderateScale(4, 0.3)}
-            bgColor={Color.yellow}
-            borderRadius={moderateScale(20, 0.3)}
-            iconStyle={{
-              fontSize: moderateScale(14, 0.6),
-            }}
-            marginRight={moderateScale(5, 0.3)}
-            isBold
-          />
-          <CustomButton
-            onPress={() => {
-              dispatch(deleteProducts(item));
-            }}
-            text={'Delete'}
-            textColor={Color.white}
-            iconName={'delete'}
-            iconType={MaterialIcons}
-            // width={windowWidth * 0.28}
-            height={windowHeight * 0.035}
-            fontSize={moderateScale(10, 0.6)}
-            marginTop={moderateScale(4, 0.3)}
-            bgColor={Color.yellow}
-            borderRadius={moderateScale(20, 0.3)}
-            iconStyle={{
-              fontSize: moderateScale(14, 0.6),
-            }}
-            isBold
-          />
-        </View>}
+        {Role == 'vendor' && (
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <CustomButton
+              onPress={() => {
+                editProduct(item?.id);
+              }}
+              text={ 'Edit'}
+              textColor={Color.white}
+              iconName={'pencil'}
+              iconType={Entypo}
+              // width={windowWidth * 0.28}
+              height={windowHeight * 0.035}
+              fontSize={moderateScale(10, 0.6)}
+              marginTop={moderateScale(4, 0.3)}
+              bgColor={Color.yellow}
+              borderRadius={moderateScale(20, 0.3)}
+              iconStyle={{
+                fontSize: moderateScale(14, 0.6),
+              }}
+              marginRight={moderateScale(5, 0.3)}
+              isBold
+            />
+            <CustomButton
+              onPress={() => {
+                deleteProduct(item?.id)
+                // dispatch(deleteProducts(item));
+              }}
+              text={isLoading ? <ActivityIndicator size={'small'} color={'white'} /> : 'Delete'}
+              textColor={Color.white}
+              iconName={!isLoading && 'delete'}
+              iconType={!isLoading && MaterialIcons}
+              width={windowWidth * 0.2}
+              height={windowHeight * 0.035}
+              fontSize={moderateScale(10, 0.6)}
+              marginTop={moderateScale(4, 0.3)}
+              bgColor={Color.yellow}
+              borderRadius={moderateScale(20, 0.3)}
+              iconStyle={{
+                fontSize: moderateScale(14, 0.6),
+              }}
+              isBold
+            />
+          </View>
+        )}
       </TouchableOpacity>
 
-      {tempitem != undefined && !seller &&(
+      {tempitem != undefined && !seller && (
         <CustomButton
           isBold
           onPress={() => removeItem(item)}
