@@ -33,10 +33,11 @@ const SearchbarComponent = ({
   const OnSearch = text => {
     let tempdata = array.filter(item => {
       return (arrayItem == 'order'
-        ? item?.orderId.toString().indexOf(text) > -1
-        : arrayItem == 'Product' ? item?.Title?.toLowerCase().indexOf(text?.toLowerCase()) > -1
+        ? item?.orderId ? item?.orderId?.toString().toLowerCase().indexOf(text) > -1 : item?.order_id?.toString().toLowerCase().indexOf(text) > -1 
+        : arrayItem == 'Product' ? item?.title?.toLowerCase().indexOf(text?.toLowerCase()) > -1
         : item?.name?.toLowerCase().indexOf(text?.toLowerCase()) > -1)
     });
+    console.log("🚀 ~ file: SearchbarComponent.js:40 ~ tempdata ~ tempdata:", tempdata)
 
     setNewData(tempdata);
   };

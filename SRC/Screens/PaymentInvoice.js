@@ -139,7 +139,7 @@ const PaymentInvoice = props => {
                     marginTop: moderateScale(20, 0.3),
                   }}>
                   <CustomText>
-                    {item.Title} x {item.qty}
+                    {item.Title} x {item.product_quantity}
                   </CustomText>
                   <CustomText>PKR{item.price}</CustomText>
                 </View>

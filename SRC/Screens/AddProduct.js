@@ -101,7 +101,7 @@ const AddProduct = props => {
       userId: user?.id,
       item: {
         id: item?.id ? item?.id : -1,
-        qty: 1,
+        product_quantity: 1,
         selectedColor: '',
         selectedSize: '',
         size: sizes,

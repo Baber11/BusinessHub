@@ -1,4 +1,4 @@
-import {View, Text, FlatList, BackHandler} from 'react-native';
+import {View, Text, FlatList, BackHandler,ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Header from '../Components/Header';
 import CustomText from '../Components/CustomText';
@@ -12,19 +12,61 @@ import Color from '../Assets/Utilities/Color';
 import MyOrderCard from '../Components/MyorderComponent';
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CustomImage from '../Components/CustomImage';
+import { Get } from '../Axios/AxiosInterceptorFunction';
+import Product from '../Components/Product';
 
 const Myorders = () => {
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
+  console.log("🚀 ~ file: Myorders.js:20 ~ Myorders ~ token:", token)
   const orderData = useSelector(state => state.commonReducer.order);
   const bookings = useSelector(state => state.commonReducer.bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
-  const [newData, setNewData] = useState(
-    selectedTab == 'Products' ? orderData : bookings,
-  );
+  const [isLoading, setIsLoading] = useState(false)
+  const [productOrders, setProductOrders] = useState([])
+  console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
+  const [serviceOrders, setServiceOrders] = useState([])
+  console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
+  const [newData, setNewData] = useState();
+  
+  const getUserOrders =async ()=>{
+    const url = 'auth/order/list';
+    setIsLoading(true)
+    const response = await Get(url, token)
+    setIsLoading(false)
+    
+    if(response != undefined){
+      console.log("🚀 ~ file: Myorders.js:35 ~ getUserOrders ~ response:", response?.data)
+      setProductOrders(response?.data?.orders)
+      
+    }
+    
+  }
+  
+  const getUserServices =async ()=>{
+    const url = 'auth/services/book/list';
+    
+    setIsLoading(true)
+    const response = await Get(url, token)
+    setIsLoading(false)
+
+    console.log("🚀 ~ file: Myorders.js:50 ~ getUserServices ~ response:", response?.data)
+    if(response != undefined){
+      setServiceOrders(response?.data?.data)
+      // setServiceOrders()
+      
+    }
+
+  }
+
+
 
   useEffect(() => {
-    setNewData(selectedTab == 'Products' ? orderData : bookings);
+    getUserOrders()
+    getUserServices()
+
+    setNewData(selectedTab == 'Products' ? productOrders : serviceOrders)
+    
   }, [selectedTab]);
 
   return (
@@ -47,14 +89,27 @@ const Myorders = () => {
           setNewData={setNewData}
           placeHolderColor={'#000'}
           placeholderName={'Search your Order Id'}
-          array={selectedTab == 'Products' ? orderData : bookings}
+          array={selectedTab == 'Products' ? productOrders : serviceOrders}
           fontSize={13}
           arrayItem={'order'}
         />
 
-        <FlatList
+      { isLoading ? <View
+              style={{
+                height: windowHeight * 0.8,
+                width: windowWidth * 0.9,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'green',
+              }}>
+              <ActivityIndicator
+                color={Color.yellow}
+                size={moderateScale(45, 0.6)}
+              />
+            </View> : <FlatList
           showsVerticalScrollIndicator={false}
           data={newData}
+          // data={serviceOrders}
           contentContainerStyle={{
             paddingBottom: moderateScale(40, 0.3),
             width: windowWidth,
@@ -155,7 +210,7 @@ const Myorders = () => {
               </>
             );
           }}
-        />
+        />}
       </View>
     </>
   );

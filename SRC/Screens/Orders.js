@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   BackHandler,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
@@ -39,28 +40,29 @@ const Orders = () => {
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedOrder, setSelectedOrder] = useState('');
+  const [selectedTab, setSelectedTab] = useState('Product');
   const [myOrder, setMyOrder] = useState([]);
+  console.log('🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:', myOrder);
+  const [serviceOrder, setServiceOrder] = useState([]);
+  console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
+  // console.log("🚀 ~ file: Orders.js:45 ~ Orders ~ serviceOrder:", serviceOrder)
   console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
   const navigation = useNavigation();
   const oneDayAgo = moment().subtract(1, 'day');
 
-  const Orders = () => {
-    setMyOrder([]);
-    orders.map(item =>
-      item.order.map(
-        order =>
-          order?.sellerId == userData?.id &&
-          setMyOrder(prev => [
-            ...prev,
-            {orderId: item.orderId, Image: item?.Image, ...order},
-          ]),
-      ),
-    );
-  };
-
-  // myOrder.filter(item => {
-  //   console.log()
-  // })
+  // const Orders = () => {
+  //   setMyOrder([]);
+  //   orders.map(item =>
+  //     item.order.map(
+  //       order =>
+  //         order?.sellerId == userData?.id &&
+  //         setMyOrder(prev => [
+  //           ...prev,
+  //           {orderId: item.orderId, Image: item?.Image, ...order},
+  //         ]),
+  //     ),
+  //   );
+  // };
 
   const dateDiff = item => {
     const currentDate = moment();
@@ -69,7 +71,34 @@ const Orders = () => {
     return currentDate.diff(newDate, 'h');
   };
 
- 
+  const getSellerOrders = async () => {
+    const url = 'auth/vendor/order/list';
+    setIsLoading(true);
+    const response = await Get(url, token);
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
+        response?.data,
+      );
+      setMyOrder(response?.data?.orders);
+    }
+  };
+  const getSellerServices = async () => {
+    const url = 'auth/vendor/services/book/list';
+    setIsLoading(true);
+    const response = await Get(url, token);
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: Orders.js:76 ~ getSellerServices ~ response:',
+        response?.data,
+      );
+       return setServiceOrder(response?.data?.data);
+    }
+  };
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -83,7 +112,10 @@ const Orders = () => {
     return () => backhandler.remove();
   }, []);
   useEffect(() => {
-    Orders();
+    getSellerOrders();
+    getSellerServices();
+
+    // Orders();
   }, [orders]);
 
   return (
@@ -102,80 +134,159 @@ const Orders = () => {
         }}>
         <View
           style={{
-            height: windowHeight * 0.3,
+            // height: windowHeight * 0.3,
+
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <CustomText
-            isBold
+          <View
             style={{
-              fontSize: moderateScale(20, 0.6),
-              marginTop: moderateVerticalScale(20, 0.6),
+              flexDirection: 'row',
               width: windowWidth,
+              justifyContent: 'space-between',
               paddingHorizontal: moderateScale(10, 0.6),
-            }}>
-            Latest Orders
-          </CustomText>
-
-          <FlatList
-            numColumns={1}
-            data={myOrder.filter(item => dateDiff(item.date) < 24)}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            contentContainerStyle={{
-              // backgroundColor:'black',
-              // height: windowHeight * 0.2,
-              // marginHorizontal:moderateScale(10,.3),
-              paddingHorizontal:moderateScale(10,.6),
+              // backgroundColor:'red',
               alignItems: 'center',
-            }}
-            ListEmptyComponent={() => {
-              return (
-                <View
-                  style={{
-                    width: windowWidth * 0.7,
-                    alignSelf: 'center',
-                  }}>
+            }}>
+            <CustomText
+              isBold
+              style={{
+                fontSize: moderateScale(20, 0.6),
+                paddingVertical: moderateScale(10, 0.6),
+                // marginTop: moderateVerticalScale(20, 0.6),
+                width: windowWidth * 0.4,
+              }}>
+              Latest Orders
+            </CustomText>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: windowWidth * 0.26,
+                height: windowHeight * 0.05,
+                borderWidth: 1,
+                borderColor: '#033b41',
+                // alignSelf: 'flex-end',
+                justifyContent: 'space-between',
+                borderRadius: moderateScale(10, 0.6),
+                overflow: 'hidden',
+                // marginTop: moderateScale(20, 0.3),
+                // marginRight: moderateScale(10, 0.3),
+              }}>
+              <CustomText
+                style={{
+                  width: windowWidth * 0.13,
+                  textAlign: 'center',
+                  paddingVertical: moderateScale(10, 0.6),
+                  fontSize: moderateScale(10, 0.6),
+                  // borderRadius: moderateScale(10, 0.6),
+                  color: selectedTab == 'Product' ? 'white' : '#033b41',
+                  backgroundColor:
+                    selectedTab == 'Product' ? '#033b41' : 'transparent',
+                }}
+                onPress={() => {
+                  setSelectedTab('Product');
+                }}>
+                Product
+              </CustomText>
+              <CustomText
+                style={{
+                  width: windowWidth * 0.13,
+                  // borderRadius: moderateScale(10, 0.6),
+                  paddingVertical: moderateScale(10, 0.6),
+                  fontSize: moderateScale(10, 0.6),
+                  textAlign: 'center',
+                  color: selectedTab == 'Seller' ? 'white' : '#033b41',
+                  backgroundColor:
+                    selectedTab == 'Seller' ? '#033b41' : 'transparent',
+                }}
+                onPress={() => {
+                  setSelectedTab('Seller');
+                }}>
+                Service
+              </CustomText>
+            </View>
+          </View>
+          {isLoading ? (
+            <View
+              style={{
+                height: windowHeight * 0.1,
+                width: windowWidth * 0.9,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'green',
+              }}>
+              <ActivityIndicator
+                color={Color.yellow}
+                size={moderateScale(30, 0.6)}
+              />
+            </View>
+          ) : (
+            <FlatList
+              numColumns={1}
+              data={
+                selectedTab == 'Product'
+                  ? myOrder.filter(item => dateDiff(item.date) < 24)
+                  : serviceOrder.filter(item => dateDiff(item.date) < 24)
+              }
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              contentContainerStyle={{
+                // backgroundColor:'black',
+                // height: windowHeight * 0.2,
+                // marginHorizontal:moderateScale(10,.3),
+                paddingHorizontal: moderateScale(10, 0.6),
+                alignItems: 'center',
+              }}
+              ListEmptyComponent={() => {
+                return (
                   <View
                     style={{
-                      width: windowWidth * 0.6,
-                      height: windowHeight * 0.2,
+                      width: windowWidth * 0.7,
                       alignSelf: 'center',
-                      marginTop: moderateScale(10, 0.3),
                     }}>
-                    <CustomImage
-                      source={require('../Assets/Images/4.png')}
+                    <View
                       style={{
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      resizeMode={'contain'}
-                    />
-                  </View>
+                        width: windowWidth * 0.6,
+                        height: windowHeight * 0.2,
+                        alignSelf: 'center',
+                        marginTop: moderateScale(10, 0.3),
+                      }}>
+                      <CustomImage
+                        source={require('../Assets/Images/4.png')}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                        }}
+                        resizeMode={'contain'}
+                      />
+                    </View>
 
-                  <CustomText
-                    style={{
-                      textAlign: 'center',
-                      color: 'black',
-                      fontSize: moderateScale(13, 0.6),
-                    }}>
-                    ERROR 404 DATA NOT FOUND
-                  </CustomText>
-                </View>
-              );
-            }}
-            renderItem={({item, index}) => {
-              return (
-                // <MyOrderCard item={item} />
-                <OrderCard
-                  item={item}
-                  selectedOrder={selectedOrder}
-                  setSelectedOrder={setSelectedOrder}
-                  width={windowWidth * 0.85}
-                />
-              );
-            }}
-          />
+                    <CustomText
+                      style={{
+                        textAlign: 'center',
+                        color: 'black',
+                        fontSize: moderateScale(13, 0.6),
+                      }}>
+                      ERROR 404 DATA NOT FOUND
+                    </CustomText>
+                  </View>
+                );
+              }}
+              renderItem={({item, index}) => {
+                console.log('🚀 ~ file: Orders.js:203 ~ Orders ~ item:', item);
+                return (
+                  // <MyOrderCard item={item} />
+                  <OrderCard
+                    item={item}
+                    selectedOrder={selectedOrder}
+                    setSelectedOrder={setSelectedOrder}
+                    width={windowWidth * 0.85}
+                    selectedTab={selectedTab}
+                  />
+                );
+              }}
+            />
+          )}
         </View>
         <CustomText
           isBold
@@ -190,58 +301,75 @@ const Orders = () => {
           History
         </CustomText>
 
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={1}
-          data={myOrder.filter(item => dateDiff(item?.date) >= 24)}
-          contentContainerStyle={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: moderateScale(10, 0.3),
-          }}
-          renderItem={({item, index}) => {
-            return (
-              <OrderCard
-                // width = {windowWidth*0.8}
-                item={item}
-                selectedOrder={selectedOrder}
-                setSelectedOrder={setSelectedOrder}
-              />
-            );
-          }}
-          ListEmptyComponent={() => {
-            return (
-              <>
-                <View
-                  style={{
-                    width: windowWidth * 0.8,
-                    height: windowHeight * 0.3,
-                    marginTop: moderateScale(30, 0.3),
-                    alignSelf: 'center',
-                    // backgroundColor:'red'
-                  }}>
-                  <CustomImage
-                    source={require('../Assets/Images/4.png')}
+        {isLoading ? (
+          <View
+            style={{
+              height: windowHeight * 0.5,
+              width: windowWidth,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // backgroundColor: 'green',
+            }}>
+            <ActivityIndicator
+              color={Color.yellow}
+              size={moderateScale(45, 0.6)}
+            />
+          </View>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={1}
+            data={myOrder.filter(item => dateDiff(item?.date) >= 24)}
+            contentContainerStyle={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: moderateScale(10, 0.3),
+            }}
+            renderItem={({item, index}) => {
+              return (
+                <OrderCard
+                  // width = {windowWidth*0.8}
+                  item={item}
+                  selectedOrder={selectedOrder}
+                  setSelectedOrder={setSelectedOrder}
+                  selectedTab={selectedTab}
+                />
+              );
+            }}
+            ListEmptyComponent={() => {
+              return (
+                <>
+                  <View
                     style={{
-                      width: '100%',
-                      height: '100%',
-                    }}
-                    resizeMode={'contain'}
-                  />
-                </View>
-                <CustomText
-                  style={{
-                    textAlign: 'center',
-                    color: 'black',
-                    fontSize: moderateScale(13, 0.6),
-                    marginTop: moderateScale(-15, 0.3),
-                  }}>
-                  ERROR 404 DATA NOT FOUND
-                </CustomText>
-              </>
-            );
-          }}
-        />
+                      width: windowWidth * 0.8,
+                      height: windowHeight * 0.3,
+                      marginTop: moderateScale(30, 0.3),
+                      alignSelf: 'center',
+                      // backgroundColor:'red'
+                    }}>
+                    <CustomImage
+                      source={require('../Assets/Images/4.png')}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      resizeMode={'contain'}
+                    />
+                  </View>
+                  <CustomText
+                    style={{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: moderateScale(13, 0.6),
+                      marginTop: moderateScale(-15, 0.3),
+                    }}>
+                    ERROR 404 DATA NOT FOUND
+                  </CustomText>
+                </>
+              );
+            }}
+          />
+        )}
       </ScrollView>
     </>
   );
@@ -249,13 +377,13 @@ const Orders = () => {
 
 export default Orders;
 
-const OrderCard = ({item, width}) => {
+const OrderCard = ({item, width, selectedTab}) => {
   console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
   return (
     <View
       key={item?.id}
       style={{
-        width: width ? width :  windowWidth * 0.95,
+        width: width ? width : windowWidth * 0.95,
         paddingVertical: moderateScale(10, 0.6),
         marginHorizontal: moderateScale(5, 0.3),
         backgroundColor: '#f9fafd',
@@ -289,7 +417,7 @@ const OrderCard = ({item, width}) => {
           backgroundColor: 'white',
         }}>
         <CustomImage
-          source={item.Image ? item?.Image : item?.image}
+          source={require('../Assets/Images/logo.png')}
           style={{
             height: '100%',
             width: '100%',
@@ -308,19 +436,23 @@ const OrderCard = ({item, width}) => {
           // isBold
           numberOfLines={1}
           style={{
+            // backgroundColor: 'red',
+            width: windowWidth * 0.5,
             color: '#2f2f2f',
             fontSize: moderateScale(13, 0.6),
           }}>
-          Order Id : {item?.orderId}
+          Order Id :
+          {item?.order?.orderId ? item?.order?.orderId : item?.order_id}
         </CustomText>
-        {item?.qty ? (
+        {item?.product_quantity || item?.qty ? (
           <CustomText
             numberOfLines={1}
             style={{
               color: '#000',
               fontSize: moderateScale(12, 0.6),
             }}>
-            Quantity : {item?.qty}
+            Quantity :
+            {item?.product_quantity ? item?.product_quantity : item?.qty}
           </CustomText>
         ) : (
           <CustomText
@@ -329,39 +461,45 @@ const OrderCard = ({item, width}) => {
               color: '#000',
               fontSize: moderateScale(12, 0.6),
             }}>
-            Service : {item?.Category}
+            Service : {item?.service?.shop_name}
           </CustomText>
         )}
 
-      
-          <CustomText
-            numberOfLines={1}
-            style={{
-              color: '#000',
-              fontSize: moderateScale(15, 0.6),
-            }}>
-            Price : PKR {item.total ? item?.total : item?.price}
-          </CustomText>
-
-          
+        <CustomText
+          numberOfLines={1}
+          style={{
+            color: '#000',
+            fontSize: moderateScale(15, 0.6),
+          }}>
+          Price : PKR{' '}
+          {item.total ? item?.total : item?.price ? item?.price : item?.charges}
+        </CustomText>
       </View>
       <CustomText
-            isBold
-            onPress={() => {
-              navigationService.navigate('OrderDetails', {
-                item: item,
-                details: false,
-              });
-            }}
-            style={{
-              position:'absolute',
-              right:10,
-              bottom:10,
-              color: '#000',
-              fontSize: moderateScale(12, 0.6),
-            }}>
-            Details
-          </CustomText>
+        isBold
+        onPress={() => {
+          if (selectedTab == 'Product') {
+            navigationService.navigate('OrderDetails', {
+              item: item,
+              details: false,
+            });
+          } else {
+            navigationService.navigate('ServiceDetails', {
+              item: item,
+              details: false,
+              seller: true,
+            });
+          }
+        }}
+        style={{
+          position: 'absolute',
+          right: 10,
+          bottom: 10,
+          color: '#000',
+          fontSize: moderateScale(12, 0.6),
+        }}>
+        Details
+      </CustomText>
     </View>
   );
 };

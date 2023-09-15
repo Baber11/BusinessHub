@@ -32,26 +32,30 @@ const ProductDetails = props => {
   const cartData = useSelector(state => state.commonReducer.cart);
   
   const user = useSelector(state => state.commonReducer.userData);
+
+  const userRole = useSelector(state=> state.commonReducer.selectedRole)
   const cartitem = cartData?.find((x, index) => x?.id == item?.id);
+  console.log("🚀 ~ file: ProductDetails.js:36 ~ ProductDetails ~ cartitem:", cartitem)
   // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
   const dispatch = useDispatch();
   const focused = useIsFocused();
-  const [Selectedcolor, SetSelectedColor] = useState(
+  const [selectedColor, setSelectedColor] = useState(
     cartitem ? cartitem?.selectedColor : '',
   );
 
-  const [Selectedsize, setSelectedSize] = useState(
+  const [selectedSize, setSelectedSize] = useState(
     cartitem ? cartitem?.selectedSize : '',
   );
 
   const [index, setIndex] = useState(1);
   console.log(
     '🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:',
-    item?.images[index-1],
+    item?.product_image[index-1],
   );
-  const [quantity, setQuantity] = useState(
-    cartitem ? cartitem?.qty : item?.quantity ? item?.quantity : 1,
-  );
+  const [quantity, setQuantity] = useState(userRole == 'vendor' ? item?.quantity : cartitem ? cartitem?.product_quantity : 1  )
+  // const [quantity, setQuantity] = useState( 
+  //   cartitem ? cartitem?.quantity : item?.quantity ? item?.quantity : 1,
+  // );
   const [cotton, setcotton] = useState(
     cartitem ? cartitem?.cotton : item?.cotton ? item?.cotton : 1,
   );
@@ -61,7 +65,9 @@ const ProductDetails = props => {
   const [yourComment, setYourComment] = useState('');
 
   const addedItem = item => {
-    dispatch(AddToCart(item));
+    // dispatch(AddToCart({qty:1,...item}));
+    console.log('Console it============>>>>>>>>>>>',{product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item})
+    dispatch(AddToCart({product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item}));
   };
 
   const images = [
@@ -83,12 +89,12 @@ const ProductDetails = props => {
     images: item?.images,
     // like: like,
     price: item?.price,
-    qty: quantity,
+    product_quantity: quantity,
     sale: item?.sale,
     size: item?.size,
     subTitle: item?.subTitle,
-    selectedSize: Selectedsize,
-    selectedColor: Selectedcolor,
+    selectedSize: selectedSize,
+    selectedColor: selectedColor,
     totalQty: item?.totalQty,
   };
 
@@ -103,7 +109,7 @@ const ProductDetails = props => {
         }}>
         <View style={styles.banner}>
           <View style={styles.container}>
-            {index > 0 && item?.images.length > 1 && (
+            {index > 0 && item?.product_image.length > 1 && (
               <>
                 <View
                   style={{
@@ -117,7 +123,7 @@ const ProductDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri: item?.images[index - 1]}}
+                    source={{uri: item?.product_image[index - 1]?.photo}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -155,9 +161,9 @@ const ProductDetails = props => {
               <CustomImage
                 source={{
                   uri:
-                    item?.images.length == 1
-                      ? item?.images[index - 1]
-                      : item?.images[index],
+                    item?.product_image.length == 1
+                      ? item?.product_image[index - 1]?.photo
+                      : item?.product_image[index]?.photo,
                 }}
                 style={{
                   height: '100%',
@@ -165,7 +171,7 @@ const ProductDetails = props => {
                 }}
               />
             </View>
-            {index < item?.images.length - 1 && (
+            {index < item?.product_image.length - 1 && (
               <>
                 <TouchableOpacity
                   onPress={() => {
@@ -196,7 +202,7 @@ const ProductDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri: item?.images[index + 1]}}
+                    source={{uri: item?.product_image[index + 1]?.photo}}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -240,29 +246,7 @@ const ProductDetails = props => {
               {finalItem?.category}
             </CustomText>
 
-            {/* <TouchableOpacity
-              activeOpacity={0.6}
-              style={{paddingRight: 10}}
-              onPress={() => {
-                setLike(!like);
-                dispatch(setLiked({id: item?.id, liked: !like}));
-              }}>
-              {like ? (
-                <Icon
-                  name={'heart'}
-                  as={Entypo}
-                  size={moderateScale(25, 0.3)}
-                  color={'#E50808'}
-                />
-              ) : (
-                <Icon
-                  name={'heart-outlined'}  
-                  as={Entypo}
-                  size={moderateScale(25, 0.3)}
-                  color={'black'}
-                />
-              )}
-            </TouchableOpacity> */}
+           
           </View>
 
           <View
@@ -341,10 +325,11 @@ const ProductDetails = props => {
 
           <View style={styles.ColorLine}>
             {JSON.parse(item?.color)?.map(color => {
+              console.log('Here================')
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    SetSelectedColor(color);
+                    setSelectedColor(color);
                     dispatch(setColor({id: item?.id, colors: color}));
                   }}
                   style={[
@@ -354,7 +339,7 @@ const ProductDetails = props => {
                       marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
-                  {Selectedcolor == color && (
+                  {selectedColor == color && (
                     <Icon
                       name={'check'}
                       as={Entypo}
@@ -397,13 +382,13 @@ const ProductDetails = props => {
                     styles.size,
                     {
                       backgroundColor:
-                        Selectedsize == size ? Color.themeColor : '#F4F5F6',
+                      selectedSize == size ? Color.themeColor : '#F4F5F6',
                       marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
                   <CustomText
                     style={{
-                      color: Selectedsize == size ? 'white' : '#8e9194',
+                      color: selectedSize == size ? 'white' : '#8e9194',
                       fontSize: moderateScale(14, 0.6),
                       textTransform: 'uppercase',
                     }}>
@@ -611,13 +596,13 @@ const ProductDetails = props => {
 
       <View style={styles.bottomContainer}>
         <CustomButton
-          disabled={cartitem?.qty > 0 ? true : false}
+          disabled={cartitem?.product_quantity > 0 ? true : false}
           isBold
           onPress={() => {
             console.log('Body========>>>>>', body);
-            addedItem(body);
+            addedItem(item);
           }}
-          text={cartitem?.qty > 0 ? 'Added' : 'ADD TO CART'}
+          text={cartitem?.product_quantity > 0 ? 'Added' : 'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}

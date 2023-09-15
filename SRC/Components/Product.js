@@ -34,7 +34,8 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
   console.log('🚀 ~ file: Product.js:25 ~ Product ~ Role:', Role);
 
   const addedItem = item => {
-    dispatch(AddToCart(item));
+    console.log('cartIte===================?????????',{product_quantity:1,product_id:item?.id,...item})
+    dispatch(AddToCart({product_quantity:1,product_id:item?.id,...item}));
   };
 
   const removeItem = item => {

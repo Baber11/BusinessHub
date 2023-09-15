@@ -33,6 +33,17 @@ const OrderDetails = props => {
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
 
+  const [colors, setColors] = useState(
+    item?.product ? JSON.parse(item?.product?.color) : JSON.parse(item?.color),
+  );
+  const [sizes, setSizes] = useState(
+    item?.product ? JSON.parse(item?.product?.size) : JSON.parse(item?.size),
+  );
+
+  const [category, setCategory] = useState(item?.product ? item?.product?.category :item?.category);
+  const [title, setTitle] = useState(item?.product ? item?.product?.title :item?.title);
+  const [price, setPrice] = useState(item?.product ? item?.product?.price : item?.price)
+  const [quantity, setQuantity] = useState(details ? item?.product ?  item?.product?.quantity : item?.quantity : item?.qty )
   const images = [
     require('../Assets/Images/image3.png'),
     require('../Assets/Images/Mask2.png'),
@@ -102,11 +113,12 @@ const OrderDetails = props => {
                 backgroundColor: 'black',
               }}>
               <CustomImage
-                source={
-                 {uri: item?.product_image?.length == 1
-                    ? item?.product_image[index - 1]?.photo
-                    : item?.product_image[index]?.photo}
-                }
+                source={{
+                  uri:
+                    item?.product_image?.length == 1
+                      ? item?.product_image[index - 1]?.photo
+                      : item?.product_image[index]?.photo,
+                }}
                 style={{
                   height: '100%',
                   height: '100%',
@@ -173,7 +185,7 @@ const OrderDetails = props => {
                 textAlign: 'left',
                 // backgroundColor:'orange',
               }}>
-              {item?.title}
+              {title}
             </CustomText>
 
             <CustomText
@@ -185,7 +197,7 @@ const OrderDetails = props => {
                 // backgroundColor:'red',
               }}
               numberOfLines={1}>
-              {item?.category}
+              {category}
             </CustomText>
           </View>
 
@@ -201,9 +213,9 @@ const OrderDetails = props => {
               style={{
                 color: Color.themeColor,
                 fontSize: 24,
-                width: windowWidth * 0.3,
+                width: windowWidth * 0.35,
               }}>
-             {item?.price}.00 PKR
+              {price}.00 PKR
             </CustomText>
 
             <View style={styles.conterContainer}>
@@ -213,9 +225,8 @@ const OrderDetails = props => {
                   color: '#1B1721',
                   fontSize: moderateScale(14, 0.6),
                 }}>
-              
                 Quantity:
-                {details ? item?.quantity : item?.quantity}
+                {quantity}
               </CustomText>
             </View>
           </View>
@@ -232,10 +243,10 @@ const OrderDetails = props => {
           </CustomText>
 
           <View style={styles.ColorLine}>
-            {JSON.parse(item?.color)?.map(color => {
+            {colors.map(color => {
               return (
                 <View style={[styles.colorContainer, {backgroundColor: color}]}>
-                  {item?.selectedColor == color && (
+                  {item?.color == color && (
                     <Icon
                       name={'check'}
                       as={Entypo}
@@ -248,29 +259,29 @@ const OrderDetails = props => {
             })}
           </View>
 
-         {item?.size?.length > 0 && <CustomText
-            isBold
-            style={{
-              fontSize: moderateScale(14, 0.6),
-              color: '#201E1D',
-              width: windowWidth * 0.17,
-              marginLeft: moderateScale(10, 0.3),
-            }}>
-            Size
-          </CustomText>}
+          {item?.size && (
+            <CustomText
+              isBold
+              style={{
+                fontSize: moderateScale(14, 0.6),
+                color: '#201E1D',
+                width: windowWidth * 0.17,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              Size
+            </CustomText>
+          )}
 
           <View style={styles.ColorLine1}>
-            {JSON.parse(item?.size)?.map(size => {
+            {sizes.map(size => {
               return (
                 <View
                   style={[
                     styles.size,
                     {
                       backgroundColor:
-                        item?.selectedSize == size
-                          ? Color.themeColor
-                          : '#F4F5F6',
-                      marginHorizontal:moderateScale(5,.3),    
+                        item?.size == size ? Color.themeColor : '#F4F5F6',
+                      marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
                   <CustomText
@@ -285,8 +296,6 @@ const OrderDetails = props => {
               );
             })}
           </View>
-
-         
         </View>
 
         <View
@@ -322,96 +331,106 @@ const OrderDetails = props => {
               return <CommentsSection item={item} />;
             }}
             ListEmptyComponent={
-              <CustomText style={{fontSize:moderateScale(15,.6), color:Color.veryLightGray}}>No Reviews</CustomText>
+              <CustomText
+                style={{
+                  fontSize: moderateScale(15, 0.6),
+                  color: Color.veryLightGray,
+                }}>
+                No Reviews
+              </CustomText>
             }
           />
         </View>
-       {item?.buyer &&( <View
-          style={{
-            width: windowWidth * 0.95,
-            borderRadius: moderateScale(10, 0.6),
-            paddingHorizontal: moderateScale(15, 0.6),
-            paddingVertical: moderateScale(10, 0.6),
-            backgroundColor: 'white',
-            marginTop: moderateScale(10, 0.3),
-            alignItems: 'center',
-            alignSelf: 'center',
-          }}>
-          <CustomText
+        {item?.order?.user && (
+          <View
             style={{
-              fontSize: moderateScale(15, 0.6),
-              color: 'black',
-              textAlign: 'left',
-              width: windowWidth * 0.9,
-            }}
-            isBold>
-            Buyer details
-          </CustomText>
-          <CustomText
-            style={{
-              fontSize: moderateScale(12, 0.6),
-              color: 'black',
-              textAlign: 'left',
-              marginTop: moderateScale(5, 0.3),
-              width: windowWidth * 0.9,
+              width: windowWidth * 0.95,
+              borderRadius: moderateScale(10, 0.6),
+              paddingHorizontal: moderateScale(15, 0.6),
+              paddingVertical: moderateScale(10, 0.6),
+              backgroundColor: 'white',
+              marginTop: moderateScale(10, 0.3),
+              alignItems: 'center',
+              alignSelf: 'center',
             }}>
-            Name : {item?.buyer?.name}
-          </CustomText>
-          <CustomText
+            <CustomText
+              style={{
+                fontSize: moderateScale(15, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                width: windowWidth * 0.9,
+              }}
+              isBold>
+              Buyer details
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }}>
+              Name : {item?.order?.user?.name}
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }}>
+              Email : {item?.order?.user?.email}
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }}>
+              Contact : {item?.order?.user?.phone}
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }}>
+              Address : {item?.order?.user?.address}
+            </CustomText>
+          </View>
+        )}
+        {!details && (
+          <View
             style={{
-              fontSize: moderateScale(12, 0.6),
-              color: 'black',
-              textAlign: 'left',
-              marginTop: moderateScale(5, 0.3),
-              width: windowWidth * 0.9,
+              width: windowWidth * 0.95,
+              height: windowHeight * 0.1,
+              flexDirection: 'row',
+              borderRadius: moderateScale(10, 0.6),
+              paddingHorizontal: moderateScale(15, 0.6),
+              backgroundColor: 'white',
+              marginTop: moderateScale(10, 0.3),
+              alignSelf: 'center',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
-            Email : {item?.buyer?.email}
-          </CustomText>
-          <CustomText
-            style={{
-              fontSize: moderateScale(12, 0.6),
-              color: 'black',
-              textAlign: 'left',
-              marginTop: moderateScale(5, 0.3),
-              width: windowWidth * 0.9,
-            }}>
-            Contact : {item?.buyer?.contact}
-          </CustomText>
-          <CustomText
-            style={{
-              fontSize: moderateScale(12, 0.6),
-              color: 'black',
-              textAlign: 'left',
-              marginTop: moderateScale(5, 0.3),
-              width: windowWidth * 0.9,
-            }}>
-            Address : {item?.buyer?.address}
-          </CustomText>
-        </View>)}
-       {!details && <View
-          style={{
-            width: windowWidth * 0.95,
-            height: windowHeight * 0.1,
-            flexDirection: 'row',
-            borderRadius: moderateScale(10, 0.6),
-            paddingHorizontal: moderateScale(15, 0.6),
-            backgroundColor: 'white',
-            marginTop: moderateScale(10, 0.3),
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <CustomText
-            style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
-            isBold>
-            Total
-          </CustomText>
-          <CustomText
-            style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
-            isBold>
-            PKR {item?.price * item?.quantity}.0 
-          </CustomText>
-        </View>}
+            <CustomText
+              style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
+              isBold>
+              Total
+            </CustomText>
+            <CustomText
+              style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
+              isBold>
+              PKR {item?.product?.price * item?.qty}.0
+            </CustomText>
+          </View>
+        )}
       </ScrollView>
     </>
   );
@@ -451,7 +470,7 @@ const styles = StyleSheet.create({
     borderRadius: (windowWidth * 0.1) / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal:moderateScale(5,.3),
+    marginHorizontal: moderateScale(5, 0.3),
     // marginLeft: moderateScale(15, 0.3),
   },
   icon: {
@@ -485,23 +504,22 @@ const styles = StyleSheet.create({
 
   ColorLine: {
     flexDirection: 'row',
-    paddingHorizontal:moderateScale(10,.6),
+    paddingHorizontal: moderateScale(10, 0.6),
     // justifyContent: 'space-evenly',
     // alignItems: 'center',
     // flexWrap:'no-wrap',
     // width: windowWidth * 0.8,
-   marginVertical:moderateScale(10,.6)
+    marginVertical: moderateScale(10, 0.6),
   },
 
   ColorLine1: {
     flexDirection: 'row',
-    width:windowWidth,
-    paddingHorizontal:moderateScale(10,.6),
+    width: windowWidth,
+    paddingHorizontal: moderateScale(10, 0.6),
     alignItems: 'center',
     // width: windowWidth * 0.7,
-   marginVertical:moderateScale(10,.6)
-
-    },
+    marginVertical: moderateScale(10, 0.6),
+  },
 
   bottomBanner: {
     width: windowWidth,

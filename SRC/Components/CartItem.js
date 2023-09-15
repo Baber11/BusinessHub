@@ -45,7 +45,7 @@ const CartItem = ({item, fromCheckout}) => {
           
           />
           <CustomImage
-            source={{uri:item?.images[0]}}
+            source={{uri:item?.product_image[0]?.photo}}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -65,7 +65,7 @@ const CartItem = ({item, fromCheckout}) => {
             {item?.selectedSize ? (
               <CustomText>Selected Size : {item?.selectedSize}</CustomText>
             ) : (
-             item?.size?.map((item1, index) => {
+             JSON.parse(item?.size)?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -109,7 +109,7 @@ const CartItem = ({item, fromCheckout}) => {
                 width: windowWidth * 0.45,
                 marginTop: moderateScale(5, 0.3),
               }}>
-              {item?.colors.map((item1, index) => {
+              {JSON.parse(item?.color)?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -149,7 +149,7 @@ const CartItem = ({item, fromCheckout}) => {
               },
             ]}>
             <CustomText style={styles.amount}>
-              {(item?.price * item?.qty)} PKR
+              {(item?.price * item?.product_quantity)} PKR
             </CustomText>
                         
             <View
@@ -164,7 +164,7 @@ const CartItem = ({item, fromCheckout}) => {
                 color={Color.themeColor}
                 size={moderateScale(25, 0.3)}
                 onPress={() => {
-                  item?.qty < item?.totalQty &&  dispatch(increamentQuantity({id: item?.id}));
+                  item?.product_quantity < item?.quantity &&  dispatch(increamentQuantity({id: item?.id}));
                 }}
               />
               <CustomText
@@ -173,7 +173,7 @@ const CartItem = ({item, fromCheckout}) => {
                   marginHorizontal: moderateScale(5, 0.3),
                   fontSize: moderateScale(12, 0.3),
                 }}>
-                {item?.qty}
+                {item?.product_quantity}
               </CustomText>
               <Icon
                 name={'circle-with-minus'}
@@ -181,7 +181,7 @@ const CartItem = ({item, fromCheckout}) => {
                 color={Color.themeColor}
                 size={moderateScale(24, 0.3)}
                 onPress={() => {
-                  item?.qty > 1 && dispatch(decrementQuantity({id: item?.id}));
+                  item?.product_quantity > 1 && dispatch(decrementQuantity({id: item?.id}));
                 }}
               />
             </View>

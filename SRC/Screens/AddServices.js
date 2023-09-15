@@ -143,16 +143,18 @@ const AddServices = props => {
     console.log("🚀 ~ file: AddServices.js:132 ~ updateService ~ formData:", formData)
     
     setIsLoading(true)
-    const response = await Patch(url, formData, apiHeader(token))
+    const response = await Post(url, formData, apiHeader(token))
     setIsLoading(false)
+    console.log("🚀 ~ file: AddServices.js:147 ~ updateService ~ response:", response?.data)
+
+    if(response != undefined){
+      console.log("🚀 ~ file: AddServices.js:151 ~ updateService ~ response:", response?.data)
+      navigation.goBack()
+      
+    }
   }
   
-  
 
-
-  // useEffect(() => {
-  //   getServices();
-  // }, []);
 
   useEffect(() => {
     if (Object.keys(image).length > 0) {

@@ -19,30 +19,68 @@ import Header from '../Components/Header';
 import {useSelector} from 'react-redux';
 import Product from '../Components/Product';
 import CustomStatusBar from '../Components/CustomStatusBar';
+import { Get } from '../Axios/AxiosInterceptorFunction';
 
 const MyAccounts = () => {
+  const token = useSelector(state=> state.authReducer.token)
   const sellerProducts = useSelector(
     state => state.commonReducer.sellerProducts,
   );
-const [myOrder, setMyOrder] = useState([])
+  const [myOrder, setMyOrder] = useState([])
   const userData = useSelector(state => state.commonReducer.userData);
   const orderData = useSelector(state => state.commonReducer.order);
   console.log(
     '🚀 ~ file: MyAccounts.js:23 ~ MyAccounts ~ orderData:',
     orderData[0]?.order,
   );
+  const [isLoading, setIsLoading] = useState(false)
+  const [addedProducts, setAddedProducts] = useState([])
+  const [orders, setOrders] = useState([])
+
+  const getProducts = async () => {
+    const url = 'auth/product';
+    setIsLoading(true);
+    const response = await Get(url, token);
+    setIsLoading(false);
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
+        response?.data,
+      );
+      // console.log('parsed data=========================',response?.data?.data[0]?.size)
+      // console.log('parsed data=========================',JSON.parse(response?.data?.data[9]?.size))
+      setAddedProducts(response?.data?.data);
+    }
+  };
+
+  const getSellerOrders = async () => {
+    const url = 'auth/vendor/order/list';
+    setIsLoading(true);
+    const response = await Get(url, token);
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
+        response?.data,
+      );
+      setOrders(response?.data?.orders);
+    }
+  };
  
   useEffect(() => {
-    orderData.map(item =>
-      item.order.map(
-        order =>
-          order?.sellerId == userData?.id &&
-          setMyOrder(prev => [
-            ...prev,
-            {orderId: item.orderId, Image: item?.Image, ...order},
-          ]),
-      ),
-    );
+    // orderData.map(item =>
+    //   item.order.map(
+    //     order =>
+    //       order?.sellerId == userData?.id &&
+    //       setMyOrder(prev => [
+    //         ...prev,
+    //         {orderId: item.orderId, Image: item?.Image, ...order},
+    //       ]),
+    //   ),
+    // );
+    getProducts()
+    getSellerOrders()
 
   }, [orderData])
   
@@ -133,8 +171,7 @@ const [myOrder, setMyOrder] = useState([])
                 color: Color.black,
               }}>
               {
-                sellerProducts.filter(item => item.sellerId == userData.id)
-                  .length
+                addedProducts?.length
               }
             </CustomText>
           </View>
@@ -158,7 +195,7 @@ const [myOrder, setMyOrder] = useState([])
                   item?.order?.filter(order => order.sellerId == userData?.id),
                 ).length
               } */}
-             {myOrder?.length}
+             {orders?.length}
             </CustomText>
           </View>
         </View>
@@ -169,7 +206,7 @@ const [myOrder, setMyOrder] = useState([])
         <FlatList
           numColumns={2}
           showsVerticalScrollIndicator={false}
-          data={ sellerProducts.filter(item => item.sellerId == userData.id)}
+          data={ addedProducts}
           style={{
             width: windowWidth,
           }}

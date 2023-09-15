@@ -38,6 +38,7 @@ const height = Dimensions.get('window').height;
 
 const ChangePassword = props => {
   const navigationN = useNavigation();
+  const token = useSelector(state => state.authReducer.token)
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
@@ -47,6 +48,25 @@ const ChangePassword = props => {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const ChangePassword =async ()=>{
+    const url = '';
+    const body={
+      currentPassword :currentPassword,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
+    }
+    setIsLoading(true)
+    const response = await Post(url, body, apiHeader(token))
+    setIsLoading(false)
+
+    if(response != undefined){
+
+      console.log("🚀 ~ file: ChangePassword.js:64 ~ ChangePassword ~ response:", response?.data)
+      
+    }
+
+  }
 
   return (
     <>
