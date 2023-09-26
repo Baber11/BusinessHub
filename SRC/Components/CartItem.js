@@ -22,7 +22,7 @@ import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
-  console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
+  // console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
   const dispatch = useDispatch();
 

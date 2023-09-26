@@ -369,7 +369,7 @@ const SellerProduct = props => {
                   color: 'black',
                   fontSize: moderateScale(13, 0.6),
                 }}>
-                ERROR 404 DATA NOT FOUND
+                DATA NOT ADDED YET
               </CustomText>
             </View>
           )}
@@ -471,7 +471,7 @@ const SellerProduct = props => {
                       fontSize: moderateScale(13, 0.6),
                       marginTop: moderateScale(-25, 0.3),
                     }}>
-                    ERROR 404 DATA NOT FOUND
+                    DATA NOT ADDED YET
                   </CustomText>
                 </>
               );

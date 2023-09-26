@@ -73,12 +73,12 @@ const AddProduct = props => {
     console.log("🚀 ~ file: AddProduct.js:75 ~ addProduct ~ formData:", JSON.stringify(formData, null, 2))
 
     for (let key in body) {
-      if (key == 'images') {
-        if (body[key].length == 0) {
+      if (images.length < 1) {
+       
           return Platform.OS == 'android'
             ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
             : Alert.alert('Add atleast one image');
-        }
+ 
       } else if (key == 'price' || key == 'totalQty') {
         if (isNaN(body[key])) {
           return Platform.OS == 'android'
@@ -339,7 +339,7 @@ const AddProduct = props => {
           />
           <TextInputWithTitle
             titleText={'Sub Title'}
-            placeholder={'Category'}
+            placeholder={'Products e.g: dress, scarf, stationary'}
             setText={setSubTitle}
             value={subTitle}
             viewHeight={0.07}
@@ -358,6 +358,7 @@ const AddProduct = props => {
             placeholder={'Total Quantity'}
             setText={setQuantity}
             value={quantity}
+            keyboardType={'numeric'}
             viewHeight={0.07}
             viewWidth={0.9}
             inputWidth={0.9}
@@ -371,6 +372,7 @@ const AddProduct = props => {
           />
           <TextInputWithTitle
             titleText={'Price'}
+            keyboardType={'numeric'}
             placeholder={'Price'}
             setText={setPrice}
             value={price}

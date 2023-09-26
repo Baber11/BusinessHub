@@ -329,7 +329,7 @@ const CustomerDashboard = () => {
                       color: 'black',
                       fontSize: moderateScale(13, 0.6),
                     }}>
-                    ERROR 404 DATA NOT FOUND
+                    DATA NOT ADDED YET
                   </CustomText>
                 </>
               );

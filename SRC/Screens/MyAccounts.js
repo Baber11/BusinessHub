@@ -115,7 +115,7 @@ const MyAccounts = () => {
               source={
                 userData?.photo
                   ? userData?.photo
-                  : require('../Assets/Images/1.jpg')
+                  : require('../Assets/Images/logo.png')
               }
               style={{
                 height: '100%',
@@ -246,7 +246,7 @@ const MyAccounts = () => {
                     fontSize: moderateScale(15, 0.6),
                     marginTop: moderateScale(-50, 0.3),
                   }}>
-                  ERROR 404 DATA NOT FOUND
+                  DATA NOT ADDED YET
                 </CustomText>
               </>
             );

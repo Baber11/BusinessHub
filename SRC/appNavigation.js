@@ -43,16 +43,16 @@ const AppNavigator = () => {
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
   const role = useSelector(state => state.authReducer.role);
-  console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
+  // console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
 
-  console.log(
-    '🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:',
-    walkThrough,
-  );
+  // console.log(
+  //   '🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:',
+  //   walkThrough,
+  // );
 
   const isVerified = useSelector(state => state.authReducer.isVerified);
   const token = useSelector(state => state.authReducer.token);
-  console.log('🚀 ~ file: appNavigation.js:33 ~ AppNavigator ~ token:', token);
+  // console.log('🚀 ~ file: appNavigation.js:33 ~ AppNavigator ~ token:', token);
 
   // console.log('token>>>>', token);
   // console.log('isVerified', isGoalCreated);

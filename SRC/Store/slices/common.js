@@ -50,7 +50,9 @@ const CommonSlice = createSlice({
     },
 
     RemoveToCart(state, action) {
-      const itemId = action.payload.id;
+      console.log('Here here===================>>>>>>', action.payload)
+      console.log('Here=================>>>>>>>>>',state.cart)
+      const itemId = action.payload;
       state.cart = state.cart.filter((item, index) => item.id !== itemId);
     },
 

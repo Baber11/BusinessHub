@@ -83,12 +83,12 @@ const AddServices = props => {
    console.log("🚀 ~ file: AddServices.js:83 ~ addService ~ formData:", JSON.stringify(formData, null, 2))
     
     for (let key in body) {
-      if (key == 'images') {
-        if (body[key].length == 0) {
+      if (images.length<1) {
+        
           return Platform.OS == 'android'
             ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
             : Alert.alert('Add atleast one image');
-        }
+  
       } else if (key == 'charges') {
         if (isNaN(body[key])) {
           return Platform.OS == 'android'
@@ -303,7 +303,7 @@ const AddServices = props => {
           />
           <TextInputWithTitle
             titleText={'Category'}
-            placeholder={'Category'}
+            placeholder={'Services eg: mehndi, baking/cakes, painting'}
             setText={setCategory}
             value={category}
             viewHeight={0.07}
@@ -327,6 +327,7 @@ const AddServices = props => {
             viewWidth={0.9}
             inputWidth={0.9}
             border={1}
+            keyboardType={'numeric'}
             // borderColor={Color.white}
             backgroundColor={Color.white}
             marginTop={moderateScale(15, 0.3)}

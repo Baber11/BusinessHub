@@ -130,7 +130,7 @@ const Profile = () => {
                 source={
                   image?.uri
                     ? {uri: image?.uri}
-                    : require('../Assets/Images/dummyman1.png')
+                    : require('../Assets/Images/logo.png')
                 }
                 style={{width: '100%', height: '100%'}}
               />

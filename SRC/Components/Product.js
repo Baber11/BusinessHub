@@ -21,7 +21,7 @@ import numeral from 'numeral';
 import {Delete, Get} from '../Axios/AxiosInterceptorFunction';
 
 const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) => {
-  console.log('🚀 ~ file: Product.js:16 ~ Product ~ item:', item);
+  // console.log('🚀 ~ file: Product.js:16 ~ Product ~ item:', item);
   // console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
   const token = useSelector(state => state.authReducer.token);
 
@@ -31,10 +31,10 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
 
   const cartData = useSelector(state => state.commonReducer.cart);
   const Role = useSelector(state => state.authReducer.role);
-  console.log('🚀 ~ file: Product.js:25 ~ Product ~ Role:', Role);
+  // console.log('🚀 ~ file: Product.js:25 ~ Product ~ Role:', Role);
 
   const addedItem = item => {
-    console.log('cartIte===================?????????',{product_quantity:1,product_id:item?.id,...item})
+    // console.log('cartIte===================?????????',{product_quantity:1,product_id:item?.id,...item})
     dispatch(AddToCart({product_quantity:1,product_id:item?.id,...item}));
   };
 
@@ -43,16 +43,16 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
   };
 
   const editProduct = async id => {
-    console.log('id===========================>>>>>', id);
+    // console.log('id===========================>>>>>', id);
     const url = `auth/product/${id}`;
     // setIsLoading(true);
     const response = await Get(url, token);
     // setIsLoading(false);
     if (response != undefined) {
-     console.log(
-        '🚀 ~ file: AddServices.js:126 ~ editService ~ response?.data:',
-        response?.data,
-      );
+    //  console.log(
+    //     '🚀 ~ file: AddServices.js:126 ~ editService ~ response?.data:',
+    //     response?.data,
+    //   );
       navigationService.navigate('AddProduct', {item: response?.data?.data});
     }
   };
@@ -83,9 +83,11 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
         activeOpacity={0.8}
         onPress={() => {
           if (!seller) {
-            if (!tempitem) {
-              addedItem(item);
-            }
+            navigationService.navigate('ProductDetails', {item});
+
+            // if (!tempitem) {
+            //   addedItem(item);
+            // }
           } else {
             navigationService.navigate('OrderDetails', {
               item,
@@ -122,9 +124,11 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
           }}
           onPress={() => {
             if (!seller) {
-              if (!tempitem) {
-                addedItem(item);
-              }
+              navigationService.navigate('ProductDetails', {item});
+
+              // if (!tempitem) {
+              //   addedItem(item);
+              // }
             } else {
               navigationService.navigate('OrderDetails', {
                 item,
@@ -148,9 +152,12 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
             }}
             onPress={() => {
               if (!seller) {
-                if (!tempitem) {
-                  addedItem(item);
-                }
+                // if (!tempitem) {
+                //   addedItem(item);
+                // }
+                navigationService.navigate('ProductDetails', {item});
+
+
               } else {
                 navigationService.navigate('OrderDetails', {
                   item,
@@ -203,7 +210,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
               height: windowHeight * 0.03,
               color: '#a2a2a2',
             }}>
-            {item?.subTitle}
+            {item?.Category}
           </CustomText>
         )}
         <CustomText
@@ -211,14 +218,42 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
             // backgroundColor : 'red',
             textAlign: 'left',
             width: windowWidth * 0.4,
-            color: Color.themeColor,
+            color: '#053b55',
             fontSize: moderateScale(11, 0.6),
           }}>
           Rs {numeral(item?.price).format('0,0')}
           {/* {item?.price} */}
         </CustomText>
+        {!seller && <CustomButton
+              onPress={() => {
+                // navigationService.navigate('ProductDetails',{item,seller:true})
+                if (seller) {
+                  navigationService.navigate('OrderDetails', {
+                    item,
+                    details: true,
+                  });
+                } else {
+                  navigationService.navigate('ProductDetails', {item});
+                }
+              }}
+              text={ 'View Details'}
+              textColor={Color.white}
+              // iconName={'pencil'}
+              // iconType={Entypo}
+              // width={windowWidth * 0.28}
+              height={windowHeight * 0.035}
+              fontSize={moderateScale(10, 0.6)}
+              marginTop={moderateScale(4, 0.3)}
+              bgColor={Color.yellow}
+              borderRadius={moderateScale(20, 0.3)}
+              iconStyle={{
+                fontSize: moderateScale(14, 0.6),
+              }}
+              marginRight={moderateScale(-60, 0.3)}
+              isBold
+            />}
 
-        {!seller && (
+        {/* {!seller && (
           <CustomText
             onPress={() => {
               // navigationService.navigate('ProductDetails',{item,seller:true})
@@ -242,7 +277,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
             }}>
             View Details
           </CustomText>
-        )}
+        )} */}
         {Role == 'vendor' && (
           <View
             style={{
@@ -292,7 +327,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
         )}
       </TouchableOpacity>
 
-      {tempitem != undefined && !seller && (
+      {/* {tempitem != undefined && !seller && (
         <CustomButton
           isBold
           onPress={() => removeItem(item)}
@@ -306,7 +341,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
           fontSize={moderateScale(12, 0.6)}
           borderRadius={moderateScale(5, 0.3)}
         />
-      )}
+      )} */}
     </View>
   );
 };

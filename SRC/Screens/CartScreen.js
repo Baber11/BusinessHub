@@ -8,24 +8,24 @@ import {
 } from 'react-native';
 import React from 'react';
 import ScreenBoiler from '../Components/ScreenBoiler';
-import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
+import { moderateScale, ScaledSheet } from 'react-native-size-matters';
+import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
 import CartItem from '../Components/CartItem';
-import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '../Components/CustomButton';
-import {EmptyCart, Order} from '../Store/slices/common';
+import { EmptyCart, Order } from '../Store/slices/common';
 import navigationService from '../navigationService';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import CustomText from '../Components/CustomText';
-import {Post} from '../Axios/AxiosInterceptorFunction';
+import { Post } from '../Axios/AxiosInterceptorFunction';
 
-const CartScreen = ({route}) => {
+const CartScreen = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
@@ -35,6 +35,15 @@ const CartScreen = ({route}) => {
   // const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
   const token = useSelector(state => state.authReducer.token);
+
+  const calcTotal = () => {
+    let total = 0;
+    cartData.map((item, index) => {
+      total += item?.price * item?.qty
+    })
+    return total
+    // console.log('Total=========>>>>',total)
+  }
 
   const checkOut = async () => {
     if (
@@ -47,17 +56,22 @@ const CartScreen = ({route}) => {
     ) {
       return Platform.OS == 'android'
         ? ToastAndroid.show(
-            'Please select the color and sizes for all items',
-            ToastAndroid.SHORT,
-          )
+          'Please select the color and sizes for all items',
+          ToastAndroid.SHORT,
+        )
         : Alert.alert('Please select the color for all items');
     } else {
       const url = 'auth/checkout';
+      var totalBill = 0;
+      cartData.map((item, index) => {
+        totalBill += item?.price * item?.product_quantity
+      })
+
       const body = {
         item_quantity: cartData?.length,
         // product_id: '',
         // Image: require('../Assets/Images/logo.png'),
-        total: 134,
+        total: totalBill,
         order: cartData,
       };
       console.log('🚀 ~ file: CartScreen.js:55 ~ checkOut ~ body:', body);
@@ -68,10 +82,10 @@ const CartScreen = ({route}) => {
       if (response != undefined) {
         console.log("🚀 ~ file: CartScreen.js:65 ~ checkOut ~ response:", response?.data)
 
-        
+
         dispatch(Order(body));
         dispatch(EmptyCart());
-        navigationService.navigate('PaymentInvoice', {body: body});
+        navigationService.navigate('PaymentInvoice', { body: body });
         Platform.OS == 'android'
           ? ToastAndroid.show('Order Confirmed', ToastAndroid.SHORT)
           : Alert.alert('Order Confirmed');
@@ -105,7 +119,7 @@ const CartScreen = ({route}) => {
             paddingBottom: moderateScale(100, 0.3),
             paddingTop: moderateScale(20, 0.3),
           }}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             return <CartItem item={item} fromCheckout={true} />;
           }}
           ListEmptyComponent={() => {
@@ -136,7 +150,7 @@ const CartScreen = ({route}) => {
                     fontSize: moderateScale(15, 0.6),
                     marginTop: moderateScale(-50, 0.3),
                   }}>
-                  ERROR 404 DATA NOT FOUND
+                  DATA NOT ADDED YET
                 </CustomText>
               </>
             );
@@ -154,7 +168,7 @@ const CartScreen = ({route}) => {
             onPress={() => {
               checkOut();
             }}
-            text={isLoading ? <ActivityIndicator color={'white'} size={'small'}/>:'Pay'  }
+            text={isLoading ? <ActivityIndicator color={'white'} size={'small'} /> : 'Order'}
             textColor={Color.white}
             width={windowWidth * 0.8}
             height={windowHeight * 0.07}
@@ -163,7 +177,7 @@ const CartScreen = ({route}) => {
             // marginTop={moderateScale(20, 0.3)}
             bgColor={Color.themeColor}
             borderRadius={moderateScale(30, 0.3)}
-            // isGradient
+          // isGradient
           />
         </View>
       </View>

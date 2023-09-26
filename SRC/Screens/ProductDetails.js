@@ -12,6 +12,7 @@ import CustomButton from '../Components/CustomButton';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   AddToCart,
+  RemoveToCart,
   decrementQuantity,
   increamentQuantity,
   setColor,
@@ -68,6 +69,10 @@ const ProductDetails = props => {
     // dispatch(AddToCart({qty:1,...item}));
     console.log('Console it============>>>>>>>>>>>',{product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item})
     dispatch(AddToCart({product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item}));
+  };
+
+  const removeItem = item => {
+    dispatch(RemoveToCart(item));
   };
 
   const images = [
@@ -596,13 +601,20 @@ const ProductDetails = props => {
 
       <View style={styles.bottomContainer}>
         <CustomButton
-          disabled={cartitem?.product_quantity > 0 ? true : false}
+          // disabled={cartitem?.product_quantity > 0 ? true : false}
           isBold
           onPress={() => {
             console.log('Body========>>>>>', body);
-            addedItem(item);
+            if(cartitem?.product_quantity > 0){
+              console.log('Here 1')
+               removeItem(cartitem?.id) 
+            }else{
+              console.log('Here 2')
+
+              addedItem(item);
+            }
           }}
-          text={cartitem?.product_quantity > 0 ? 'Added' : 'ADD TO CART'}
+          text={cartitem?.product_quantity > 0 ? 'Remove From Cart' : 'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}

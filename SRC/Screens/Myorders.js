@@ -205,7 +205,7 @@ const Myorders = () => {
                     fontSize: moderateScale(15, 0.6),
                     marginTop: moderateScale(-50, 0.3),
                   }}>
-                  ERROR 404 DATA NOT FOUND
+                  DATA NOT ADDED YET
                 </CustomText>
               </>
             );

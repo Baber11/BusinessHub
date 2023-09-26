@@ -267,7 +267,7 @@ const Orders = () => {
                         color: 'black',
                         fontSize: moderateScale(13, 0.6),
                       }}>
-                      ERROR 404 DATA NOT FOUND
+                      DATA NOT ADDED YET
                     </CustomText>
                   </View>
                 );
@@ -363,7 +363,7 @@ const Orders = () => {
                       fontSize: moderateScale(13, 0.6),
                       marginTop: moderateScale(-15, 0.3),
                     }}>
-                    ERROR 404 DATA NOT FOUND
+                    DATA NOT ADDED YET
                   </CustomText>
                 </>
               );
