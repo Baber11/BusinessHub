@@ -36,6 +36,7 @@ import MyAccounts from './Screens/MyAccounts';
 import Profile from './Screens/Profile';
 import PersonalInfo from './Screens/PersonalInfo';
 import ChangeEmail from './Screens/ChangeEmail';
+import BankDetails from './Screens/BankDetails';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -79,6 +80,7 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="BankDetails" component={BankDetails} />
           <RootNav.Screen name="PaymentInvoice" component={PaymentInvoice} />
           {/* <RootNav.Screen name="SellerProduct" component={SellerProduct} /> */}
           <RootNav.Screen name="AddProduct" component={AddProduct} />
