@@ -57,10 +57,10 @@ const ResetPassword = props => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: ResetPassword.js:59 ~ resetPassword ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: ResetPassword.js:59 ~ resetPassword ~ response:',
+      //   response?.data,
+      // );
 
       Platform.OS == 'android'
         ? ToastAndroid.show('Password reset successfully')
@@ -183,7 +183,7 @@ const ResetPassword = props => {
                 resetPass();
                 // dispatch(setUserToken({token : 'sadasdawdadas'}))
               }}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               // borderColor={Color.white}
               // borderWidth={2}
               // borderRadius={moderateScale(30, 0.3)}

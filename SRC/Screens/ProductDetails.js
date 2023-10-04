@@ -29,14 +29,14 @@ import moment from 'moment';
 
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ item:", item)
+  // console.log("🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
   
   const user = useSelector(state => state.commonReducer.userData);
 
   const userRole = useSelector(state=> state.commonReducer.selectedRole)
   const cartitem = cartData?.find((x, index) => x?.id == item?.id);
-  console.log("🚀 ~ file: ProductDetails.js:36 ~ ProductDetails ~ cartitem:", cartitem)
+  // console.log("🚀 ~ file: ProductDetails.js:36 ~ ProductDetails ~ cartitem:", cartitem)
   // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
   const dispatch = useDispatch();
   const focused = useIsFocused();
@@ -49,10 +49,10 @@ const ProductDetails = props => {
   );
 
   const [index, setIndex] = useState(1);
-  console.log(
-    '🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:',
-    item?.product_image[index-1],
-  );
+  // console.log(
+  //   '🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:',
+  //   item?.product_image[index-1],
+  // );
   const [quantity, setQuantity] = useState(userRole == 'vendor' ? item?.quantity : cartitem ? cartitem?.product_quantity : 1  )
   // const [quantity, setQuantity] = useState( 
   //   cartitem ? cartitem?.quantity : item?.quantity ? item?.quantity : 1,
@@ -67,7 +67,7 @@ const ProductDetails = props => {
 
   const addedItem = item => {
     // dispatch(AddToCart({qty:1,...item}));
-    console.log('Console it============>>>>>>>>>>>',{product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item})
+    // console.log('Console it============>>>>>>>>>>>',{product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item})
     dispatch(AddToCart({product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item}));
   };
 
@@ -330,7 +330,7 @@ const ProductDetails = props => {
 
           <View style={styles.ColorLine}>
             {JSON.parse(item?.color)?.map(color => {
-              console.log('Here================')
+              // console.log('Here================')
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -572,7 +572,7 @@ const ProductDetails = props => {
                   text: yourComment,
                   time: moment().format(' hh:mm:ss a'),
                 };
-                console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
+                // console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
                 setComments(prev => [
                   ...prev,
                   {
@@ -591,7 +591,7 @@ const ProductDetails = props => {
               fontSize={moderateScale(10, 0.6)}
               // marginBottom={moderateScale(10,.3)}
               // marginTop={moderateScale(20, 0.3)}
-              bgColor={Color.themeColor}
+              bgColor={Color.themeBlue}
               borderRadius={moderateScale(30, 0.3)}
               // isGradient
             />
@@ -604,12 +604,12 @@ const ProductDetails = props => {
           // disabled={cartitem?.product_quantity > 0 ? true : false}
           isBold
           onPress={() => {
-            console.log('Body========>>>>>', body);
+            // console.log('Body========>>>>>', body);
             if(cartitem?.product_quantity > 0){
-              console.log('Here 1')
+              // console.log('Here 1')
                removeItem(cartitem?.id) 
             }else{
-              console.log('Here 2')
+              // console.log('Here 2')
 
               addedItem(item);
             }
@@ -621,7 +621,7 @@ const ProductDetails = props => {
           fontSize={moderateScale(16, 0.6)}
           // marginBottom={moderateScale(10,.3)}
           // marginTop={moderateScale(20, 0.3)}
-          bgColor={Color.themeColor}
+          bgColor={Color.themeBlue}
           borderRadius={moderateScale(30, 0.3)}
           // isGradient
         />

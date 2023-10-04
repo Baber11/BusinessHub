@@ -37,6 +37,7 @@ import Profile from './Screens/Profile';
 import PersonalInfo from './Screens/PersonalInfo';
 import ChangeEmail from './Screens/ChangeEmail';
 import BankDetails from './Screens/BankDetails';
+import PickUpLocation from './Screens/PickUpLocation';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -84,6 +85,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="PaymentInvoice" component={PaymentInvoice} />
           {/* <RootNav.Screen name="SellerProduct" component={SellerProduct} /> */}
           <RootNav.Screen name="AddProduct" component={AddProduct} />
+          <RootNav.Screen name="PickUpLocation" component={PickUpLocation} />
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="ProductDetails" component={ProductDetails} />

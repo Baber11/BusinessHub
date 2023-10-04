@@ -37,7 +37,7 @@ const SearchbarComponent = ({
         : arrayItem == 'Product' ? item?.title?.toLowerCase().indexOf(text?.toLowerCase()) > -1
         : item?.name?.toLowerCase().indexOf(text?.toLowerCase()) > -1)
     });
-    console.log("🚀 ~ file: SearchbarComponent.js:40 ~ tempdata ~ tempdata:", tempdata)
+    // console.log("🚀 ~ file: SearchbarComponent.js:40 ~ tempdata ~ tempdata:", tempdata)
 
     setNewData(tempdata);
   };
@@ -49,6 +49,7 @@ const SearchbarComponent = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginTop:moderateScale(5,.3),
       }}>
       <View
         style={[

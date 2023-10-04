@@ -77,11 +77,11 @@ const VerifyNumber = props => {
   const VerifyOTP = async () => {
     const url = 'password/code/check';
     setIsLoading(true);
-    console.log(code);
+    // console.log(code);
     const response = await Post(url, {code: code}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response)
+      // console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response)
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
@@ -227,8 +227,7 @@ const VerifyNumber = props => {
                 //   phone: phoneNumber,
                 // });
               }}
-              bgColor={Color.yellow
-              }
+              bgColor={Color.themeBlue}
               // borderRadius={moderateScale(30, 0.3)}
             />
           </CardContainer>

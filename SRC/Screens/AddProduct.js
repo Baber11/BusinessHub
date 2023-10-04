@@ -29,23 +29,27 @@ import {Patch, Post} from '../Axios/AxiosInterceptorFunction';
 
 const AddProduct = props => {
   const item = props?.route?.params?.item;
-  console.log('🚀 ~ file: AddProduct.js:31 ~ AddProduct ~ item:', item);
+  // console.log('🚀 ~ file: AddProduct.js:31 ~ AddProduct ~ item:', item);
   const token = useSelector(state => state.authReducer.token);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
-  const [images, setImages] = useState(item?.product_image ? item?.product_image : []);
+  const [images, setImages] = useState(
+    item?.product_image ? item?.product_image : [],
+  );
   const [title, setTitle] = useState(item?.title ? item?.title : '');
   const [subTitle, setSubTitle] = useState(
     item?.category ? item?.category : '',
   );
   const [price, setPrice] = useState(item?.price ? `${item?.price}` : '');
-  console.log('🚀 ~ file: AddProduct.js:38 ~ AddProduct ~ price:', price);
+  // console.log('🚀 ~ file: AddProduct.js:38 ~ AddProduct ~ price:', price);
   const [quantity, setQuantity] = useState(
     item?.quantity ? `${item?.quantity}` : '',
   );
-  const [colors, setColors] = useState(item?.color ? JSON.parse(item?.color) : []);
-  console.log("🚀 ~ file: AddProduct.js:47 ~ AddProduct ~ colors:", colors)
-  const [sizes, setSizes] = useState(item?.size ? JSON.parse(item?.size ) : []);
+  const [colors, setColors] = useState(
+    item?.color ? JSON.parse(item?.color) : [],
+  );
+  // console.log('🚀 ~ file: AddProduct.js:47 ~ AddProduct ~ colors:', colors);
+  const [sizes, setSizes] = useState(item?.size ? JSON.parse(item?.size) : []);
   const [cotton, setCotton] = useState([]);
   const [imagePickerModal, setImagePickerModal] = useState(false);
   const [image, setImage] = useState({});
@@ -68,56 +72,59 @@ const AddProduct = props => {
       formData.append(key, body[key]);
     }
     images?.map((item, index) => formData.append(`photo[${index}]`, item));
-    colors?.map((item, index)=> formData.append(`color[${index}]`, item))
-    sizes?.map((item, index) => formData.append(`size[${index}]`, item))
-    console.log("🚀 ~ file: AddProduct.js:75 ~ addProduct ~ formData:", JSON.stringify(formData, null, 2))
+    colors?.map((item, index) => formData.append(`color[${index}]`, item));
+    sizes?.map((item, index) => formData.append(`size[${index}]`, item));
+    // console.log(
+    //   '🚀 ~ file: AddProduct.js:75 ~ addProduct ~ formData:',
+    //   JSON.stringify(formData, null, 2),
+    // );
 
     for (let key in body) {
       if (images.length < 1) {
-       
-          return Platform.OS == 'android'
-            ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
-            : Alert.alert('Add atleast one image');
- 
+        return Platform.OS == 'android'
+          ? ToastAndroid.show('Add atleast one image', ToastAndroid.SHORT)
+          : Alert.alert('Add atleast one image');
       } else if (key == 'price' || key == 'totalQty') {
         if (isNaN(body[key])) {
           return Platform.OS == 'android'
             ? ToastAndroid.show(`${key} should be number`, ToastAndroid.SHORT)
             : Alert.alert(`${key} should be number`);
         }
-      } else if (key == 'colors') {
-        if (!body[key].length) {
-          return Platform.OS == 'android'
-            ? ToastAndroid.show('Add atleast one color', ToastAndroid.SHORT)
-            : Alert.alert('Add atleast one color');
-        }
-      } else if (body[key] == '') {
+      } 
+      // else if (key == 'colors') {
+      //   if (!body[key].length) {
+      //     return Platform.OS == 'android'
+      //       ? ToastAndroid.show('Add atleast one color', ToastAndroid.SHORT)
+      //       : Alert.alert('Add atleast one color');
+      //   }
+      // } 
+      else if (body[key] == '') {
         return Platform.OS == 'android'
           ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
           : Alert.alert('All Fields are required');
       }
     }
-    console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', {
-      userId: user?.id,
-      item: {
-        id: item?.id ? item?.id : -1,
-        product_quantity: 1,
-        selectedColor: '',
-        selectedSize: '',
-        size: sizes,
-        ...body,
-      },
-    });
+    // console.log('🚀 ~ file: AddProduct.js:428 ~ AddProduct ~ body:', {
+    //   userId: user?.id,
+    //   item: {
+    //     id: item?.id ? item?.id : -1,
+    //     product_quantity: 1,
+    //     selectedColor: '',
+    //     selectedSize: '',
+    //     size: sizes,
+    //     ...body,
+    //   },
+    // });
 
     const url = 'auth/product';
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-       console.log(
-        '🚀 ~ file: SellerProducts.js:63 ~ AddProduct ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: SellerProducts.js:63 ~ AddProduct ~ response:',
+      //   response?.data,
+      // );
 
       navigation.goBack();
     }
@@ -140,8 +147,8 @@ const AddProduct = props => {
     // navigationService.navigate('SellerProduct',{item:{...body,images:images.slice(0)}})
   };
 
-  const updateProduct = async (id)=>{
-    const url = `auth/product/${id}?_method=put`
+  const updateProduct = async id => {
+    const url = `auth/product/${id}?_method=put`;
     const body = {
       // photo: images,
       title: title,
@@ -152,34 +159,43 @@ const AddProduct = props => {
       // size: sizes,
     };
 
-    const formData = new FormData()
-    for(let key in body){
-      formData.append(key,body[key])
+    const formData = new FormData();
+    for (let key in body) {
+      formData.append(key, body[key]);
     }
-    if(images.length>item?.product_image.length){
-      console.log('new images==================>>>>>',images.slice(item?.product_image.length))
-      images?.slice(item?.product_image.length)?.map((item, index)=> formData.append(`photo[${index}]`, item))
+    if (images.length > item?.product_image.length) {
+      // console.log(
+      //   'new images==================>>>>>',
+      //   images.slice(item?.product_image.length),
+      // );
+      images
+        ?.slice(item?.product_image.length)
+        ?.map((item, index) => formData.append(`photo[${index}]`, item));
     }
-    
+
     // images.map((item, index)=> formData.append(`photo[${index}]`,item) )
-    sizes?.map((item, index)=> formData.append(`size[${index}]`, item))
-    colors?.map((item, index)=> formData.append(`color[${index}]`, item))
+    sizes?.map((item, index) => formData.append(`size[${index}]`, item));
+    colors?.map((item, index) => formData.append(`color[${index}]`, item));
 
-    console.log("🚀 ~ file: AddProduct.js:172 ~ updateProduct ~ formData:", formData)
-    setIsLoading(true)
-    const response = await Post(url, formData,apiHeader(token))
-    setIsLoading(false)
-     console.log("🚀 ~ file: AddProduct.js:174 ~ updateProduct ~ response?.data:")
-    
-     if(response?.data?.success){
-       console.log("🚀 ~ file: AddProduct.js:174 ~ updateProduct ~ response?.data:", response?.data)
-       navigation.goBack();
-      
+    // console.log(
+    //   '🚀 ~ file: AddProduct.js:172 ~ updateProduct ~ formData:',
+    //   formData,
+    // );
+    setIsLoading(true);
+    const response = await Post(url, formData, apiHeader(token));
+    setIsLoading(false);
+    // console.log(
+    //   '🚀 ~ file: AddProduct.js:174 ~ updateProduct ~ response?.data:',
+    // );
+
+    if (response?.data?.success) {
+      // console.log(
+      //   '🚀 ~ file: AddProduct.js:174 ~ updateProduct ~ response?.data:',
+      //   response?.data,
+      // );
+      navigation.goBack();
     }
-
-  }
-
-  
+  };
 
   useEffect(() => {
     if (Object.keys(image).length > 0) {
@@ -260,10 +276,10 @@ const AddProduct = props => {
             }}>
             {images?.length > 0 &&
               images?.map((item, index) => {
-                console.log(
-                  '🚀 ~ file: AddServices.js:149 ~ images.map ~ item:',
-                  item,
-                );
+                // console.log(
+                //   '🚀 ~ file: AddServices.js:149 ~ images.map ~ item:',
+                //   item,
+                // );
                 return (
                   <View
                     style={{
@@ -281,6 +297,28 @@ const AddProduct = props => {
                       marginRight: moderateScale(10, 0.6),
                       marginBottom: moderateScale(10, 0.3),
                     }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setImages(images.filter(i => i?.uri != item?.uri));
+                      }}
+                      style={{
+                        position: 'absolute',
+                        backgroundColor: 'white',
+                        borderRadius: moderateScale(5, 0.6),
+                        zIndex: 1,
+                        right: 3,
+                        top: 3,
+                      }}>
+                      <Icon
+                        onPress={() => {
+                          setImages(images.filter(i => i?.uri != item?.uri));
+                        }}
+                        name={'cross'}
+                        as={Entypo}
+                        size={4}
+                        color={Color.black}
+                      />
+                    </TouchableOpacity>
                     <CustomImage
                       source={{uri: item?.photo ? item?.photo : item?.uri}}
                       style={{width: '100%', height: '100%'}}
@@ -443,9 +481,31 @@ const AddProduct = props => {
                       borderColor: Color.veryLightGray,
                       borderWidth: 1,
                     }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSizes(sizes.filter(i => i != item));
+                      }}
+                      style={{
+                        position: 'absolute',
+                        backgroundColor: Color.themeBlue,
+                        borderRadius: moderateScale(5, 0.6),
+                        zIndex: 1,
+                        right: -4,
+                        top: -4,
+                      }}>
+                      <Icon
+                        onPress={() => {
+                          setSizes(sizes.filter(i => i != item));
+                        }}
+                        name={'cross'}
+                        as={Entypo}
+                        size={4}
+                        color={Color.white}
+                      />
+                    </TouchableOpacity>
                     <CustomText
                       style={{
-                        fontSize: moderateScale(10, 0.6),
+                        fontSize: moderateScale(12, 0.6),
                         color: 'black',
                       }}>
                       {item}
@@ -487,7 +547,7 @@ const AddProduct = props => {
             width={windowWidth * 0.4}
             height={windowHeight * 0.06}
             marginTop={moderateScale(15, 0.3)}
-            bgColor={Color.yellow}
+            bgColor={Color.themeBlue}
             borderRadius={moderateScale(5, 0.3)}
             // isGradient
           />
@@ -511,7 +571,30 @@ const AddProduct = props => {
                     borderRadius: moderateScale(30, 0.6) / 2,
                     marginHorizontal: moderateScale(5, 0.3),
                     backgroundColor: item,
-                  }}></View>
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setColors(colors.filter(i => i != item));
+                    }}
+                    style={{
+                      position: 'absolute',
+                      backgroundColor: Color.themeBlue,
+                      borderRadius: moderateScale(5, 0.6),
+                      zIndex: 1,
+                      right: -3,
+                      top: -3,
+                    }}>
+                    <Icon
+                      onPress={() => {
+                        setColors(colors.filter(i => i != item));
+                      }}
+                      name={'cross'}
+                      as={Entypo}
+                      size={4}
+                      color={Color.white}
+                    />
+                  </TouchableOpacity>
+                </View>
               );
             })}
           </View>
@@ -522,21 +605,31 @@ const AddProduct = props => {
           disabled={false}
           isBold
           onPress={() => {
-            if(item){
-              updateProduct(item?.id)
-            }else{
+            if (item) {
+              updateProduct(item?.id);
+            } else {
               addProduct();
-
             }
           }}
-          text={isLoading ? <ActivityIndicator size={moderateScale(25,.6)} color ={'white'} /> : item ? 'Update' : 'Save'}
+          text={
+            isLoading ? (
+              <ActivityIndicator
+                size={moderateScale(25, 0.6)}
+                color={'white'}
+              />
+            ) : item ? (
+              'Update'
+            ) : (
+              'Save'
+            )
+          }
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
           fontSize={moderateScale(16, 0.6)}
           // marginBottom={moderateScale(10,.3)}
           // marginTop={moderateScale(20, 0.3)}
-          bgColor={Color.themeColor}
+          bgColor={Color.themeBlue}
           borderRadius={moderateScale(30, 0.3)}
           // isGradient
         />

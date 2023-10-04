@@ -18,15 +18,15 @@ import Product from '../Components/Product';
 const Myorders = () => {
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
-  console.log("🚀 ~ file: Myorders.js:20 ~ Myorders ~ token:", token)
+  // console.log("🚀 ~ file: Myorders.js:20 ~ Myorders ~ token:", token)
   const orderData = useSelector(state => state.commonReducer.order);
   const bookings = useSelector(state => state.commonReducer.bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
   const [isLoading, setIsLoading] = useState(false)
   const [productOrders, setProductOrders] = useState([])
-  console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
+  // console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
   const [serviceOrders, setServiceOrders] = useState([])
-  console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
+  // console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
   const [newData, setNewData] = useState();
   
   const getUserOrders =async ()=>{
@@ -36,7 +36,7 @@ const Myorders = () => {
     setIsLoading(false)
     
     if(response != undefined){
-      console.log("🚀 ~ file: Myorders.js:35 ~ getUserOrders ~ response:", response?.data)
+      // console.log("🚀 ~ file: Myorders.js:35 ~ getUserOrders ~ response:", response?.data)
       setProductOrders(response?.data?.orders)
       
     }
@@ -50,7 +50,7 @@ const Myorders = () => {
     const response = await Get(url, token)
     setIsLoading(false)
 
-    console.log("🚀 ~ file: Myorders.js:50 ~ getUserServices ~ response:", response?.data)
+    // console.log("🚀 ~ file: Myorders.js:50 ~ getUserServices ~ response:", response?.data)
     if(response != undefined){
       setServiceOrders(response?.data?.data)
       // setServiceOrders()
@@ -82,7 +82,7 @@ const Myorders = () => {
         style={{
           height: windowHeight * 0.9,
           width: windowWidth,
-          backgroundColor: Color.themeColor2,
+          backgroundColor: Color.white,
           alignItems: 'center',
         }}>
         <SearchbarComponent
@@ -189,7 +189,7 @@ const Myorders = () => {
                     // backgroundColor:'red'
                   }}>
                   <CustomImage
-                    source={require('../Assets/Images/4.png')}
+                    source={require('../Assets/Images/4.jpg')}
                     style={{
                       width: '100%',
                       height: '100%',

@@ -61,10 +61,10 @@ const SellerProduct = props => {
     const response = await Get(url, token);
     setIsLoading(false);
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
+      //   response?.data,
+      // );
       // console.log('parsed data=========================',response?.data?.data[0]?.size)
       // console.log('parsed data=========================',JSON.parse(response?.data?.data[9]?.size))
       setAddedProducts(response?.data?.data);
@@ -77,10 +77,10 @@ const SellerProduct = props => {
     const response = await Get(url, token);
     setProductLoading(false);
     if (response?.data?.success) {
-      console.log(
-        '🚀 ~ file: AddServices.js:114 ~ getServices ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: AddServices.js:114 ~ getServices ~ response:',
+      //   response?.data,
+      // );
 
       response?.data?.data
         ? setServices([response?.data?.data])
@@ -96,10 +96,10 @@ const SellerProduct = props => {
     // setIsLoading(false);
 
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: SellerProducts.js:87 ~ editService ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: SellerProducts.js:87 ~ editService ~ response:',
+      //   response?.data,
+      // );
       navigationService.navigate('AddServices', {item});
     }
   };
@@ -109,10 +109,10 @@ const SellerProduct = props => {
     setIsLoading(true);
     const response = await Delete(url, apiHeader(token));
     setIsLoading(false);
-    console.log(
-      '🚀 ~ file: SellerProducts.js:98 ~ is ~ response:',
-      response?.data,
-    );
+    // console.log(
+    //   '🚀 ~ file: SellerProducts.js:98 ~ is ~ response:',
+    //   response?.data,
+    // );
     if (response != undefined) {
       getServices();
     }
@@ -142,7 +142,7 @@ const SellerProduct = props => {
         }}
         style={{
           minHeight: windowHeight * 0.9,
-          backgroundColor: '#D2E4E4',
+          backgroundColor: 'white',
         }}>
         <View
           style={{
@@ -179,7 +179,7 @@ const SellerProduct = props => {
             height={windowHeight * 0.04}
             fontSize={moderateScale(12, 0.6)}
             // marginTop={moderateScale(10, 0.3)}
-            bgColor={Color.yellow}
+            bgColor={Color.themeBlue}
             borderRadius={moderateScale(20, 0.3)}
             // isGradient
             isBold
@@ -205,16 +205,16 @@ const SellerProduct = props => {
                 // backgroundColor: 'green',
               }}>
               <ActivityIndicator
-                color={Color.yellow}
+                color={Color.themeBlue}
                 size={moderateScale(30, 0.6)}
               />
             </View>
           ) : services?.length > 0 ? (
             services?.map((item, index) => {
-              console.log(
-                '🚀 ~ file: SellerProducts.js:203 ~ .map ~ item:',
-                item,
-              );
+              // console.log(
+              //   '🚀 ~ file: SellerProducts.js:203 ~ .map ~ item:',
+              //   item,
+              // );
               return (
                 <>
                   <TouchableOpacity
@@ -307,7 +307,7 @@ const SellerProduct = props => {
                           height={windowHeight * 0.035}
                           fontSize={moderateScale(10, 0.6)}
                           marginTop={moderateScale(4, 0.3)}
-                          bgColor={Color.yellow}
+                          bgColor={Color.themeBlue}
                           borderRadius={moderateScale(20, 0.3)}
                           iconStyle={{
                             fontSize: moderateScale(14, 0.6),
@@ -328,7 +328,7 @@ const SellerProduct = props => {
                           height={windowHeight * 0.035}
                           fontSize={moderateScale(10, 0.6)}
                           marginTop={moderateScale(4, 0.3)}
-                          bgColor={Color.yellow}
+                          bgColor={Color.themeBlue}
                           borderRadius={moderateScale(20, 0.3)}
                           iconStyle={{
                             fontSize: moderateScale(14, 0.6),
@@ -354,7 +354,7 @@ const SellerProduct = props => {
                   alignSelf: 'center',
                 }}>
                 <CustomImage
-                  source={require('../Assets/Images/4.png')}
+                  source={require('../Assets/Images/4.jpg')}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -367,8 +367,8 @@ const SellerProduct = props => {
                 style={{
                   textAlign: 'center',
                   color: 'black',
-                  fontSize: moderateScale(13, 0.6),
-                }}>
+                  fontSize: moderateScale(15, 0.6),
+                }} isBold>
                 DATA NOT ADDED YET
               </CustomText>
             </View>
@@ -405,7 +405,7 @@ const SellerProduct = props => {
             height={windowHeight * 0.04}
             fontSize={moderateScale(12, 0.6)}
             // marginTop={moderateScale(10, 0.3)}
-            bgColor={Color.yellow}
+            bgColor={Color.themeBlue}
             borderRadius={moderateScale(20, 0.3)}
             // isGradient
             isBold
@@ -422,7 +422,7 @@ const SellerProduct = props => {
               // backgroundColor: 'green',
             }}>
             <ActivityIndicator
-              color={Color.yellow}
+              color={Color.themeBlue}
               size={moderateScale(45, 0.6)}
             />
           </View>
@@ -456,7 +456,7 @@ const SellerProduct = props => {
                       alignSelf: 'center',
                     }}>
                     <CustomImage
-                      source={require('../Assets/Images/4.png')}
+                      source={require('../Assets/Images/4.jpg')}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -468,9 +468,10 @@ const SellerProduct = props => {
                     style={{
                       textAlign: 'center',
                       color: 'black',
-                      fontSize: moderateScale(13, 0.6),
+                      fontSize: moderateScale(17, 0.6),
                       marginTop: moderateScale(-25, 0.3),
-                    }}>
+                      paddingVertical:moderateScale(5,.6),
+                    }} isBold>
                     DATA NOT ADDED YET
                   </CustomText>
                 </>

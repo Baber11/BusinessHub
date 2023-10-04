@@ -21,18 +21,19 @@ const PaymentInvoice = props => {
   const Invoice = props.route.params.body;
   const user = useSelector(state=> state.commonReducer.userData)
 
-  console.log('PAYMENT INVOICE ========>>>>>>', Invoice);
+  // console.log('PAYMENT INVOICE ========>>>>>>', Invoice);
 
 
   return (
     <>
-      <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
+      <CustomStatusBar backgroundColor={'white'} barStyle={'dark-content'} />
 
       <View
         style={{
           height: windowHeight,
           width: windowWidth,
-          backgroundColor: Color.themeColor2,
+          // backgroundColor: Color.themeColor2,
+          backgroundColor:'white',
           alignItems: 'center',
         }}>
         <View
@@ -143,7 +144,7 @@ const PaymentInvoice = props => {
                     marginTop: moderateScale(20, 0.3),
                   }}>
                   <CustomText>
-                    {item.Title} x {item.product_quantity}
+                    {item.title} x {item.product_quantity}
                   </CustomText>
                   <CustomText>PKR{item.price}</CustomText>
                 </View>
@@ -177,7 +178,7 @@ const PaymentInvoice = props => {
           style={{
             width: windowWidth * 0.4,
             paddingVertical: moderateScale(15, 0.6),
-            backgroundColor: Color.themeColor,
+            backgroundColor: Color.themeBlue,
             borderRadius: moderateScale(10, 0.3),
             marginTop: moderateScale(20, 0.3),
             alignItems: 'center',

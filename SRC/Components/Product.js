@@ -65,7 +65,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
 
     if(response != undefined){
       
-      console.log("🚀 ~ file: Product.js:65 ~ deleteService ~ response:", response?.data)
+      // console.log("🚀 ~ file: Product.js:65 ~ deleteService ~ response:", response?.data)
       setAddedProducts(addedProducts.filter(product=> product?.id != item?.id))  
       
     }
@@ -100,7 +100,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
             width: windowWidth * 0.45,
             // height: windowHeight * 0.35,
             paddingVertical: moderateScale(5, 0.6),
-            backgroundColor: '#fff',
+            backgroundColor: '#D2E4E4',
             margin: moderateScale(5, 0.3),
             borderRadius: 5,
             alignItems: 'center',
@@ -204,13 +204,14 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
 
         {!seller && (
           <CustomText
+          numberOfLines={1}
             style={{
               textAlign: 'left',
-              width: windowWidth * 0.35,
+              width: windowWidth * 0.4,
               height: windowHeight * 0.03,
               color: '#a2a2a2',
             }}>
-            {item?.Category}
+            {item?.category}
           </CustomText>
         )}
         <CustomText
@@ -224,7 +225,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
           Rs {numeral(item?.price).format('0,0')}
           {/* {item?.price} */}
         </CustomText>
-        {!seller && <CustomButton
+        {/* {!seller && <CustomButton
               onPress={() => {
                 // navigationService.navigate('ProductDetails',{item,seller:true})
                 if (seller) {
@@ -251,7 +252,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
               }}
               marginRight={moderateScale(-60, 0.3)}
               isBold
-            />}
+            />} */}
 
         {/* {!seller && (
           <CustomText
@@ -295,7 +296,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
               height={windowHeight * 0.035}
               fontSize={moderateScale(10, 0.6)}
               marginTop={moderateScale(4, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               borderRadius={moderateScale(20, 0.3)}
               iconStyle={{
                 fontSize: moderateScale(14, 0.6),
@@ -316,7 +317,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
               height={windowHeight * 0.035}
               fontSize={moderateScale(10, 0.6)}
               marginTop={moderateScale(4, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               borderRadius={moderateScale(20, 0.3)}
               iconStyle={{
                 fontSize: moderateScale(14, 0.6),

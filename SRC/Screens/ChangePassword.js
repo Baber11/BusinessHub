@@ -7,6 +7,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -50,7 +51,7 @@ const ChangePassword = props => {
   const [isLoading, setIsLoading] = useState(false);
 
   const ChangePassword =async ()=>{
-    const url = '';
+    const url = 'password/reset';
     const body={
       currentPassword :currentPassword,
       newPassword: newPassword,
@@ -63,6 +64,7 @@ const ChangePassword = props => {
     if(response != undefined){
 
       console.log("🚀 ~ file: ChangePassword.js:64 ~ ChangePassword ~ response:", response?.data)
+      Platform.OS == 'android' ? ToastAndroid.show('Password changed Successfully', ToastAndroid.SHORT) : Alert.alert('Password changed Successfully') 
       
     }
 
@@ -75,7 +77,7 @@ const ChangePassword = props => {
         barStyle={'dark-content'}
       />
       <Header
-        showBack={true}
+        // showBack={true}
         title={'Change Password'}
         headerColor={['#CBE4E8', '#D2E4E4']}
        
@@ -89,33 +91,10 @@ const ChangePassword = props => {
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={['#D2E4E4', '#D2E4E4']}
+        colors={['white', 'white']}
         // locations ={[0, 0.5, 0.6]}
       >
-        {/* <TouchableOpacity
-          activeOpacity={0.8}
-          style={{
-            position: 'absolute',
-            top: moderateScale(20, 0.3),
-            left: moderateScale(20, 0.3),
-            height: moderateScale(30, 0.3),
-            width: moderateScale(30, 0.3),
-            borderRadius: moderateScale(5, 0.3),
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            zIndex: 1,
-          }}>
-          <Icon
-            name={'arrowleft'}
-            as={AntDesign}
-            size={moderateScale(22, 0.3)}
-            color={Color.themeColor}
-            onPress={() => {
-              navigationN.goBack();
-            }}
-          />
-        </TouchableOpacity> */}
+      
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -125,12 +104,12 @@ const ChangePassword = props => {
             width: '100%',
             height: windowHeight*0.9,
           }}>
-          <CardContainer
+          {/* <CardContainer
             style={{
               paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
               // backgroundColor:'white',
-            }}>
+            }}> */}
             <CustomText isBold style={styles.txt2}>
               Change Password
             </CustomText>
@@ -141,7 +120,7 @@ const ChangePassword = props => {
 
             <TextInputWithTitle
               titleText={'Current Passwrod'}
-              secureText={false}
+              secureText={true}
               placeholder={'Current Passwrod'}
               setText={setCurrentPassword}
               value={currentPassword}
@@ -160,7 +139,7 @@ const ChangePassword = props => {
 
             <TextInputWithTitle
               titleText={'Enter New Password'}
-              secureText={false}
+              secureText={true}
               placeholder={'Enter New Password'}
               setText={setNewPassword}
               value={newPassword}
@@ -178,7 +157,7 @@ const ChangePassword = props => {
             />
             <TextInputWithTitle
               titleText={'Confirm your new password'}
-              secureText={false}
+              secureText={true}
               placeholder={'Confirm your new password'}
               setText={setConfirmNewPassword}
               value={confirmNewPassword}
@@ -207,18 +186,16 @@ const ChangePassword = props => {
               height={windowHeight * 0.06}
               marginTop={moderateScale(20, 0.3)}
               onPress={() => {
-                dispatch(setUserToken({token: 'sadasdawdadas'}));
+                // dispatch(setUserToken({token: 'sadasdawdadas'}));
+
               }}
               bgColor={
-                SelecteduserRole == 'Qbid member'
-                  ? Color.blue
-                  : Color.themeColor
+                Color.themeBlue
               }
-              // borderColor={Color.white}
-              // borderWidth={2}
+             
               borderRadius={moderateScale(30, 0.3)}
             />
-          </CardContainer>
+          {/* </CardContainer> */}
         </KeyboardAwareScrollView>
       </LinearGradient>
       </ScrollView>

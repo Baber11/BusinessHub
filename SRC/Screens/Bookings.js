@@ -314,7 +314,7 @@ const Bookings = () => {
                     // backgroundColor:'red'
                   }}>
                   <CustomImage
-                    source={require('../Assets/Images/4.png')}
+                    source={require('../Assets/Images/4.jpg')}
                     style={{
                       width: '100%',
                       height: '100%',

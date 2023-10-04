@@ -64,10 +64,10 @@ const LoginScreen = props => {
 
     // console.log('LoginResponse============>>>>>>>', response?.data);
     if (response?.data?.success) {
-      console.log(
-        'Login Testing =============>>>>>>',
-        response?.data?.user_info,
-      );
+      // console.log(
+      //   'Login Testing =============>>>>>>',
+      //   response?.data?.user_info,
+      // );
       dispatch(setUserData(response?.data?.user_info));
       dispatch(SetUserRole(response?.data?.user_info?.role));
       dispatch(setUserToken({token: response?.data?.token}));
@@ -91,7 +91,7 @@ const LoginScreen = props => {
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={[Color.themeColor2, Color.themeColor2]}
+        colors={[Color.white, Color.white]}
         // locations ={[0, 0.5, 0.6]}
       >
        
@@ -110,13 +110,13 @@ const LoginScreen = props => {
               }}
             />
           </View>
-          <CardContainer
+          {/* <CardContainer
             style={{
               paddingVertical: moderateScale(40, 0.3),
               alignItems: 'center',
               justifyContent: 'center',
               marginTop: moderateScale(30, 0.3),
-            }}>
+            }}> */}
             <TextInputWithTitle
               iconName={'email'}
               iconType={Fontisto}
@@ -168,7 +168,7 @@ const LoginScreen = props => {
                 marginTop: moderateScale(10, 0.3),
               }}
               onPress={() => {
-                console.log('here');
+                // console.log('here');
                 navigationService.navigate('EnterPhone');
               }}
             />
@@ -188,11 +188,11 @@ const LoginScreen = props => {
               width={windowWidth * 0.4}
               height={windowHeight * 0.06}
               marginTop={moderateScale(30, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               borderRadius={moderateScale(5, 0.3)}
               // isGradient
             />
-          </CardContainer>
+          {/* </CardContainer> */}
 
           <CustomText style={styles.txt5}>Don't have an account ?</CustomText>
           <CustomText

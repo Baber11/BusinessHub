@@ -93,7 +93,7 @@ const Profile = () => {
         style={{
           width: windowWidth,
           height: windowHeight,
-          backgroundColor: '#D2E4E4',
+          backgroundColor: 'white',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
@@ -108,7 +108,7 @@ const Profile = () => {
             justifyContent: 'center',
           }}>
           <Icon
-          style={{position:'absolute', left:20, top:20}}
+            style={{position: 'absolute', left: 20, top: 20}}
             name={'menu'}
             as={Feather}
             size={moderateScale(25, 0.3)}
@@ -160,12 +160,18 @@ const Profile = () => {
         </ImageBackground>
 
         <ScrollView>
-          <CardContainer
+          {/* <CardContainer
             style={{
               paddingVertical: moderateScale(15, 0.3),
               alignItems: 'center',
               justifyContent: 'center',
               marginTop: moderateScale(30, 0.3),
+            }}> */}
+          <View
+            style={{
+              // backgroundColor: 'green',
+              alignSelf: 'center',
+              paddingVertical: moderateScale(20, 0.6),
             }}>
             <TextInputWithTitle
               title={'Username'}
@@ -246,11 +252,12 @@ const Profile = () => {
               width={windowWidth * 0.4}
               height={windowHeight * 0.06}
               marginTop={moderateScale(15, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               // borderRadius={moderateScale(5, 0.3)}
               // isGradient
             />
-          </CardContainer>
+          </View>
+          {/* </CardContainer> */}
         </ScrollView>
       </View>
       <ImagePickerModal

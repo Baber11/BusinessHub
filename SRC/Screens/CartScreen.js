@@ -5,6 +5,7 @@ import {
   Platform,
   ToastAndroid,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import ScreenBoiler from '../Components/ScreenBoiler';
@@ -29,7 +30,7 @@ const CartScreen = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log('the data is ========>> >> ', cartData);
+  // console.log('the data is ========>> >> ', cartData);
   const [isLoading, setIsLoading] = useState(false)
   const [finalAmount, setFinalAmount] = useState(0);
   // const [productsForCard, setProdctsForCart] = useState([]);
@@ -44,6 +45,22 @@ const CartScreen = ({ route }) => {
     return total
     // console.log('Total=========>>>>',total)
   }
+  const Confirm = () => {
+    Alert.alert('Action required', 'Login to Continue', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Login',
+        onPress: () => {
+          navigationService.navigate('LoginScreen');
+        },
+      },
+    ]);
+    return true;
+  };
 
   const checkOut = async () => {
     if (
@@ -85,7 +102,7 @@ const CartScreen = ({ route }) => {
 
         dispatch(Order(body));
         dispatch(EmptyCart());
-        navigationService.navigate('PaymentInvoice', { body: body });
+        navigationService.navigate('PickUpLocation', { body: body });
         Platform.OS == 'android'
           ? ToastAndroid.show('Order Confirmed', ToastAndroid.SHORT)
           : Alert.alert('Order Confirmed');
@@ -96,12 +113,13 @@ const CartScreen = ({ route }) => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#CBE4E8'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#CBE4E8']} />
+      <Header showBack={true} headerColor={['#CBE4E8', '#CBE4E8']} title={'Cart'} />
       <View
         style={{
           width: windowWidth,
           height: windowHeight * 0.9,
-          backgroundColor: '#CBE4E8',
+          // backgroundColor: '#CBE4E8',
+          backgroundColor:'white',
         }}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -128,13 +146,13 @@ const CartScreen = ({ route }) => {
                 <View
                   style={{
                     width: windowWidth * 0.8,
-                    height: windowHeight * 0.4,
+                    height: windowHeight * 0.55,
                     marginTop: moderateScale(30, 0.3),
                     alignSelf: 'center',
                     // backgroundColor:'red'
                   }}>
                   <CustomImage
-                    source={require('../Assets/Images/4.png')}
+                    source={require('../Assets/Images/4.jpg')}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -147,7 +165,7 @@ const CartScreen = ({ route }) => {
                   style={{
                     textAlign: 'center',
                     color: 'black',
-                    fontSize: moderateScale(15, 0.6),
+                    fontSize: moderateScale(20, 0.6),
                     marginTop: moderateScale(-50, 0.3),
                   }}>
                   DATA NOT ADDED YET
@@ -163,22 +181,29 @@ const CartScreen = ({ route }) => {
             width: windowWidth,
             alignItems: 'center',
           }}>
-          <CustomButton
+         {cartData.length> 0 && <CustomButton
             isBold
             onPress={() => {
-              checkOut();
+              if(token == null){
+                Confirm()
+              }
+              else{
+                checkOut();
+
+              }
+
             }}
-            text={isLoading ? <ActivityIndicator color={'white'} size={'small'} /> : 'Order'}
+            text={isLoading ? <ActivityIndicator color={'white'} size={'small'} /> : 'Place Order'}
             textColor={Color.white}
             width={windowWidth * 0.8}
             height={windowHeight * 0.07}
             fontSize={moderateScale(16, 0.6)}
             // marginBottom={moderateScale(10,.3)}
             // marginTop={moderateScale(20, 0.3)}
-            bgColor={Color.themeColor}
+            bgColor={Color.themeBlue}
             borderRadius={moderateScale(30, 0.3)}
           // isGradient
-          />
+          />}
         </View>
       </View>
     </>

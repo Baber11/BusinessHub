@@ -32,21 +32,21 @@ import navigationService from '../navigationService';
 const Orders = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
+  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
   const orders = useSelector(state => state.commonReducer.order);
-  console.log('🚀 ~ file: Orders.js:30 ~ orders:', orders);
+  // console.log('🚀 ~ file: Orders.js:30 ~ orders:', orders);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedOrder, setSelectedOrder] = useState('');
-  const [selectedTab, setSelectedTab] = useState('Product');
+  const [selectedTab, setSelectedTab] = useState('Products');
   const [myOrder, setMyOrder] = useState([]);
-  console.log('🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:', myOrder);
+  // console.log('🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:', myOrder);
   const [serviceOrder, setServiceOrder] = useState([]);
-  console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
+  // console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
   // console.log("🚀 ~ file: Orders.js:45 ~ Orders ~ serviceOrder:", serviceOrder)
-  console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
+  // console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
   const navigation = useNavigation();
   const oneDayAgo = moment().subtract(1, 'day');
 
@@ -67,7 +67,7 @@ const Orders = () => {
   const dateDiff = item => {
     const currentDate = moment();
     const newDate = moment(item);
-    console.log('Date difference=========', currentDate.diff(newDate, 'h'));
+    // console.log('Date difference=========', currentDate.diff(newDate, 'h'));
     return currentDate.diff(newDate, 'h');
   };
 
@@ -78,10 +78,10 @@ const Orders = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
+      //   response?.data,
+      // );
       setMyOrder(response?.data?.orders);
     }
   };
@@ -92,10 +92,10 @@ const Orders = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: Orders.js:76 ~ getSellerServices ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: Orders.js:76 ~ getSellerServices ~ response:',
+      //   response?.data,
+      // );
        return setServiceOrder(response?.data?.data);
     }
   };
@@ -139,6 +139,54 @@ const Orders = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
+             <View
+                style={{
+                  flexDirection: 'row',
+                  width: windowWidth * 0.7,
+                  borderWidth: 1,
+                  borderColor: Color.themeBlue,
+                  alignSelf: 'center',
+                  justifyContent: 'space-between',
+                  borderRadius: moderateScale(10, 0.6),
+                  overflow: 'hidden',
+                }}>
+                <CustomText
+                  style={{
+                    width: windowWidth * 0.35,
+                    textAlign: 'center',
+                    paddingVertical: moderateScale(10, 0.6),
+                    borderRadius: moderateScale(10, 0.6),
+                    color:
+                      selectedTab == 'Products' ? 'white' : Color.themeBlue,
+                    backgroundColor:
+                      selectedTab == 'Products'
+                        ? Color.themeBlue
+                        : 'transparent',
+                  }}
+                  onPress={() => {
+                    setSelectedTab('Products');
+                  }}>
+                  Products
+                </CustomText>
+                <CustomText
+                  style={{
+                    width: windowWidth * 0.35,
+                    borderRadius: moderateScale(10, 0.6),
+                    paddingVertical: moderateScale(10, 0.6),
+                    textAlign: 'center',
+                    color:
+                      selectedTab == 'Services' ? 'white' : Color.themeBlue,
+                    backgroundColor:
+                      selectedTab == 'Services'
+                        ? Color.themeBlue
+                        : 'transparent',
+                  }}
+                  onPress={() => {
+                    setSelectedTab('Services');
+                  }}>
+                  Services
+                </CustomText>
+              </View>
           <View
             style={{
               flexDirection: 'row',
@@ -158,7 +206,7 @@ const Orders = () => {
               }}>
               Latest Orders
             </CustomText>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 width: windowWidth * 0.26,
@@ -204,7 +252,7 @@ const Orders = () => {
                 }}>
                 Service
               </CustomText>
-            </View>
+            </View> */}
           </View>
           {isLoading ? (
             <View
@@ -216,7 +264,7 @@ const Orders = () => {
                 // backgroundColor: 'green',
               }}>
               <ActivityIndicator
-                color={Color.yellow}
+                color={Color.themeBlue}
                 size={moderateScale(30, 0.6)}
               />
             </View>
@@ -252,7 +300,7 @@ const Orders = () => {
                         marginTop: moderateScale(10, 0.3),
                       }}>
                       <CustomImage
-                        source={require('../Assets/Images/4.png')}
+                        source={require('../Assets/Images/4.jpg')}
                         style={{
                           width: '100%',
                           height: '100%',
@@ -273,7 +321,7 @@ const Orders = () => {
                 );
               }}
               renderItem={({item, index}) => {
-                console.log('🚀 ~ file: Orders.js:203 ~ Orders ~ item:', item);
+                // console.log('🚀 ~ file: Orders.js:203 ~ Orders ~ item:', item);
                 return (
                   // <MyOrderCard item={item} />
                   <OrderCard
@@ -311,7 +359,7 @@ const Orders = () => {
               // backgroundColor: 'green',
             }}>
             <ActivityIndicator
-              color={Color.yellow}
+              color={Color.themeBlue}
               size={moderateScale(45, 0.6)}
             />
           </View>
@@ -348,7 +396,7 @@ const Orders = () => {
                       // backgroundColor:'red'
                     }}>
                     <CustomImage
-                      source={require('../Assets/Images/4.png')}
+                      source={require('../Assets/Images/4.jpg')}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -378,7 +426,7 @@ const Orders = () => {
 export default Orders;
 
 const OrderCard = ({item, width, selectedTab}) => {
-  console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
+  // console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
   return (
     <View
       key={item?.id}

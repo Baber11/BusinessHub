@@ -32,7 +32,7 @@ const EnterPhone = props => {
     state => state.commonReducer.selectedRole,
   );
   const fromForgot = props?.route?.params?.fromForgot;
-  console.log('here=>', fromForgot);
+  // console.log('here=>', fromForgot);
   const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation()
@@ -48,7 +48,7 @@ const EnterPhone = props => {
     const response = await Post(url, {email: phone}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      console.log('response data =>', response?.data);
+      // console.log('response data =>', response?.data);
 
 
       Platform.OS == 'android'
@@ -78,7 +78,7 @@ const EnterPhone = props => {
           }}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
-          colors={[Color.themeColor2, Color.themeColor2]}
+          colors={['white', 'white']}
           // locations ={[0, 0.5, 0.6]}
         >
           <TouchableOpacity
@@ -114,11 +114,11 @@ const EnterPhone = props => {
               width: '100%',
               height: windowHeight,
             }}>
-            <CardContainer
+            {/* <CardContainer
               style={{
                 paddingVertical: moderateScale(30, 0.3),
                 alignItems: 'center',
-              }}>
+              }}> */}
               <CustomText isBold style={styles.txt2}>
                 Forget Password
               </CustomText>
@@ -159,9 +159,9 @@ const EnterPhone = props => {
                   sendOTP()
                   
                 }}
-                bgColor={Color.yellow}
+                bgColor={Color.themeBlue}
               />
-            </CardContainer>
+            {/* </CardContainer> */}
           </KeyboardAwareScrollView>
         </LinearGradient>
       </ScreenBoiler>

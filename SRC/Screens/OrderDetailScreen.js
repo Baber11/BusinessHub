@@ -85,10 +85,10 @@ const OrderDetailScreen = props => {
           flexGrow: 0,
         }}
         renderItem={({item, index}) => {
-          console.log(
-            '🚀 ~ file: OrderDetailScreen.js:103 ~ OrderDetailScreen ~ item:',
-            item?.product,
-          );
+          // console.log(
+          //   '🚀 ~ file: OrderDetailScreen.js:103 ~ OrderDetailScreen ~ item:',
+          //   item?.product,
+          // );
           return (
             <View
               style={{
@@ -124,15 +124,20 @@ const OrderDetailScreen = props => {
                   backgroundColor: 'transparent',
                 }}>
                 <CustomImage
-                  source={{
+                  source={
+                    // require('../Assets/Images/logo.png')
+                    {
                     uri: item?.product?.product_image[0]?.photo
                       ? item?.product?.product_image[0]?.photo
                       : item?.images
                       ? item?.images[0]
                       : item?.service_image
                       ? item?.service_image[0]?.photo
-                      : item?.orderdetail[0]?.images[0],
-                  }}
+                      : item?.orderdetail[0]?.images?
+                      item?.orderdetail[0]?.images[0] :
+                      require('../Assets/Images/logo.png')
+                  }
+                }
                   style={{
                     height: '100%',
                     width: '100%',
@@ -362,7 +367,7 @@ const OrderDetailScreen = props => {
                       }}>
                       {item.description
                         ? item.description
-                        : item?.service?.description}
+                        : item?.service?.description}dhsfhsdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     </CustomText>
                   </View>
                   <Divider
@@ -388,7 +393,7 @@ const OrderDetailScreen = props => {
                   // backgroundColor:'red'
                 }}>
                 <CustomImage
-                  source={require('../Assets/Images/4.png')}
+                  source={require('../Assets/Images/4.jpg')}
                   style={{
                     width: '100%',
                     height: '100%',

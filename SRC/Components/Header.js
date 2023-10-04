@@ -170,10 +170,7 @@ const Header = props => {
             size={moderateScale(25, 0.3)}
             color={Color.black}
             onPress={() => {
-              if (token == null) {
-                Confirm();
-                // navigationService.navigate('LoginScreen')
-              } else if (cartData?.length > 0) {
+              if (cartData?.length > 0) {
                 navigationService.navigate('CartScreen');
               } else {
                 return Platform.OS == 'android'

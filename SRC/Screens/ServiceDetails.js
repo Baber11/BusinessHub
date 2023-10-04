@@ -40,19 +40,19 @@ import navigationService from '../navigationService';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 
 const ServiceDetails = props => {
-  console.log(
-    '🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ props:',
-    props?.route?.params,
-  );
+  // console.log(
+  //   '🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ props:',
+  //   props?.route?.params,
+  // );
   const item = props?.route?.params?.item;
-  console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
+  // console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
   // console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
-  console.log(
-    '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
-    seller,
-  );
+  // console.log(
+  //   '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
+  //   seller,
+  // );
   const navigation = useNavigation();
   const user = useSelector(state => state.commonReducer.userData);
   const dispatch = useDispatch();
@@ -65,10 +65,10 @@ const ServiceDetails = props => {
   const [images, setImages] = useState(
     item?.service_image ? item?.service_image : item?.images,
   );
-  console.log(
-    '🚀 ~ file: ServiceDetails.js:66 ~ ServiceDetails ~ images:',
-    images,
-  );
+  // console.log(
+  //   '🚀 ~ file: ServiceDetails.js:66 ~ ServiceDetails ~ images:',
+  //   images,
+  // );
   const [yourComment, setYourComment] = useState('');
   const [bookingModal, setBookingModal] = useState(false);
   const [calendar, setCalendar] = useState(false);
@@ -99,7 +99,7 @@ const ServiceDetails = props => {
         text: yourComment,
         time: moment().format(' hh:mm:ss a'),
       };
-      console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
+      // console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
       setComments(prev => [
         ...prev,
         {
@@ -122,10 +122,10 @@ const ServiceDetails = props => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response?.data?.success) {
-      return console.log(
-        '🚀 ~ file: ServiceDetails.js:112 ~ BookingNow ~ response:',
-        response?.data,
-      );
+      // return console.log(
+      //   '🚀 ~ file: ServiceDetails.js:112 ~ BookingNow ~ response:',
+      //   response?.data,
+      // );
     }
   };
 
@@ -354,7 +354,7 @@ const ServiceDetails = props => {
                 }}
                 minDate={moment().format()}
                 onDayPress={day => {
-                  console.log('day========>>>>>', day);
+                  // console.log('day========>>>>>', day);
                   setDate(day?.dateString);
                 }}
                 theme={{
@@ -512,7 +512,7 @@ const ServiceDetails = props => {
                     fontSize={moderateScale(10, 0.6)}
                     // marginBottom={moderateScale(10,.3)}
                     // marginTop={moderateScale(20, 0.3)}
-                    bgColor={Color.themeColor}
+                    bgColor={Color.themeBlue}
                     borderRadius={moderateScale(30, 0.3)}
                     // isGradient
                   />
@@ -542,11 +542,11 @@ const ServiceDetails = props => {
                       )
                     : Alert.alert('Please select a date');
                 } else {
-                  console.log('item dispatching......', {
-                    order: item,
-                    date: date,
-                    orderId: Math.floor(Math.random() * 1000000000),
-                  });
+                  // console.log('item dispatching......', {
+                  //   order: item,
+                  //   date: date,
+                  //   orderId: Math.floor(Math.random() * 1000000000),
+                  // });
                   // dispatch(
                   //   setServiceBooking({
                   //     order: [item],
@@ -574,7 +574,7 @@ const ServiceDetails = props => {
             fontSize={moderateScale(16, 0.6)}
             // marginBottom={moderateScale(10,.3)}
             // marginTop={moderateScale(20, 0.3)}
-            bgColor={Color.themeColor}
+            bgColor={Color.themeBlue}
             borderRadius={moderateScale(30, 0.3)}
             //   isGradient
           />

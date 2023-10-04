@@ -37,10 +37,10 @@ import Header from '../Components/Header';
 
 const PersonalInfo = () => {
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log(
-    '🚀 ~ file: PersonalInfo.js:38 ~ PersonalInfo ~ userData:',
-    userData,
-  );
+  // console.log(
+  //   '🚀 ~ file: PersonalInfo.js:38 ~ PersonalInfo ~ userData:',
+  //   userData,
+  // );
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState(
     userData?.name ? userData?.name : '',
@@ -104,7 +104,7 @@ const PersonalInfo = () => {
 
     setIsLoading(true);
     const response = await Post(url, body, apiHeader());
-    console.log('🚀 ~ file: Signup.js:93 ~ registerUser ~ response:', response);
+    // console.log('🚀 ~ file: Signup.js:93 ~ registerUser ~ response:', response);
     setIsLoading(false);
 
     if (response != undefined) {

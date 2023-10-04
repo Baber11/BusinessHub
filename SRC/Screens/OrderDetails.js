@@ -29,7 +29,7 @@ import moment from 'moment';
 const OrderDetails = props => {
   const item = props.route.params.item;
   const details = props.route.params.details;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
 

@@ -36,17 +36,17 @@ const CustomerDashboard = () => {
   const sellerServices = useSelector(
     state => state.commonReducer.sellerService,
   );
-  console.log(
-    '🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:',
-    sellerServices,
-  );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:',
+  //   sellerServices,
+  // );
   const sellerProducts = useSelector(
     state => state.commonReducer.sellerProducts,
   );
-  console.log(
-    '🚀 ~ file: CustomerDashboard.js:42 ~ CustomerDashboard ~ sellerProducts:',
-    sellerProducts,
-  );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:42 ~ CustomerDashboard ~ sellerProducts:',
+  //   sellerProducts,
+  // );
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [isServiceLoading, setIsServiceLoading] = useState(false);
@@ -55,14 +55,14 @@ const CustomerDashboard = () => {
   const [selectedService, setSelectedService] = useState('');
   const [allProducts, setAllProducts] = useState([]);
   const [allServices, setAllServices] = useState([]);
-  console.log(
-    '🚀 ~ file: CustomerDashboard.js:47 ~ CustomerDashboard ~ allServices:',
-    allServices,
-  );
-  console.log(
-    '🚀 ~ file: CustomerDashboard.js:46 ~ CustomerDashboard ~ allProducts:',
-    allProducts,
-  );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:47 ~ CustomerDashboard ~ allServices:',
+  //   allServices,
+  // );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:46 ~ CustomerDashboard ~ allProducts:',
+  //   allProducts,
+  // );
 
   const productList = async () => {
     const url = 'products';
@@ -70,10 +70,10 @@ const CustomerDashboard = () => {
     const response = await Get(url);
     setIsLoading(false);
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
+      //   response?.data,
+      // );
       setAllProducts(response?.data?.data?.products);
     }
   };
@@ -87,18 +87,18 @@ const CustomerDashboard = () => {
     if (response != undefined) {
       setAllServices(response?.data?.data?.services);
 
-      console.log(
-        '🚀 ~ file: CustomerDashboard.js:67 ~ serviceList ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: CustomerDashboard.js:67 ~ serviceList ~ response:',
+      //   response?.data,
+      // );
     }
   };
 
   const [newData, setNewData] = useState([]);
-  console.log(
-    '🚀 ~ file: CustomerDashboard.js:61 ~ CustomerDashboard ~ newData:',
-    newData,
-  );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:61 ~ CustomerDashboard ~ newData:',
+  //   newData,
+  // );
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -134,7 +134,7 @@ const CustomerDashboard = () => {
         }}
         style={{
           minHeight: windowHeight * 0.9,
-          backgroundColor: '#D2E4E4',
+          backgroundColor: 'white',
         }}>
         <CustomText
           isBold
@@ -164,15 +164,15 @@ const CustomerDashboard = () => {
           {isServiceLoading ? (
             <View style={{height:windowHeight*0.1, justifyContent:'center'}}>
             <ActivityIndicator
-              color={Color.yellow}
+              color={Color.themeBlue}
               size={moderateScale(30, 0.6)}
             /></View>
           ) : (
             allServices?.map((item, index) => {
-              console.log(
-                '🚀 ~ file: CustomerDashboard.js:145 ~ {allServices?.map ~ item:',
-                item,
-              );
+              // console.log(
+              //   '🚀 ~ file: CustomerDashboard.js:145 ~ {allServices?.map ~ item:',
+              //   item,
+              // );
               return (
                 <>
                   <TouchableOpacity
@@ -288,7 +288,7 @@ const CustomerDashboard = () => {
             }}>
             <ActivityIndicator
               size={moderateScale(45, 0.6)}
-              color={Color.yellow}
+              color={Color.themeBlue}
             />
           </View>
         ) : (
@@ -314,7 +314,7 @@ const CustomerDashboard = () => {
                       alignSelf: 'center',
                     }}>
                     <CustomImage
-                      source={require('../Assets/Images/4.png')}
+                      source={require('../Assets/Images/4.jpg')}
                       style={{
                         width: '100%',
                         height: '100%',
