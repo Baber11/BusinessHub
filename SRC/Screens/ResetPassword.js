@@ -27,92 +27,88 @@ import {ActivityIndicator} from 'react-native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import CardContainer from '../Components/CardContainer';
 // import CustomHeader from '../Components/CustomHeader';
-import { Icon } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-import { setUserToken } from '../Store/slices/auth';
+import {Icon} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {setUserToken} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const ResetPassword = props => {
-
   const dispatch = useDispatch();
+  const token = useSelector(state => state.authReducer.token);
   const navigationN = useNavigation();
-  const phoneNumber = props?.route?.params?.phone;
-const [password, setPassword] = useState('')
-const [ConfirmPass, setConfirmPass] = useState('')
+  const email = props?.route?.params?.email;
+  const [password, setPassword] = useState('');
+  const [ConfirmPass, setConfirmPass] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // const sendOTP = async () => {
-  //   const url = 'password/email';
-  //   if (['', null, undefined].includes(phone)) {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show('Phone number is required', ToastAndroid.SHORT)
-  //       : alert('Phone number is required');
-  //   }
-  //   setIsLoading(true);
-  //   const response = await Post(url, {email: phone}, apiHeader());
-  //   setIsLoading(false);
-  //   if (response != undefined) {
-  //     console.log('response data =>', response?.data);
-  //     Platform.OS == 'android'
-  //       ? ToastAndroid.show(`OTP sent to ${phone}`, ToastAndroid.SHORT)
-  //       : alert(`OTP sent to ${phone}`);
-  //     fromForgot
-  //       ? navigationService.navigate('VerifyNumber', {
-  //           fromForgot: fromForgot,
-  //           phoneNumber: `${phone}`,
-  //         })
-  //       : navigationService.navigate('VerifyNumber', {
-  //           phoneNumber: `${phone}`,
-  //         });
-  //   }
-  // };
+  const resetPass = async () => {
+    if (password !== ConfirmPass)
+      return alert('Password and confirm password donot not match');
+    const url = 'password/reset';
+    const body = {
+      email: email,
+      password: password,
+      confirm_password: ConfirmPass,
+    };
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+    if (response != undefined) {
+      // console.log(
+      //   '🚀 ~ file: ResetPassword.js:59 ~ resetPassword ~ response:',
+      //   response?.data,
+      // );
+
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Password reset successfully')
+        : alert('Password reset successfully');
+      navigationService.navigate('LoginScreen');
+    }
+  };
 
   return (
     <>
       <CustomStatusBar
-       backgroundColor={
-        Color.white
-      }
+        backgroundColor={Color.white}
         barStyle={'dark-content'}
       />
-         <LinearGradient
+      <LinearGradient
         style={{
           width: windowWidth,
           height: windowHeight,
         }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-         colors={[Color.themeColor2,Color.themeColor2]}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        colors={[Color.themeColor2, Color.themeColor2]}
         // locations ={[0, 0.5, 0.6]}
-        >
-            <TouchableOpacity
-            activeOpacity={0.8}
+      >
+        <TouchableOpacity
+          activeOpacity={0.8}
           style={{
-            position : 'absolute',
-            top : moderateScale(20,0.3),
-            left : moderateScale(20,0.3),
+            position: 'absolute',
+            top: moderateScale(20, 0.3),
+            left: moderateScale(20, 0.3),
             height: moderateScale(30, 0.3),
             width: moderateScale(30, 0.3),
             borderRadius: moderateScale(5, 0.3),
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor:'white',
-            zIndex : 1
+            backgroundColor: 'white',
+            zIndex: 1,
           }}>
-         
-            <Icon
-              name={'arrowleft'}
-              as={AntDesign}
-              size={moderateScale(22, 0.3)}
-              color={Color.yellow}
-              onPress={()=>{
-                navigationN.goBack()
-              }}
-            />
-            </TouchableOpacity>
+          <Icon
+            name={'arrowleft'}
+            as={AntDesign}
+            size={moderateScale(22, 0.3)}
+            color={Color.yellow}
+            onPress={() => {
+              navigationN.goBack();
+            }}
+          />
+        </TouchableOpacity>
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -137,7 +133,7 @@ const [ConfirmPass, setConfirmPass] = useState('')
 
             <TextInputWithTitle
               titleText={'Enter New Password'}
-              secureText={false}
+              secureText={true}
               placeholder={'Enter New Password'}
               setText={setPassword}
               value={password}
@@ -155,7 +151,7 @@ const [ConfirmPass, setConfirmPass] = useState('')
             />
             <TextInputWithTitle
               titleText={'Confirm your new password'}
-              secureText={false}
+              secureText={true}
               placeholder={'Confirm your new password'}
               setText={setConfirmPass}
               value={ConfirmPass}
@@ -184,18 +180,14 @@ const [ConfirmPass, setConfirmPass] = useState('')
               height={windowHeight * 0.06}
               marginTop={moderateScale(20, 0.3)}
               onPress={() => {
-              // dispatch(setUserToken({token : 'sadasdawdadas'}))
+                resetPass();
+                // dispatch(setUserToken({token : 'sadasdawdadas'}))
               }}
-              bgColor={Color.yellow
-            }
+              bgColor={Color.themeBlue}
               // borderColor={Color.white}
               // borderWidth={2}
               // borderRadius={moderateScale(30, 0.3)}
             />
-
-           
-             
-            
           </CardContainer>
         </KeyboardAwareScrollView>
       </LinearGradient>

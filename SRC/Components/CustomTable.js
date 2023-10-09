@@ -152,8 +152,8 @@ const CustomTable = ({
           }}
           data={ newData.filter(data =>
             selectedTab == 'Buyer'
-              ? data?.role.toLowerCase() == 'vendor'
-              : data?.role.toLowerCase() == 'customer',
+              ? data?.role.toLowerCase() == 'customer'
+              : data?.role.toLowerCase() == 'vendor',
           )}
           renderItem={(item, index1) => {
             // console.log("🚀 ~ file: CustomTable.js:101 ~ index1:", item , index1)

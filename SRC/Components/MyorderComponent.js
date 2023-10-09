@@ -8,7 +8,7 @@ import Color from '../Assets/Utilities/Color';
 import {useNavigation} from '@react-navigation/native';
 
 const MyOrderCard = ({item , type}) => {
-  console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item)
+  //  console.log("🚀 ~ file: MyorderComponent.js:11 ~ MyOrderCard ~ item:", item?.order_id)
   
   const navigation = useNavigation();
 
@@ -46,7 +46,7 @@ const MyOrderCard = ({item , type}) => {
           backgroundColor: 'white',
         }}>
         <CustomImage
-          source={item.Image? item?.Image : item?.image}
+          source={require('../Assets/Images/logo.png')}
           style={{
             height: '100%',
             width: '100%',
@@ -65,24 +65,26 @@ const MyOrderCard = ({item , type}) => {
           // isBold
           numberOfLines={1}
           style={{
+            // backgroundColor:'red',
+            width:windowWidth*0.5,
             color: '#2f2f2f',
             fontSize: moderateScale(13, 0.6),
           }}>
-          OrderId : {item.orderId}
+          OrderId : {item?.orderId ? item?.orderId : item?.order_id}
         </CustomText>
-        {item?.Quantiity ? (<CustomText
+        {item?.quantity ? (<CustomText
           numberOfLines={1}
           style={{
             color: '#000',
             fontSize: moderateScale(12, 0.6),
           }}>
-          Quantity : {item?.Quantiity}
+          Quantity : {item?.quantity}
         </CustomText>):(<CustomText
           numberOfLines={1}
           style={{
             color: '#000',
             fontSize: moderateScale(12, 0.6),
-          }}>Service : {item?.order[0]?.Title}</CustomText>)}
+          }}>Service : {item?.title ? item?.title : item?.service?.shop_name}</CustomText>)}
         
          
         <View
@@ -98,7 +100,7 @@ const MyOrderCard = ({item , type}) => {
               color: '#000',
               fontSize: moderateScale(15, 0.6),
             }}>
-            Price : PKR {item?.total ? item?.total : `${item?.order[0]?.charges}` }
+            Price : PKR {item?.total ? item?.total : `${item?.charges}` }
           </CustomText>
 
           <CustomText

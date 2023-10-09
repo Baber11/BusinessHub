@@ -5,9 +5,11 @@ import CustomText from './CustomText';
 import {moderateScale} from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import CustomImage from './CustomImage';
 import {Icon} from 'native-base';
 import {
+  RemoveToCart,
   addQuantity,
   decrementQuantity,
   increamentQuantity,
@@ -22,9 +24,12 @@ import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
-  console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
+  // console.log("🚀 ~ file: CartItem.js:25 ~ CartItem ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
   const dispatch = useDispatch();
+  const removeItem = item => {
+    dispatch(RemoveToCart(item));
+  };
 
   return (
     <View style={styles.cardContainer} key={item?.id}>
@@ -35,17 +40,20 @@ const CartItem = ({item, fromCheckout}) => {
         }}>
         <View style={styles.otherContainer}>
           <Icon
-            name={'circle'}
-            as={Entypo}
+            name={'minuscircleo'}
+            as={AntDesign}
             size={moderateScale(20, 0.3)}
-            color={Color.themeLightGray}
+            color={Color.black}
             style={{
               marginRight: moderateScale(5, 0.3),
+            }}
+            onPress={()=>{
+              removeItem(item?.id)
             }}
           
           />
           <CustomImage
-            source={{uri:item?.images[0]}}
+            source={{uri:item?.product_image[0]?.photo}}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -65,7 +73,7 @@ const CartItem = ({item, fromCheckout}) => {
             {item?.selectedSize ? (
               <CustomText>Selected Size : {item?.selectedSize}</CustomText>
             ) : (
-             item?.size?.map((item1, index) => {
+             JSON.parse(item?.size)?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -109,7 +117,7 @@ const CartItem = ({item, fromCheckout}) => {
                 width: windowWidth * 0.45,
                 marginTop: moderateScale(5, 0.3),
               }}>
-              {item?.colors.map((item1, index) => {
+              {JSON.parse(item?.color)?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -149,7 +157,7 @@ const CartItem = ({item, fromCheckout}) => {
               },
             ]}>
             <CustomText style={styles.amount}>
-              {(item?.price * item?.qty)} PKR
+              {(item?.price * item?.product_quantity)} PKR
             </CustomText>
                         
             <View
@@ -164,7 +172,7 @@ const CartItem = ({item, fromCheckout}) => {
                 color={Color.themeColor}
                 size={moderateScale(25, 0.3)}
                 onPress={() => {
-                  item?.qty < item?.totalQty &&  dispatch(increamentQuantity({id: item?.id}));
+                  item?.product_quantity < item?.quantity &&  dispatch(increamentQuantity({id: item?.id}));
                 }}
               />
               <CustomText
@@ -173,7 +181,7 @@ const CartItem = ({item, fromCheckout}) => {
                   marginHorizontal: moderateScale(5, 0.3),
                   fontSize: moderateScale(12, 0.3),
                 }}>
-                {item?.qty}
+                {item?.product_quantity}
               </CustomText>
               <Icon
                 name={'circle-with-minus'}
@@ -181,7 +189,7 @@ const CartItem = ({item, fromCheckout}) => {
                 color={Color.themeColor}
                 size={moderateScale(24, 0.3)}
                 onPress={() => {
-                  item?.qty > 1 && dispatch(decrementQuantity({id: item?.id}));
+                  item?.product_quantity > 1 && dispatch(decrementQuantity({id: item?.id}));
                 }}
               />
             </View>

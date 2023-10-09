@@ -14,21 +14,26 @@ import {moderateScale} from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import navigationService from '../navigationService';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const PaymentInvoice = props => {
   const Invoice = props.route.params.body;
+  const user = useSelector(state=> state.commonReducer.userData)
 
-  console.log('PAYMENT INVOICE ========>>>>>>', Invoice);
+  // console.log('PAYMENT INVOICE ========>>>>>>', Invoice);
+
 
   return (
     <>
-      <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
+      <CustomStatusBar backgroundColor={'white'} barStyle={'dark-content'} />
 
       <View
         style={{
           height: windowHeight,
           width: windowWidth,
-          backgroundColor: Color.themeColor2,
+          // backgroundColor: Color.themeColor2,
+          backgroundColor:'white',
           alignItems: 'center',
         }}>
         <View
@@ -64,7 +69,7 @@ const PaymentInvoice = props => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <CustomText>Order Id</CustomText>
-            <CustomText>{Invoice?.orderId}</CustomText>
+            <CustomText>123424928346</CustomText>
           </View>
           <View
             style={{
@@ -74,7 +79,7 @@ const PaymentInvoice = props => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <CustomText>Bill To</CustomText>
-            <CustomText>William Andrew </CustomText>
+            <CustomText>{user?.name}</CustomText>
           </View>
           <View
             style={{
@@ -83,8 +88,8 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>AmountDueTo</CustomText>
-            <CustomText>PKR {Invoice.order[0].price}</CustomText>
+            <CustomText>Amount Due To</CustomText>
+            <CustomText>PKR {Invoice.total}</CustomText>
           </View>
           <View
             style={{
@@ -94,7 +99,7 @@ const PaymentInvoice = props => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <CustomText>Payment Due To</CustomText>
-            <CustomText>19 March 2023</CustomText>
+            <CustomText>{ moment().format('DD MMM YYYY')}</CustomText>
           </View>
         </View>
 
@@ -139,7 +144,7 @@ const PaymentInvoice = props => {
                     marginTop: moderateScale(20, 0.3),
                   }}>
                   <CustomText>
-                    {item.Title} x {item.qty}
+                    {item.title} x {item.product_quantity}
                   </CustomText>
                   <CustomText>PKR{item.price}</CustomText>
                 </View>
@@ -171,14 +176,14 @@ const PaymentInvoice = props => {
           onPress={() => navigationService.navigate('CustomerDashboard')}
           activeOpacity={0.8}
           style={{
-            width: windowWidth * 0.3,
+            width: windowWidth * 0.4,
             paddingVertical: moderateScale(15, 0.6),
-            backgroundColor: Color.black,
+            backgroundColor: Color.themeBlue,
             borderRadius: moderateScale(10, 0.3),
             marginTop: moderateScale(20, 0.3),
             alignItems: 'center',
           }}>
-          <CustomText style={{color: Color.white}}>CLOSE</CustomText>
+          <CustomText style={{color: Color.white, fontSize:moderateScale(15,.6)}}>Back To Home</CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity

@@ -90,7 +90,7 @@ const Signup = () => {
 
     setIsLoading(true);
     const response = await Post(url, body, apiHeader());
-    console.log("🚀 ~ file: Signup.js:93 ~ registerUser ~ response:", response)
+    // console.log("🚀 ~ file: Signup.js:93 ~ registerUser ~ response:", response)
     setIsLoading(false);
 
     if (response != undefined) {
@@ -123,7 +123,7 @@ const Signup = () => {
           }}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
-          colors={[Color.themeColor2, Color.themeColor2]}>
+          colors={[Color.white, Color.white]}>
           <View
             style={{
               marginTop: 40,
@@ -139,13 +139,13 @@ const Signup = () => {
               }}
             />
           </View>
-          <CardContainer
+          {/* <CardContainer
             style={{
               paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
               justifyContent: 'center',
               marginTop: moderateScale(30, 0.3),
-            }}>
+            }}> */}
             <DropDownSingleSelect
               array={UserRoleArray}
               item={userRole}
@@ -317,11 +317,11 @@ const Signup = () => {
               width={windowWidth * 0.4}
               height={windowHeight * 0.06}
               marginTop={moderateScale(30, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               // borderRadius={moderateScale(5, 0.3)}
               // isGradient
             />
-          </CardContainer>
+          {/* </CardContainer> */}
           <CustomText style={styles.txt5}>Already have an account ?</CustomText>
           <CustomText
             onPress={() => navigationService.navigate('LoginScreen')}

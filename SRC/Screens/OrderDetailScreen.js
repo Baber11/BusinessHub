@@ -14,16 +14,7 @@ import moment from 'moment';
 const OrderDetailScreen = props => {
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
-  // const [flatListRef,setFlatListref] = useState()
-  // console.log(
-  //   '🚀 ~ file: Walkthrough.js:62 ~ Walkthrough ~ viewableItems',
-  //   flatListRef,
-  // );
   const onViewableItemsChanged = ({viewableItems}) => {
-    // console.log(
-    //   '🚀 ~ file: Walkthrough.js:62 ~ Walkthrough ~ viewableItems',
-    //   viewableItems,
-    // );
     setIndex(viewableItems[0]?.index);
   };
 
@@ -31,14 +22,9 @@ const OrderDetailScreen = props => {
     waitForInteraction: true,
     viewAreaCoveragePercentThreshold: 100,
   };
-  // const viewabilityConfigCallbackPairs = useRef([{onViewableItemsChanged}]);
   const viewabilityConfigCallbackPairs = useRef([{onViewableItemsChanged}]);
 
   const scrollToIndex = index => {
-    // console.log(
-    //   '🚀 ~ file: BottomSheetSelect.js:50 ~ scrollToIndex ~ index:',
-    //   index,
-    // );
     flatListRef.current.scrollToIndex({animated: true, index});
   };
 
@@ -71,10 +57,13 @@ const OrderDetailScreen = props => {
   ];
 
   const item = props.route.params.item;
+  console.log(
+    '🚀 ~ file: OrderDetailScreen.js:74 ~ OrderDetailScreen ~ item:',
+    item,
+  );
 
   const type = props.route.params.type;
 
-  // console.log('Item Data======>>>>>>>>>>>>>>>>>>', item?.date);
   return (
     <ImageBackground
       source={require('../Assets/Images/imageBackground.png')}
@@ -87,12 +76,8 @@ const OrderDetailScreen = props => {
         pagingEnabled
         horizontal
         viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
-        // viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         showsHorizontalScrollIndicator={false}
-        data={item?.order}
-        // onViewableItemsChanged={(item , index)=>{
-        //   console.log(item)
-        // }}
+        data={item?.orderdetail ? item?.orderdetail : [item]}
         contentContainerStyle={{
           alignSelf: 'center',
         }}
@@ -100,17 +85,16 @@ const OrderDetailScreen = props => {
           flexGrow: 0,
         }}
         renderItem={({item, index}) => {
-          console.log("🚀 ~ file: OrderDetailScreen.js:103 ~ OrderDetailScreen ~ item:", item)
-          // console.log('Item images', item);
+          // console.log(
+          //   '🚀 ~ file: OrderDetailScreen.js:103 ~ OrderDetailScreen ~ item:',
+          //   item?.product,
+          // );
           return (
             <View
               style={{
                 width: windowWidth,
                 height: windowHeight * 0.9,
-              }}
-
-              // scrollEventThrottle={16}
-            >
+              }}>
               <CustomText
                 style={{
                   color: '#000',
@@ -118,7 +102,9 @@ const OrderDetailScreen = props => {
                   textAlign: 'center',
                   marginTop: moderateScale(30, 0.3),
                 }}>
-                {item.Title}
+                {item?.product?.title
+                  ? item?.product?.title
+                  : item?.service?.shop_name}
               </CustomText>
               <CustomText
                 style={{
@@ -126,7 +112,9 @@ const OrderDetailScreen = props => {
                   fontSize: moderateScale(11, 0.6),
                   textAlign: 'center',
                 }}>
-                {item?.subTitle}
+                {item?.product?.category
+                  ? item?.product?.category
+                  : item?.service?.category}
               </CustomText>
 
               <View
@@ -136,7 +124,20 @@ const OrderDetailScreen = props => {
                   backgroundColor: 'transparent',
                 }}>
                 <CustomImage
-                  source={{uri: item?.images[0]?.image?.uri ? item?.images[0]?.image?.uri : item?.images ? item?.images[0] :  item?.order[0]?.images[0]}}
+                  source={
+                    // require('../Assets/Images/logo.png')
+                    {
+                    uri: item?.product?.product_image[0]?.photo
+                      ? item?.product?.product_image[0]?.photo
+                      : item?.images
+                      ? item?.images[0]
+                      : item?.service_image
+                      ? item?.service_image[0]?.photo
+                      : item?.orderdetail[0]?.images?
+                      item?.orderdetail[0]?.images[0] :
+                      require('../Assets/Images/logo.png')
+                  }
+                }
                   style={{
                     height: '100%',
                     width: '100%',
@@ -145,52 +146,53 @@ const OrderDetailScreen = props => {
                 />
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: moderateScale(15, 0.3),
-                  paddingHorizontal: moderateScale(15, 0.6),
-                  alignItems: 'center',
-                  width: '100%',
-                }}>
-                {item?.colors?.map((data, index) => {
-                  return (
-                    <View
-                      style={{
-                        width: windowWidth * 0.06,
-                        height: windowWidth * 0.06,
-                        borderRadius: (windowWidth * 0.06) / 2,
-                        backgroundColor: data.toLocaleLowerCase(),
-                        borderWidth: 1,
-                        marginRight: moderateScale(7, 0.3),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      {data.toLocaleLowerCase() ==
-                        item?.selectedColor.toLocaleLowerCase() && (
-                        <Icon
-                          name={'check'}
-                          as={FontAwesome}
-                          size={moderateScale(15, 0.3)}
-                          color={'green'}
-                        />
-                      )}
-                    </View>
-                  );
-                })}
-
-                <CustomText
+              {item?.product?.color && (
+                <View
                   style={{
-                    color: '#0a0d38',
-                    fontSize: moderateScale(25, 0.6),
-                    position: 'absolute',
-                    right: 10,
+                    flexDirection: 'row',
+                    marginTop: moderateScale(15, 0.3),
+                    paddingHorizontal: moderateScale(15, 0.6),
+                    alignItems: 'center',
+                    width: '100%',
                   }}>
-                  PKR {item?.price ? item?.price : item?.charges}
-                </CustomText>
-              </View>
+                  {JSON.parse(item?.product?.color)?.map((data, index) => {
+                    return (
+                      <View
+                        style={{
+                          width: windowWidth * 0.06,
+                          height: windowWidth * 0.06,
+                          borderRadius: (windowWidth * 0.06) / 2,
+                          backgroundColor: data.toLocaleLowerCase(),
+                          borderWidth: 1,
+                          marginRight: moderateScale(7, 0.3),
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        {data.toLocaleLowerCase() ==
+                          item?.color.toLocaleLowerCase() && (
+                          <Icon
+                            name={'check'}
+                            as={FontAwesome}
+                            size={moderateScale(15, 0.3)}
+                            color={'green'}
+                          />
+                        )}
+                      </View>
+                    );
+                  })}
+                  <CustomText
+                    style={{
+                      color: '#0a0d38',
+                      fontSize: moderateScale(25, 0.6),
+                      position: 'absolute',
+                      right: 10,
+                    }}>
+                    PKR {item?.price}
+                  </CustomText>
+                </View>
+              )}
 
-              {item?.selectedSize && (
+              {item?.size && (
                 <>
                   <View
                     style={{
@@ -209,7 +211,7 @@ const OrderDetailScreen = props => {
 
                     <CustomText
                       style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
-                      {item.selectedSize}
+                      {item?.size}
                     </CustomText>
                   </View>
                   <Divider
@@ -220,6 +222,36 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
+              {item?.charges && (<>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: moderateScale(30, 0.3),
+                    paddingHorizontal: moderateScale(18, 0.6),
+                  }}>
+                  <CustomText
+                    style={{
+                      color: Color.veryLightGray,
+                      fontSize: moderateScale(12, 0.6),
+                    }}>
+                    charges
+                  </CustomText>
+
+                  <CustomText
+                    style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
+                    {item?.charges}
+                  </CustomText>
+                </View>
+                 <Divider
+                 my="2"
+                 width="96"
+                 alignSelf={'center'}
+                 _light={{bg: 'gray.200'}}
+               />
+               </>
+              )}
+             
               <View
                 style={{
                   flexDirection: 'row',
@@ -228,13 +260,18 @@ const OrderDetailScreen = props => {
                   paddingHorizontal: moderateScale(18, 0.6),
                 }}>
                 <CustomText
-                  style={{color: Color.veryLightGray, fontSize: moderateScale(12, 0.6)}}>
+                  style={{
+                    color: Color.veryLightGray,
+                    fontSize: moderateScale(12, 0.6),
+                  }}>
                   Category
                 </CustomText>
 
                 <CustomText
                   style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
-                  {item.Title}
+                  {item?.product
+                    ? item?.product?.title
+                    : item?.service?.shop_name}
                 </CustomText>
               </View>
               <Divider
@@ -293,7 +330,7 @@ const OrderDetailScreen = props => {
 
                     <CustomText
                       style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
-                      {item.qty}
+                      {item?.qty}
                     </CustomText>
                   </View>
                   <Divider
@@ -304,7 +341,7 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
-              {item?.description && (
+              {(item?.description || item?.service?.description) && (
                 <>
                   <View
                     style={{
@@ -328,7 +365,9 @@ const OrderDetailScreen = props => {
                         // backgroundColor: 'purple',
                         fontSize: moderateScale(12, 0.6),
                       }}>
-                      {item.description}
+                      {item.description
+                        ? item.description
+                        : item?.service?.description}dhsfhsdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
                     </CustomText>
                   </View>
                   <Divider
@@ -354,7 +393,7 @@ const OrderDetailScreen = props => {
                   // backgroundColor:'red'
                 }}>
                 <CustomImage
-                  source={require('../Assets/Images/4.png')}
+                  source={require('../Assets/Images/4.jpg')}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -370,7 +409,7 @@ const OrderDetailScreen = props => {
                   fontSize: moderateScale(15, 0.6),
                   marginTop: moderateScale(-50, 0.3),
                 }}>
-                ERROR 404 DATA NOT FOUND
+                DATA NOT ADDED YET
               </CustomText>
             </>
           );
@@ -395,7 +434,7 @@ const OrderDetailScreen = props => {
             // position: 'absolute',
             // bottom: moderateScale(30, 0.6),
           }}>
-          {item?.order.map((x, i) => {
+          {item?.orderdetail?.map((x, i) => {
             // console.log('index, i ', index, i);
             return (
               <View

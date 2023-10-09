@@ -39,7 +39,7 @@ const VerifyNumber = props => {
 
   //params
   const fromForgot = props?.route?.params?.fromForgot;
-  const phoneNumber = props?.route?.params?.phoneNumber;
+  const email = props?.route?.params?.email;
 
   //states
   const [code, setCode] = useState('');
@@ -65,27 +65,28 @@ const VerifyNumber = props => {
   const sendOTP = async () => {
     const url = 'password/email';
     setIsLoading(true);
-    const response = await Post(url, {email: phoneNumber}, apiHeader());
+    const response = await Post(url, {email: email}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
       Platform.OS == 'android'
-        ? ToastAndroid.show(`OTP sent to ${phoneNumber}`, ToastAndroid.SHORT)
-        : alert(`OTP sent to ${phoneNumber}`);
+        ? ToastAndroid.show(`OTP sent to ${email}`, ToastAndroid.SHORT)
+        : alert(`OTP sent to ${email}`);
     }
   };
 
   const VerifyOTP = async () => {
     const url = 'password/code/check';
     setIsLoading(true);
-    console.log(code);
+    // console.log(code);
     const response = await Post(url, {code: code}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
+      // console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response)
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
 
-      navigationService.navigate('ResetPassword', {phoneNumber: phoneNumber});
+      navigationService.navigate('ResetPassword', {email: email});
     }
   };
 
@@ -163,7 +164,7 @@ const VerifyNumber = props => {
               to reset your password{' '}
               {
                 <CustomText style={{color: Color.black}}>
-                  {phoneNumber}
+                  {email}
                 </CustomText>
               }
             </CustomText>
@@ -221,12 +222,12 @@ const VerifyNumber = props => {
               height={windowHeight * 0.06}
               marginTop={moderateScale(20, 0.3)}
               onPress={() => {
-                navigationService.navigate('ResetPassword', {
-                  phone: phoneNumber,
-                });
+                VerifyOTP()
+                // navigationService.navigate('ResetPassword', {
+                //   phone: phoneNumber,
+                // });
               }}
-              bgColor={Color.yellow
-              }
+              bgColor={Color.themeBlue}
               // borderRadius={moderateScale(30, 0.3)}
             />
           </CardContainer>

@@ -50,7 +50,9 @@ const CommonSlice = createSlice({
     },
 
     RemoveToCart(state, action) {
-      const itemId = action.payload.id;
+      // console.log('Here here===================>>>>>>', action.payload)
+      // console.log('Here=================>>>>>>>>>',state.cart)
+      const itemId = action.payload;
       state.cart = state.cart.filter((item, index) => item.id !== itemId);
     },
 
@@ -67,7 +69,7 @@ const CommonSlice = createSlice({
       const itemAddCart = state.cart.find(item => item.id === itemId);
 
       if (itemAddCart) {
-        itemAddCart.qty++;
+        itemAddCart.product_quantity++;
       }
     },
     decrementQuantity(state, action) {
@@ -75,8 +77,8 @@ const CommonSlice = createSlice({
       const itemAddCart = state.cart.find(item => item.id === itemId);
 
       if (itemAddCart) {
-        if (itemAddCart.qty >= 1) {
-          itemAddCart.qty--;
+        if (itemAddCart.product_quantity >= 1) {
+          itemAddCart.product_quantity--;
         } else if (itemAddCart == 1) {
           state.cart = state.cart.filter(
             (item, index) => item.id !== action.payload.id,
@@ -85,7 +87,7 @@ const CommonSlice = createSlice({
       }
     },
     setColor(state, action) {
-      console.log(action.payload);
+      // console.log(action.payload);
       const itemId = action.payload.id;
       const item = state.cart.find(item => item.id === itemId);
       if (item) {
@@ -93,7 +95,7 @@ const CommonSlice = createSlice({
       }
     },
     setSize(state, action) {
-      console.log(action.payload);
+      // console.log(action.payload);
       const itemId = action.payload.id;
       const item = state.cart.find(item => item.id === itemId);
       if (item) {
@@ -115,16 +117,16 @@ const CommonSlice = createSlice({
       }
     },
     setServiceBooking(state, action) {
-      console.log(
-        '🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:',
-        action.payload,
-      );
+      // console.log(
+      //   '🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:',
+      //   action.payload,
+      // );
       state.bookings.push(action.payload);
     },
 
     setAddProducts(state, action) {
-      console.log('Data===============>>=====', state.sellerProducts);
-      console.log('Data===============>>', action.payload);
+      // console.log('Data===============>>=====', state.sellerProducts);
+      // console.log('Data===============>>', action.payload);
 
       // console.log('Dat==================>>>>>>>', {sellerId:action.payload.userId,id:state.sellerProducts.length+1, ...action.payload.item, })
       const item = state.sellerProducts.find(
@@ -151,32 +153,32 @@ const CommonSlice = createSlice({
 
     deleteProducts(state, action) {
 
-      console.log(
-        '🚀 ~ file: common.js:147 ~ deleteProducts ~ action:',
-        action.payload,
-      );
+      // console.log(
+      //   '🚀 ~ file: common.js:147 ~ deleteProducts ~ action:',
+      //   action.payload,
+      // );
 
-      console.log('Data===============>>=====', state.sellerProducts);
+      // console.log('Data===============>>=====', state.sellerProducts);
       state.sellerProducts = state.sellerProducts.filter(
         item => item.id != action.payload.id,
       );
     },
 
     setServices(state, action) {
-      console.log(
-        '🚀 ~ file: common.js:133 ~ setServices ~ state:',
-        state.sellerService,
-      );
-      console.log(
-        '🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:',
-        action.payload,
-      );
+      // console.log(
+      //   '🚀 ~ file: common.js:133 ~ setServices ~ state:',
+      //   state.sellerService,
+      // );
+      // console.log(
+      //   '🚀 ~ file: common.js:116 ~ setServiceBooking ~ action:',
+      //   action.payload,
+      // );
 
       const item = state.sellerService.find(item => {
         // console.log(item?.serviceOwner.id, action.payload.id)
         return item.serviceOwner.id == action.payload.serviceOwner.id;
       });
-      console.log('🚀 ~ file: common.js:137 ~ setServices ~ item:', item);
+      // console.log('🚀 ~ file: common.js:137 ~ setServices ~ item:', item);
       if (item) {
         item.Title = action.payload.Title;
         item.category = action.payload.category;

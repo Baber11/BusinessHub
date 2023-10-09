@@ -167,9 +167,7 @@ const ChangeEmail = props => {
                 dispatch(setUserToken({token: 'sadasdawdadas'}));
               }}
               bgColor={
-                SelecteduserRole == 'Qbid member'
-                  ? Color.blue
-                  : Color.themeColor
+                Color.themeBlue
               }
               // borderColor={Color.white}
               // borderWidth={2}

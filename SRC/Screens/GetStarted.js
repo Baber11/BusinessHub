@@ -64,7 +64,7 @@ const GetStarted = () => {
                 'Buyer'
               )
             }
-            textColor={Color.yellow}
+            textColor={Color.themeBlue}
             width={windowWidth * 0.8}
             height={windowHeight * 0.06}
             marginTop={moderateScale(100, 0.3)}
@@ -72,7 +72,7 @@ const GetStarted = () => {
               navigationService.navigate('MyDrawer');
             }}
             bgColor={Color.white}
-            borderColor={Color.yellow}
+            borderColor={Color.themeBlue}
             borderWidth={1}
           />
           <CustomButton
@@ -90,7 +90,7 @@ const GetStarted = () => {
             onPress={() => {
               navigationService.navigate('LoginScreen');
             }}
-            bgColor={Color.yellow}
+            bgColor={Color.themeBlue}
             borderColor={Color.white}
             borderWidth={1}
           />

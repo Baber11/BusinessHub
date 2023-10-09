@@ -36,22 +36,24 @@ import MyAccounts from './Screens/MyAccounts';
 import Profile from './Screens/Profile';
 import PersonalInfo from './Screens/PersonalInfo';
 import ChangeEmail from './Screens/ChangeEmail';
+import BankDetails from './Screens/BankDetails';
+import PickUpLocation from './Screens/PickUpLocation';
 
 const AppNavigator = () => {
   // const isLogin = false;
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
   const role = useSelector(state => state.authReducer.role);
-  console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
+  // console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
 
-  console.log(
-    '🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:',
-    walkThrough,
-  );
+  // console.log(
+  //   '🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:',
+  //   walkThrough,
+  // );
 
   const isVerified = useSelector(state => state.authReducer.isVerified);
   const token = useSelector(state => state.authReducer.token);
-  console.log('🚀 ~ file: appNavigation.js:33 ~ AppNavigator ~ token:', token);
+  // console.log('🚀 ~ file: appNavigation.js:33 ~ AppNavigator ~ token:', token);
 
   // console.log('token>>>>', token);
   // console.log('isVerified', isGoalCreated);
@@ -82,17 +84,17 @@ const AppNavigator = () => {
           <RootNav.Screen name="PaymentInvoice" component={PaymentInvoice} />
           {/* <RootNav.Screen name="SellerProduct" component={SellerProduct} /> */}
           <RootNav.Screen name="AddProduct" component={AddProduct} />
+          <RootNav.Screen name="PickUpLocation" component={PickUpLocation} />
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="ProductDetails" component={ProductDetails} />
           <RootNav.Screen name="AddServices" component={AddServices} />
           <RootNav.Screen name="ServiceDetails" component={ServiceDetails} />
           <RootNav.Screen name="OrderDetails" component={OrderDetails} />
-          <RootNav.Screen name="ChangeEmail" component={ChangeEmail} />
-          <RootNav.Screen name="ChangePassword" component={ChangePassword} />
+          {/* <RootNav.Screen name="ChangeEmail" component={ChangeEmail} /> */}
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
-          <RootNav.Screen name="PersonalInfo" component={PersonalInfo} />
+          {/* <RootNav.Screen name="PersonalInfo" component={PersonalInfo} /> */}
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="CartScreen" component={CartScreen} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />
@@ -143,10 +145,10 @@ export const MyDrawer = () => {
       <DrawerNavigation.Screen name="Orders" component={Orders} />
       {/* <DrawerNavigation.Screen name="Bookings" component={Bookings} /> */}
 
-      {/* <DrawerNavigation.Screen
+      <DrawerNavigation.Screen
         name="ChangePassword"
         component={ChangePassword}
-      /> */}
+      />
       <DrawerNavigation.Screen name="Myorders" component={Myorders} />
 
       <DrawerNavigation.Screen

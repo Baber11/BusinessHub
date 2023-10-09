@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
@@ -37,25 +37,38 @@ import TextInputWithTitle from '../Components/TextInputWithTitle';
 import moment from 'moment';
 import {Calendar} from 'react-native-calendars';
 import navigationService from '../navigationService';
+import {Post} from '../Axios/AxiosInterceptorFunction';
 
 const ServiceDetails = props => {
+  // console.log(
+  //   '🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ props:',
+  //   props?.route?.params,
+  // );
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item)
-  console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
+  // console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
+  // console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
-  console.log(
-    '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
-    seller,
-  );
-  const navigation = useNavigation()
+  // console.log(
+  //   '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
+  //   seller,
+  // );
+  const navigation = useNavigation();
   const user = useSelector(state => state.commonReducer.userData);
   const dispatch = useDispatch();
   const focused = useIsFocused();
   const [index, setIndex] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState(
     item?.comments ? item?.comments : [],
   );
+  const [images, setImages] = useState(
+    item?.service_image ? item?.service_image : item?.images,
+  );
+  // console.log(
+  //   '🚀 ~ file: ServiceDetails.js:66 ~ ServiceDetails ~ images:',
+  //   images,
+  // );
   const [yourComment, setYourComment] = useState('');
   const [bookingModal, setBookingModal] = useState(false);
   const [calendar, setCalendar] = useState(false);
@@ -86,7 +99,7 @@ const ServiceDetails = props => {
         text: yourComment,
         time: moment().format(' hh:mm:ss a'),
       };
-      console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
+      // console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
       setComments(prev => [
         ...prev,
         {
@@ -99,6 +112,20 @@ const ServiceDetails = props => {
       setYourComment('');
     } else {
       Confirm();
+    }
+  };
+
+  const BookNow = async () => {
+    const url = 'auth/services/book';
+    const body = {service_id: item?.id, date: date, charges: item?.charges};
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+    if (response?.data?.success) {
+      // return console.log(
+      //   '🚀 ~ file: ServiceDetails.js:112 ~ BookingNow ~ response:',
+      //   response?.data,
+      // );
     }
   };
 
@@ -117,7 +144,7 @@ const ServiceDetails = props => {
         }}>
         <View style={styles.banner}>
           <View style={styles.container}>
-            {index > 0 && item?.images.length > 1 && (
+            {index > 0 && images?.length > 1 && (
               <>
                 <View
                   style={{
@@ -131,7 +158,9 @@ const ServiceDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri :item?.images[index - 1]?.image?.uri}}
+                    source={{
+                      uri: images[index - 1]?.photo,
+                    }}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -166,18 +195,19 @@ const ServiceDetails = props => {
                 backgroundColor: 'black',
               }}>
               <CustomImage
-                source={
-                  {uri :item?.images.length == 1
-                    ? item?.images[index - 1]?.image?.uri
-                    : item?.images[index]?.image?.uri}
-                }
+                source={{
+                  uri:
+                    images?.length == 1
+                      ? images[index - 1]?.photo
+                      : images[index]?.photo,
+                }}
                 style={{
                   height: '100%',
                   height: '100%',
                 }}
               />
             </View>
-            {index < item?.images.length - 1 && (
+            {index < images?.length - 1 && (
               <>
                 <TouchableOpacity
                   onPress={() => {
@@ -208,7 +238,9 @@ const ServiceDetails = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={{uri : item?.images[index + 1]?.image?.uri}}
+                    source={{
+                      uri: images[index + 1]?.photo,
+                    }}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -237,7 +269,7 @@ const ServiceDetails = props => {
                 textAlign: 'left',
                 // backgroundColor:'orange',
               }}>
-              {item?.Title}
+              {item?.shop_name ? item?.shop_name : item?.service?.shop_name}
             </CustomText>
 
             <CustomText
@@ -249,7 +281,7 @@ const ServiceDetails = props => {
                 // backgroundColor:'red',
               }}
               numberOfLines={1}>
-              {item?.subTitle}
+              {item?.category ? item?.category : item?.service?.category}
             </CustomText>
           </View>
 
@@ -267,7 +299,7 @@ const ServiceDetails = props => {
                 fontSize: 24,
                 width: windowWidth * 0.31,
               }}>
-              {item?.charges}.00 PKR 
+              {item?.charges}.00 PKR
             </CustomText>
           </View>
         </View>
@@ -298,9 +330,93 @@ const ServiceDetails = props => {
               width: windowWidth * 0.9,
               marginLeft: moderateScale(10, 0.3),
             }}>
-            {item?.description}
+            {item?.description ? item?.description : item?.service?.description}
           </CustomText>
         </View>
+
+        {!seller && <View style={styles.container2}>
+              <CustomText
+                isBold
+                style={{
+                  fontSize: moderateScale(14, 0.6),
+                  marginTop: moderateScale(10, 0.3),
+                  color: '#201E1D',
+                  width: windowWidth * 0.9,
+                  marginLeft: moderateScale(10, 0.3),
+                }}>
+                Book a date
+              </CustomText>
+              <Calendar
+                style={{
+                  width: windowWidth * 0.8,
+                  marginBottom: moderateScale(40, 0.3),
+                  // backgroundColor : 'red'
+                }}
+                minDate={moment().format()}
+                onDayPress={day => {
+                  // console.log('day========>>>>>', day);
+                  setDate(day?.dateString);
+                }}
+                theme={{
+                  textSectionTitleColor: Color.themeColor,
+                  selectedDayBackgroundColor: Color.themeColor,
+                  selectedDayTextColor: Color.white,
+                  todayTextColor: Color.themeColor,
+                  dayTextColor: Color.black,
+                  dayTextColor: Color.black,
+                  textDisabledColor: '#d9e1e8',
+                  arrowColor: Color.themeColor,
+                  monthTextColor: Color.veryLightGray,
+                  indicatorColor: Color.themeColor,
+                  textMonthFontWeight: 'bold',
+                  textDayHeaderFontWeight: 'bold',
+                  textDayFontSize: moderateScale(12, 0.3),
+                  textMonthFontSize: moderateScale(16, 0.3),
+                  textDayHeaderFontSize: moderateScale(14, 0.3),
+                }}
+                markedDates={{
+                  ...{
+                    [date]: {
+                      selected: true,
+                      color: Color.themeColor,
+                      textColor: '#000000',
+                      marked: true,
+                    },
+                  },
+                }}
+              />
+            
+
+        </View>}
+
+        {seller && item?.date &&
+        <View style={styles.container2}> 
+        <CustomText
+          isBold
+          style={{
+            fontSize: moderateScale(14, 0.6),
+            marginTop: moderateScale(10, 0.3),
+            color: '#201E1D',
+            width: windowWidth * 0.9,
+            marginLeft: moderateScale(10, 0.3),
+          }}>
+          Booking Date
+        </CustomText>
+        <CustomText
+          style={{
+            fontSize: moderateScale(14, 0.6),
+            // marginTop: moderateScale(10, 0.3),
+            color: '#201E1D',
+            width: windowWidth * 0.9,
+            marginLeft: moderateScale(10, 0.3),
+          }}>
+          {item?.date}
+        </CustomText>
+      </View>
+        }
+
+  
+
         {
           <View
             style={{
@@ -396,67 +512,13 @@ const ServiceDetails = props => {
                     fontSize={moderateScale(10, 0.6)}
                     // marginBottom={moderateScale(10,.3)}
                     // marginTop={moderateScale(20, 0.3)}
-                    bgColor={Color.themeColor}
+                    bgColor={Color.themeBlue}
                     borderRadius={moderateScale(30, 0.3)}
                     // isGradient
                   />
                 </View>
               </>
             )}
-
-              {!seller && <> 
-               <CustomText
-                  isBold
-                  style={{
-                    fontSize: moderateScale(14, 0.6),
-                    marginTop: moderateScale(10, 0.3),
-                    color: '#201E1D',
-                    width: windowWidth * 0.9,
-                    marginLeft: moderateScale(10, 0.3),
-                  }}>
-                  Book a date
-                </CustomText>
-                <Calendar
-                  style={{
-                    width: windowWidth * 0.8,
-                    marginBottom : moderateScale(40,0.3),
-                    // backgroundColor : 'red'
-                  }}
-                  minDate={moment().format()}
-                  onDayPress={day => {
-                    console.log('day========>>>>>', day);
-                    setDate(day?.dateString);
-                  }}
-                  theme={{
-                    textSectionTitleColor: Color.themeColor,
-                    selectedDayBackgroundColor: Color.themeColor,
-                    selectedDayTextColor: Color.white,
-                    todayTextColor: Color.themeColor,
-                    dayTextColor: Color.black,
-                    dayTextColor: Color.black,
-                    textDisabledColor: '#d9e1e8',
-                    arrowColor: Color.themeColor,
-                    monthTextColor: Color.veryLightGray,
-                    indicatorColor: Color.themeColor,
-                    textMonthFontWeight: 'bold',
-                    textDayHeaderFontWeight: 'bold',
-                    textDayFontSize: moderateScale(12, 0.3),
-                    textMonthFontSize: moderateScale(16, 0.3),
-                    textDayHeaderFontSize: moderateScale(14, 0.3),
-                  }}
-                  markedDates={{
-                    ...{
-                      [date]: {
-                        selected: true,
-                        color: Color.themeColor,
-                        textColor: '#000000',
-                        marked: true,
-                      },
-                    },
-                  }}
-                />
-               
-              </>}
           </View>
         }
       </ScrollView>
@@ -467,7 +529,7 @@ const ServiceDetails = props => {
             isBold
             onPress={() => {
               if (token == null) {
-                Confirm()
+                Confirm();
                 // if () {
                 //   setCalendar(true);
                 // }
@@ -480,30 +542,28 @@ const ServiceDetails = props => {
                       )
                     : Alert.alert('Please select a date');
                 } else {
-                  console.log('item dispatching......', {
-                    order: item,
-                    date: date,
-                    orderId: Math.floor(Math.random() * 1000000000),
-                  });
-                  dispatch(
-                    setServiceBooking({
-                      order: [item],
-                      date: date,
-                      total: item?.price,
-                      Image: require('../Assets/Images/logo.png'),
-                      orderId: Math.floor(Math.random() * 1000000000),
-                    }),
-                  );
+                  // console.log('item dispatching......', {
+                  //   order: item,
+                  //   date: date,
+                  //   orderId: Math.floor(Math.random() * 1000000000),
+                  // });
+                  // dispatch(
+                  //   setServiceBooking({
+                  //     order: [item],
+                  //     date: date,
+                  //     total: item?.price,
+                  //     Image: require('../Assets/Images/logo.png'),
+                  //     orderId: Math.floor(Math.random() * 1000000000),
+                  //   }),
+                  // );
+                  BookNow();
                   Platform.OS == 'android'
                     ? ToastAndroid.show(
                         'Your Booking has been confirmed',
                         ToastAndroid.SHORT,
                       )
                     : Alert.alert('Your Booking has been confirmed');
-                    navigation.goBack()
-                    
-                    // navigationService.navigate('Myorders')
-                  // setCalendar(false);
+                  navigation.goBack();
                 }
               }
             }}
@@ -514,7 +574,7 @@ const ServiceDetails = props => {
             fontSize={moderateScale(16, 0.6)}
             // marginBottom={moderateScale(10,.3)}
             // marginTop={moderateScale(20, 0.3)}
-            bgColor={Color.themeColor}
+            bgColor={Color.themeBlue}
             borderRadius={moderateScale(30, 0.3)}
             //   isGradient
           />
@@ -527,6 +587,15 @@ const ServiceDetails = props => {
 export default ServiceDetails;
 
 const styles = StyleSheet.create({
+  container2:{
+    width: windowWidth * 0.95,
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    marginTop: moderateScale(10, 0.3),
+    borderRadius: moderateScale(10, 0.6),
+    paddingVertical: moderateScale(10, 0.6),
+    alignItems: 'center',
+  },
   size: {
     height: windowWidth * 0.08,
     alignItems: 'center',

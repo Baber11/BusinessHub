@@ -314,7 +314,7 @@ const Bookings = () => {
                     // backgroundColor:'red'
                   }}>
                   <CustomImage
-                    source={require('../Assets/Images/4.png')}
+                    source={require('../Assets/Images/4.jpg')}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -330,7 +330,7 @@ const Bookings = () => {
                     fontSize:moderateScale(15,0.6),
                     marginTop:moderateScale(-50,0.3)
                   }}>
-                  ERROR 404 DATA NOT FOUND
+                  DATA NOT ADDED YET
                 </CustomText>
               </>
             );

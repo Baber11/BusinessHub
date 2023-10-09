@@ -5,6 +5,7 @@ import {
   View,
   BackHandler,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
@@ -26,27 +27,78 @@ import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
 import SearchbarComponent from '../Components/SearchbarComponent';
-
+import {Get} from '../Axios/AxiosInterceptorFunction';
 
 const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
   // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-  const sellerServices = useSelector(state => state.commonReducer.sellerService)
-  console.log("🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:", sellerServices)
-  const sellerProducts = useSelector(state=> state.commonReducer.sellerProducts)
-  console.log("🚀 ~ file: CustomerDashboard.js:42 ~ CustomerDashboard ~ sellerProducts:", sellerProducts)
+  const sellerServices = useSelector(
+    state => state.commonReducer.sellerService,
+  );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:',
+  //   sellerServices,
+  // );
+  const sellerProducts = useSelector(
+    state => state.commonReducer.sellerProducts,
+  );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:42 ~ CustomerDashboard ~ sellerProducts:',
+  //   sellerProducts,
+  // );
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
+  const [isServiceLoading, setIsServiceLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
   const [selectedService, setSelectedService] = useState('');
-  console.log(
-    '🚀 ~ file: HomeScreen.js:27 ~ HomeScreen ~ isFocused:',
-    isFocused,
-  );
+  const [allProducts, setAllProducts] = useState([]);
+  const [allServices, setAllServices] = useState([]);
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:47 ~ CustomerDashboard ~ allServices:',
+  //   allServices,
+  // );
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:46 ~ CustomerDashboard ~ allProducts:',
+  //   allProducts,
+  // );
 
-  const [newData, setNewData] = useState(sellerProducts);
+  const productList = async () => {
+    const url = 'products';
+    setIsLoading(true);
+    const response = await Get(url);
+    setIsLoading(false);
+    if (response != undefined) {
+      // console.log(
+      //   '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
+      //   response?.data,
+      // );
+      setAllProducts(response?.data?.data?.products);
+    }
+  };
+
+  const serviceList = async () => {
+    const url = 'services';
+    setIsServiceLoading(true);
+    const response = await Get(url);
+    setIsServiceLoading(false);
+
+    if (response != undefined) {
+      setAllServices(response?.data?.data?.services);
+
+      // console.log(
+      //   '🚀 ~ file: CustomerDashboard.js:67 ~ serviceList ~ response:',
+      //   response?.data,
+      // );
+    }
+  };
+
+  const [newData, setNewData] = useState([]);
+  // console.log(
+  //   '🚀 ~ file: CustomerDashboard.js:61 ~ CustomerDashboard ~ newData:',
+  //   newData,
+  // );
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
@@ -63,6 +115,11 @@ const CustomerDashboard = () => {
     return () => backhandler.remove();
   }, []);
 
+  useEffect(() => {
+    productList();
+    serviceList();
+    setNewData(allProducts);
+  }, []);
 
   return (
     <>
@@ -70,7 +127,6 @@ const CustomerDashboard = () => {
       <Header headerColor={['#D2E4E4', '#D2E4E4']} cart />
 
       <ScrollView
-        
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
@@ -78,7 +134,7 @@ const CustomerDashboard = () => {
         }}
         style={{
           minHeight: windowHeight * 0.9,
-          backgroundColor: '#D2E4E4',
+          backgroundColor: 'white',
         }}>
         <CustomText
           isBold
@@ -105,91 +161,103 @@ const CustomerDashboard = () => {
           showsHorizontalScrollIndicator={false}
           // style={styles.categoryContainer}
         >
-          {sellerServices.map((item, index) => {
-            return (
-              <>
-                <TouchableOpacity
-                activeOpacity={0.8}
-                  key={item?.userid}
-                  style={{
-                    flexDirection: 'row',
-                    width: windowWidth * 0.9,
-                    height: windowHeight * 0.15,
-                    paddingVertical: moderateScale(10, 0.6),
-                    paddingRight: moderateScale(10, 0.6),
-
-                    borderRadius: moderateScale(10, 0.6),
-                    borderColor: Color.veryLightGray,
-                    borderWidth: 1,
-
-                    marginHorizontal: moderateScale(5, 0.3),
-                    backgroundColor: 'white',
-                  }}
-                  onPress={() => {
-                    navigationService.navigate('ServiceDetails', {
-                      item,
-                    });
-                  }}>
-                  <View
+          {isServiceLoading ? (
+            <View style={{height:windowHeight*0.1, justifyContent:'center'}}>
+            <ActivityIndicator
+              color={Color.themeBlue}
+              size={moderateScale(30, 0.6)}
+            /></View>
+          ) : (
+            allServices?.map((item, index) => {
+              // console.log(
+              //   '🚀 ~ file: CustomerDashboard.js:145 ~ {allServices?.map ~ item:',
+              //   item,
+              // );
+              return (
+                <>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    key={item?.userid}
                     style={{
-                      width: windowWidth * 0.3,
-                      height: windowHeight * 0.12,
-                      borderRadius: moderateScale(5, 0.6),
+                      flexDirection: 'row',
+                      width: windowWidth * 0.9,
+                      height: windowHeight * 0.15,
+                      paddingVertical: moderateScale(10, 0.6),
+                      paddingRight: moderateScale(10, 0.6),
+
+                      borderRadius: moderateScale(10, 0.6),
+                      borderColor: Color.veryLightGray,
+                      borderWidth: 1,
+
+                      marginHorizontal: moderateScale(5, 0.3),
                       backgroundColor: 'white',
-                      overflow: 'hidden',
-                      marginLeft: moderateScale(10, 0.6),
+                    }}
+                    onPress={() => {
+                      navigationService.navigate('ServiceDetails', {
+                        item,
+                      });
                     }}>
-                    <CustomImage
-                      source={{uri: item?.images[0]?.image?.uri}}
+                    <View
                       style={{
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      resizeMode={'stretch'}
-                      onPress={() => {
-                        setSelectedService(item?.Title);
-                        navigationService.navigate('ServiceDetails', {item});
-                      }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginLeft: moderateScale(10, 0.3),
-                      justifyContent: 'center',
-                    }}>
-                    <CustomText
-                      numberOfLines={1}
-                      style={{
-                        fontSize: moderateScale(16, 0.6),
-                        width: windowWidth * 0.45,
-                        color: 'black',
+                        width: windowWidth * 0.3,
+                        height: windowHeight * 0.12,
+                        borderRadius: moderateScale(5, 0.6),
+                        backgroundColor: 'white',
+                        overflow: 'hidden',
+                        marginLeft: moderateScale(10, 0.6),
                       }}>
-                      {item?.Title}
-                    </CustomText>
-                    <CustomText
-                      numberOfLines={1}
+                      <CustomImage
+                        source={{uri: item?.images[0]?.photo}}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                        }}
+                        resizeMode={'stretch'}
+                        onPress={() => {
+                          setSelectedService(item?.shop_name);
+                          navigationService.navigate('ServiceDetails', {item});
+                        }}
+                      />
+                    </View>
+                    <View
                       style={{
-                        fontSize: moderateScale(13, 0.6),
-                        width: windowWidth * 0.45,
-                        color: 'black',
+                        marginLeft: moderateScale(10, 0.3),
+                        justifyContent: 'center',
                       }}>
-                      {item?.category}
-                    </CustomText>
-                    <CustomText isBold>
-                      starting from Rs {item?.charges}
-                    </CustomText>
-                  </View>
-                </TouchableOpacity>
-              </>
-            );
-          })}
+                      <CustomText
+                        numberOfLines={1}
+                        style={{
+                          fontSize: moderateScale(16, 0.6),
+                          width: windowWidth * 0.45,
+                          color: 'black',
+                        }}>
+                        {item?.shop_name}
+                      </CustomText>
+                      <CustomText
+                        numberOfLines={1}
+                        style={{
+                          fontSize: moderateScale(13, 0.6),
+                          width: windowWidth * 0.45,
+                          color: 'black',
+                        }}>
+                        {item?.category}
+                      </CustomText>
+                      <CustomText isBold>
+                        starting from Rs {item?.charges}
+                      </CustomText>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              );
+            })
+          )}
         </ScrollView>
 
         <SearchbarComponent
           setNewData={setNewData}
           placeHolderColor={'#000'}
           placeholderName={'Enter Product Name'}
-          array={sellerProducts}
+          array={allProducts}
           arrayItem={'Product'}
           fontSize={13}
           SearchStyle={{
@@ -210,49 +278,64 @@ const CustomerDashboard = () => {
           Products
         </CustomText>
 
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={newData}
-          contentContainerStyle={{
-            alignSelf: 'center',
-            marginTop: moderateScale(5, 0.3),
-          }}
-          renderItem={({item, index}) => {
-            return <Product item={item} />;
-          }}
-          ListEmptyComponent={() => {
-            return (
-              <>
-                <View
-                  style={{
-                    width: windowWidth * 0.79,
-                    height: windowHeight * 0.25,
-                    marginTop: moderateScale(30, 0.3),
-                    alignSelf: 'center',
-                  }}>
-                  <CustomImage
-                    source={require('../Assets/Images/4.png')}
+        {isLoading ? (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              // backgroundColor: 'green',
+              height: windowHeight * 0.4,
+            }}>
+            <ActivityIndicator
+              size={moderateScale(45, 0.6)}
+              color={Color.themeBlue}
+            />
+          </View>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            data={newData.length == 0 ? allProducts : newData}
+            contentContainerStyle={{
+              alignSelf: 'center',
+              marginTop: moderateScale(5, 0.3),
+            }}
+            renderItem={({item, index}) => {
+              return <Product item={item} />;
+            }}
+            ListEmptyComponent={() => {
+              return (
+                <>
+                  <View
                     style={{
-                      width: '100%',
-                      height: '100%',
-                    }}
-                    resizeMode={'contain'}
-                  />
-                </View>
-                <CustomText
-                  isBold
-                  style={{
-                    textAlign: 'center',
-                    color: 'black',
-                    fontSize: moderateScale(13, 0.6),
-                  }}>
-                  ERROR 404 DATA NOT FOUND
-                </CustomText>
-              </>
-            );
-          }}
-        />
+                      width: windowWidth * 0.79,
+                      height: windowHeight * 0.25,
+                      marginTop: moderateScale(30, 0.3),
+                      alignSelf: 'center',
+                    }}>
+                    <CustomImage
+                      source={require('../Assets/Images/4.jpg')}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      resizeMode={'contain'}
+                    />
+                  </View>
+                  <CustomText
+                    isBold
+                    style={{
+                      textAlign: 'center',
+                      color: 'black',
+                      fontSize: moderateScale(13, 0.6),
+                    }}>
+                    DATA NOT ADDED YET
+                  </CustomText>
+                </>
+              );
+            }}
+          />
+        )}
       </ScrollView>
     </>
   );
