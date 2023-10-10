@@ -36,7 +36,7 @@ import MyAccounts from './Screens/MyAccounts';
 import Profile from './Screens/Profile';
 import PersonalInfo from './Screens/PersonalInfo';
 import ChangeEmail from './Screens/ChangeEmail';
-import BankDetails from './Screens/BankDetails';
+// import BankDetails from './Screens/BankDetails';
 import PickUpLocation from './Screens/PickUpLocation';
 
 const AppNavigator = () => {

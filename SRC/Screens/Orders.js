@@ -124,12 +124,12 @@ const Orders = () => {
         backgroundColor={['#CBE4E8', '#D2E4E4']}
         barStyle={'dark-content'}
       />
-      <Header headerColor={['#CBE4E8', '#D2E4E4']} />
+      <Header headerColor={['#fff', '#fff']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
-          backgroundColor: '#CBE4E8',
+          backgroundColor:Color.white,
           minHeight: windowHeight * 0.9,
         }}>
         <View

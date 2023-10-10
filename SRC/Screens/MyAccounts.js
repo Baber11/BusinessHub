@@ -96,13 +96,13 @@ const MyAccounts = () => {
   return (
     <>
       <CustomStatusBar
-        backgroundColor={['#CBE4E8', '#D2E4E4']}
+        backgroundColor={['#fff', '#D2E4E4']}
         barStyle={'dark-content'}
       />
 
       {/* <Header headerColor={['#CBE4E8', '#D2E4E4']} /> */}
       <ImageBackground
-          source={require('../Assets/Images/waves.jpg')}
+          source={require('../Assets/Images/waves1.jpg')}
           resizeMode={'cover'}
           style={{
             width: windowWidth * 1,
@@ -264,7 +264,7 @@ const MyAccounts = () => {
           </View>
         </View> */}
 
-        <View style={{borderBottomWidth: 2, borderColor: Color.white}}></View>
+        {/* <View style={{borderBottomWidth: 2, borderColor: Color.white}}></View> */}
 
         <View
           style={{

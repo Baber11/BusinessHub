@@ -134,7 +134,7 @@ const ServiceDetails = props => {
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
       <Header
         showBack={true}
-        headerColor={['#CBE4E8', '#D2E4E4']}
+        headerColor={['#fff', '#fff']}
         cart={!seller}
       />
       <ScrollView

@@ -124,7 +124,7 @@ const CustomerDashboard = () => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
-      <Header headerColor={['#D2E4E4', '#D2E4E4']} cart />
+      <Header headerColor={['#fff', '#fff']} cart />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -164,7 +164,7 @@ const CustomerDashboard = () => {
           {isServiceLoading ? (
             <View style={{height:windowHeight*0.1, justifyContent:'center'}}>
             <ActivityIndicator
-              color={Color.themeBlue}
+              color={Color.darkBlue}
               size={moderateScale(30, 0.6)}
             /></View>
           ) : (
@@ -288,7 +288,7 @@ const CustomerDashboard = () => {
             }}>
             <ActivityIndicator
               size={moderateScale(45, 0.6)}
-              color={Color.themeBlue}
+              color={Color.darkBlue}
             />
           </View>
         ) : (

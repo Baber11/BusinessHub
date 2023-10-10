@@ -75,7 +75,7 @@ const HomeScreen = () => {
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
       <Header
-        headerColor={['#D2E4E4', '#D2E4E4']}
+        headerColor={['#fff', '#fff']}
         // showLogout
         hideUser
       />

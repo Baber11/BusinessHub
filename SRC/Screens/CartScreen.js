@@ -113,7 +113,7 @@ const CartScreen = ({ route }) => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#CBE4E8'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#CBE4E8']} title={'Cart'} />
+      <Header showBack={true} headerColor={['#fff', '#fff']} title={'Cart'} />
       <View
         style={{
           width: windowWidth,

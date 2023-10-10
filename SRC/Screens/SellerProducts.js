@@ -134,7 +134,7 @@ const SellerProduct = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
-      <Header headerColor={['#D2E4E4', '#D2E4E4']} />
+      <Header headerColor={['#fff', '#fff']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -175,9 +175,9 @@ const SellerProduct = props => {
             textColor={Color.white}
             iconName={'plus'}
             iconType={Entypo}
-            width={windowWidth * 0.28}
+            width={windowWidth * 0.25}
             height={windowHeight * 0.04}
-            fontSize={moderateScale(12, 0.6)}
+            fontSize={moderateScale(10, 0.6)}
             // marginTop={moderateScale(10, 0.3)}
             bgColor={Color.themeBlue}
             borderRadius={moderateScale(20, 0.3)}
@@ -401,9 +401,9 @@ const SellerProduct = props => {
             textColor={Color.white}
             iconName={'plus'}
             iconType={Entypo}
-            width={windowWidth * 0.28}
+            width={windowWidth * 0.25}
             height={windowHeight * 0.04}
-            fontSize={moderateScale(12, 0.6)}
+            fontSize={moderateScale(10, 0.6)}
             // marginTop={moderateScale(10, 0.3)}
             bgColor={Color.themeBlue}
             borderRadius={moderateScale(20, 0.3)}
