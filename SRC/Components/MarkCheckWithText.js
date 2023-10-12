@@ -67,7 +67,7 @@ const MarkCheckWithText = ({
               styles.txt3,
               {
                 color:
-                  userRole == 'Qbid member' ? Color.blue : Color.themeColor,
+                  userRole == 'Qbid member' ? Color.blue : Color.themeBlue,
               },
               textStyleSecondary
             ]}>

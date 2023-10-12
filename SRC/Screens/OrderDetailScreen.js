@@ -465,7 +465,7 @@ const OrderDetailScreen = props => {
           position: 'absolute',
           bottom: moderateScale(10, 0.6),
           alignSelf: 'center',
-          shadowColor: Color.themeColor,
+          shadowColor: Color.themeBlue,
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 0.25,
           shadowRadius: 3.84,

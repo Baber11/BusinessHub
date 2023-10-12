@@ -100,7 +100,9 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
             width: windowWidth * 0.45,
             // height: windowHeight * 0.35,
             paddingVertical: moderateScale(5, 0.6),
-            backgroundColor: '#D2E4E4',
+            backgroundColor: Color.white,
+            borderWidth:1,
+            borderColor:Color.veryLightGray,
             margin: moderateScale(5, 0.3),
             borderRadius: 5,
             alignItems: 'center',
@@ -245,7 +247,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
               height={windowHeight * 0.035}
               fontSize={moderateScale(10, 0.6)}
               marginTop={moderateScale(4, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               borderRadius={moderateScale(20, 0.3)}
               iconStyle={{
                 fontSize: moderateScale(14, 0.6),
@@ -338,7 +340,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
           marginTop={moderateScale(10, 0.3)}
           marginBottom={moderateScale(10, 0.3)}
           height={windowHeight * 0.04}
-          bgColor={Color.themeColor}
+          bgColor={Color.themeBlue}
           fontSize={moderateScale(12, 0.6)}
           borderRadius={moderateScale(5, 0.3)}
         />

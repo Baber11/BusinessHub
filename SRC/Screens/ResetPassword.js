@@ -63,7 +63,7 @@ const ResetPassword = props => {
       // );
 
       Platform.OS == 'android'
-        ? ToastAndroid.show('Password reset successfully')
+        ? ToastAndroid.show('Password reset successfully',ToastAndroid.SHORT)
         : alert('Password reset successfully');
       navigationService.navigate('LoginScreen');
     }
@@ -82,7 +82,7 @@ const ResetPassword = props => {
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={[Color.themeColor2, Color.themeColor2]}
+        colors={[Color.white, Color.white]}
         // locations ={[0, 0.5, 0.6]}
       >
         <TouchableOpacity
@@ -96,14 +96,14 @@ const ResetPassword = props => {
             borderRadius: moderateScale(5, 0.3),
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'white',
+            backgroundColor: Color.themeBlue,
             zIndex: 1,
           }}>
           <Icon
             name={'arrowleft'}
             as={AntDesign}
             size={moderateScale(22, 0.3)}
-            color={Color.yellow}
+            color={Color.white}
             onPress={() => {
               navigationN.goBack();
             }}
@@ -122,6 +122,7 @@ const ResetPassword = props => {
             style={{
               paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
+              backgroundColor : 'white'
             }}>
             <CustomText isBold style={styles.txt2}>
               Forget Password
@@ -144,7 +145,7 @@ const ResetPassword = props => {
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(35, 0.3)}
-              color={Color.yellow}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               // borderRadius={moderateScale(25, 0.3)}
               elevation
@@ -162,7 +163,7 @@ const ResetPassword = props => {
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.yellow}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               // borderRadius={moderateScale(25, 0.3)}
               elevation

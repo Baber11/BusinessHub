@@ -157,7 +157,7 @@ const Chuncks = ({amount, title, iconName}) => {
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={[Color.themeColor, Color.themeColor]}
+        colors={[Color.themeBlue, Color.themeBlue]}
         style={styles.container}>
         <View
           style={{

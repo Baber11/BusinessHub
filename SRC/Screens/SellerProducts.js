@@ -5,6 +5,8 @@ import {
   View,
   ToastAndroid,
   ActivityIndicator,
+  BackHandler,
+  Alert
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FlatList, Icon, ScrollView} from 'native-base';
@@ -44,7 +46,7 @@ const SellerProduct = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [isProductLoading, setProductLoading] = useState(false);
   const [services, setServices] = useState([]);
-  // console.log("🚀 ~ file: SellerProducts.js:45 ~ SellerProduct ~ services:", services[0]?.images[0])
+  console.log("🚀 ~ file: SellerProducts.js:45 ~ SellerProduct ~ services:", services[0]?.images[0])
   const [products, setProducts] = useState(
     sellerProducts.filter(item => {
       return item?.userId == userData.id;
@@ -119,6 +121,28 @@ const SellerProduct = props => {
   };
 
   useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Hold on!', 'Are you sure you want to exit?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+
+  useEffect(() => {
     getProducts();
     getServices();
   }, [isFocused]);
@@ -164,12 +188,12 @@ const SellerProduct = props => {
           </CustomText>
           <CustomButton
             onPress={() => {
-              services.length > 0 
+              services.length > 0
                 ? ToastAndroid.show(
                     'Service is already added',
                     ToastAndroid.SHORT,
                   )
-                : navigationService.navigate('AddServices')
+                : navigationService.navigate('AddServices');
             }}
             text={'service'}
             textColor={Color.white}
@@ -368,7 +392,8 @@ const SellerProduct = props => {
                   textAlign: 'center',
                   color: 'black',
                   fontSize: moderateScale(15, 0.6),
-                }} isBold>
+                }}
+                isBold>
                 DATA NOT ADDED YET
               </CustomText>
             </View>
@@ -416,7 +441,7 @@ const SellerProduct = props => {
           <View
             style={{
               height: windowHeight * 0.6,
-              width: windowWidth ,
+              width: windowWidth,
               justifyContent: 'center',
               alignItems: 'center',
               // backgroundColor: 'green',
@@ -470,8 +495,9 @@ const SellerProduct = props => {
                       color: 'black',
                       fontSize: moderateScale(17, 0.6),
                       marginTop: moderateScale(-25, 0.3),
-                      paddingVertical:moderateScale(5,.6),
-                    }} isBold>
+                      paddingVertical: moderateScale(5, 0.6),
+                    }}
+                    isBold>
                     DATA NOT ADDED YET
                   </CustomText>
                 </>

@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     // width: windowWidth * 0.45,
   },
   edit: {
-    backgroundColor: Color.themeColor1,
+    backgroundColor: Color.themeBlue1,
     width: moderateScale(25, 0.3),
     height: moderateScale(25, 0.3),
     position: 'absolute',

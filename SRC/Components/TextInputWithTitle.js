@@ -60,7 +60,7 @@ const TextInputWithTitle = props => {
             backgroundColor: props.backgroundColor,
           },
           props.elevation && {
-            shadowColor: Color.themeColor,
+            shadowColor: Color.themeBlue,
             shadowOffset: {
               width: 0,
               height: 4,

@@ -151,7 +151,7 @@ const MyAccounts = () => {
                 name="pencil"
                 as={FontAwesome}
                 style={styles.icon2}
-                color={Color.white}
+                color={Color.black}
                 size={moderateScale(16, 0.3)}
                 onPress={() => {
                   setImagePicker(true);
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     // borderColor : 'black'
   },
   edit: {
-    backgroundColor: Color.themeColor1,
+    backgroundColor: Color.white,
     width: moderateScale(25, 0.3),
     height: moderateScale(25, 0.3),
     position: 'absolute',

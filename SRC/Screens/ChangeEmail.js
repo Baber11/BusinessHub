@@ -126,7 +126,7 @@ const ChangeEmail = props => {
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation
@@ -145,7 +145,7 @@ const ChangeEmail = props => {
               marginTop={moderateScale(10, 0.3)}
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
-              color={Color.themeColor}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation

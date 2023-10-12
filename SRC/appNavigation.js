@@ -68,12 +68,11 @@ const AppNavigator = () => {
         : role == 'customer'
         ? 'HomeScreenOther'
         : 'HomeScreenOther';
-    const firstScreen = 
-      !walkThrough
+    const firstScreen = !walkThrough
       ? 'WalkThroughScreen'
       : token == null
       ? 'GetStarted'
-      :'MyDrawer';
+      : 'MyDrawer';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
@@ -120,6 +119,7 @@ const AppNavigator = () => {
 export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
   const role = useSelector(state => state.authReducer.role);
+  console.log('🚀 ~ file: appNavigation.js:123 ~ MyDrawer ~ role:', role);
   const firstScreen =
     role == 'admin'
       ? 'HomeScreen'
@@ -134,28 +134,37 @@ export const MyDrawer = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      {/* <DrawerNavigation.Screen name="SellerProduct" component={SellerProduct} />
       <DrawerNavigation.Screen
         name="CustomerDashboard"
         component={CustomerDashboard}
+      /> */}
+      <DrawerNavigation.Screen
+        name={
+          role == 'admin'
+            ? 'HomeScreen'
+            : role == 'vendor'
+            ? 'SellerProduct'
+            : 'CustomerDashboard'
+        }
+        component={
+          role == 'admin'
+            ? HomeScreen
+            : role == 'vendor'
+            ? SellerProduct
+            : CustomerDashboard
+        }
       />
-      <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />
       <DrawerNavigation.Screen name="Profile" component={Profile} />
       <DrawerNavigation.Screen name="MyAccounts" component={MyAccounts} />
 
       <DrawerNavigation.Screen name="Orders" component={Orders} />
-      {/* <DrawerNavigation.Screen name="Bookings" component={Bookings} /> */}
 
       <DrawerNavigation.Screen
         name="ChangePassword"
         component={ChangePassword}
       />
       <DrawerNavigation.Screen name="Myorders" component={Myorders} />
-
-      <DrawerNavigation.Screen
-        name="AdminDashboard"
-        component={AdminDashboard}
-      />
-      <DrawerNavigation.Screen name="SellerProduct" component={SellerProduct} />
     </DrawerNavigation.Navigator>
   );
 };

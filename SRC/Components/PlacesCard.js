@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
       viewLocation:{
         fontSize: moderateScale(8, 0.6),
         color: Color.black,
-        borderColor: Color.themeColor,
+        borderColor: Color.themeBlue,
         borderWidth: 1,
         padding: moderateScale(5, 0.6),
         borderRadius: moderateScale(20, 0.6),

@@ -40,6 +40,9 @@ const height = Dimensions.get('window').height;
 const ChangePassword = props => {
   const navigationN = useNavigation();
   const token = useSelector(state => state.authReducer.token)
+  const userData = useSelector(state => state.commonReducer.userData)
+  console.log("🚀 ~ file: ChangePassword.js:44 ~ ChangePassword ~ userData:", userData?.email)
+
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
@@ -50,35 +53,47 @@ const ChangePassword = props => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const ChangePassword =async ()=>{
+  const resetPass = async () => {
+    if (newPassword !== confirmNewPassword)
+      return alert('Password and confirm password donot not match');
     const url = 'password/reset';
-    const body={
-      currentPassword :currentPassword,
-      newPassword: newPassword,
-      confirmNewPassword: confirmNewPassword,
+    const body = {
+      email: userData?.email,
+      password: newPassword,
+      confirm_password: confirmNewPassword,
+    };
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+    if (response?.data?.success != false) {
+      console.log(
+        '🚀 ~ file: ResetPassword.js:59 ~ resetPassword ~ response:',
+        response?.data?.success,
+      );
+      navigationN.goBack()
+
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Password Changed successfully',ToastAndroid.SHORT)
+        : alert('Password Changed successfully');
+   
+
+    } 
+    else{
+      Platform.OS == 'android'
+      ? ToastAndroid.show(response?.data?.error,ToastAndroid.SHORT)
+      : alert(response?.data?.error);
     }
-    setIsLoading(true)
-    const response = await Post(url, body, apiHeader(token))
-    setIsLoading(false)
-
-    if(response != undefined){
-
-      console.log("🚀 ~ file: ChangePassword.js:64 ~ ChangePassword ~ response:", response?.data)
-      Platform.OS == 'android' ? ToastAndroid.show('Password changed Successfully', ToastAndroid.SHORT) : Alert.alert('Password changed Successfully') 
-      
-    }
-
-  }
+  };
 
   return (
     <>
       <CustomStatusBar
-        backgroundColor={Color.white}
+        backgroundColor={['#fff', '#fff']}
         barStyle={'dark-content'}
       />
       <Header
         // showBack={true}
-        title={'Change Password'}
+        // title={'Change Password'}
         headerColor={['#fff', '#fff']}
        
       />
@@ -100,7 +115,8 @@ const ChangePassword = props => {
           contentContainerStyle={{
             // paddingBottom: moderateScale(20, 0.3),
             alignItems: 'center',
-            justifyContent: 'center',
+            // justifyContent: 'center',
+            paddingTop : windowHeight * 0.1,
             width: '100%',
             height: windowHeight*0.9,
           }}>
@@ -118,7 +134,7 @@ const ChangePassword = props => {
               create your new password!
             </CustomText>
 
-            <TextInputWithTitle
+            {/* <TextInputWithTitle
               titleText={'Current Passwrod'}
               secureText={true}
               placeholder={'Current Passwrod'}
@@ -131,11 +147,11 @@ const ChangePassword = props => {
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(35, 0.3)}
-              color={Color.themeColor}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation
-            />
+            /> */}
 
             <TextInputWithTitle
               titleText={'Enter New Password'}
@@ -149,8 +165,8 @@ const ChangePassword = props => {
               // border={1}
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
+              marginTop={moderateScale(80, 0.3)}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation
@@ -168,7 +184,7 @@ const ChangePassword = props => {
               borderColor={'#ffffff'}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
+              color={Color.themeBlue}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
               elevation
@@ -184,8 +200,9 @@ const ChangePassword = props => {
               textColor={Color.white}
               width={windowWidth * 0.75}
               height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
+              marginTop={moderateScale(40, 0.3)}
               onPress={() => {
+                resetPass()
                 // dispatch(setUserToken({token: 'sadasdawdadas'}));
 
               }}

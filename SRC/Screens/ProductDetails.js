@@ -147,7 +147,7 @@ const ProductDetails = props => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     left: -5,
-                    backgroundColor: Color.themeColor,
+                    backgroundColor: Color.themeBlue,
                   }}>
                   <Icon name={'left'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -190,7 +190,7 @@ const ProductDetails = props => {
                     zIndex: 1,
                     justifyContent: 'center',
                     right: -5,
-                    backgroundColor: Color.themeColor,
+                    backgroundColor: Color.themeBlue,
                   }}>
                   <Icon name={'right'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -264,9 +264,9 @@ const ProductDetails = props => {
             <CustomText
               isBold
               style={{
-                color: Color.themeColor,
+                color: Color.themeBlue,
                 fontSize: 24,
-                width: windowWidth * 0.38,
+                width: windowWidth * 0.4,
               }}>
               {finalItem?.price}.0 PKR
             </CustomText>
@@ -387,7 +387,7 @@ const ProductDetails = props => {
                     styles.size,
                     {
                       backgroundColor:
-                      selectedSize == size ? Color.themeColor : '#F4F5F6',
+                      selectedSize == size ? Color.themeBlue : '#F4F5F6',
                       marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
@@ -556,7 +556,7 @@ const ProductDetails = props => {
               borderColor={Color.veryLightGray}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
+              color={Color.themeBlue}
               marginRight={moderateScale(10, 0.3)}
               placeholderColor={Color.themeLightGray}
               borderRadius={moderateScale(25, 0.3)}
@@ -614,7 +614,7 @@ const ProductDetails = props => {
               addedItem(item);
             }
           }}
-          text={cartitem?.product_quantity > 0 ? 'Remove From Cart' : 'ADD TO CART'}
+          text={cartitem?.product_quantity > 0 ? 'Remove ' : 'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.06,
     height: windowWidth * 0.06,
     borderRadius: (windowWidth * 0.06) / 2,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     alignItems: 'center',
     justifyContent: 'center',
   },

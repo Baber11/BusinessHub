@@ -150,7 +150,7 @@ const Myorders = () => {
                       textAlign: 'center',
                       paddingVertical: moderateScale(10, 0.6),
                       borderRadius: moderateScale(10, 0.6),
-                      color: selectedTab == 'Products' ? 'white' : Color.themeColor,
+                      color: selectedTab == 'Products' ? 'white' : Color.themeBlue,
                       backgroundColor:
                         selectedTab == 'Products'
                           ? Color.darkBlue
@@ -167,7 +167,7 @@ const Myorders = () => {
                       borderRadius: moderateScale(10, 0.6),
                       paddingVertical: moderateScale(10, 0.6),
                       textAlign: 'center',
-                      color: selectedTab == 'Services' ? 'white' : Color.themeColor,
+                      color: selectedTab == 'Services' ? 'white' : Color.themeBlue,
                       backgroundColor:
                         selectedTab == 'Services'
                           ? Color.darkBlue

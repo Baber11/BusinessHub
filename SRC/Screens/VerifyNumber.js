@@ -114,7 +114,7 @@ const VerifyNumber = props => {
         }}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y:1}}
-         colors={[Color.themeColor2,Color.themeColor2]}
+         colors={[Color.white,Color.white]}
         // locations ={[0, 0.5, 0.6]}
         >
         <TouchableOpacity
@@ -128,14 +128,14 @@ const VerifyNumber = props => {
             borderRadius: moderateScale(5, 0.3),
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'white',
+            backgroundColor: Color.themeBlue,
             zIndex: 1,
           }}>
           <Icon
             name={'arrowleft'}
             as={AntDesign}
             size={moderateScale(22, 0.3)}
-            color={Color.yellow}
+            color={Color.white}
             onPress={() => {
               navigationN.goBack();
             }}
@@ -155,6 +155,7 @@ const VerifyNumber = props => {
             style={{
               paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
+              backgroundColor : 'white'
             }}>
             <CustomText isBold style={styles.txt2}>
               Enter OTP
@@ -252,7 +253,7 @@ const styles = ScaledSheet.create({
     lineHeight: moderateScale(20, 0.3),
   },
   txt4: {
-    color: Color.yellow,
+    color: Color.themeBlue,
     fontSize: moderateScale(14, 0.6),
     borderBottomWidth: 1,
     borderColor: Color.white,
@@ -283,14 +284,14 @@ const styles = ScaledSheet.create({
     // borderRadius: moderateScale(10, 0.3),
   },
   focusCell: {
-    // backgroundColor: Color.themeColor,
+    // backgroundColor: Color.themeBlue,
     // borderRadius: moderateScale(10, 0.3),
 
-    borderColor: Color.yellow,
+    borderColor: Color.themeBlue,
     borderWidth: 1,
   },
   cellText: {
-    color: Color.yellow,
+    color: Color.themeBlue,
     fontSize: moderateScale(20, 0.3),
     textAlign: 'center',
   },

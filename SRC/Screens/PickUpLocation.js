@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.06,
     height: windowWidth * 0.06,
     borderRadius: (windowWidth * 0.06) / 2,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     alignItems: 'center',
     justifyContent: 'center',
   },

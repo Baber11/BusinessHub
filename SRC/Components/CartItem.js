@@ -169,7 +169,7 @@ const CartItem = ({item, fromCheckout}) => {
               <Icon
                 name={'add-circle-sharp'}
                 as={Ionicons}
-                color={Color.themeColor}
+                color={Color.themeBlue}
                 size={moderateScale(25, 0.3)}
                 onPress={() => {
                   item?.product_quantity < item?.quantity &&  dispatch(increamentQuantity({id: item?.id}));
@@ -186,7 +186,7 @@ const CartItem = ({item, fromCheckout}) => {
               <Icon
                 name={'circle-with-minus'}
                 as={Entypo}
-                color={Color.themeColor}
+                color={Color.themeBlue}
                 size={moderateScale(24, 0.3)}
                 onPress={() => {
                   item?.product_quantity > 1 && dispatch(decrementQuantity({id: item?.id}));
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     marginLeft: moderateScale(5, 0.3),
     flexWrap: 'wrap',
     width: windowWidth * 0.5,
-    // backgroundColor : 'yellow',
+    // backgroundColor : 'themeBlue',
     overflow: 'hidden',
   },
   text1: {
@@ -259,6 +259,6 @@ const styles = StyleSheet.create({
   },
   amount: {
     fontSize: moderateScale(18, 0.3),
-    color: Color.themeColor,
+    color: Color.themeBlue,
   },
 });

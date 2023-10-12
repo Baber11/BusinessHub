@@ -196,15 +196,15 @@ const styles = ScaledSheet.create({
     backgroundColor: Color.white,
     marginBottom: moderateScale(5, 0.3),
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 5,
+    // },
+    // shadowOpacity: 0.36,
+    // shadowRadius: 6.68,
 
-    elevation: 11,
+    // elevation: 11,
   },
   statusModal: {
     alignSelf: 'flex-end',
@@ -215,20 +215,20 @@ const styles = ScaledSheet.create({
     marginTop: moderateScale(60, 0.3),
     // borderWidth: 1,
     borderColor: Color.green,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    // shadowOpacity: 0.29,
+    // shadowRadius: 4.65,
 
-    elevation: 3,
+    // elevation: 3,
   },
   header2: {
     width: windowWidth,
     // height: windowHeight * 0.13,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     // justifyContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',

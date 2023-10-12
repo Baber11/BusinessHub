@@ -217,7 +217,7 @@ const AddProduct = props => {
 
   return (
     <>
-      <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
+      <CustomStatusBar backgroundColor={'#ffffff'} barStyle={'dark-content'} />
       <Header showBack={true} headerColor={['#fff', '#fff']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -689,7 +689,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: windowWidth,
     height: windowHeight * 0.08,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     //  alignItems:'center',
     bottom: 0,
     justifyContent: 'center',
@@ -714,7 +714,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.06,
     height: windowWidth * 0.06,
     borderRadius: (windowWidth * 0.06) / 2,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     alignItems: 'center',
     justifyContent: 'center',
   },

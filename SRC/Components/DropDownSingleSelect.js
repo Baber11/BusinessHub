@@ -64,7 +64,7 @@ const DropDownSingleSelect = ({
           borderWidth: 1,
         },
         elevation && {
-          shadowColor: Color.themeColor,
+          shadowColor: Color.themeBlue,
           shadowOffset: {
             width: 0,
             height: 4,
@@ -223,7 +223,7 @@ const styles = ScaledSheet.create({
     color: Color.themeBlack,
   },
   icon2: {
-    color: Color.themeColor,
+    color: Color.themeBlue,
     position: 'absolute',
     left: moderateScale(10, 0.3),
     top: moderateScale(12, 0.3),

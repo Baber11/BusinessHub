@@ -26,14 +26,14 @@ const CustomDropDownMultiSelect = ({min, max, item, setItem, array, title , maxH
         searchInputPlaceholderText={'Search items ...'}
         textInputProps={{autoFocus: false}}
         hideDropdown
-        tagRemoveIconColor={ userRole == 'Qbid Member' ?  Color.blue : Color.themeColor}
+        tagRemoveIconColor={ userRole == 'Qbid Member' ?  Color.blue : Color.themeBlue}
         tagBorderColor={ userRole == 'Qbid Member' ?  Color.blue : Color.white}
         tagTextColor={ userRole == 'Qbid Member' ?  Color.white : Color.white}
         
         displayKey="name"
         uniqueKey="id"
         // hideSubmitButton
-        submitButtonColor={Color.themeColor}
+        submitButtonColor={Color.themeBlue}
         submitButtonText={'Done'}
         styleMainWrapper={{
           // align
@@ -54,8 +54,8 @@ const CustomDropDownMultiSelect = ({min, max, item, setItem, array, title , maxH
           height: moderateScale(50, 0.3),
           fontSize: moderateScale(20, 0.3),
         }}
-        selectedItemIconColor={Color.themeColor}
-        selectedItemTextColor={Color.themeColor}
+        selectedItemIconColor={Color.themeBlue}
+        selectedItemTextColor={Color.themeBlue}
         styleDropdownMenu={[{
           width: Dimensions.get('window').width * 0.9,
           paddingHorizontal: 10,

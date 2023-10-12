@@ -311,7 +311,7 @@ export default CustomSidebarMenu;
 const styles = ScaledSheet.create({
   header: {
     height: height * 0.24,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
   },
   labels: {
     flexDirection: "row",
@@ -333,7 +333,7 @@ const styles = ScaledSheet.create({
     // fontWeight: "bold",
   },
   iconStyle: {
-    color: Color.themeColor1,
+    color: Color.themeBlue1,
     width: moderateScale(25, 0.3),
     // marginTop: moderateScale(-18, 0.3),
 
@@ -366,7 +366,7 @@ const styles = ScaledSheet.create({
         : moderateScale(50, 0.3),
   },
   userProfileView: {
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     marginLeft: moderateScale(20, 0.3),
   },
 });

@@ -100,17 +100,17 @@ const Orders = () => {
     }
   };
 
-  useEffect(() => {
-    const backhandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        BackHandler.exitApp();
-        return true;
-      },
-    );
+  // useEffect(() => {
+  //   const backhandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     () => {
+  //       BackHandler.exitApp();
+  //       return true;
+  //     },
+  //   );
 
-    return () => backhandler.remove();
-  }, []);
+  //   return () => backhandler.remove();
+  // }, []);
   useEffect(() => {
     getSellerOrders();
     getSellerServices();
@@ -460,7 +460,7 @@ const OrderCard = ({item, width, selectedTab}) => {
           height: windowWidth * 0.2,
           borderRadius: (windowWidth * 0.2) / 2,
           borderWidth: 1,
-          borderColor: Color.themeColor,
+          borderColor: Color.themeBlue,
           overflow: 'hidden',
           backgroundColor: 'white',
         }}>
