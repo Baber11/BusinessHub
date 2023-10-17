@@ -20,7 +20,7 @@ import ScreenBoiler from '../Components/ScreenBoiler';
 import CustomText from '../Components/CustomText';
 import CustomImage from '../Components/CustomImage';
 import Header from '../Components/Header';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Product from '../Components/Product';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import {Get, Post} from '../Axios/AxiosInterceptorFunction';
@@ -29,6 +29,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import ImagePickerModal from '../Components/ImagePickerModal';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import { setUserData } from '../Store/slices/common';
 
 const MyAccounts = () => {
   const token = useSelector(state => state.authReducer.token);
@@ -38,6 +39,9 @@ const MyAccounts = () => {
   const [myOrder, setMyOrder] = useState([]);
   const userData = useSelector(state => state.commonReducer.userData);
   const orderData = useSelector(state => state.commonReducer.order);
+
+
+  const dispatch = useDispatch()
  
   const [isLoading, setIsLoading] = useState(false);
   const [addedProducts, setAddedProducts] = useState([]);
@@ -70,11 +74,12 @@ const MyAccounts = () => {
   };
 
   const updateProfile = async () => {
-    const url = '';
+    const url = 'auth/profile';
+    console.log("🚀 ~ file: MyAccounts.js:75 ~ updateProfile ~ url:", url)
 
     const formData = new FormData()
     if(Object.keys(image).length>0){
-      formData.append('image',image )
+      formData.append('photo',image )
     }else{
       return Platform.OS == 'android'
           ? ToastAndroid.show(`image is required`, ToastAndroid.SHORT)
@@ -83,12 +88,12 @@ const MyAccounts = () => {
    
 
   setIsLoading(true)
-    const response = await Post(url, body, apiHeader(token));
+    const response = await Post(url, formData, apiHeader(token));
     setIsLoading(false)
     if( response != undefined){
-      console.log("🚀 ~ file: Profile.js:113 ~ updateProfile ~ response:", response?.data)
+      // return console.log("🚀 ~ file: Profile.js:113 ~ MyAccount ~ response:", response?.data)
 
-      dispatch(setUserData(response?.data))
+      dispatch(setUserData(response?.data?.user_info))
       
     }
   };  
@@ -103,6 +108,17 @@ const MyAccounts = () => {
     getProducts();
     getSellerOrders();
   }, [orderData]);
+
+
+
+  useEffect(() => {
+    if(Object.keys(image).length>0){
+      updateProfile()
+      setImage({})
+    }
+
+  }, [image])
+  
 
  
   return (
@@ -145,7 +161,7 @@ const MyAccounts = () => {
                 resizeMode={'cover'}
                 source={
                   image?.uri
-                    ? {uri: image?.uri}
+                    ? {uri: image?.uri} : userData?.photo ?{uri:userData?.photo}
                     : require('../Assets/Images/logo.png')
                 }
                 style={{width: '100%', height: '100%'}}

@@ -47,6 +47,7 @@ const Profile = () => {
   const orderData = useSelector(state => state.commonReducer.order);
   const bookings = useSelector(state => state.commonReducer.bookings);
   const userData = useSelector(state => state.commonReducer.userData);
+  console.log("🚀 ~ file: Profile.js:50 ~ Profile ~ userData:", userData)
   const [username, setUserName] = useState(
     userData?.name ? userData?.name : '',
   );
@@ -56,6 +57,7 @@ const Profile = () => {
   const [selectedTab, setSelectedTab] = useState('Products');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
+  console.log("🚀 ~ file: Profile.js:60 ~ Profile ~ image:", image)
   const [newData, setNewData] = useState(
     selectedTab == 'Products' ? orderData : bookings,
   );
@@ -108,14 +110,15 @@ const Profile = () => {
         formData.append(key, body[key])
       }
     }
+    console.log("🚀 ~ file: Profile.js:109 ~ updateProfile ~ formData:", formData)
 
   setIsLoading(true)
-    const response = await Post(url, body, apiHeader(token));
+    const response = await Post(url, formData, apiHeader(token));
     setIsLoading(false)
     if( response != undefined){
       console.log("🚀 ~ file: Profile.js:113 ~ updateProfile ~ response:", response?.data)
 
-      dispatch(setUserData(response?.data))
+      dispatch(setUserData(response?.data?.user_info))
       
     }
   };
@@ -168,7 +171,7 @@ const Profile = () => {
                 resizeMode={'cover'}
                 source={
                   image?.uri
-                    ? {uri: image?.uri}
+                    ? {uri: image?.uri} : userData?.photo ?{uri:userData?.photo}
                     : require('../Assets/Images/logo.png')
                 }
                 style={{width: '100%', height: '100%'}}

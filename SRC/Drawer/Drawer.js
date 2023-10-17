@@ -231,7 +231,7 @@ const Drawer = () => {
               <View style={styles.Profile}>
                 <CustomImage
                   resizeMode={'cover'}
-                  source={require('../Assets/Images/logo.png')}
+                  source={userData?.photo ? {uri :userData?.photo } :require('../Assets/Images/logo.png')}
                   style={{width: '100%', height: '100%'}}
                 />
               </View>

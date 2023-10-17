@@ -30,7 +30,7 @@ const CartScreen = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
-  // console.log('the data is ========>> >> ', cartData);
+  console.log('the data is ========>> >> ', cartData);
   const [isLoading, setIsLoading] = useState(false)
   const [finalAmount, setFinalAmount] = useState(0);
   // const [productsForCard, setProdctsForCart] = useState([]);
@@ -63,21 +63,21 @@ const CartScreen = ({ route }) => {
   };
 
   const checkOut = async () => {
-    if (
-      cartData.some(item => {
-        return (
-          item?.selectedColor == '' ||
-          (item?.size.length > 0 && item?.selectedSize == '')
-        );
-      })
-    ) {
-      return Platform.OS == 'android'
-        ? ToastAndroid.show(
-          'Please select the color and sizes for all items',
-          ToastAndroid.SHORT,
-        )
-        : Alert.alert('Please select the color for all items');
-    } else {
+    // if (
+    //   cartData.some(item => {
+    //     return (
+    //       (item?.color != null && item?.selectedColor == '') || (item?.size != null && item?.selectedSize == '')
+    //     );
+    //   })
+    // ) {
+    //   return Platform.OS == 'android'
+    //     ? ToastAndroid.show(
+    //       'Please select the color and sizes for all items',
+    //       ToastAndroid.SHORT,
+    //     )
+    //     : Alert.alert('Please select the color for all items');
+    // } else 
+    {
       const url = 'auth/checkout';
       var totalBill = 0;
       cartData.map((item, index) => {
