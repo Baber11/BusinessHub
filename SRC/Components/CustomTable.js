@@ -31,9 +31,9 @@ const CustomTable = ({
   setData,
 }) => {
   const isFocused = useIsFocused()
-  console.log("🚀 ~ file: CustomTable.js:32 ~ data:", data)
+  // console.log("🚀 ~ file: CustomTable.js:32 ~ data:", data)
   const [newData, setNewData] = useState([]);
-  console.log("🚀 ~ file: CustomTable.js:33 ~ newData:", newData)
+  // console.log("🚀 ~ file: CustomTable.js:33 ~ newData:", newData)
   const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Buyer');
   const token = useSelector(state => state.authReducer.token);
@@ -52,7 +52,7 @@ const CustomTable = ({
     const response = await Post(url, body, apiHeader(token));
     setLoading(false);
     if (response?.data?.success) {
-      console.log('response', response?.data);
+      // console.log('response', response?.data);
       setData(prev => [...prev], (data[index].status = statusToBe));
     }
   };
@@ -190,7 +190,7 @@ const CustomTable = ({
                       borderRadius={moderateScale(5, 0.3)}
                       marginRight={moderateScale(5, 0.3)}
                       onPress={() => {
-                        console.log(item?.id);
+                        // console.log(item?.id);
                         actionPreform(item?.item, item?.index);
                       }}
                       disabled={loading}

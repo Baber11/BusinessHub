@@ -6,15 +6,19 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Platform,
+  ToastAndroid,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Header from '../Components/Header';
 import CustomText from '../Components/CustomText';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomStatusBar from '../Components/CustomStatusBar';
 
 import {moderateScale} from 'react-native-size-matters';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import MyOrderCard from '../Components/MyorderComponent';
@@ -33,9 +37,12 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import { setUserData } from '../Store/slices/common';
 
 const Profile = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
   const token = useSelector(state => state.authReducer.token);
   const orderData = useSelector(state => state.commonReducer.order);
   const bookings = useSelector(state => state.commonReducer.bookings);
@@ -79,6 +86,40 @@ const Profile = () => {
       },
     },
   ];
+
+  const updateProfile = async () => {
+    const url = 'auth/profile';
+    const body = {name: username, phone: phone, email: email};
+    const formData = new FormData()
+    if(Object.keys(image).length>0){
+      formData.append('photo',image )
+    }else{
+      return Platform.OS == 'android'
+          ? ToastAndroid.show(`image is required`, ToastAndroid.SHORT)
+          : Alert.alert(`image is required`);
+    }
+    for (let key in body) {
+      if (body[key] == '') {
+        return Platform.OS == 'android'
+          ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
+          : Alert.alert(`${key} is required`);
+      }else{
+
+        formData.append(key, body[key])
+      }
+    }
+
+  setIsLoading(true)
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false)
+    if( response != undefined){
+      console.log("🚀 ~ file: Profile.js:113 ~ updateProfile ~ response:", response?.data)
+
+      dispatch(setUserData(response?.data))
+      
+    }
+  };
+
   useEffect(() => {
     setNewData(selectedTab == 'Products' ? orderData : bookings);
   }, [selectedTab]);
@@ -86,8 +127,6 @@ const Profile = () => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
-
-      {/* <Header headerColor={['#D2E4E4', '#D2E4E4']} cart /> */}
 
       <View
         style={{
@@ -160,13 +199,6 @@ const Profile = () => {
         </ImageBackground>
 
         <ScrollView>
-          {/* <CardContainer
-            style={{
-              paddingVertical: moderateScale(15, 0.3),
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: moderateScale(30, 0.3),
-            }}> */}
           <View
             style={{
               // backgroundColor: 'green',
@@ -240,7 +272,7 @@ const Profile = () => {
             />
 
             <CustomButton
-              //   onPress={() => registerUser()}
+                onPress={() => updateProfile()}
               text={
                 isLoading ? (
                   <ActivityIndicator color={Color.white} size={'small'} />

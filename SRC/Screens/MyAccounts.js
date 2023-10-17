@@ -52,12 +52,7 @@ const MyAccounts = () => {
     const response = await Get(url, token);
     setIsLoading(false);
     if (response != undefined) {
-      // console.log(
-      //   '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
-      //   response?.data,
-      // );
-      // console.log('parsed data=========================',response?.data?.data[0]?.size)
-      // console.log('parsed data=========================',JSON.parse(response?.data?.data[9]?.size))
+      
       setAddedProducts(response?.data?.data);
     }
   };
@@ -69,25 +64,13 @@ const MyAccounts = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      // console.log(
-      //   '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
-      //   response?.data,
-      // );
+     
       setOrders(response?.data?.orders);
     }
   };
 
   useEffect(() => {
-    // orderData.map(item =>
-    //   item.order.map(
-    //     order =>
-    //       order?.sellerId == userData?.id &&
-    //       setMyOrder(prev => [
-    //         ...prev,
-    //         {orderId: item.orderId, Image: item?.Image, ...order},
-    //       ]),
-    //   ),
-    // );
+   
     getProducts();
     getSellerOrders();
   }, [orderData]);
@@ -170,99 +153,8 @@ const MyAccounts = () => {
           backgroundColor: Color.white,
           minHeight: windowHeight * 0.9,
         }}>
-        {/* <View
-          style={{
-            width: windowWidth ,
-            height: windowHeight * 0.15,
-            backgroundColor:'blue',
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: moderateScale(5, 0.6),
-          }}>
-          <View style={styles.profileSection}>
-            <CustomImage
-              source={
-                userData?.photo
-                  ? userData?.photo
-                  : require('../Assets/Images/logo.png')
-              }
-              style={{
-                height: '100%',
-                width: '100%',
-              }}
-              resizeMode="contain"
-            />
-          </View>
-
-          <View style={{marginLeft: moderateScale(10, 0.3)}}>
-            <CustomText
-              style={{
-                fontSize: moderateScale(15, 0.6),
-                color: Color.black,
-              }}>
-              {userData?.name}
-            </CustomText>
-
-            <CustomText
-              numberOfLines={2}
-              style={{
-                fontSize: moderateScale(10, 0.6),
-                color: Color.black,
-              }}>
-              {userData?.email}
-            </CustomText>
-          </View>
-        </View> */}
-        {/* <View
-          style={{
-            justifyContent: 'center',
-            // backgroundColor: 'green',
-            alignItems: 'center',
-            paddingVertical:moderateScale(5,.6),
-          }}>
-          <View
-            style={{
-              width: windowWidth * 0.3,
-              // height: windowHeight * 0.3,
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingVertical:moderateScale(10,.6),
-              // backgroundColor: 'orange',
-            }}>
-            <View style={styles.Profile1}>
-              <CustomImage
-                resizeMode={'cover'}
-                source={
-                  image?.uri
-                    ? {uri: image?.uri}
-                    : require('../Assets/Images/logo.png')
-                }
-                style={{width: '100%', height: '100%'}}
-              />
-            </View>
-
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.edit}
-              onPress={() => {
-                setImagePickerVisible(true);
-              }}>
-              <Icon
-                name="pencil"
-                as={FontAwesome}
-                style={styles.icon2}
-                color={Color.white}
-                size={moderateScale(16, 0.3)}
-                onPress={() => {
-                  setImagePickerVisible(true);
-                }}
-              />
-            </TouchableOpacity>
-            <CustomText style={styles.text1} isBold>
-              {userData?.name}
-            </CustomText>
-          </View>
-        </View> */}
+       
+       
 
         <View style={{borderBottomWidth: 2, borderColor: Color.white}}></View>
 
@@ -317,7 +209,6 @@ const MyAccounts = () => {
           </View>
         </View>
 
-        {/* <View style={{borderBottomWidth: 2, borderColor: Color.black}}></View> */}
 
         <FlatList
           numColumns={2}
