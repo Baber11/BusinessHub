@@ -41,7 +41,7 @@ const MyOrderCard = ({item , type}) => {
           height: windowWidth * 0.2,
           borderRadius: (windowWidth * 0.2) / 2,
           borderWidth: 1,
-          borderColor: Color.themeColor,
+          borderColor: Color.themeBlue,
           overflow: 'hidden',
           backgroundColor: 'white',
         }}>

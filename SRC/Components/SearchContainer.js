@@ -54,7 +54,7 @@ const SearchContainer = ({
                 as={FontAwesome}
                 size={moderateScale(20)}
                 style={{alignSelf: 'center'}}
-                color={Color.themeColor}
+                color={Color.themeBlue}
               />
             </>
           )}

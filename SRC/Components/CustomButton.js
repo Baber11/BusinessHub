@@ -59,7 +59,7 @@ const CustomButton = props => {
           marginBottom: marginBottom || 0,
         },
         elevation && {
-          shadowColor: Color.themeColor,
+          shadowColor: Color.themeBlue,
           shadowOffset: {
             width: 0,
             height: 4,

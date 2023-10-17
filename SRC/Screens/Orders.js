@@ -100,17 +100,17 @@ const Orders = () => {
     }
   };
 
-  useEffect(() => {
-    const backhandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        BackHandler.exitApp();
-        return true;
-      },
-    );
+  // useEffect(() => {
+  //   const backhandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     () => {
+  //       BackHandler.exitApp();
+  //       return true;
+  //     },
+  //   );
 
-    return () => backhandler.remove();
-  }, []);
+  //   return () => backhandler.remove();
+  // }, []);
   useEffect(() => {
     getSellerOrders();
     getSellerServices();
@@ -124,12 +124,12 @@ const Orders = () => {
         backgroundColor={['#CBE4E8', '#D2E4E4']}
         barStyle={'dark-content'}
       />
-      <Header headerColor={['#CBE4E8', '#D2E4E4']} />
+      <Header headerColor={['#fff', '#fff']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
-          backgroundColor: '#CBE4E8',
+          backgroundColor:Color.white,
           minHeight: windowHeight * 0.9,
         }}>
         <View
@@ -460,7 +460,7 @@ const OrderCard = ({item, width, selectedTab}) => {
           height: windowWidth * 0.2,
           borderRadius: (windowWidth * 0.2) / 2,
           borderWidth: 1,
-          borderColor: Color.themeColor,
+          borderColor: Color.themeBlue,
           overflow: 'hidden',
           backgroundColor: 'white',
         }}>

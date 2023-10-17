@@ -44,14 +44,23 @@ const TextInputWithTitle = props => {
       <View
         style={[
           styles.fieldSet,
+          props?.border && {borderWidth: props.border},
+          props?.borderBottomColor && {
+            borderBottomColor: props.borderBottomColor,
+          },
+          props?.borderBottomWidth && {
+            borderBottomWidth: props.borderBottomWidth,
+          },
+
           {
             width: windowWidth * props.viewWidth,
-            borderWidth: props.border,
+            // borderBottomColor:props.borderBottomColor,
+            // borderBottomWidth:props.borderBottomWidth,
             // borderColor: Color.veryLightGray,
             backgroundColor: props.backgroundColor,
           },
           props.elevation && {
-            shadowColor: Color.themeColor,
+            shadowColor: Color.themeBlue,
             shadowOffset: {
               width: 0,
               height: 4,
@@ -139,7 +148,6 @@ const TextInputWithTitle = props => {
                       styles.inputBox,
                       {
                         paddingBottom: 0,
-                        
                       },
                     ],
               ]}

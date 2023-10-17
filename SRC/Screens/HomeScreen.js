@@ -75,7 +75,7 @@ const HomeScreen = () => {
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
       <Header
-        headerColor={['#D2E4E4', '#D2E4E4']}
+        headerColor={['#fff', '#fff']}
         // showLogout
         hideUser
       />
@@ -157,7 +157,7 @@ const Chuncks = ({amount, title, iconName}) => {
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={[Color.themeColor, Color.themeColor]}
+        colors={[Color.themeBlue, Color.themeBlue]}
         style={styles.container}>
         <View
           style={{

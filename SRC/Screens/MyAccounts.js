@@ -5,11 +5,14 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Platform,
+  ToastAndroid,
+  Alert, 
   ImageBackground,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import LinearGradient from 'react-native-linear-gradient';
 import navigationService from '../navigationService';
 import Color from '../Assets/Utilities/Color';
@@ -20,7 +23,7 @@ import Header from '../Components/Header';
 import {useSelector} from 'react-redux';
 import Product from '../Components/Product';
 import CustomStatusBar from '../Components/CustomStatusBar';
-import {Get} from '../Axios/AxiosInterceptorFunction';
+import {Get, Post} from '../Axios/AxiosInterceptorFunction';
 import {Icon} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import ImagePickerModal from '../Components/ImagePickerModal';
@@ -35,10 +38,7 @@ const MyAccounts = () => {
   const [myOrder, setMyOrder] = useState([]);
   const userData = useSelector(state => state.commonReducer.userData);
   const orderData = useSelector(state => state.commonReducer.order);
-  // console.log(
-  //   '🚀 ~ file: MyAccounts.js:23 ~ MyAccounts ~ orderData:',
-  //   orderData[0]?.order,
-  // );
+ 
   const [isLoading, setIsLoading] = useState(false);
   const [addedProducts, setAddedProducts] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -69,13 +69,42 @@ const MyAccounts = () => {
     }
   };
 
+  const updateProfile = async () => {
+    const url = '';
+
+    const formData = new FormData()
+    if(Object.keys(image).length>0){
+      formData.append('image',image )
+    }else{
+      return Platform.OS == 'android'
+          ? ToastAndroid.show(`image is required`, ToastAndroid.SHORT)
+          : Alert.alert(`image is required`);
+    }
+   
+
+  setIsLoading(true)
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false)
+    if( response != undefined){
+      console.log("🚀 ~ file: Profile.js:113 ~ updateProfile ~ response:", response?.data)
+
+      dispatch(setUserData(response?.data))
+      
+    }
+  };  
+
+
+
+
+
+
   useEffect(() => {
    
     getProducts();
     getSellerOrders();
   }, [orderData]);
 
-  // console.log('DATA', sellerProducts);
+ 
   return (
     <>
       <CustomStatusBar
@@ -83,7 +112,6 @@ const MyAccounts = () => {
         barStyle={'dark-content'}
       />
 
-      {/* <Header headerColor={['#CBE4E8', '#D2E4E4']} /> */}
       <ImageBackground
           source={require('../Assets/Images/waves.jpg')}
           resizeMode={'cover'}

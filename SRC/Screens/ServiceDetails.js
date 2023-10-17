@@ -134,7 +134,7 @@ const ServiceDetails = props => {
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
       <Header
         showBack={true}
-        headerColor={['#CBE4E8', '#D2E4E4']}
+        headerColor={['#fff', '#fff']}
         cart={!seller}
       />
       <ScrollView
@@ -179,7 +179,7 @@ const ServiceDetails = props => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     left: -5,
-                    backgroundColor: Color.themeColor,
+                    backgroundColor: Color.themeBlue,
                   }}>
                   <Icon name={'left'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -221,7 +221,7 @@ const ServiceDetails = props => {
                     zIndex: 1,
                     justifyContent: 'center',
                     right: -5,
-                    backgroundColor: Color.themeColor,
+                    backgroundColor: Color.themeBlue,
                   }}>
                   <Icon name={'right'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -295,7 +295,7 @@ const ServiceDetails = props => {
             <CustomText
               isBold
               style={{
-                color: Color.themeColor,
+                color: Color.themeBlue,
                 fontSize: 24,
                 width: windowWidth * 0.31,
               }}>
@@ -358,16 +358,16 @@ const ServiceDetails = props => {
                   setDate(day?.dateString);
                 }}
                 theme={{
-                  textSectionTitleColor: Color.themeColor,
-                  selectedDayBackgroundColor: Color.themeColor,
+                  textSectionTitleColor: Color.themeBlue,
+                  selectedDayBackgroundColor: Color.themeBlue,
                   selectedDayTextColor: Color.white,
-                  todayTextColor: Color.themeColor,
+                  todayTextColor: Color.themeBlue,
                   dayTextColor: Color.black,
                   dayTextColor: Color.black,
                   textDisabledColor: '#d9e1e8',
-                  arrowColor: Color.themeColor,
+                  arrowColor: Color.themeBlue,
                   monthTextColor: Color.veryLightGray,
-                  indicatorColor: Color.themeColor,
+                  indicatorColor: Color.themeBlue,
                   textMonthFontWeight: 'bold',
                   textDayHeaderFontWeight: 'bold',
                   textDayFontSize: moderateScale(12, 0.3),
@@ -378,7 +378,7 @@ const ServiceDetails = props => {
                   ...{
                     [date]: {
                       selected: true,
-                      color: Color.themeColor,
+                      color: Color.themeBlue,
                       textColor: '#000000',
                       marked: true,
                     },
@@ -493,7 +493,7 @@ const ServiceDetails = props => {
                     borderColor={Color.veryLightGray}
                     backgroundColor={'#FFFFFF'}
                     marginTop={moderateScale(10, 0.3)}
-                    color={Color.themeColor}
+                    color={Color.themeBlue}
                     marginRight={moderateScale(10, 0.3)}
                     placeholderColor={Color.themeLightGray}
                     borderRadius={moderateScale(25, 0.3)}
@@ -633,7 +633,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.06,
     height: windowWidth * 0.06,
     borderRadius: (windowWidth * 0.06) / 2,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     alignItems: 'center',
     justifyContent: 'center',
   },

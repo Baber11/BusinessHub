@@ -92,14 +92,14 @@ const EnterPhone = props => {
               borderRadius: moderateScale(5, 0.3),
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'white',
+              backgroundColor: Color.themeBlue,
               zIndex: 1,
             }}>
             <Icon
               name={'arrowleft'}
               as={AntDesign}
               size={moderateScale(22, 0.3)}
-              color={Color.yellow}
+              color={Color.white}
               onPress={() => {
                 navigation.goBack();
               }}
@@ -139,7 +139,7 @@ const EnterPhone = props => {
                 borderColor={'#ffffff'}
                 backgroundColor={'#FFFFFF'}
                 marginTop={moderateScale(35, 0.3)}
-                color={Color.yellow}
+                color={Color.themeBlue}
                 placeholderColor={Color.themeLightGray}
                 elevation
               />
@@ -196,7 +196,7 @@ const styles = ScaledSheet.create({
     width: windowWidth * 0.9,
   },
   txt4: {
-    color: Color.yellow,
+    color: Color.themeBlue,
     fontSize: moderateScale(14, 0.6),
     marginTop: moderateScale(8, 0.3),
     fontWeight: 'bold',

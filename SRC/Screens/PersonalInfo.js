@@ -225,7 +225,7 @@ const PersonalInfo = () => {
               width={windowWidth * 0.4}
               height={windowHeight * 0.06}
               marginTop={moderateScale(30, 0.3)}
-              bgColor={Color.yellow}
+              bgColor={Color.themeBlue}
               // borderRadius={moderateScale(5, 0.3)}
               // isGradient
             /> */}
@@ -248,7 +248,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: moderateScale(10, 0.6),
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: Color.themeColor,
+    shadowColor: Color.themeBlue,
     shadowOffset: {
       width: 0,
       height: 4,

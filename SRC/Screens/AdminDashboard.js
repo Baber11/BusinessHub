@@ -84,7 +84,7 @@ const AdminDashboard = () => {
   return (
     <>
       <CustomStatusBar
-        backgroundColor={[Color.themeColor, '#83D475', '#ABE098']}
+        backgroundColor={[Color.themeBlue, '#83D475', '#ABE098']}
         barStyle={'dark-content'}
       />
       <Header />

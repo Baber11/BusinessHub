@@ -24,7 +24,7 @@ const GetStarted = () => {
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={[Color.themeColor2, Color.themeColor2]}
+        colors={[Color.white, Color.white]}
       >
         <CustomText isBold style={{
           fontSize : moderateScale(24,0.6),
@@ -107,7 +107,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     height: windowHeight,
     width: windowWidth,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
   },
   bottomImage: {
     width: windowWidth * 0.5,

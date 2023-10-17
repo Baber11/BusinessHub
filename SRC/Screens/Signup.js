@@ -35,16 +35,18 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [confirmPass, setconfirmPass] = useState('');
   const [showNumberModal, setShowNumberModal] = useState(false);
-  const [countryCode, setCountryCode] = useState('US');
+  const [countryCode, setCountryCode] = useState('PK');
+  console.log("🚀 ~ file: Signup.js:39 ~ Signup ~ countryCode:", countryCode)
   const [country, setCountry] = useState({
-    callingCode: ['1'],
-    cca2: 'US',
-    currency: ['USD'],
-    flag: 'flag-us',
-    name: 'United States',
-    region: 'Americas',
-    subregion: 'North America',
+    callingCode: ['92'],
+    cca2: 'PK',
+    currency: ['PKR'],
+    flag: 'flag-pk',
+    name: 'Pakistan',
+    region: 'Asia',
+    subregion: 'Southern Asia',
   });
+  console.log("🚀 ~ file: Signup.js:48 ~ Signup ~ country:", country)
   const [userRole, setuserRole] = useState('seller');
   const [withCallingCode, setWithCallingCode] = useState(true);
   const [withFilter, setFilter] = useState(true);
@@ -348,7 +350,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: moderateScale(10, 0.6),
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: Color.themeColor,
+    shadowColor: Color.themeBlue,
     shadowOffset: {
       width: 0,
       height: 4,

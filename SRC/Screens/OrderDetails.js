@@ -55,7 +55,7 @@ const OrderDetails = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header showBack={true} headerColor={['#CBE4E8', '#D2E4E4']} />
+      <Header showBack={true} headerColor={['#fff', '#fff']} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -96,7 +96,7 @@ const OrderDetails = props => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     left: -5,
-                    backgroundColor: Color.themeColor,
+                    backgroundColor: Color.themeBlue,
                   }}>
                   <Icon name={'left'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -139,7 +139,7 @@ const OrderDetails = props => {
                     zIndex: 1,
                     justifyContent: 'center',
                     right: -5,
-                    backgroundColor: Color.themeColor,
+                    backgroundColor: Color.themeBlue,
                   }}>
                   <Icon name={'right'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -211,7 +211,7 @@ const OrderDetails = props => {
             <CustomText
               isBold
               style={{
-                color: Color.themeColor,
+                color: Color.themeBlue,
                 fontSize: 24,
                 width: windowWidth * 0.35,
               }}>
@@ -280,7 +280,7 @@ const OrderDetails = props => {
                     styles.size,
                     {
                       backgroundColor:
-                        item?.size == size ? Color.themeColor : '#F4F5F6',
+                        item?.size == size ? Color.themeBlue : '#F4F5F6',
                       marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.06,
     height: windowWidth * 0.06,
     borderRadius: (windowWidth * 0.06) / 2,
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeBlue,
     alignItems: 'center',
     justifyContent: 'center',
   },

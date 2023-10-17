@@ -259,7 +259,7 @@ const CustomTable = ({
                     fontSize: moderateScale(16, 0.3),
                     color: Color.black,
 
-                    // backgroundColor : 'yellow'
+                    // backgroundColor : 'themeBlue'
                   }}>
                   No users yet
                 </CustomText>

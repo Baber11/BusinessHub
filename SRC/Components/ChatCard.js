@@ -85,7 +85,7 @@ const ChatCard = ({
               height: moderateScale(15, 0.3),
               borderRadius: moderateScale(7.5, 0.3),
               backgroundColor:
-                userRole == 'Qbid Member' ? Color.blue : Color.themeColor,
+                userRole == 'Qbid Member' ? Color.blue : Color.themeBlue,
               justifyContent: 'center',
               alignItems: 'center',
               overflow: 'hidden',

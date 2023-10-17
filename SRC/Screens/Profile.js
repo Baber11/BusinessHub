@@ -137,7 +137,7 @@ const Profile = () => {
           alignItems: 'center',
         }}>
         <ImageBackground
-          source={require('../Assets/Images/waves.jpg')}
+          source={require('../Assets/Images/waves1.jpg')}
           resizeMode={'cover'}
           style={{
             width: windowWidth * 1,
@@ -198,7 +198,22 @@ const Profile = () => {
           </View>
         </ImageBackground>
 
-        <ScrollView>
+      
+        <ScrollView
+          style={{
+            backgroundColor: Color.white,
+            width: windowWidth,
+            marginTop: moderateScale(-30, 0.3),
+            borderTopLeftRadius:moderateScale(30,0.3),
+            borderTopRightRadius:moderateScale(30,0.3)
+          }}>
+          {/* <CardContainer
+            style={{
+              paddingVertical: moderateScale(15, 0.3),
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: moderateScale(30, 0.3),
+            }}> */}
           <View
             style={{
               // backgroundColor: 'green',
@@ -345,7 +360,7 @@ const styles = StyleSheet.create({
     // width: windowWidth * 0.45,
   },
   edit: {
-    backgroundColor: Color.themeColor1,
+    backgroundColor: Color.themeBlue1,
     width: moderateScale(25, 0.3),
     height: moderateScale(25, 0.3),
     position: 'absolute',

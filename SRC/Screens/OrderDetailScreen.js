@@ -367,7 +367,7 @@ const OrderDetailScreen = props => {
                       }}>
                       {item.description
                         ? item.description
-                        : item?.service?.description}dhsfhsdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                        : item?.service?.description}
                     </CustomText>
                   </View>
                   <Divider
@@ -461,15 +461,16 @@ const OrderDetailScreen = props => {
         style={{
           width: windowWidth * 0.4,
           paddingVertical: moderateScale(20, 0.6),
-          backgroundColor: Color.themeColor,
+          backgroundColor: Color.darkBlue,
           position: 'absolute',
-          bottom: moderateScale(80, 0.6),
+          bottom: moderateScale(10, 0.6),
           alignSelf: 'center',
-          shadowColor: Color.themeColor,
+          shadowColor: Color.themeBlue,
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
           elevation: 10,
+          borderRadius:moderateScale(5,0.3)
         }}
         onPress={() => {
           navigation.goBack();

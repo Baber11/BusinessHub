@@ -31,38 +31,13 @@ import {Get} from '../Axios/AxiosInterceptorFunction';
 
 const CustomerDashboard = () => {
   const token = useSelector(state => state.authReducer.token);
-  const userData = useSelector(state => state.commonReducer.userData);
-  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
-  const sellerServices = useSelector(
-    state => state.commonReducer.sellerService,
-  );
-  // console.log(
-  //   '🚀 ~ file: CustomerDashboard.js:38 ~ sellerServices:',
-  //   sellerServices,
-  // );
-  const sellerProducts = useSelector(
-    state => state.commonReducer.sellerProducts,
-  );
-  // console.log(
-  //   '🚀 ~ file: CustomerDashboard.js:42 ~ CustomerDashboard ~ sellerProducts:',
-  //   sellerProducts,
-  // );
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [isServiceLoading, setIsServiceLoading] = useState(false);
-  const [users, setUsers] = useState([]);
   const isFocused = useIsFocused();
-  const [selectedService, setSelectedService] = useState('');
   const [allProducts, setAllProducts] = useState([]);
   const [allServices, setAllServices] = useState([]);
-  // console.log(
-  //   '🚀 ~ file: CustomerDashboard.js:47 ~ CustomerDashboard ~ allServices:',
-  //   allServices,
-  // );
-  // console.log(
-  //   '🚀 ~ file: CustomerDashboard.js:46 ~ CustomerDashboard ~ allProducts:',
-  //   allProducts,
-  // );
+  const [newData, setNewData] = useState([]);
 
   const productList = async () => {
     const url = 'products';
@@ -70,10 +45,6 @@ const CustomerDashboard = () => {
     const response = await Get(url);
     setIsLoading(false);
     if (response != undefined) {
-      // console.log(
-      //   '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
-      //   response?.data,
-      // );
       setAllProducts(response?.data?.data?.products);
     }
   };
@@ -86,24 +57,14 @@ const CustomerDashboard = () => {
 
     if (response != undefined) {
       setAllServices(response?.data?.data?.services);
-
-      // console.log(
-      //   '🚀 ~ file: CustomerDashboard.js:67 ~ serviceList ~ response:',
-      //   response?.data,
-      // );
     }
   };
-
-  const [newData, setNewData] = useState([]);
-  // console.log(
-  //   '🚀 ~ file: CustomerDashboard.js:61 ~ CustomerDashboard ~ newData:',
-  //   newData,
-  // );
 
   useEffect(() => {
     const backhandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
+        console.log('in backhandler')
         if (token != null) {
           BackHandler.exitApp();
         } else {
@@ -124,7 +85,7 @@ const CustomerDashboard = () => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
-      <Header headerColor={['#D2E4E4', '#D2E4E4']} cart />
+      <Header headerColor={['#fff', '#fff']} cart />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -164,7 +125,7 @@ const CustomerDashboard = () => {
           {isServiceLoading ? (
             <View style={{height:windowHeight*0.1, justifyContent:'center'}}>
             <ActivityIndicator
-              color={Color.themeBlue}
+              color={Color.darkBlue}
               size={moderateScale(30, 0.6)}
             /></View>
           ) : (
@@ -214,7 +175,6 @@ const CustomerDashboard = () => {
                         }}
                         resizeMode={'stretch'}
                         onPress={() => {
-                          setSelectedService(item?.shop_name);
                           navigationService.navigate('ServiceDetails', {item});
                         }}
                       />
@@ -288,7 +248,7 @@ const CustomerDashboard = () => {
             }}>
             <ActivityIndicator
               size={moderateScale(45, 0.6)}
-              color={Color.themeBlue}
+              color={Color.darkBlue}
             />
           </View>
         ) : (
