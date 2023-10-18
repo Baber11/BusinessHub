@@ -66,14 +66,30 @@ const AddProduct = props => {
       category: subTitle,
       quantity: parseInt(quantity),
       price: parseFloat(price),
+     
     };
     const formData = new FormData();
     for (let key in body) {
       formData.append(key, body[key]);
     }
-    images?.map((item, index) => formData.append(`photo[${index}]`, item));
-    colors?.map((item, index) => formData.append(`color[${index}]`, item));
-    sizes?.map((item, index) => formData.append(`size[${index}]`, item));
+    if(images?.length > 0){
+
+      images?.map((item, index) => formData.append(`photo[${index}]`, item));
+    }else{
+      formData.append("photo", []);
+    }
+    if(colors.length > 0 ){
+
+      colors?.map((item, index) => formData.append(`color[${index}]`, item));
+    }else{
+      formData.append("color", []);
+    }
+    if(sizes.length>0){
+
+      sizes?.map((item, index) => formData.append(`size[${index}]`, item));
+    }else{
+      formData.append("size", []);
+    }
     // console.log(
     //   '🚀 ~ file: AddProduct.js:75 ~ addProduct ~ formData:',
     //   JSON.stringify(formData, null, 2),
@@ -116,6 +132,7 @@ const AddProduct = props => {
     //   },
     // });
 
+    console.log("🚀 ~ file: AddProduct.js:122 ~ addProduct ~ formData:", formData)
     const url = 'auth/product';
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader(token));

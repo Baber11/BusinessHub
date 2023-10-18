@@ -29,7 +29,7 @@ import moment from 'moment';
 
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
-  // console.log("🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ item:", item)
+  console.log("🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ item:", item)
   const cartData = useSelector(state => state.commonReducer.cart);
   
   const user = useSelector(state => state.commonReducer.userData);
@@ -317,7 +317,7 @@ const ProductDetails = props => {
             </View>
           </View>
 
-          <CustomText
+         {!['null', null, undefined, '', []].includes(item?.color) && <CustomText
             isBold
             style={{
               color: '#201E1D',
@@ -326,7 +326,7 @@ const ProductDetails = props => {
               marginLeft: moderateScale(10, 0.3),
             }}>
             Color
-          </CustomText>
+          </CustomText>}
 
           <View style={styles.ColorLine}>
             {JSON.parse(item?.color)?.map(color => {
@@ -357,7 +357,7 @@ const ProductDetails = props => {
             })}
           </View>
 
-          {item?.size?.length > 0 && (
+          {!['null', null, undefined, '', []].includes(item?.size) && (
             <CustomText
               isBold
               style={{

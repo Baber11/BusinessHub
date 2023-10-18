@@ -40,10 +40,22 @@ const OrderDetails = props => {
     item?.product ? JSON.parse(item?.product?.size) : JSON.parse(item?.size),
   );
 
-  const [category, setCategory] = useState(item?.product ? item?.product?.category :item?.category);
-  const [title, setTitle] = useState(item?.product ? item?.product?.title :item?.title);
-  const [price, setPrice] = useState(item?.product ? item?.product?.price : item?.price)
-  const [quantity, setQuantity] = useState(details ? item?.product ?  item?.product?.quantity : item?.quantity : item?.qty )
+  const [category, setCategory] = useState(
+    item?.product ? item?.product?.category : item?.category,
+  );
+  const [title, setTitle] = useState(
+    item?.product ? item?.product?.title : item?.title,
+  );
+  const [price, setPrice] = useState(
+    item?.product ? item?.product?.price : item?.price,
+  );
+  const [quantity, setQuantity] = useState(
+    details
+      ? item?.product
+        ? item?.product?.quantity
+        : item?.quantity
+      : item?.qty,
+  );
   const images = [
     require('../Assets/Images/image3.png'),
     require('../Assets/Images/Mask2.png'),
@@ -231,7 +243,7 @@ const OrderDetails = props => {
             </View>
           </View>
 
-          <CustomText
+          {!['null', null, undefined, '', []].includes(colors) &&<CustomText
             isBold
             style={{
               color: '#201E1D',
@@ -240,26 +252,29 @@ const OrderDetails = props => {
               marginLeft: moderateScale(10, 0.3),
             }}>
             Color
-          </CustomText>
+          </CustomText>}
 
-          <View style={styles.ColorLine}>
-            {colors.map(color => {
-              return (
-                <View style={[styles.colorContainer, {backgroundColor: color}]}>
-                  {item?.color == color && (
-                    <Icon
-                      name={'check'}
-                      as={Entypo}
-                      size={moderateScale(17, 0.3)}
-                      color={'#fff'}
-                    />
-                  )}
-                </View>
-              );
-            })}
-          </View>
+          {!['null', null, undefined, '', []].includes(colors) && (
+            <View style={styles.ColorLine}>
+              {colors.map(color => {
+                return (
+                  <View
+                    style={[styles.colorContainer, {backgroundColor: color}]}>
+                    {item?.color == color && (
+                      <Icon
+                        name={'check'}
+                        as={Entypo}
+                        size={moderateScale(17, 0.3)}
+                        color={'#fff'}
+                      />
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          )}
 
-          {item?.size && (
+          {!['null', null, undefined, '', []].includes(sizes) && (
             <CustomText
               isBold
               style={{
@@ -272,7 +287,7 @@ const OrderDetails = props => {
             </CustomText>
           )}
 
-          <View style={styles.ColorLine1}>
+          {!['null', null, undefined, '', []].includes(sizes) && <View style={styles.ColorLine1}>
             {sizes.map(size => {
               return (
                 <View
@@ -295,7 +310,7 @@ const OrderDetails = props => {
                 </View>
               );
             })}
-          </View>
+          </View>}
         </View>
 
         <View

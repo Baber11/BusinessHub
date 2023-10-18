@@ -63,20 +63,20 @@ const CartScreen = ({ route }) => {
   };
 
   const checkOut = async () => {
-    // if (
-    //   cartData.some(item => {
-    //     return (
-    //       (item?.color != null && item?.selectedColor == '') || (item?.size != null && item?.selectedSize == '')
-    //     );
-    //   })
-    // ) {
-    //   return Platform.OS == 'android'
-    //     ? ToastAndroid.show(
-    //       'Please select the color and sizes for all items',
-    //       ToastAndroid.SHORT,
-    //     )
-    //     : Alert.alert('Please select the color for all items');
-    // } else 
+    if (
+      cartData.some(item => {
+        return (
+          (item?.color != "null" && item?.selectedColor == '') || (item?.size != "null" && item?.selectedSize == '')
+        );
+      })
+    ) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show(
+          'Please select the color and sizes for all items',
+          ToastAndroid.SHORT,
+        )
+        : Alert.alert('Please select the color for all items');
+    } else 
     {
       const url = 'auth/checkout';
       var totalBill = 0;

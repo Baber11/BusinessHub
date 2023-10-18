@@ -67,7 +67,7 @@ const SellerProduct = props => {
       //   '🚀 ~ file: CustomerDashboard.js:52 ~ productList ~ response:',
       //   response?.data,
       // );
-      // console.log('parsed data=========================',response?.data?.data[0]?.size)
+      console.log('parsed data=========================',response?.data)
       // console.log('parsed data=========================',JSON.parse(response?.data?.data[9]?.size))
       setAddedProducts(response?.data?.data);
     }

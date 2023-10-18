@@ -42,7 +42,7 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState('');
   const [selectedTab, setSelectedTab] = useState('Products');
   const [myOrder, setMyOrder] = useState([]);
-  // console.log('🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:', myOrder);
+  console.log('🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:', myOrder);
   const [serviceOrder, setServiceOrder] = useState([]);
   // console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
   // console.log("🚀 ~ file: Orders.js:45 ~ Orders ~ serviceOrder:", serviceOrder)
