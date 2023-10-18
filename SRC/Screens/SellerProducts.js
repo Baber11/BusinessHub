@@ -37,6 +37,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const SellerProduct = props => {
   const token = useSelector(state => state.authReducer.token);
+  console.log("🚀 ~ file: SellerProducts.js:40 ~ SellerProduct ~ token:", token)
   const userData = useSelector(state => state.commonReducer.userData);
   const sellerProducts = useSelector(
     state => state.commonReducer.sellerProducts,

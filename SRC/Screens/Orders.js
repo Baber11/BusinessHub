@@ -372,7 +372,7 @@ const Orders = () => {
             paddingHorizontal: moderateScale(10, 0.5),
             marginTop: moderateScale(10, 0.3),
           }}>
-          Approved Orders
+         History
         </CustomText>
 
         {isLoading ? (
