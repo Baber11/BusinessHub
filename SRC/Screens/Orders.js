@@ -17,17 +17,19 @@ import {
 } from 'react-native-size-matters';
 import Header from '../Components/Header';
 import CustomText from '../Components/CustomText';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomTable from '../Components/CustomTable';
 import moment from 'moment';
-import {Get} from '../Axios/AxiosInterceptorFunction';
+import {Get, Post} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
 import navigationService from '../navigationService';
+import CustomButton from '../Components/CustomButton';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Orders = () => {
   const token = useSelector(state => state.authReducer.token);
@@ -96,7 +98,7 @@ const Orders = () => {
       //   '🚀 ~ file: Orders.js:76 ~ getSellerServices ~ response:',
       //   response?.data,
       // );
-       return setServiceOrder(response?.data?.data);
+      return setServiceOrder(response?.data?.data);
     }
   };
 
@@ -129,7 +131,7 @@ const Orders = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: moderateScale(60, 0.3),
-          backgroundColor:Color.white,
+          backgroundColor: Color.white,
           minHeight: windowHeight * 0.9,
         }}>
         <View
@@ -139,54 +141,48 @@ const Orders = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-             <View
-                style={{
-                  flexDirection: 'row',
-                  width: windowWidth * 0.7,
-                  borderWidth: 1,
-                  borderColor: Color.themeBlue,
-                  alignSelf: 'center',
-                  justifyContent: 'space-between',
-                  borderRadius: moderateScale(10, 0.6),
-                  overflow: 'hidden',
-                }}>
-                <CustomText
-                  style={{
-                    width: windowWidth * 0.35,
-                    textAlign: 'center',
-                    paddingVertical: moderateScale(10, 0.6),
-                    borderRadius: moderateScale(10, 0.6),
-                    color:
-                      selectedTab == 'Products' ? 'white' : Color.themeBlue,
-                    backgroundColor:
-                      selectedTab == 'Products'
-                        ? Color.themeBlue
-                        : 'transparent',
-                  }}
-                  onPress={() => {
-                    setSelectedTab('Products');
-                  }}>
-                  Products
-                </CustomText>
-                <CustomText
-                  style={{
-                    width: windowWidth * 0.35,
-                    borderRadius: moderateScale(10, 0.6),
-                    paddingVertical: moderateScale(10, 0.6),
-                    textAlign: 'center',
-                    color:
-                      selectedTab == 'Services' ? 'white' : Color.themeBlue,
-                    backgroundColor:
-                      selectedTab == 'Services'
-                        ? Color.themeBlue
-                        : 'transparent',
-                  }}
-                  onPress={() => {
-                    setSelectedTab('Services');
-                  }}>
-                  Services
-                </CustomText>
-              </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: windowWidth * 0.7,
+              borderWidth: 1,
+              borderColor: Color.themeBlue,
+              alignSelf: 'center',
+              justifyContent: 'space-between',
+              borderRadius: moderateScale(10, 0.6),
+              overflow: 'hidden',
+            }}>
+            <CustomText
+              style={{
+                width: windowWidth * 0.35,
+                textAlign: 'center',
+                paddingVertical: moderateScale(10, 0.6),
+                borderRadius: moderateScale(10, 0.6),
+                color: selectedTab == 'Products' ? 'white' : Color.themeBlue,
+                backgroundColor:
+                  selectedTab == 'Products' ? Color.themeBlue : 'transparent',
+              }}
+              onPress={() => {
+                setSelectedTab('Products');
+              }}>
+              Products
+            </CustomText>
+            <CustomText
+              style={{
+                width: windowWidth * 0.35,
+                borderRadius: moderateScale(10, 0.6),
+                paddingVertical: moderateScale(10, 0.6),
+                textAlign: 'center',
+                color: selectedTab == 'Services' ? 'white' : Color.themeBlue,
+                backgroundColor:
+                  selectedTab == 'Services' ? Color.themeBlue : 'transparent',
+              }}
+              onPress={() => {
+                setSelectedTab('Services');
+              }}>
+              Services
+            </CustomText>
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -206,53 +202,6 @@ const Orders = () => {
               }}>
               Latest Orders
             </CustomText>
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                width: windowWidth * 0.26,
-                height: windowHeight * 0.05,
-                borderWidth: 1,
-                borderColor: '#033b41',
-                // alignSelf: 'flex-end',
-                justifyContent: 'space-between',
-                borderRadius: moderateScale(10, 0.6),
-                overflow: 'hidden',
-                // marginTop: moderateScale(20, 0.3),
-                // marginRight: moderateScale(10, 0.3),
-              }}>
-              <CustomText
-                style={{
-                  width: windowWidth * 0.13,
-                  textAlign: 'center',
-                  paddingVertical: moderateScale(10, 0.6),
-                  fontSize: moderateScale(10, 0.6),
-                  // borderRadius: moderateScale(10, 0.6),
-                  color: selectedTab == 'Product' ? 'white' : '#033b41',
-                  backgroundColor:
-                    selectedTab == 'Product' ? '#033b41' : 'transparent',
-                }}
-                onPress={() => {
-                  setSelectedTab('Product');
-                }}>
-                Product
-              </CustomText>
-              <CustomText
-                style={{
-                  width: windowWidth * 0.13,
-                  // borderRadius: moderateScale(10, 0.6),
-                  paddingVertical: moderateScale(10, 0.6),
-                  fontSize: moderateScale(10, 0.6),
-                  textAlign: 'center',
-                  color: selectedTab == 'Seller' ? 'white' : '#033b41',
-                  backgroundColor:
-                    selectedTab == 'Seller' ? '#033b41' : 'transparent',
-                }}
-                onPress={() => {
-                  setSelectedTab('Seller');
-                }}>
-                Service
-              </CustomText>
-            </View> */}
           </View>
           {isLoading ? (
             <View
@@ -321,16 +270,93 @@ const Orders = () => {
                 );
               }}
               renderItem={({item, index}) => {
+                console.log('🚀 ~ file: Orders.js:273 ~ Orders ~ item:', item);
                 // console.log('🚀 ~ file: Orders.js:203 ~ Orders ~ item:', item);
                 return (
                   // <MyOrderCard item={item} />
-                  <OrderCard
-                    item={item}
-                    selectedOrder={selectedOrder}
-                    setSelectedOrder={setSelectedOrder}
-                    width={windowWidth * 0.85}
-                    selectedTab={selectedTab}
-                  />
+                  <View
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <OrderCard
+                      item={item}
+                      selectedOrder={selectedOrder}
+                      setSelectedOrder={setSelectedOrder}
+                      width={windowWidth * 0.85}
+                      selectedTab={selectedTab}
+                    />
+                    {/* <View
+                      style={{
+                        flexDirection: 'row',
+                        marginTop: moderateScale(5, 0.3),
+                        // backgroundColor: 'red',
+                        width: windowWidth * 0.45,
+                        justifyContent: 'space-between',
+                      }}>
+                      <CustomButton
+                        onPress={async () => {
+                          const url = `auth/order/update/${item?.order?.id}`;
+                          const body = {status: 'accepted'};
+                          const response = await Post(
+                            url,
+                            body,
+                            apiHeader(token),
+                          );
+                          if (response != undefined) {
+                            console.log(
+                              '🚀 ~ file: Orders.js:304 ~ onPress={ ~ response:',
+                              response?.data,
+                            );
+                          }
+                        }}
+                        text={'Accept'}
+                        textColor={Color.white}
+                        iconName={'pencil'}
+                        iconType={Entypo}
+                        // width={windowWidth * 0.28}
+                        height={windowHeight * 0.035}
+                        fontSize={moderateScale(10, 0.6)}
+                        marginTop={moderateScale(4, 0.3)}
+                        bgColor={Color.themeBlue}
+                        borderRadius={moderateScale(20, 0.3)}
+                        iconStyle={{
+                          fontSize: moderateScale(14, 0.6),
+                        }}
+                        marginRight={moderateScale(5, 0.3)}
+                        isBold
+                      />
+                      <CustomButton
+                        onPress={async () => {
+                          const url = `auth/order/update/${item?.order?.id}`;
+                          const body = {status: 'rejected'};
+                          const response = await Post(
+                            url,
+                            body,
+                            apiHeader(token),
+                          );
+                          if (response != undefined) {
+                            console.log(
+                              '🚀 ~ file: Orders.js:304 ~ onPress={ ~ response:',
+                              response?.data,
+                            );
+                          }
+                        }}
+                        text={'Reject'}
+                        textColor={Color.white}
+                        iconName={'pencil'}
+                        iconType={Entypo}
+                        // width={windowWidth * 0.28}
+                        height={windowHeight * 0.035}
+                        fontSize={moderateScale(10, 0.6)}
+                        marginTop={moderateScale(4, 0.3)}
+                        bgColor={Color.themeBlue}
+                        borderRadius={moderateScale(20, 0.3)}
+                        iconStyle={{
+                          fontSize: moderateScale(14, 0.6),
+                        }}
+                        marginRight={moderateScale(5, 0.3)}
+                        isBold
+                      />
+                    </View> */}
+                  </View>
                 );
               }}
             />
@@ -346,7 +372,7 @@ const Orders = () => {
             paddingHorizontal: moderateScale(10, 0.5),
             marginTop: moderateScale(10, 0.3),
           }}>
-          History
+          Approved Orders
         </CustomText>
 
         {isLoading ? (
@@ -519,14 +545,14 @@ const OrderCard = ({item, width, selectedTab}) => {
             color: '#000',
             fontSize: moderateScale(15, 0.6),
           }}>
-          Price : PKR{' '}
+          Price : PKR
           {item.total ? item?.total : item?.price ? item?.price : item?.charges}
         </CustomText>
       </View>
       <CustomText
         isBold
         onPress={() => {
-          if (selectedTab == 'Product') {
+          if (selectedTab == 'Products') {
             navigationService.navigate('OrderDetails', {
               item: item,
               details: false,

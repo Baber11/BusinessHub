@@ -45,7 +45,7 @@ const ServiceDetails = props => {
   //   props?.route?.params,
   // );
   const item = props?.route?.params?.item;
-  // console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
+  return console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
   // console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
