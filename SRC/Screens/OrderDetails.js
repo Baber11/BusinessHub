@@ -54,7 +54,7 @@ const OrderDetails = props => {
 
   return (
     <>
-      <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
+      <CustomStatusBar backgroundColor={'#ffff'} barStyle={'dark-content'} />
       <Header showBack={true} headerColor={['#fff', '#fff']} />
       <ScrollView
         showsVerticalScrollIndicator={false}

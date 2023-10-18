@@ -116,7 +116,6 @@ const OrderDetailScreen = props => {
                   ? item?.product?.category
                   : item?.service?.category}
               </CustomText>
-
               <View
                 style={{
                   width: windowWidth,
@@ -127,17 +126,17 @@ const OrderDetailScreen = props => {
                   source={
                     // require('../Assets/Images/logo.png')
                     {
-                    uri: item?.product?.product_image[0]?.photo
-                      ? item?.product?.product_image[0]?.photo
-                      : item?.images
-                      ? item?.images[0]
-                      : item?.service_image
-                      ? item?.service_image[0]?.photo
-                      : item?.orderdetail[0]?.images?
-                      item?.orderdetail[0]?.images[0] :
-                      require('../Assets/Images/logo.png')
+                      uri: item?.product?.product_image[0]?.photo
+                        ? item?.product?.product_image[0]?.photo
+                        : item?.images
+                        ? item?.images[0]
+                        : item?.service_image
+                        ? item?.service_image[0]?.photo
+                        : item?.orderdetail[0]?.images
+                        ? item?.orderdetail[0]?.images[0]
+                        : require('../Assets/Images/logo.png'),
+                    }
                   }
-                }
                   style={{
                     height: '100%',
                     width: '100%',
@@ -145,7 +144,6 @@ const OrderDetailScreen = props => {
                   resizeMode={'contain'}
                 />
               </View>
-
               {item?.product?.color && (
                 <View
                   style={{
@@ -191,7 +189,6 @@ const OrderDetailScreen = props => {
                   </CustomText>
                 </View>
               )}
-
               {item?.size && (
                 <>
                   <View
@@ -222,36 +219,36 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
-              {item?.charges && (<>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: moderateScale(30, 0.3),
-                    paddingHorizontal: moderateScale(18, 0.6),
-                  }}>
-                  <CustomText
+              {item?.charges && (
+                <>
+                  <View
                     style={{
-                      color: Color.veryLightGray,
-                      fontSize: moderateScale(12, 0.6),
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginTop: moderateScale(30, 0.3),
+                      paddingHorizontal: moderateScale(18, 0.6),
                     }}>
-                    charges
-                  </CustomText>
+                    <CustomText
+                      style={{
+                        color: Color.veryLightGray,
+                        fontSize: moderateScale(12, 0.6),
+                      }}>
+                      charges
+                    </CustomText>
 
-                  <CustomText
-                    style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
-                    {item?.charges}
-                  </CustomText>
-                </View>
-                 <Divider
-                 my="2"
-                 width="96"
-                 alignSelf={'center'}
-                 _light={{bg: 'gray.200'}}
-               />
-               </>
+                    <CustomText
+                      style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
+                      {item?.charges}
+                    </CustomText>
+                  </View>
+                  <Divider
+                    my="2"
+                    width="96"
+                    alignSelf={'center'}
+                    _light={{bg: 'gray.200'}}
+                  />
+                </>
               )}
-             
               <View
                 style={{
                   flexDirection: 'row',
@@ -310,7 +307,6 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
-
               {item?.qty && (
                 <>
                   <View
@@ -378,6 +374,33 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
+
+              <TouchableOpacity
+                style={{
+                  width: windowWidth * 0.4,
+                  paddingVertical: moderateScale(20, 0.6),
+                  backgroundColor: Color.darkBlue,
+                  alignSelf: 'center',
+                  marginTop:moderateScale(20,0.3),
+                  shadowColor: Color.themeBlue,
+                  shadowOffset: {width: 0, height: 2},
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 10,
+                  borderRadius: moderateScale(5, 0.3),
+                }}
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                <CustomText
+                  style={{
+                    color: '#fff',
+                    fontSize: moderateScale(13, 0.6),
+                    textAlign: 'center',
+                  }}>
+                  Close
+                </CustomText>
+              </TouchableOpacity>
             </View>
           );
         }}
@@ -414,6 +437,7 @@ const OrderDetailScreen = props => {
             </>
           );
         }}
+
         // ListFooterComponent={({item , index})=>{
         //   console.log('index is ================>' , item)
         //   return(
@@ -457,33 +481,6 @@ const OrderDetailScreen = props => {
           })}
         </View>
       )}
-      <TouchableOpacity
-        style={{
-          width: windowWidth * 0.4,
-          paddingVertical: moderateScale(20, 0.6),
-          backgroundColor: Color.darkBlue,
-          position: 'absolute',
-          bottom: moderateScale(10, 0.6),
-          alignSelf: 'center',
-          shadowColor: Color.themeBlue,
-          shadowOffset: {width: 0, height: 2},
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 10,
-          borderRadius:moderateScale(5,0.3)
-        }}
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        <CustomText
-          style={{
-            color: '#fff',
-            fontSize: moderateScale(13, 0.6),
-            textAlign: 'center',
-          }}>
-          Close
-        </CustomText>
-      </TouchableOpacity>
     </ImageBackground>
   );
 };
