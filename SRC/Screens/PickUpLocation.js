@@ -34,7 +34,7 @@ const PickUpLocation = props => {
   const user = useSelector(state => state.commonReducer.userData);
 
   const [size, setSize] = useState('');
-  const sizesArray = ['A', 'B', 'C', 'D', 'E','F', 'G'];
+  const sizesArray = ['Block-A', 'Block-B', 'Block-C', 'Block-D', 'Block-E','Block-F', 'Block-G'];
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();

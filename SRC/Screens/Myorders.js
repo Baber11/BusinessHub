@@ -33,8 +33,10 @@ const Myorders = () => {
   // console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
   const [serviceOrders, setServiceOrders] = useState([]);
   // console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
-  const [newData, setNewData] = useState();
+  const [newData, setNewData] = useState([]);
+  console.log("🚀 ~ file: Myorders.js:37 ~ Myorders ~ newData:", newData)
 
+ 
   const getUserOrders = async () => {
     const url = 'auth/order/list';
     setIsLoading(true);
@@ -42,7 +44,6 @@ const Myorders = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      // console.log("🚀 ~ file: Myorders.js:35 ~ getUserOrders ~ response:", response?.data)
       setProductOrders(response?.data?.orders);
     }
   };
@@ -69,6 +70,7 @@ const Myorders = () => {
   }, [selectedTab]);
 
   return (
+    
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
 
@@ -112,7 +114,7 @@ const Myorders = () => {
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={newData}
+            data={newData.reverse()}
             // data={serviceOrders}
             contentContainerStyle={{
               paddingBottom: moderateScale(40, 0.3),

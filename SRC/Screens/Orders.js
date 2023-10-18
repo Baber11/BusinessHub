@@ -78,10 +78,10 @@ const Orders = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      // console.log(
-      //   '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
-      //   response?.data,
-      // );
+      console.log(
+        '🚀 ~ file: Orders.js:76 ~ getSellerOrders ~ response:',
+        response?.data,
+      );
       setMyOrder(response?.data?.orders);
     }
   };
@@ -272,7 +272,7 @@ const Orders = () => {
             <FlatList
               numColumns={1}
               data={
-                selectedTab == 'Product'
+                selectedTab == 'Products'
                   ? myOrder.filter(item => dateDiff(item.date) < 24)
                   : serviceOrder.filter(item => dateDiff(item.date) < 24)
               }
