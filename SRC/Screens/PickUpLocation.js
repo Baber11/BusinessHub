@@ -28,16 +28,40 @@ import {setAddProducts} from '../Store/slices/common';
 import {Patch, Post} from '../Axios/AxiosInterceptorFunction';
 
 const PickUpLocation = props => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const body = props?.route?.params?.body;
   // console.log('🚀 ~ file: AddProduct.js:31 ~ AddProduct ~ item:', item);
   const token = useSelector(state => state.authReducer.token);
   const user = useSelector(state => state.commonReducer.userData);
 
   const [size, setSize] = useState('');
-  const sizesArray = ['Block-A', 'Block-B', 'Block-C', 'Block-D', 'Block-E','Block-F', 'Block-G'];
+  const sizesArray = [
+    'Block-A',
+    'Block-B',
+    'Block-C',
+    'Block-D',
+    'Block-E',
+    'Block-F',
+    'Block-G',
+    'Others'
+  ];
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+
+
+  useEffect(() => {
+    if(size == 'Others'){
+      Alert.alert('Alert!!', 'Please contact seller within two days to confirm your order', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'okay', onPress: () => null},
+      ]);
+    }
+  }, [size])
+  
 
   return (
     <>
@@ -60,7 +84,11 @@ const PickUpLocation = props => {
               flexWrap: 'wrap',
               // paddingHorizontal: moderateScale(10, 0.6),
             }}></View>
-            <CustomText style={{fontSize:moderateScale(15,.6), color:'black', }} isBold>Select PickUp Location</CustomText>
+          <CustomText
+            style={{fontSize: moderateScale(15, 0.6), color: 'black'}}
+            isBold>
+            Select PickUp Location
+          </CustomText>
 
           <DropDownSingleSelect
             array={sizesArray}
@@ -81,12 +109,16 @@ const PickUpLocation = props => {
           />
           <CustomButton
             isBold
-            onPress={
-                ()=>{
-                    navigationService.navigate('PaymentInvoice',{body:body})
-                }
+            onPress={() => {
+              navigationService.navigate('PaymentInvoice', {body: body});
+            }}
+            text={
+              isLoading ? (
+                <ActivityIndicator color={'white'} size={'small'} />
+              ) : (
+                'Confirm'
+              )
             }
-            text={isLoading ? <ActivityIndicator color={'white'} size={'small'} /> : 'Confirm'}
             textColor={Color.white}
             width={windowWidth * 0.5}
             height={windowHeight * 0.07}
@@ -95,11 +127,8 @@ const PickUpLocation = props => {
             marginTop={moderateScale(20, 0.3)}
             bgColor={Color.themeBlue}
             borderRadius={moderateScale(30, 0.3)}
-          // isGradient
+            // isGradient
           />
-
-
-          
         </View>
       </ScrollView>
     </>

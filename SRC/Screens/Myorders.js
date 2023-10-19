@@ -32,7 +32,7 @@ const Myorders = () => {
   const [productOrders, setProductOrders] = useState([]);
   // console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
   const [serviceOrders, setServiceOrders] = useState([]);
-  // console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
+  console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
   const [newData, setNewData] = useState([]);
   console.log("🚀 ~ file: Myorders.js:37 ~ Myorders ~ newData:", newData)
 
@@ -130,7 +130,7 @@ const Myorders = () => {
             renderItem={({item, index}) => {
               // console.log('DATA34', item);
               return (
-                <MyOrderCard item={item} type={selectedTab != 'Products'} />
+                <MyOrderCard item={item} type={selectedTab != 'Products'} selectedTab={selectedTab}/>
               );
             }}
             ListHeaderComponent={() => {

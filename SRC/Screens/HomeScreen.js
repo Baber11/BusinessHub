@@ -90,7 +90,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         style={{
           minHeight: windowHeight * 0.9,
-          backgroundColor: Color.themeColor2,
+          backgroundColor: Color.white,
         }}
         contentContainerStyle={{
           paddingBottom: moderateScale(40, 0.6),

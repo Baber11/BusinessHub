@@ -24,7 +24,7 @@ const SplashScreen = () => {
         }}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y:1}}
-        colors={[Color.white , Color.white]}
+        colors={['#D2E4E4' , '#D2E4E4']}
         // locations ={[0, 0.5, 0.6]}
         >
 

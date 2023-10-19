@@ -44,9 +44,12 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState('');
   const [selectedTab, setSelectedTab] = useState('Products');
   const [myOrder, setMyOrder] = useState([]);
-  console.log('🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:', myOrder);
+  console.log(
+    '🚀 ~ file: Orders.js:44 ~ Orders ~ myOrder:',
+    myOrder[0]?.created_at,
+  );
   const [serviceOrder, setServiceOrder] = useState([]);
-  // console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
+  console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
   // console.log("🚀 ~ file: Orders.js:45 ~ Orders ~ serviceOrder:", serviceOrder)
   // console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
   const navigation = useNavigation();
@@ -67,9 +70,12 @@ const Orders = () => {
   // };
 
   const dateDiff = item => {
+    console.log('🚀 ~ file: Orders.js:73 ~ dateDiff ~ item:', item);
     const currentDate = moment();
+    // console.log("🚀 ~ file: Orders.js:71 ~ dateDiff ~ currentDate:", currentDate)
     const newDate = moment(item);
-    // console.log('Date difference=========', currentDate.diff(newDate, 'h'));
+    // console.log("🚀 ~ file: Orders.js:73 ~ dateDiff ~ newDate:", newDate)
+    console.log('Date difference=========', currentDate.diff(newDate, 'h'));
     return currentDate.diff(newDate, 'h');
   };
 
@@ -222,8 +228,12 @@ const Orders = () => {
               numColumns={1}
               data={
                 selectedTab == 'Products'
-                  ? myOrder.filter(item => dateDiff(item.date) < 24)
-                  : serviceOrder.filter(item => dateDiff(item.date) < 24)
+                  ? myOrder
+                      .filter(item => dateDiff(item.created_at) < 48)
+                      .reverse()
+                  : serviceOrder
+                      .filter(item => item?.status == 'pending')
+                      .reverse()
               }
               showsHorizontalScrollIndicator={false}
               horizontal
@@ -270,12 +280,14 @@ const Orders = () => {
                 );
               }}
               renderItem={({item, index}) => {
-                console.log('🚀 ~ file: Orders.js:273 ~ Orders ~ item:', item);
+                // console.log(
+                //   '🚀 ~ file: Orders.js:273 ~ Orders ~ item:',
+                //   item?.order?.orderId,
+                // );
                 // console.log('🚀 ~ file: Orders.js:203 ~ Orders ~ item:', item);
                 return (
                   // <MyOrderCard item={item} />
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View style={{}}>
                     <OrderCard
                       item={item}
                       selectedOrder={selectedOrder}
@@ -283,79 +295,84 @@ const Orders = () => {
                       width={windowWidth * 0.85}
                       selectedTab={selectedTab}
                     />
-                    {/* <View
-                      style={{
-                        flexDirection: 'row',
-                        marginTop: moderateScale(5, 0.3),
-                        // backgroundColor: 'red',
-                        width: windowWidth * 0.45,
-                        justifyContent: 'space-between',
-                      }}>
-                      <CustomButton
-                        onPress={async () => {
-                          const url = `auth/order/update/${item?.order?.id}`;
-                          const body = {status: 'accepted'};
-                          const response = await Post(
-                            url,
-                            body,
-                            apiHeader(token),
-                          );
-                          if (response != undefined) {
-                            console.log(
-                              '🚀 ~ file: Orders.js:304 ~ onPress={ ~ response:',
-                              response?.data,
+                    {selectedTab == 'Services' && item?.status == 'pending' && (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          // marginTop: moderateScale(5, 0.3),
+                          // backgroundColor: 'red',
+                          width: windowWidth * 0.6,
+                          alignSelf: 'center',
+                          justifyContent: 'space-between',
+                        }}>
+                        <CustomButton
+                          onPress={async () => {
+                            const url = `auth/services/book/status/${item?.id}`;
+                            const body = {status: 'accepted'};
+                            const response = await Post(
+                              url,
+                              body,
+                              apiHeader(token),
                             );
-                          }
-                        }}
-                        text={'Accept'}
-                        textColor={Color.white}
-                        iconName={'pencil'}
-                        iconType={Entypo}
-                        // width={windowWidth * 0.28}
-                        height={windowHeight * 0.035}
-                        fontSize={moderateScale(10, 0.6)}
-                        marginTop={moderateScale(4, 0.3)}
-                        bgColor={Color.themeBlue}
-                        borderRadius={moderateScale(20, 0.3)}
-                        iconStyle={{
-                          fontSize: moderateScale(14, 0.6),
-                        }}
-                        marginRight={moderateScale(5, 0.3)}
-                        isBold
-                      />
-                      <CustomButton
-                        onPress={async () => {
-                          const url = `auth/order/update/${item?.order?.id}`;
-                          const body = {status: 'rejected'};
-                          const response = await Post(
-                            url,
-                            body,
-                            apiHeader(token),
-                          );
-                          if (response != undefined) {
-                            console.log(
-                              '🚀 ~ file: Orders.js:304 ~ onPress={ ~ response:',
-                              response?.data,
+                            if (response != undefined) {
+                              console.log(
+                                '🚀 ~ file: Orders.js:304 ~ onPress={ ~ response:',
+                                response?.data,
+                              );
+                              getSellerServices();
+                            }
+                          }}
+                          text={'Accept'}
+                          textColor={Color.white}
+                          // iconName={'pencil'}
+                          // iconType={Entypo}
+                          width={windowWidth * 0.28}
+                          height={windowHeight * 0.04}
+                          fontSize={moderateScale(12, 0.6)}
+                          marginTop={moderateScale(4, 0.3)}
+                          bgColor={Color.themeBlue}
+                          borderRadius={moderateScale(20, 0.3)}
+                          iconStyle={{
+                            fontSize: moderateScale(14, 0.6),
+                          }}
+                          // marginRight={moderateScale(5, 0.3)}
+                          isBold
+                        />
+                        <CustomButton
+                          onPress={async () => {
+                            const url = `auth/services/book/status/${item?.id}`;
+                            const body = {status: 'rejected'};
+                            const response = await Post(
+                              url,
+                              body,
+                              apiHeader(token),
                             );
-                          }
-                        }}
-                        text={'Reject'}
-                        textColor={Color.white}
-                        iconName={'pencil'}
-                        iconType={Entypo}
-                        // width={windowWidth * 0.28}
-                        height={windowHeight * 0.035}
-                        fontSize={moderateScale(10, 0.6)}
-                        marginTop={moderateScale(4, 0.3)}
-                        bgColor={Color.themeBlue}
-                        borderRadius={moderateScale(20, 0.3)}
-                        iconStyle={{
-                          fontSize: moderateScale(14, 0.6),
-                        }}
-                        marginRight={moderateScale(5, 0.3)}
-                        isBold
-                      />
-                    </View> */}
+                            if (response != undefined) {
+                              console.log(
+                                '🚀 ~ file: Orders.js:304 ~ onPress={ ~ response:',
+                                response?.data,
+                              );
+                              getSellerServices();
+                            }
+                          }}
+                          text={'Reject'}
+                          textColor={Color.white}
+                          // iconName={'pencil'}
+                          // iconType={Entypo}
+                          width={windowWidth * 0.28}
+                          height={windowHeight * 0.04}
+                          fontSize={moderateScale(12, 0.6)}
+                          marginTop={moderateScale(4, 0.3)}
+                          bgColor={Color.themeBlue}
+                          borderRadius={moderateScale(20, 0.3)}
+                          iconStyle={{
+                            fontSize: moderateScale(14, 0.6),
+                          }}
+                          // marginRight={moderateScale(5, 0.3)}
+                          isBold
+                        />
+                      </View>
+                    )}
                   </View>
                 );
               }}
@@ -372,7 +389,7 @@ const Orders = () => {
             paddingHorizontal: moderateScale(10, 0.5),
             marginTop: moderateScale(10, 0.3),
           }}>
-         History
+          History
         </CustomText>
 
         {isLoading ? (
@@ -393,7 +410,15 @@ const Orders = () => {
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={1}
-            data={myOrder.filter(item => dateDiff(item?.date) >= 24)}
+            data={
+              selectedTab == 'Products'
+                ? myOrder
+                    .filter(item => dateDiff(item?.created_at) >= 48)
+                    .reverse()
+                : serviceOrder
+                    .filter(item => item?.status != 'pending')
+                    .reverse()
+            }
             contentContainerStyle={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -457,6 +482,7 @@ const OrderCard = ({item, width, selectedTab}) => {
     <View
       key={item?.id}
       style={{
+        marginBottom: moderateScale(10, 0.3),
         width: width ? width : windowWidth * 0.95,
         paddingVertical: moderateScale(10, 0.6),
         marginHorizontal: moderateScale(5, 0.3),
@@ -480,6 +506,30 @@ const OrderCard = ({item, width, selectedTab}) => {
         elevation: 5,
         // marginBottom : moderateScale(10,0.3)
       }}>
+      {selectedTab == 'Services' && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 5,
+            right: 10,
+            // padding:moderateScale(5,.6),
+            borderRadius: moderateScale(10, 0.6),
+            flexDirection:'row',
+            alignItems:'center'
+          }}>
+          <CustomText style={{fontSize: moderateScale(8, 0.6)}}>
+            {item?.status}
+          </CustomText>
+          <View
+            style={{
+              height: moderateScale(5, 0.6),
+              width: moderateScale(5, 0.6),
+              borderRadius: moderateScale(5, 0.6) / 2,
+              marginLeft:moderateScale(3,.3),
+              backgroundColor:item?.status == 'accepted' ? 'green':item?.status == 'pending' ? 'orange' :'red',
+            }}></View>
+        </View>
+      )}
       <View
         style={{
           width: windowWidth * 0.2,

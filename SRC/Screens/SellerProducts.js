@@ -363,6 +363,7 @@ const SellerProduct = props => {
                       </View>
                     </View>
                   </TouchableOpacity>
+                 
                 </>
               );
             })

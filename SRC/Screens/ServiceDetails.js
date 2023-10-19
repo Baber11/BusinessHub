@@ -45,7 +45,7 @@ const ServiceDetails = props => {
   //   props?.route?.params,
   // );
   const item = props?.route?.params?.item;
-  return console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
+  console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
   // console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
@@ -122,6 +122,13 @@ const ServiceDetails = props => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response?.data?.success) {
+      Platform.OS == 'android'
+      ? ToastAndroid.show(
+          'Your Booking has been confirmed',
+          ToastAndroid.SHORT,
+        )
+      : Alert.alert('Your Booking has been confirmed');
+    navigation.goBack();
       // return console.log(
       //   '🚀 ~ file: ServiceDetails.js:112 ~ BookingNow ~ response:',
       //   response?.data,
@@ -132,11 +139,7 @@ const ServiceDetails = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-      <Header
-        showBack={true}
-        headerColor={['#fff', '#fff']}
-        cart={!seller}
-      />
+      <Header showBack={true} headerColor={['#fff', '#fff']} cart={!seller} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -334,88 +337,86 @@ const ServiceDetails = props => {
           </CustomText>
         </View>
 
-        {!seller && <View style={styles.container2}>
-              <CustomText
-                isBold
-                style={{
-                  fontSize: moderateScale(14, 0.6),
-                  marginTop: moderateScale(10, 0.3),
-                  color: '#201E1D',
-                  width: windowWidth * 0.9,
-                  marginLeft: moderateScale(10, 0.3),
-                }}>
-                Book a date
-              </CustomText>
-              <Calendar
-                style={{
-                  width: windowWidth * 0.8,
-                  marginBottom: moderateScale(40, 0.3),
-                  // backgroundColor : 'red'
-                }}
-                minDate={moment().format()}
-                onDayPress={day => {
-                  // console.log('day========>>>>>', day);
-                  setDate(day?.dateString);
-                }}
-                theme={{
-                  textSectionTitleColor: Color.themeBlue,
-                  selectedDayBackgroundColor: Color.themeBlue,
-                  selectedDayTextColor: Color.white,
-                  todayTextColor: Color.themeBlue,
-                  dayTextColor: Color.black,
-                  dayTextColor: Color.black,
-                  textDisabledColor: '#d9e1e8',
-                  arrowColor: Color.themeBlue,
-                  monthTextColor: Color.veryLightGray,
-                  indicatorColor: Color.themeBlue,
-                  textMonthFontWeight: 'bold',
-                  textDayHeaderFontWeight: 'bold',
-                  textDayFontSize: moderateScale(12, 0.3),
-                  textMonthFontSize: moderateScale(16, 0.3),
-                  textDayHeaderFontSize: moderateScale(14, 0.3),
-                }}
-                markedDates={{
-                  ...{
-                    [date]: {
-                      selected: true,
-                      color: Color.themeBlue,
-                      textColor: '#000000',
-                      marked: true,
-                    },
+        {!seller && (
+          <View style={styles.container2}>
+            <CustomText
+              isBold
+              style={{
+                fontSize: moderateScale(14, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              Book a date
+            </CustomText>
+            <Calendar
+              style={{
+                width: windowWidth * 0.8,
+                marginBottom: moderateScale(40, 0.3),
+                // backgroundColor : 'red'
+              }}
+              minDate={moment().format()}
+              onDayPress={day => {
+                // console.log('day========>>>>>', day);
+                setDate(day?.dateString);
+              }}
+              theme={{
+                textSectionTitleColor: Color.themeBlue,
+                selectedDayBackgroundColor: Color.themeBlue,
+                selectedDayTextColor: Color.white,
+                todayTextColor: Color.themeBlue,
+                dayTextColor: Color.black,
+                dayTextColor: Color.black,
+                textDisabledColor: '#d9e1e8',
+                arrowColor: Color.themeBlue,
+                monthTextColor: Color.veryLightGray,
+                indicatorColor: Color.themeBlue,
+                textMonthFontWeight: 'bold',
+                textDayHeaderFontWeight: 'bold',
+                textDayFontSize: moderateScale(12, 0.3),
+                textMonthFontSize: moderateScale(16, 0.3),
+                textDayHeaderFontSize: moderateScale(14, 0.3),
+              }}
+              markedDates={{
+                ...{
+                  [date]: {
+                    selected: true,
+                    color: Color.themeBlue,
+                    textColor: '#000000',
+                    marked: true,
                   },
-                }}
-              />
-            
+                },
+              }}
+            />
+          </View>
+        )}
 
-        </View>}
-
-        {seller && item?.date &&
-        <View style={styles.container2}> 
-        <CustomText
-          isBold
-          style={{
-            fontSize: moderateScale(14, 0.6),
-            marginTop: moderateScale(10, 0.3),
-            color: '#201E1D',
-            width: windowWidth * 0.9,
-            marginLeft: moderateScale(10, 0.3),
-          }}>
-          Booking Date
-        </CustomText>
-        <CustomText
-          style={{
-            fontSize: moderateScale(14, 0.6),
-            // marginTop: moderateScale(10, 0.3),
-            color: '#201E1D',
-            width: windowWidth * 0.9,
-            marginLeft: moderateScale(10, 0.3),
-          }}>
-          {item?.date}
-        </CustomText>
-      </View>
-        }
-
-  
+        {seller && item?.date && (
+          <View style={styles.container2}>
+            <CustomText
+              isBold
+              style={{
+                fontSize: moderateScale(14, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              Booking Date
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(14, 0.6),
+                // marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              {item?.date}
+            </CustomText>
+          </View>
+        )}
 
         {
           <View
@@ -557,13 +558,7 @@ const ServiceDetails = props => {
                   //   }),
                   // );
                   BookNow();
-                  Platform.OS == 'android'
-                    ? ToastAndroid.show(
-                        'Your Booking has been confirmed',
-                        ToastAndroid.SHORT,
-                      )
-                    : Alert.alert('Your Booking has been confirmed');
-                  navigation.goBack();
+                
                 }
               }
             }}
@@ -587,7 +582,7 @@ const ServiceDetails = props => {
 export default ServiceDetails;
 
 const styles = StyleSheet.create({
-  container2:{
+  container2: {
     width: windowWidth * 0.95,
     backgroundColor: 'white',
     alignSelf: 'center',
