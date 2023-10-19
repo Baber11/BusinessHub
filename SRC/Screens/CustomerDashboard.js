@@ -25,7 +25,6 @@ import {useSelector} from 'react-redux';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import Product from '../Components/Product';
-import navigationService from '../navigationService';
 import SearchbarComponent from '../Components/SearchbarComponent';
 import {Get} from '../Axios/AxiosInterceptorFunction';
 
@@ -38,6 +37,9 @@ const CustomerDashboard = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [allServices, setAllServices] = useState([]);
   const [newData, setNewData] = useState([]);
+  const [search, setSearch] = useState('');
+
+  console.log("🚀 ~ file: CustomerDashboard.js:40 ~ newData:", newData)
 
   const productList = async () => {
     const url = 'products';
@@ -45,6 +47,10 @@ const CustomerDashboard = () => {
     const response = await Get(url);
     setIsLoading(false);
     if (response != undefined) {
+      console.log(
+        'reviews========f df  fsdff fggf gdssd>',
+        response?.data?.data?.products[0]?.product_review,
+      );
       setAllProducts(response?.data?.data?.products);
     }
   };
@@ -64,7 +70,7 @@ const CustomerDashboard = () => {
     const backhandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        console.log('in backhandler')
+        // console.log('in backhandler')
         if (token != null) {
           BackHandler.exitApp();
         } else {
@@ -77,10 +83,13 @@ const CustomerDashboard = () => {
   }, []);
 
   useEffect(() => {
-    productList();
-    serviceList();
-    setNewData(allProducts);
-  }, []);
+    if(isFocused == true){
+
+      productList();
+      serviceList();
+      // setNewData(allProducts);
+    }
+  }, [isFocused]);
 
   return (
     <>
@@ -123,17 +132,16 @@ const CustomerDashboard = () => {
           // style={styles.categoryContainer}
         >
           {isServiceLoading ? (
-            <View style={{height:windowHeight*0.1, justifyContent:'center'}}>
-            <ActivityIndicator
-              color={Color.darkBlue}
-              size={moderateScale(30, 0.6)}
-            /></View>
+            <View
+              style={{height: windowHeight * 0.1, justifyContent: 'center'}}>
+              <ActivityIndicator
+                color={Color.darkBlue}
+                size={moderateScale(30, 0.6)}
+              />
+            </View>
           ) : (
             allServices?.map((item, index) => {
-              // console.log(
-              //   '🚀 ~ file: CustomerDashboard.js:145 ~ {allServices?.map ~ item:',
-              //   item,
-              // );
+              
               return (
                 <>
                   <TouchableOpacity
@@ -154,7 +162,7 @@ const CustomerDashboard = () => {
                       backgroundColor: 'white',
                     }}
                     onPress={() => {
-                      navigationService.navigate('ServiceDetails', {
+                      navigation.navigate('ServiceDetails', {
                         item,
                       });
                     }}>
@@ -175,7 +183,7 @@ const CustomerDashboard = () => {
                         }}
                         resizeMode={'stretch'}
                         onPress={() => {
-                          navigationService.navigate('ServiceDetails', {item});
+                          navigation.navigate('ServiceDetails', {item});
                         }}
                       />
                     </View>
@@ -224,6 +232,8 @@ const CustomerDashboard = () => {
             width: windowWidth * 0.95,
             marginLeft: moderateScale(10, 0.3),
           }}
+          setSearch={setSearch}
+          search={search}
         />
 
         <CustomText
@@ -255,13 +265,21 @@ const CustomerDashboard = () => {
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
-            data={newData.length == 0 ? allProducts : newData}
+            data={search == '' ? allProducts : newData}
             contentContainerStyle={{
               alignSelf: 'center',
               marginTop: moderateScale(5, 0.3),
             }}
             renderItem={({item, index}) => {
-              return <Product item={item} />;
+             
+              return (
+                <Product
+                  onPress={() => {
+                    navigation.navigate('ProductDetails', {item: item});
+                  }}
+                  item={item}
+                />
+              );
             }}
             ListEmptyComponent={() => {
               return (

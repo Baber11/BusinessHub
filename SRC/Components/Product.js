@@ -20,9 +20,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import numeral from 'numeral';
 import {Delete, Get} from '../Axios/AxiosInterceptorFunction';
 
-const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) => {
-  // console.log('🚀 ~ file: Product.js:16 ~ Product ~ item:', item);
-  // console.log("🚀 ~ file: Product.js:16 ~ Product ~ seller:", seller)
+const Product = ({item, seller, onPress,setAddedProducts, addedProducts}) => {
   const token = useSelector(state => state.authReducer.token);
 
   const dispatch = useDispatch();
@@ -31,28 +29,11 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
 
   const cartData = useSelector(state => state.commonReducer.cart);
   const Role = useSelector(state => state.authReducer.role);
-  // console.log('🚀 ~ file: Product.js:25 ~ Product ~ Role:', Role);
-
-  const addedItem = item => {
-    // console.log('cartIte===================?????????',{product_quantity:1,product_id:item?.id,...item})
-    dispatch(AddToCart({product_quantity:1,product_id:item?.id,...item}));
-  };
-
-  const removeItem = item => {
-    dispatch(RemoveToCart(item));
-  };
 
   const editProduct = async id => {
-    // console.log('id===========================>>>>>', id);
     const url = `auth/product/${id}`;
-    // setIsLoading(true);
     const response = await Get(url, token);
-    // setIsLoading(false);
     if (response != undefined) {
-    //  console.log(
-    //     '🚀 ~ file: AddServices.js:126 ~ editService ~ response?.data:',
-    //     response?.data,
-    //   );
       navigationService.navigate('AddProduct', {item: response?.data?.data});
     }
   };
@@ -83,11 +64,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
         activeOpacity={0.8}
         onPress={() => {
           if (!seller) {
-            navigationService.navigate('ProductDetails', {item});
-
-            // if (!tempitem) {
-            //   addedItem(item);
-            // }
+            onPress()
           } else {
             navigationService.navigate('OrderDetails', {
               item,
@@ -126,11 +103,7 @@ const Product = ({item, seller, customStyle,setAddedProducts, addedProducts}) =>
           }}
           onPress={() => {
             if (!seller) {
-              navigationService.navigate('ProductDetails', {item});
-
-              // if (!tempitem) {
-              //   addedItem(item);
-              // }
+              onPress()
             } else {
               navigationService.navigate('OrderDetails', {
                 item,

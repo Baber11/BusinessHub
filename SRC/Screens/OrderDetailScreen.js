@@ -56,10 +56,10 @@ const OrderDetailScreen = props => {
     },
   ];
 
-  const item = props.route.params.item;
+  const item1 = props.route.params.item;
   console.log(
-    '🚀 ~ file: OrderDetailScreen.js:74 ~ OrderDetailScreen ~ item:',
-    item,
+    '🚀 ~ file: OrderDetailScref sdfsd fen.js:74 ~ OrderDetdfsfailScreen ~ item:',
+    item1?.pickup_point,
   );
 
   const type = props.route.params.type;
@@ -77,7 +77,7 @@ const OrderDetailScreen = props => {
         horizontal
         viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
         showsHorizontalScrollIndicator={false}
-        data={item?.orderdetail ? item?.orderdetail : [item]}
+        data={item1?.orderdetail ? item1?.orderdetail : [item1]}
         contentContainerStyle={{
           alignSelf: 'center',
         }}
@@ -337,7 +337,33 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
-              {(item?.description || item?.service?.description) && (
+               <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginTop: moderateScale(20, 0.3),
+                      paddingHorizontal: moderateScale(18, 0.6),
+                    }}>
+                    <CustomText
+                      style={{
+                        color: Color.themeLightGray,
+                        fontSize: moderateScale(12, 0.6),
+                      }}>
+                      PickUp point  
+                    </CustomText>
+
+                    <CustomText
+                      style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
+                      {item1?.pickup_point}
+                    </CustomText>
+                  </View>
+                  <Divider
+                    my="2"
+                    width="96"
+                    alignSelf={'center'}
+                    _light={{bg: 'gray.200'}}
+                  />
+              {/* {(item?.description || item?.service?.description) && (
                 <>
                   <View
                     style={{
@@ -373,9 +399,9 @@ const OrderDetailScreen = props => {
                     _light={{bg: 'gray.200'}}
                   />
                 </>
-              )}
+              )} */}
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   width: windowWidth * 0.4,
                   paddingVertical: moderateScale(20, 0.6),
@@ -400,7 +426,7 @@ const OrderDetailScreen = props => {
                   }}>
                   Close
                 </CustomText>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           );
         }}
@@ -458,7 +484,7 @@ const OrderDetailScreen = props => {
             // position: 'absolute',
             // bottom: moderateScale(30, 0.6),
           }}>
-          {item?.orderdetail?.map((x, i) => {
+          {item1?.orderdetail?.map((x, i) => {
             // console.log('index, i ', index, i);
             return (
               <View

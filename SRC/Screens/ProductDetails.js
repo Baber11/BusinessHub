@@ -1,6 +1,12 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
@@ -26,18 +32,19 @@ import Color from '../Assets/Utilities/Color';
 import CommentsSection from '../Components/CommentsSection';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import moment from 'moment';
+import {Post} from '../Axios/AxiosInterceptorFunction';
 
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ item:", item)
+  console.log("🚀 ~ file: ProductDetails.js:39 ~ ProductDetails ~ item:", item)
+ 
   const cartData = useSelector(state => state.commonReducer.cart);
-  
+  const token = useSelector(state => state.authReducer.token);
+
   const user = useSelector(state => state.commonReducer.userData);
 
-  const userRole = useSelector(state=> state.commonReducer.selectedRole)
+  const userRole = useSelector(state => state.commonReducer.selectedRole);
   const cartitem = cartData?.find((x, index) => x?.id == item?.id);
-  // console.log("🚀 ~ file: ProductDetails.js:36 ~ ProductDetails ~ cartitem:", cartitem)
-  // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
   const dispatch = useDispatch();
   const focused = useIsFocused();
   const [selectedColor, setSelectedColor] = useState(
@@ -49,59 +56,77 @@ const ProductDetails = props => {
   );
 
   const [index, setIndex] = useState(1);
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:',
-  //   item?.product_image[index-1],
-  // );
-  const [quantity, setQuantity] = useState(userRole == 'vendor' ? item?.quantity : cartitem ? cartitem?.product_quantity : 1  )
-  // const [quantity, setQuantity] = useState( 
-  //   cartitem ? cartitem?.quantity : item?.quantity ? item?.quantity : 1,
-  // );
-  const [cotton, setcotton] = useState(
-    cartitem ? cartitem?.cotton : item?.cotton ? item?.cotton : 1,
+
+  const [quantity, setQuantity] = useState(
+    userRole == 'vendor'
+      ? item?.quantity
+      : cartitem
+      ? cartitem?.product_quantity
+      : 1,
   );
-  const [comments, setComments] = useState(
-    item?.comments ? item?.comments : [],
+
+  const [comments, setComments] = useState([]
   );
+
+  const [isLoading, setisLoading] = useState(false);
   const [yourComment, setYourComment] = useState('');
 
+  const addReview = async () => {
+    const url = 'auth/review';
+    const body = {
+      product_id: item?.id,
+      description: yourComment,
+    };
+    setisLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setisLoading(false);
+
+    if (response != undefined) {
+      setComments(prev => [
+        ...prev,
+        {
+          user: {photo: user?.photo, name: user?.name},
+          description: yourComment,
+          time: moment(),
+        },
+      ]);
+      setYourComment('');
+    }
+  };
+
   const addedItem = item => {
-    // dispatch(AddToCart({qty:1,...item}));
-    // console.log('Console it============>>>>>>>>>>>',{product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item})
-    dispatch(AddToCart({product_quantity:quantity,product_id:item?.id,selectedSize:selectedSize, selectedColor:selectedColor, ...item}));
+    dispatch(
+      AddToCart({
+        product_quantity: quantity,
+        product_id: item?.id,
+        selectedSize: selectedSize,
+        selectedColor: selectedColor,
+        ...item,
+      }),
+    );
   };
 
   const removeItem = item => {
     dispatch(RemoveToCart(item));
   };
 
-  const images = [
-    require('../Assets/Images/image3.png'),
-    require('../Assets/Images/Mask2.png'),
-    require('../Assets/Images/image3.png'),
-    require('../Assets/Images/Mask2.png'),
-    require('../Assets/Images/Mask.png'),
-  ];
+ 
 
   const [finalItem, setFinalItem] = useState(
     cartitem != undefined ? cartitem : item,
   );
-  const body = {
-    Title: item?.Title,
-    colors: item?.colors,
-    cotton: cotton,
-    id: item?.id,
-    images: item?.images,
-    // like: like,
-    price: item?.price,
-    product_quantity: quantity,
-    sale: item?.sale,
-    size: item?.size,
-    subTitle: item?.subTitle,
-    selectedSize: selectedSize,
-    selectedColor: selectedColor,
-    totalQty: item?.totalQty,
-  };
+
+  useEffect(() => {
+    setComments(item?.product_review)
+    console.log(
+      '🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ ite\fd0:',
+      item?.product_review,
+    );
+    return ()=>{
+      setComments([])
+    }
+  }, [focused])
+  
 
   return (
     <>
@@ -250,8 +275,6 @@ const ProductDetails = props => {
               numberOfLines={1}>
               {finalItem?.category}
             </CustomText>
-
-           
           </View>
 
           <View
@@ -317,20 +340,21 @@ const ProductDetails = props => {
             </View>
           </View>
 
-         {!['null', null, undefined, '', []].includes(item?.color) && <CustomText
-            isBold
-            style={{
-              color: '#201E1D',
-              fontSize: moderateScale(14, 0.6),
-              width: windowWidth * 0.17,
-              marginLeft: moderateScale(10, 0.3),
-            }}>
-            Color
-          </CustomText>}
+          {!['null', null, undefined, '', []].includes(item?.color) && (
+            <CustomText
+              isBold
+              style={{
+                color: '#201E1D',
+                fontSize: moderateScale(14, 0.6),
+                width: windowWidth * 0.17,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              Color
+            </CustomText>
+          )}
 
           <View style={styles.ColorLine}>
             {JSON.parse(item?.color)?.map(color => {
-              // console.log('Here================')
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -387,7 +411,7 @@ const ProductDetails = props => {
                     styles.size,
                     {
                       backgroundColor:
-                      selectedSize == size ? Color.themeBlue : '#F4F5F6',
+                        selectedSize == size ? Color.themeBlue : '#F4F5F6',
                       marginHorizontal: moderateScale(5, 0.3),
                     },
                   ]}>
@@ -403,93 +427,6 @@ const ProductDetails = props => {
               );
             })}
           </View>
-
-          {/* <CustomText
-            style={{
-              fontSize: moderateScale(12, 0.6),
-              color: '#8e9194',
-              width: windowWidth * 0.28,
-            }}>
-            Composition
-          </CustomText> */}
-
-          {/* <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: moderateScale(5, 0.6),
-              alignItems: 'center',
-            }}>
-            <CustomText
-              isBold
-              style={{
-                color: '#2F2B29',
-                fontSize: 16,
-                width: windowWidth * 0.36,
-              }}>
-              Organic Cotton
-            </CustomText>
-
-            <View style={styles.conterContainer}>
-              <TouchableOpacity
-                style={{
-                  width: windowWidth * 0.06,
-                  height: windowHeight * 0.03,
-                  borderRadius: (windowWidth * 0.06) / 3,
-                  backgroundColor: '#f2f2f2',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  setcotton(cotton + 1);
-                  dispatch(setCotton({id: item.id, val: 1}));
-                }}>
-                <CustomText
-                  isBold
-                  style={{
-                    color: '#000',
-                    fontSize: 13,
-                  }}>
-                  +
-                </CustomText>
-              </TouchableOpacity>
-
-              <CustomText
-                isBold
-                style={{
-                  color: '#2F2B29',
-                  fontSize: 18,
-                }}>
-                {cotton}
-              </CustomText>
-
-              <TouchableOpacity
-                onPress={() => {
-                  if (cotton > 1) {
-                    setcotton(cotton - 1);
-                  }
-                  item?.cotton > 1 &&
-                    dispatch(setCotton({id: item?.id, val: -1}));
-                }}
-                style={{
-                  width: windowWidth * 0.06,
-                  height: windowHeight * 0.03,
-                  borderRadius: (windowWidth * 0.06) / 3,
-                  backgroundColor: '#f2f2f2',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <CustomText
-                  isBold
-                  style={{
-                    color: '#000',
-                    fontSize: 13,
-                  }}>
-                  -
-                </CustomText>
-              </TouchableOpacity>
-            </View>
-          </View> */}
         </View>
 
         <View
@@ -552,7 +489,6 @@ const ProductDetails = props => {
               viewHeight={0.05}
               viewWidth={0.7}
               inputWidth={0.7}
-              // border={1}
               borderColor={Color.veryLightGray}
               backgroundColor={'#FFFFFF'}
               marginTop={moderateScale(10, 0.3)}
@@ -565,35 +501,20 @@ const ProductDetails = props => {
             />
             <CustomButton
               isBold
-              onPress={() => {
-                const body = {
-                  userName: user?.name,
-                  image: user?.image,
-                  text: yourComment,
-                  time: moment().format(' hh:mm:ss a'),
-                };
-                // console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
-                setComments(prev => [
-                  ...prev,
-                  {
-                    userName: user?.name,
-                    image: user?.image,
-                    text: yourComment,
-                    time: moment().format(' hh:mm:ss a'),
-                  },
-                ]);
-                setYourComment('');
-              }}
-              text={'Add'}
+              onPress={addReview}
+              text={
+                isLoading ? (
+                  <ActivityIndicator size={'small'} color={'white'} />
+                ) : (
+                  'Add'
+                )
+              }
               textColor={Color.white}
               width={windowWidth * 0.15}
               height={windowHeight * 0.045}
               fontSize={moderateScale(10, 0.6)}
-              // marginBottom={moderateScale(10,.3)}
-              // marginTop={moderateScale(20, 0.3)}
               bgColor={Color.themeBlue}
               borderRadius={moderateScale(30, 0.3)}
-              // isGradient
             />
           </View>
         </View>
@@ -601,16 +522,11 @@ const ProductDetails = props => {
 
       <View style={styles.bottomContainer}>
         <CustomButton
-          // disabled={cartitem?.product_quantity > 0 ? true : false}
           isBold
           onPress={() => {
-            // console.log('Body========>>>>>', body);
-            if(cartitem?.product_quantity > 0){
-              // console.log('Here 1')
-               removeItem(cartitem?.id) 
-            }else{
-              // console.log('Here 2')
-
+            if (cartitem?.product_quantity > 0) {
+              removeItem(cartitem?.id);
+            } else {
               addedItem(item);
             }
           }}
@@ -619,11 +535,8 @@ const ProductDetails = props => {
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
           fontSize={moderateScale(16, 0.6)}
-          // marginBottom={moderateScale(10,.3)}
-          // marginTop={moderateScale(20, 0.3)}
           bgColor={Color.themeBlue}
           borderRadius={moderateScale(30, 0.3)}
-          // isGradient
         />
       </View>
     </>

@@ -29,7 +29,7 @@ import moment from 'moment';
 const OrderDetails = props => {
   const item = props.route.params.item;
   const details = props.route.params.details;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressfsdfesfdfsDefdtail ~ item:', item);
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
 
@@ -416,7 +416,7 @@ const OrderDetails = props => {
                 marginTop: moderateScale(5, 0.3),
                 width: windowWidth * 0.9,
               }}>
-              Address : {item?.order?.user?.address}
+              Address : {item?.pickup_point}
             </CustomText>
           </View>
         )}

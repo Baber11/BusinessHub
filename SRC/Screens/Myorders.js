@@ -13,7 +13,7 @@ import CustomStatusBar from '../Components/CustomStatusBar';
 
 import {moderateScale} from 'react-native-size-matters';
 import {useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import MyOrderCard from '../Components/MyorderComponent';
 import SearchbarComponent from '../Components/SearchbarComponent';
@@ -23,20 +23,20 @@ import Product from '../Components/Product';
 
 const Myorders = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const token = useSelector(state => state.authReducer.token);
-  // console.log("🚀 ~ file: Myorders.js:20 ~ Myorders ~ token:", token)
-  const orderData = useSelector(state => state.commonReducer.order);
-  const bookings = useSelector(state => state.commonReducer.bookings);
   const [selectedTab, setSelectedTab] = useState('Products');
   const [isLoading, setIsLoading] = useState(false);
   const [productOrders, setProductOrders] = useState([]);
   // console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
   const [serviceOrders, setServiceOrders] = useState([]);
-  console.log("🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:", serviceOrders)
+  console.log(
+    '🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:',
+    serviceOrders,
+  );
   const [newData, setNewData] = useState([]);
-  console.log("🚀 ~ file: Myorders.js:37 ~ Myorders ~ newData:", newData)
+  console.log('🚀 ~ file: Myorders.js:37 ~ Myorders ~ newData:', newData);
 
- 
   const getUserOrders = async () => {
     const url = 'auth/order/list';
     setIsLoading(true);
@@ -66,11 +66,14 @@ const Myorders = () => {
     getUserOrders();
     getUserServices();
 
-    setNewData(selectedTab == 'Products' ? productOrders : serviceOrders);
-  }, [selectedTab]);
+    setNewData(
+      selectedTab == 'Products'
+        ? productOrders.reverse()
+        : serviceOrders.reverse(),
+    );
+  }, [selectedTab, isFocused]);
 
   return (
-    
     <>
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
 
@@ -114,7 +117,7 @@ const Myorders = () => {
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={newData.reverse()}
+            data={newData}
             // data={serviceOrders}
             contentContainerStyle={{
               paddingBottom: moderateScale(40, 0.3),
@@ -130,7 +133,11 @@ const Myorders = () => {
             renderItem={({item, index}) => {
               // console.log('DATA34', item);
               return (
-                <MyOrderCard item={item} type={selectedTab != 'Products'} selectedTab={selectedTab}/>
+                <MyOrderCard
+                  item={item}
+                  type={selectedTab != 'Products'}
+                  selectedTab={selectedTab}
+                />
               );
             }}
             ListHeaderComponent={() => {
@@ -152,7 +159,8 @@ const Myorders = () => {
                       textAlign: 'center',
                       paddingVertical: moderateScale(10, 0.6),
                       borderRadius: moderateScale(10, 0.6),
-                      color: selectedTab == 'Products' ? 'white' : Color.themeBlue,
+                      color:
+                        selectedTab == 'Products' ? 'white' : Color.themeBlue,
                       backgroundColor:
                         selectedTab == 'Products'
                           ? Color.darkBlue
@@ -169,7 +177,8 @@ const Myorders = () => {
                       borderRadius: moderateScale(10, 0.6),
                       paddingVertical: moderateScale(10, 0.6),
                       textAlign: 'center',
-                      color: selectedTab == 'Services' ? 'white' : Color.themeBlue,
+                      color:
+                        selectedTab == 'Services' ? 'white' : Color.themeBlue,
                       backgroundColor:
                         selectedTab == 'Services'
                           ? Color.darkBlue

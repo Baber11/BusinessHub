@@ -24,7 +24,9 @@ const MarkCheckWithText = ({
 
 
 }) => {
+  
     const userRole = useSelector(state => state.commonReducer.selectedRole);
+    // console.log("🚀 ~ file: MarkCheckWithText.js:29 ~ userRole:", userRole)
   return (
     <View
       style={[

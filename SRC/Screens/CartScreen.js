@@ -9,42 +9,38 @@ import {
 } from 'react-native';
 import React from 'react';
 import ScreenBoiler from '../Components/ScreenBoiler';
-import { moderateScale, ScaledSheet } from 'react-native-size-matters';
-import { apiHeader, windowHeight, windowWidth } from '../Utillity/utils';
+import {moderateScale, ScaledSheet} from 'react-native-size-matters';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
 import CartItem from '../Components/CartItem';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../Components/CustomButton';
-import { EmptyCart, Order } from '../Store/slices/common';
+import {EmptyCart, Order} from '../Store/slices/common';
 import navigationService from '../navigationService';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
 import CustomText from '../Components/CustomText';
-import { Post } from '../Axios/AxiosInterceptorFunction';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import PickupModal from '../Components/PickupModal';
 
-const CartScreen = ({ route }) => {
+const CartScreen = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log('the data is ========>> >> ', cartData);
-  const [isLoading, setIsLoading] = useState(false)
+  console.log('the data fdsfdfis ========>> >> ', cartData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [size, setSize] = useState('');
+  const [modalVisbile, setModalVisible] = useState(false);
+
   const [finalAmount, setFinalAmount] = useState(0);
   // const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
   const token = useSelector(state => state.authReducer.token);
 
-  const calcTotal = () => {
-    let total = 0;
-    cartData.map((item, index) => {
-      total += item?.price * item?.qty
-    })
-    return total
-    // console.log('Total=========>>>>',total)
-  }
   const Confirm = () => {
     Alert.alert('Action required', 'Login to Continue', [
       {
@@ -66,49 +62,69 @@ const CartScreen = ({ route }) => {
     if (
       cartData.some(item => {
         return (
-          (item?.color != "null" && item?.selectedColor == '') || (item?.size != "null" && item?.selectedSize == '')
+          (item?.color != 'null' && item?.selectedColor == '') ||
+          (item?.size != 'null' && item?.selectedSize == '')
         );
       })
     ) {
       return Platform.OS == 'android'
         ? ToastAndroid.show(
-          'Please select the color and sizes for all items',
-          ToastAndroid.SHORT,
-        )
+            'Please select the color and sizes for all items',
+            ToastAndroid.SHORT,
+          )
         : Alert.alert('Please select the color for all items');
-    } else 
-    {
+    } else {
       const url = 'auth/checkout';
       var totalBill = 0;
       cartData.map((item, index) => {
-        totalBill += item?.price * item?.product_quantity
-      })
+        totalBill += item?.price * item?.product_quantity;
+      });
 
       const body = {
         item_quantity: cartData?.length,
+        pickup_point: size,
         // product_id: '',
         // Image: require('../Assets/Images/logo.png'),
         total: totalBill,
         order: cartData,
       };
       console.log('🚀 ~ file: CartScreen.js:55 ~ checkOut ~ body:', body);
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await Post(url, body, apiHeader(token));
-      setIsLoading(false)
+      setIsLoading(false);
 
       if (response != undefined) {
-        console.log("🚀 ~ file: CartScreen.js:65 ~ checkOut ~ response:", response?.data)
-
+        console.log(
+          '🚀 ~ file: CartScreen.js:65 ~ checkOut ~ response:',
+          response?.data,
+        );
 
         dispatch(Order(body));
         dispatch(EmptyCart());
-        navigationService.navigate('PickUpLocation', { body: body });
+        navigationService.navigate('PaymentInvoice', {body: body});
         Platform.OS == 'android'
           ? ToastAndroid.show('Order Confirmed', ToastAndroid.SHORT)
           : Alert.alert('Order Confirmed');
       }
     }
   };
+
+  useEffect(() => {
+    if (size == 'Others') {
+      Alert.alert(
+        'Alert!!',
+        'Please contact seller within two days to confirm your order',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'okay', onPress: () => null},
+        ],
+      );
+    }
+  }, [size]);
 
   return (
     <>
@@ -119,7 +135,7 @@ const CartScreen = ({ route }) => {
           width: windowWidth,
           height: windowHeight * 0.9,
           // backgroundColor: '#CBE4E8',
-          backgroundColor:'white',
+          backgroundColor: 'white',
         }}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -137,7 +153,7 @@ const CartScreen = ({ route }) => {
             paddingBottom: moderateScale(100, 0.3),
             paddingTop: moderateScale(20, 0.3),
           }}
-          renderItem={({ item, index }) => {
+          renderItem={({item, index}) => {
             return <CartItem item={item} fromCheckout={true} />;
           }}
           ListEmptyComponent={() => {
@@ -181,31 +197,42 @@ const CartScreen = ({ route }) => {
             width: windowWidth,
             alignItems: 'center',
           }}>
-         {cartData.length> 0 && <CustomButton
-            isBold
-            onPress={() => {
-              if(token == null){
-                Confirm()
+          {cartData.length > 0 && (
+            <CustomButton
+              isBold
+              onPress={() => {
+                if (token == null) {
+                  Confirm();
+                } else {
+                  size != '' ? checkOut() : setModalVisible(true);
+                }
+              }}
+              text={
+                isLoading ? (
+                  <ActivityIndicator color={'white'} size={'small'} />
+                ) : (
+                  size != '' ? 'Place Order' : 'choose Pickup location'
+                )
               }
-              else{
-                checkOut();
-
-              }
-
-            }}
-            text={isLoading ? <ActivityIndicator color={'white'} size={'small'} /> : 'Place Order'}
-            textColor={Color.white}
-            width={windowWidth * 0.8}
-            height={windowHeight * 0.07}
-            fontSize={moderateScale(16, 0.6)}
-            // marginBottom={moderateScale(10,.3)}
-            // marginTop={moderateScale(20, 0.3)}
-            bgColor={Color.themeBlue}
-            borderRadius={moderateScale(30, 0.3)}
-          // isGradient
-          />}
+              textColor={Color.white}
+              width={windowWidth * 0.8}
+              height={windowHeight * 0.07}
+              fontSize={moderateScale(16, 0.6)}
+              // marginBottom={moderateScale(10,.3)}
+              // marginTop={moderateScale(20, 0.3)}
+              bgColor={Color.themeBlue}
+              borderRadius={moderateScale(30, 0.3)}
+              // isGradient
+            />
+          )}
         </View>
       </View>
+      <PickupModal
+        setData={setSize}
+        data={size}
+        isModalVisible={modalVisbile}
+        setIsModalVisible={setModalVisible}
+      />
     </>
   );
 };
