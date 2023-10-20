@@ -313,49 +313,7 @@ const OrderDetails = props => {
           </View>}
         </View>
 
-        <View
-          style={{
-            width: windowWidth * 0.95,
-            backgroundColor: 'white',
-            alignSelf: 'center',
-            marginTop: moderateScale(10, 0.3),
-            borderRadius: moderateScale(10, 0.6),
-            paddingVertical: moderateScale(10, 0.6),
-            alignItems: 'center',
-          }}>
-          <CustomText
-            isBold
-            style={{
-              fontSize: moderateScale(14, 0.6),
-              color: '#201E1D',
-              width: windowWidth * 0.9,
-              marginLeft: moderateScale(10, 0.3),
-            }}>
-            Reviews
-          </CustomText>
-
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            numColumns={1}
-            data={item?.comments}
-            contentContainerStyle={{
-              alignSelf: 'center',
-              marginTop: moderateScale(5, 0.3),
-            }}
-            renderItem={({item, index}) => {
-              return <CommentsSection item={item} />;
-            }}
-            ListEmptyComponent={
-              <CustomText
-                style={{
-                  fontSize: moderateScale(15, 0.6),
-                  color: Color.veryLightGray,
-                }}>
-                No Reviews
-              </CustomText>
-            }
-          />
-        </View>
+       
         {item?.order?.user && (
           <View
             style={{
@@ -420,6 +378,51 @@ const OrderDetails = props => {
             </CustomText>
           </View>
         )}
+
+<View
+          style={{
+            width: windowWidth * 0.95,
+            backgroundColor: 'white',
+            alignSelf: 'center',
+            marginTop: moderateScale(10, 0.3),
+            borderRadius: moderateScale(10, 0.6),
+            paddingVertical: moderateScale(10, 0.6),
+            alignItems: 'center',
+          }}>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(14, 0.6),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Reviews
+          </CustomText>
+
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={1}
+            data={item?.product_review
+            }
+            contentContainerStyle={{
+              alignSelf: 'center',
+              marginTop: moderateScale(5, 0.3),
+            }}
+            renderItem={({item, index}) => {
+              return <CommentsSection item={item} />;
+            }}
+            ListEmptyComponent={
+              <CustomText
+                style={{
+                  fontSize: moderateScale(15, 0.6),
+                  color: Color.veryLightGray,
+                }}>
+                No Reviews
+              </CustomText>
+            }
+          />
+        </View>
         {!details && (
           <View
             style={{

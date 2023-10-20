@@ -30,19 +30,13 @@ const Myorders = () => {
   const [productOrders, setProductOrders] = useState([]);
   // console.log("🚀 ~ file: Myorders.js:25 ~ Myorders ~ newData:", newData)
   const [serviceOrders, setServiceOrders] = useState([]);
-  console.log(
-    '🚀 ~ file: Myorders.js:27 ~ Myorders ~ serviceOrders:',
-    serviceOrders,
-  );
-  const [newData, setNewData] = useState([]);
-  console.log('🚀 ~ file: Myorders.js:37 ~ Myorders ~ newData:', newData);
-
+ 
+  const [newData, setNewData] = useState(productOrders);
   const getUserOrders = async () => {
     const url = 'auth/order/list';
     setIsLoading(true);
     const response = await Get(url, token);
     setIsLoading(false);
-
     if (response != undefined) {
       setProductOrders(response?.data?.orders);
     }
@@ -50,15 +44,11 @@ const Myorders = () => {
 
   const getUserServices = async () => {
     const url = 'auth/services/book/list';
-
     setIsLoading(true);
     const response = await Get(url, token);
     setIsLoading(false);
-
-    // console.log("🚀 ~ file: Myorders.js:50 ~ getUserServices ~ response:", response?.data)
     if (response != undefined) {
       setServiceOrders(response?.data?.data);
-      // setServiceOrders()
     }
   };
 
@@ -66,11 +56,11 @@ const Myorders = () => {
     getUserOrders();
     getUserServices();
 
-    setNewData(
-      selectedTab == 'Products'
-        ? productOrders.reverse()
-        : serviceOrders.reverse(),
-    );
+    // setNewData(
+    //   selectedTab == 'Products'
+    //     ? productOrders.reverse()
+    //     : serviceOrders.reverse(),
+    // );
   }, [selectedTab, isFocused]);
 
   return (
@@ -117,7 +107,13 @@ const Myorders = () => {
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={newData}
+            data={
+              !newData.length
+                ? selectedTab == 'Products'
+                  ? productOrders
+                  : serviceOrders
+                : newData
+            }
             // data={serviceOrders}
             contentContainerStyle={{
               paddingBottom: moderateScale(40, 0.3),
@@ -125,11 +121,7 @@ const Myorders = () => {
               minHeight: windowHeight * 0.9,
               paddingTop: moderateScale(20, 0.3),
             }}
-            style={
-              {
-                // backgroundColor: 'white',
-              }
-            }
+           
             renderItem={({item, index}) => {
               // console.log('DATA34', item);
               return (

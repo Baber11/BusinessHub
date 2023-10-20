@@ -129,7 +129,7 @@ const MyAccounts = () => {
       />
 
       <ImageBackground
-          source={require('../Assets/Images/waves.jpg')}
+          source={require('../Assets/Images/waves1.jpg')}
           resizeMode={'cover'}
           style={{
             width: windowWidth * 1,

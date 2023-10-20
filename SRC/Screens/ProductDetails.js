@@ -36,8 +36,11 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 
 const ProductDetails = props => {
   const item = props?.route?.params?.item;
-  console.log("🚀 ~ file: ProductDetails.js:39 ~ ProductDetails ~ item:", item)
- 
+  console.log(
+    '🚀 ~ file: ProductDetails.js:39 ~ ProductDetails ~ item:',
+    item?.seller_info,
+  );
+
   const cartData = useSelector(state => state.commonReducer.cart);
   const token = useSelector(state => state.authReducer.token);
 
@@ -65,8 +68,7 @@ const ProductDetails = props => {
       : 1,
   );
 
-  const [comments, setComments] = useState([]
-  );
+  const [comments, setComments] = useState([]);
 
   const [isLoading, setisLoading] = useState(false);
   const [yourComment, setYourComment] = useState('');
@@ -110,23 +112,20 @@ const ProductDetails = props => {
     dispatch(RemoveToCart(item));
   };
 
- 
-
   const [finalItem, setFinalItem] = useState(
     cartitem != undefined ? cartitem : item,
   );
 
   useEffect(() => {
-    setComments(item?.product_review)
+    setComments(item?.product_review);
     console.log(
       '🚀 ~ file: ProductDetails.js:31 ~ ProductDetails ~ ite\fd0:',
       item?.product_review,
     );
-    return ()=>{
-      setComments([])
-    }
-  }, [focused])
-  
+    return () => {
+      setComments([]);
+    };
+  }, [focused]);
 
   return (
     <>
@@ -427,6 +426,93 @@ const ProductDetails = props => {
               );
             })}
           </View>
+        </View>
+        <View
+          style={{
+            width: windowWidth * 0.95,
+            backgroundColor: 'white',
+            alignSelf: 'center',
+            marginTop: moderateScale(10, 0.3),
+            borderRadius: moderateScale(10, 0.6),
+            paddingVertical: moderateScale(10, 0.6),
+            alignItems: 'center',
+          }}>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(14, 0.6),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            About Seller
+          </CustomText>
+
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Name : 
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              {item?.seller_info[0]?.name}
+            </CustomText>
+          </CustomText>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Phone : 
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              {item?.seller_info[0]?.phone}
+            </CustomText>
+            
+          </CustomText>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Email : 
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+               {item?.seller_info[0]?.email}
+            </CustomText>
+         
+          </CustomText>
         </View>
 
         <View

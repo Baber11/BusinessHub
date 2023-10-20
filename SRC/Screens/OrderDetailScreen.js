@@ -1,4 +1,4 @@
-import {View, ImageBackground, TouchableOpacity, FlatList} from 'react-native';
+import {View, ImageBackground, TouchableOpacity, FlatList, ScrollView} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
@@ -59,7 +59,7 @@ const OrderDetailScreen = props => {
   const item1 = props.route.params.item;
   console.log(
     '🚀 ~ file: OrderDetailScref sdfsd fen.js:74 ~ OrderDetdfsfailScreen ~ item:',
-    item1?.pickup_point,
+    item1,
   );
 
   const type = props.route.params.type;
@@ -72,6 +72,7 @@ const OrderDetailScreen = props => {
         height: windowHeight,
         backgroundColor: '#eeeeee',
       }}>
+     
       <FlatList
         pagingEnabled
         horizontal
@@ -90,11 +91,13 @@ const OrderDetailScreen = props => {
           //   item?.product,
           // );
           return (
+           
             <View
               style={{
                 width: windowWidth,
                 height: windowHeight * 0.9,
               }}>
+                 <ScrollView showsVerticalScrollIndicator={false}>
               <CustomText
                 style={{
                   color: '#000',
@@ -337,7 +340,35 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
-               <View
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: moderateScale(20, 0.3),
+                  paddingHorizontal: moderateScale(18, 0.6),
+                }}>
+                <CustomText
+                  style={{
+                    color: Color.themeLightGray,
+                    fontSize: moderateScale(12, 0.6),
+                  }}>
+                  PickUp point
+                </CustomText>
+
+                <CustomText
+                  style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
+                  {item1?.pickup_point}
+                </CustomText>
+              </View>
+              <Divider
+                my="2"
+                width="96"
+                alignSelf={'center'}
+                _light={{bg: 'gray.200'}}
+              />
+            
+              
+                  <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
@@ -349,12 +380,12 @@ const OrderDetailScreen = props => {
                         color: Color.themeLightGray,
                         fontSize: moderateScale(12, 0.6),
                       }}>
-                      PickUp point  
+                      seller Name
                     </CustomText>
 
                     <CustomText
                       style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
-                      {item1?.pickup_point}
+                      {item1?.orderdetail ? item1?.orderdetail[0]?.product?.seller_info[0]?.name :item1?.service?.seller_info[0]?.name}
                     </CustomText>
                   </View>
                   <Divider
@@ -363,6 +394,34 @@ const OrderDetailScreen = props => {
                     alignSelf={'center'}
                     _light={{bg: 'gray.200'}}
                   />
+               
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: moderateScale(20, 0.3),
+                  paddingHorizontal: moderateScale(18, 0.6),
+                }}>
+                <CustomText
+                  style={{
+                    color: Color.themeLightGray,
+                    fontSize: moderateScale(12, 0.6),
+                  }}>
+                  seller Contact
+                </CustomText>
+
+                <CustomText
+                  style={{color: '#000', fontSize: moderateScale(15, 0.6)}}>
+                  {item1?.orderdetail ? item1?.orderdetail[0]?.product?.seller_info[0]?.phone : item?.service?.seller_info[0]?.phone}
+                </CustomText>
+              </View>
+              <Divider
+                my="2"
+                width="96"
+                alignSelf={'center'}
+                _light={{bg: 'gray.200'}}
+              />
+         
               {/* {(item?.description || item?.service?.description) && (
                 <>
                   <View
@@ -427,7 +486,10 @@ const OrderDetailScreen = props => {
                   Close
                 </CustomText>
               </TouchableOpacity> */}
+            
+            </ScrollView>
             </View>
+           
           );
         }}
         ListEmptyComponent={() => {
@@ -507,6 +569,7 @@ const OrderDetailScreen = props => {
           })}
         </View>
       )}
+    
     </ImageBackground>
   );
 };

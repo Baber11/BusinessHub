@@ -188,7 +188,7 @@ const Profile = () => {
                 name="pencil"
                 as={FontAwesome}
                 style={styles.icon2}
-                color={Color.white}
+                color={Color.black}
                 size={moderateScale(16, 0.3)}
                 onPress={() => {
                   setImagePicker(true);
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     // width: windowWidth * 0.45,
   },
   edit: {
-    backgroundColor: Color.themeBlue1,
+    backgroundColor: Color.white,
     width: moderateScale(25, 0.3),
     height: moderateScale(25, 0.3),
     position: 'absolute',

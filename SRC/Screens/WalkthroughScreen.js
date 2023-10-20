@@ -43,21 +43,7 @@ const WalkThroughScreen = props => {
       title: 'Opportunity to rent your favourite stuff',
       text: `The opportunity to rent favorite items presents several benefits and advantages for users, making it an appealing feature of Business Hub. Here are some reasons why users would find this option attractive: \n\n Cost-Effectiveness: Renting favorite items allows users to enjoy them without the high upfront costs of purchasing. Whether it's electronic gadgets, sports equipment, or luxury items, renting offers a more affordable short-term solution.\n\n Space and Clutter Reduction: Owning too many items can lead to clutter and storage issues.`   },
   ];
-  //   const slides = [
-  //     {
-  //       key: '1',
-  //       title: 'Buy or Sell Residential',
-  //       text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ',
-  //       logo: require('../Assets/Images/walkthrough1.png'),
-  //     },
-  //     {
-  //       key: '2',
-  //       title: 'Buy or Sell Residential',
-  //       text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ',
-  //       logo: require('../Assets/Images/walkthrough2.png'),
-  //     },
-  //   ];
-
+ 
   const RenderSlider = ({item}) => {
     return (
       <View style={styles.SliderContainer}>
@@ -110,17 +96,7 @@ const WalkThroughScreen = props => {
             </CustomText>
            
           </View>
-          {/* <View
-            style={{
-              alignItems: 'center',
-            }}>
-            <Text numberOfLines={1} style={styles.title}>
-              {item.title}
-            </Text>
-            <Text numberOfLines={4} style={styles.subText}>
-              {item.text}
-            </Text>
-          </View> */}
+      
         </LinearGradient>
       </View>
     );
@@ -131,6 +107,7 @@ const WalkThroughScreen = props => {
       <CustomText style={[styles.generalBtn, styles.btnRight]}>Next</CustomText>
     );
   };
+
   const RenderDoneBtn = () => {
     return (
       <CustomText
@@ -142,6 +119,7 @@ const WalkThroughScreen = props => {
       </CustomText>
     );
   };
+
   const RenderSkipBtn = () => {
     return (
       <CustomText
@@ -153,22 +131,21 @@ const WalkThroughScreen = props => {
       </CustomText>
     );
   };
+
+
   const RenderBackBtn = () => {
     return (
       <CustomText style={[styles.generalBtn, styles.btnLeft]}>Back</CustomText>
     );
   };
+  
   return (
     <ScreenBoiler
       showHeader={false}
       statusBarBackgroundColor={[Color.white, Color.white]}
       statusBarContentStyle={'dark-content'}>
       <View style={styles.container}>
-        {/* <CustomImage
-          source={backgroundImage}
-          resizeMode="contain"
-          style={styles.bgImage}
-        /> */}
+      
         <AppIntroSlider
           renderItem={RenderSlider}
           data={slides}

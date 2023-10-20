@@ -40,19 +40,13 @@ import navigationService from '../navigationService';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 
 const ServiceDetails = props => {
-  // console.log(
-  //   '🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ props:',
-  //   props?.route?.params,
-  // );
+ 
   const item = props?.route?.params?.item;
   console.log('🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:', item);
-  // console.log("🚀 ~ file: ServiceDetails.js:43 ~ ServiceDetails ~ item:", item?.order?.images[0])
   const seller = props?.route?.params?.seller;
   const token = useSelector(state => state.authReducer.token);
-  // console.log(
-  //   '🚀 ~ file: ServiceDetails.js:32 ~ ServiceDetails ~ seller:',
-  //   seller,
-  // );
+  console.log("🚀 ~ file: ServiceDetails.js:48 ~ ServiceDetails ~ token:", token)
+ 
   const navigation = useNavigation();
   const user = useSelector(state => state.commonReducer.userData);
   const dispatch = useDispatch();
@@ -65,10 +59,7 @@ const ServiceDetails = props => {
   const [images, setImages] = useState(
     item?.service_image ? item?.service_image : item?.images,
   );
-  // console.log(
-  //   '🚀 ~ file: ServiceDetails.js:66 ~ ServiceDetails ~ images:',
-  //   images,
-  // );
+ 
   const [yourComment, setYourComment] = useState('');
   const [bookingModal, setBookingModal] = useState(false);
   const [calendar, setCalendar] = useState(false);
@@ -99,7 +90,6 @@ const ServiceDetails = props => {
         text: yourComment,
         time: moment().format(' hh:mm:ss a'),
       };
-      // console.log('Body is here==========>>>>>>>>>>>>>>>>>', body);
       setComments(prev => [
         ...prev,
         {
@@ -123,16 +113,9 @@ const ServiceDetails = props => {
     setIsLoading(false);
     if (response?.data?.success) {
       Platform.OS == 'android'
-      ? ToastAndroid.show(
-          'Your Booking has been confirmed',
-          ToastAndroid.SHORT,
-        )
-      : Alert.alert('Your Booking has been confirmed');
-    navigation.goBack();
-      // return console.log(
-      //   '🚀 ~ file: ServiceDetails.js:112 ~ BookingNow ~ response:',
-      //   response?.data,
-      // );
+        ? ToastAndroid.show('Your Booking request is on pending, the seller will accept/reject it soon. Please check your orders to see its status.', ToastAndroid.SHORT)
+        : Alert.alert('Your Booking request is on pending, the seller will accept/reject it soon. Please check your orders to see its status.');
+      navigation.goBack();
     }
   };
 
@@ -260,7 +243,6 @@ const ServiceDetails = props => {
               justifyContent: 'space-between',
               padding: moderateScale(10, 0.6),
               alignItems: 'center',
-              // backgroundColor:'purple',
             }}>
             <CustomText
               isBold
@@ -270,7 +252,6 @@ const ServiceDetails = props => {
                 fontSize: moderateScale(18, 0.6),
                 width: windowWidth * 0.4,
                 textAlign: 'left',
-                // backgroundColor:'orange',
               }}>
               {item?.shop_name ? item?.shop_name : item?.service?.shop_name}
             </CustomText>
@@ -281,7 +262,6 @@ const ServiceDetails = props => {
                 width: windowWidth * 0.38,
                 fontSize: moderateScale(14, 0.6),
                 textAlign: 'left',
-                // backgroundColor:'red',
               }}
               numberOfLines={1}>
               {item?.category ? item?.category : item?.service?.category}
@@ -336,6 +316,101 @@ const ServiceDetails = props => {
             {item?.description ? item?.description : item?.service?.description}
           </CustomText>
         </View>
+        {!seller &&  <View
+          style={{
+            width: windowWidth * 0.95,
+            backgroundColor: 'white',
+            alignSelf: 'center',
+            marginTop: moderateScale(10, 0.3),
+            borderRadius: moderateScale(10, 0.6),
+            paddingVertical: moderateScale(10, 0.6),
+            alignItems: 'center',
+          }}>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(14, 0.6),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+           About Seller 
+          </CustomText>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Name : 
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              {item?.seller_info[0]?.name}
+            </CustomText>
+          </CustomText>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Phone : 
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              {item?.seller_info[0]?.phone}
+            </CustomText>
+            
+          </CustomText>
+          <CustomText
+            isBold
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              marginTop: moderateScale(10, 0.3),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            Email : 
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginTop: moderateScale(10, 0.3),
+                color: '#201E1D',
+                width: windowWidth * 0.9,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+               {item?.seller_info[0]?.email}
+            </CustomText>
+         
+          </CustomText>
+          <CustomText
+            style={{
+              fontSize: moderateScale(12, 0.6),
+              color: '#201E1D',
+              width: windowWidth * 0.9,
+              marginLeft: moderateScale(10, 0.3),
+            }}>
+            {item?.seller_info ? item?.se : item?.service?.description}
+          </CustomText>
+        </View>}
 
         {!seller && (
           <View style={styles.container2}>
@@ -354,11 +429,10 @@ const ServiceDetails = props => {
               style={{
                 width: windowWidth * 0.8,
                 marginBottom: moderateScale(40, 0.3),
-                // backgroundColor : 'red'
               }}
               minDate={moment().format()}
               onDayPress={day => {
-                // console.log('day========>>>>>', day);
+               
                 setDate(day?.dateString);
               }}
               theme={{
@@ -391,6 +465,68 @@ const ServiceDetails = props => {
             />
           </View>
         )}
+        {item?.user_info &&  <View
+            style={{
+              width: windowWidth * 0.95,
+              borderRadius: moderateScale(10, 0.6),
+              paddingHorizontal: moderateScale(15, 0.6),
+              paddingVertical: moderateScale(10, 0.6),
+              backgroundColor: 'white',
+              marginTop: moderateScale(10, 0.3),
+              alignItems: 'center',
+              alignSelf: 'center',
+            }}>
+            <CustomText
+              style={{
+                fontSize: moderateScale(15, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                width: windowWidth * 0.9,
+              }}
+              isBold>
+              Buyer details
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }} isBold>
+              Name : {item?.user_info?.name}
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }} isBold>
+              Email : {item?.user_info?.email}
+            </CustomText>
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }} isBold>
+              Contact : {item?.user_info?.phone}
+            </CustomText>
+           {item?.pickup_point && <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                color: 'black',
+                textAlign: 'left',
+                marginTop: moderateScale(5, 0.3),
+                width: windowWidth * 0.9,
+              }} isBold>
+              Address : {item?.pickup_point}
+            </CustomText>}
+          </View>}
 
         {seller && item?.date && (
           <View style={styles.container2}>
@@ -408,7 +544,6 @@ const ServiceDetails = props => {
             <CustomText
               style={{
                 fontSize: moderateScale(14, 0.6),
-                // marginTop: moderateScale(10, 0.3),
                 color: '#201E1D',
                 width: windowWidth * 0.9,
                 marginLeft: moderateScale(10, 0.3),
@@ -418,110 +553,10 @@ const ServiceDetails = props => {
           </View>
         )}
 
-        {
-          <View
-            style={{
-              width: windowWidth * 0.95,
-              backgroundColor: 'white',
-              alignSelf: 'center',
-              marginTop: moderateScale(10, 0.3),
-              borderRadius: moderateScale(10, 0.6),
-              paddingVertical: moderateScale(10, 0.6),
-              alignItems: 'center',
-            }}>
-            <CustomText
-              isBold
-              style={{
-                fontSize: moderateScale(14, 0.6),
-                color: '#201E1D',
-                width: windowWidth * 0.9,
-                marginLeft: moderateScale(10, 0.3),
-              }}>
-              Reviews
-            </CustomText>
 
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              numColumns={1}
-              data={comments}
-              contentContainerStyle={{
-                alignSelf: 'center',
-                marginTop: moderateScale(5, 0.3),
-              }}
-              renderItem={({item, index}) => {
-                return <CommentsSection item={item} />;
-              }}
-              ListEmptyComponent={
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(15, 0.6),
-                    color: Color.veryLightGray,
-                  }}>
-                  No Reviews Yet
-                </CustomText>
-              }
-            />
-            {!seller && (
-              <>
-                <CustomText
-                  isBold
-                  style={{
-                    fontSize: moderateScale(14, 0.6),
-                    marginTop: moderateScale(10, 0.3),
-                    color: '#201E1D',
-                    width: windowWidth * 0.9,
-                    marginLeft: moderateScale(10, 0.3),
-                  }}>
-                  Your review
-                </CustomText>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    // backgroundColor:'black',
-                    width: windowWidth * 0.9,
-                    justifyContent: 'space-between',
-                  }}>
-                  <TextInputWithTitle
-                    titleText={'Write a review'}
-                    // secureText={false}
-                    placeholder={'Write a review'}
-                    setText={setYourComment}
-                    value={yourComment}
-                    viewHeight={0.05}
-                    viewWidth={0.7}
-                    inputWidth={0.7}
-                    // border={1}
-                    borderColor={Color.veryLightGray}
-                    backgroundColor={'#FFFFFF'}
-                    marginTop={moderateScale(10, 0.3)}
-                    color={Color.themeBlue}
-                    marginRight={moderateScale(10, 0.3)}
-                    placeholderColor={Color.themeLightGray}
-                    borderRadius={moderateScale(25, 0.3)}
-                    marginBottom={moderateScale(10, 0.3)}
-                    elevation
-                  />
-                  <CustomButton
-                    isBold
-                    onPress={() => {
-                      addComment();
-                    }}
-                    text={'Add'}
-                    textColor={Color.white}
-                    width={windowWidth * 0.15}
-                    height={windowHeight * 0.045}
-                    fontSize={moderateScale(10, 0.6)}
-                    // marginBottom={moderateScale(10,.3)}
-                    // marginTop={moderateScale(20, 0.3)}
-                    bgColor={Color.themeBlue}
-                    borderRadius={moderateScale(30, 0.3)}
-                    // isGradient
-                  />
-                </View>
-              </>
-            )}
-          </View>
-        }
+         
+        
+
       </ScrollView>
 
       {!seller && (
@@ -531,9 +566,6 @@ const ServiceDetails = props => {
             onPress={() => {
               if (token == null) {
                 Confirm();
-                // if () {
-                //   setCalendar(true);
-                // }
               } else {
                 if (date == '') {
                   return Platform.OS == 'android'
@@ -543,22 +575,7 @@ const ServiceDetails = props => {
                       )
                     : Alert.alert('Please select a date');
                 } else {
-                  // console.log('item dispatching......', {
-                  //   order: item,
-                  //   date: date,
-                  //   orderId: Math.floor(Math.random() * 1000000000),
-                  // });
-                  // dispatch(
-                  //   setServiceBooking({
-                  //     order: [item],
-                  //     date: date,
-                  //     total: item?.price,
-                  //     Image: require('../Assets/Images/logo.png'),
-                  //     orderId: Math.floor(Math.random() * 1000000000),
-                  //   }),
-                  // );
                   BookNow();
-                
                 }
               }
             }}
@@ -567,11 +584,8 @@ const ServiceDetails = props => {
             width={windowWidth * 0.8}
             height={windowHeight * 0.07}
             fontSize={moderateScale(16, 0.6)}
-            // marginBottom={moderateScale(10,.3)}
-            // marginTop={moderateScale(20, 0.3)}
             bgColor={Color.themeBlue}
             borderRadius={moderateScale(30, 0.3)}
-            //   isGradient
           />
         </View>
       )}
@@ -586,7 +600,7 @@ const styles = StyleSheet.create({
     width: windowWidth * 0.95,
     backgroundColor: 'white',
     alignSelf: 'center',
-    marginTop: moderateScale(10, 0.3),
+    marginTop: moderateScale(5, 0.3),
     borderRadius: moderateScale(10, 0.6),
     paddingVertical: moderateScale(10, 0.6),
     alignItems: 'center',
@@ -594,7 +608,6 @@ const styles = StyleSheet.create({
   size: {
     height: windowWidth * 0.08,
     alignItems: 'center',
-    // backgroundColor:'red',
     width: windowWidth * 0.08,
     borderRadius: (windowWidth * 0.1) / 2,
     justifyContent: 'center',
@@ -604,7 +617,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight * 0.08,
     backgroundColor: '#FFFFFF',
-    //  alignItems:'center',
     bottom: 0,
     justifyContent: 'center',
   },
@@ -634,7 +646,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     width: windowWidth * 0.95,
-    // height: windowHeight * 0.8,
     backgroundColor: 'white',
     alignSelf: 'center',
     overflow: 'hidden',
@@ -650,15 +661,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: moderateScale(5, 0.6),
-    // backgroundColor:'black'
   },
 
   ColorLine: {
     flexDirection: 'row',
-    // justifyContent: 'space-evenly',
-    // alignItems: 'center',
-    // flexWrap:'no-wrap',
-    // width: windowWidth * 0.8,
+  
     marginTop: moderateScale(15, 0.3),
     marginBottom: moderateScale(15, 0.3),
   },

@@ -34,9 +34,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 const Orders = () => {
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  // console.log('🚀 ~ file: HomeScreen.js:25 ~ HomeScreen ~ userData:', userData);
   const orders = useSelector(state => state.commonReducer.order);
-  // console.log('🚀 ~ file: Orders.js:30 ~ orders:', orders);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -50,31 +48,14 @@ const Orders = () => {
   );
   const [serviceOrder, setServiceOrder] = useState([]);
   console.log('🚀 ~ file: Orders.js:46 ~ Orders ~ serviceOrder:', serviceOrder);
-  // console.log("🚀 ~ file: Orders.js:45 ~ Orders ~ serviceOrder:", serviceOrder)
-  // console.log('🚀 ~ file: Orders.js:39 ~ myOrder:', myOrder);
+
   const navigation = useNavigation();
   const oneDayAgo = moment().subtract(1, 'day');
-
-  // const Orders = () => {
-  //   setMyOrder([]);
-  //   orders.map(item =>
-  //     item.order.map(
-  //       order =>
-  //         order?.sellerId == userData?.id &&
-  //         setMyOrder(prev => [
-  //           ...prev,
-  //           {orderId: item.orderId, Image: item?.Image, ...order},
-  //         ]),
-  //     ),
-  //   );
-  // };
 
   const dateDiff = item => {
     console.log('🚀 ~ file: Orders.js:73 ~ dateDiff ~ item:', item);
     const currentDate = moment();
-    // console.log("🚀 ~ file: Orders.js:71 ~ dateDiff ~ currentDate:", currentDate)
     const newDate = moment(item);
-    // console.log("🚀 ~ file: Orders.js:73 ~ dateDiff ~ newDate:", newDate)
     console.log('Date difference=========', currentDate.diff(newDate, 'h'));
     return currentDate.diff(newDate, 'h');
   };
@@ -100,25 +81,10 @@ const Orders = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      // console.log(
-      //   '🚀 ~ file: Orders.js:76 ~ getSellerServices ~ response:',
-      //   response?.data,
-      // );
       return setServiceOrder(response?.data?.data);
     }
   };
 
-  // useEffect(() => {
-  //   const backhandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     () => {
-  //       BackHandler.exitApp();
-  //       return true;
-  //     },
-  //   );
-
-  //   return () => backhandler.remove();
-  // }, []);
   useEffect(() => {
     getSellerOrders();
     getSellerServices();
@@ -142,8 +108,6 @@ const Orders = () => {
         }}>
         <View
           style={{
-            // height: windowHeight * 0.3,
-
             justifyContent: 'center',
             alignItems: 'center',
           }}>
@@ -195,7 +159,7 @@ const Orders = () => {
               width: windowWidth,
               justifyContent: 'space-between',
               paddingHorizontal: moderateScale(10, 0.6),
-              // backgroundColor:'red',
+
               alignItems: 'center',
             }}>
             <CustomText
@@ -203,7 +167,7 @@ const Orders = () => {
               style={{
                 fontSize: moderateScale(20, 0.6),
                 paddingVertical: moderateScale(10, 0.6),
-                // marginTop: moderateVerticalScale(20, 0.6),
+
                 width: windowWidth * 0.4,
               }}>
               Latest Orders
@@ -216,7 +180,6 @@ const Orders = () => {
                 width: windowWidth * 0.9,
                 justifyContent: 'center',
                 alignItems: 'center',
-                // backgroundColor: 'green',
               }}>
               <ActivityIndicator
                 color={Color.themeBlue}
@@ -232,15 +195,12 @@ const Orders = () => {
                       .filter(item => dateDiff(item.created_at) < 48)
                       .reverse()
                   : serviceOrder
-                      .filter(item => item?.status == 'pending')
+                      .filter(item => item?.status != 'rejected' && dateDiff(item?.created_at) < 48)
                       .reverse()
               }
               showsHorizontalScrollIndicator={false}
               horizontal
               contentContainerStyle={{
-                // backgroundColor:'black',
-                // height: windowHeight * 0.2,
-                // marginHorizontal:moderateScale(10,.3),
                 paddingHorizontal: moderateScale(10, 0.6),
                 alignItems: 'center',
               }}
@@ -280,11 +240,6 @@ const Orders = () => {
                 );
               }}
               renderItem={({item, index}) => {
-                // console.log(
-                //   '🚀 ~ file: Orders.js:273 ~ Orders ~ item:',
-                //   item?.order?.orderId,
-                // );
-                // console.log('🚀 ~ file: Orders.js:203 ~ Orders ~ item:', item);
                 return (
                   // <MyOrderCard item={item} />
                   <View style={{}}>
@@ -416,7 +371,7 @@ const Orders = () => {
                     .filter(item => dateDiff(item?.created_at) >= 48)
                     .reverse()
                 : serviceOrder
-                    .filter(item => item?.status != 'pending')
+                    .filter(item => dateDiff(item?.created_at) >= 48 || item?.status =='rejected')
                     .reverse()
             }
             contentContainerStyle={{
@@ -427,7 +382,6 @@ const Orders = () => {
             renderItem={({item, index}) => {
               return (
                 <OrderCard
-                  // width = {windowWidth*0.8}
                   item={item}
                   selectedOrder={selectedOrder}
                   setSelectedOrder={setSelectedOrder}
@@ -477,7 +431,7 @@ const Orders = () => {
 export default Orders;
 
 const OrderCard = ({item, width, selectedTab}) => {
-  // console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
+  console.log('🚀 ~ file: Orders.js:349 ~ OrderCard ~ item:', item);
   return (
     <View
       key={item?.id}
@@ -514,8 +468,8 @@ const OrderCard = ({item, width, selectedTab}) => {
             right: 10,
             // padding:moderateScale(5,.6),
             borderRadius: moderateScale(10, 0.6),
-            flexDirection:'row',
-            alignItems:'center'
+            flexDirection: 'row',
+            alignItems: 'center',
           }}>
           <CustomText style={{fontSize: moderateScale(8, 0.6)}}>
             {item?.status}
@@ -525,8 +479,13 @@ const OrderCard = ({item, width, selectedTab}) => {
               height: moderateScale(5, 0.6),
               width: moderateScale(5, 0.6),
               borderRadius: moderateScale(5, 0.6) / 2,
-              marginLeft:moderateScale(3,.3),
-              backgroundColor:item?.status == 'accepted' ? 'green':item?.status == 'pending' ? 'orange' :'red',
+              marginLeft: moderateScale(3, 0.3),
+              backgroundColor:
+                item?.status == 'accepted'
+                  ? 'green'
+                  : item?.status == 'pending'
+                  ? 'orange'
+                  : 'red',
             }}></View>
         </View>
       )}

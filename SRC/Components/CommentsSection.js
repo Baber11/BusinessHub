@@ -61,7 +61,7 @@ const CommentsSection = ({item}) => {
             //   backgroundColor:'red',
             // width: windowWidth * 0.78,
           }}>
-         {moment(item?.time).fromNow()}
+         {moment(item?.created_at).fromNow()}
      
         </CustomText>
       </View>

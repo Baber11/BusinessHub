@@ -143,79 +143,7 @@ const CustomerDashboard = () => {
             allServices?.map((item, index) => {
               
               return (
-                <>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    key={item?.userid}
-                    style={{
-                      flexDirection: 'row',
-                      width: windowWidth * 0.9,
-                      height: windowHeight * 0.15,
-                      paddingVertical: moderateScale(10, 0.6),
-                      paddingRight: moderateScale(10, 0.6),
-
-                      borderRadius: moderateScale(10, 0.6),
-                      borderColor: Color.veryLightGray,
-                      borderWidth: 1,
-
-                      marginHorizontal: moderateScale(5, 0.3),
-                      backgroundColor: 'white',
-                    }}
-                    onPress={() => {
-                      navigation.navigate('ServiceDetails', {
-                        item,
-                      });
-                    }}>
-                    <View
-                      style={{
-                        width: windowWidth * 0.3,
-                        height: windowHeight * 0.12,
-                        borderRadius: moderateScale(5, 0.6),
-                        backgroundColor: 'white',
-                        overflow: 'hidden',
-                        marginLeft: moderateScale(10, 0.6),
-                      }}>
-                      <CustomImage
-                        source={{uri: item?.images[0]?.photo}}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                        }}
-                        resizeMode={'stretch'}
-                        onPress={() => {
-                          navigation.navigate('ServiceDetails', {item});
-                        }}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        marginLeft: moderateScale(10, 0.3),
-                        justifyContent: 'center',
-                      }}>
-                      <CustomText
-                        numberOfLines={1}
-                        style={{
-                          fontSize: moderateScale(16, 0.6),
-                          width: windowWidth * 0.45,
-                          color: 'black',
-                        }}>
-                        {item?.shop_name}
-                      </CustomText>
-                      <CustomText
-                        numberOfLines={1}
-                        style={{
-                          fontSize: moderateScale(13, 0.6),
-                          width: windowWidth * 0.45,
-                          color: 'black',
-                        }}>
-                        {item?.category}
-                      </CustomText>
-                      <CustomText isBold>
-                        starting from Rs {item?.charges}
-                      </CustomText>
-                    </View>
-                  </TouchableOpacity>
-                </>
+                <ServiceCard item={item} />
               );
             })
           )}
@@ -340,3 +268,78 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+const ServiceCard =({item})=>{
+  const navigation = useNavigation()
+  return (  <TouchableOpacity
+    activeOpacity={0.8}
+    key={item?.userid}
+    style={{
+      flexDirection: 'row',
+      width: windowWidth * 0.9,
+      height: windowHeight * 0.15,
+      paddingVertical: moderateScale(10, 0.6),
+      paddingRight: moderateScale(10, 0.6),
+
+      borderRadius: moderateScale(10, 0.6),
+      borderColor: Color.veryLightGray,
+      borderWidth: 1,
+
+      marginHorizontal: moderateScale(5, 0.3),
+      backgroundColor: 'white',
+    }}
+    onPress={() => {
+      navigation.navigate('ServiceDetails', {
+        item,
+      });
+    }}>
+    <View
+      style={{
+        width: windowWidth * 0.3,
+        height: windowHeight * 0.12,
+        borderRadius: moderateScale(5, 0.6),
+        backgroundColor: 'white',
+        overflow: 'hidden',
+        marginLeft: moderateScale(10, 0.6),
+      }}>
+      <CustomImage
+        source={{uri: item?.images[0]?.photo}}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        resizeMode={'stretch'}
+        onPress={() => {
+          navigation.navigate('ServiceDetails', {item});
+        }}
+      />
+    </View>
+    <View
+      style={{
+        marginLeft: moderateScale(10, 0.3),
+        justifyContent: 'center',
+      }}>
+      <CustomText
+        numberOfLines={1}
+        style={{
+          fontSize: moderateScale(16, 0.6),
+          width: windowWidth * 0.45,
+          color: 'black',
+        }}>
+        {item?.shop_name}
+      </CustomText>
+      <CustomText
+        numberOfLines={1}
+        style={{
+          fontSize: moderateScale(13, 0.6),
+          width: windowWidth * 0.45,
+          color: 'black',
+        }}>
+        {item?.category}
+      </CustomText>
+      <CustomText isBold>
+        starting from Rs {item?.charges}
+      </CustomText>
+    </View>
+  </TouchableOpacity>)
+}
