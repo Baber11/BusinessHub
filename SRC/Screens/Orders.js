@@ -90,7 +90,7 @@ const Orders = () => {
     getSellerServices();
 
     // Orders();
-  }, [orders]);
+  }, [selectedTab]);
 
   return (
     <>

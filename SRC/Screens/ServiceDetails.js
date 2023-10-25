@@ -113,7 +113,7 @@ const ServiceDetails = props => {
     setIsLoading(false);
     if (response?.data?.success) {
       Platform.OS == 'android'
-        ? ToastAndroid.show('Your Booking request is on pending, the seller will accept/reject it soon. Please check your orders to see its status.', ToastAndroid.SHORT)
+        ? ToastAndroid.show('Your Booking request is on pending, the seller will accept/reject it soon. Please check your orders to see its status.', ToastAndroid.LONG)
         : Alert.alert('Your Booking request is on pending, the seller will accept/reject it soon. Please check your orders to see its status.');
       navigation.goBack();
     }

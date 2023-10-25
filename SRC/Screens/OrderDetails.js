@@ -366,7 +366,7 @@ const OrderDetails = props => {
               }}>
               Contact : {item?.order?.user?.phone}
             </CustomText>
-            <CustomText
+            {item?.pickup_point && <CustomText
               style={{
                 fontSize: moderateScale(12, 0.6),
                 color: 'black',
@@ -375,7 +375,7 @@ const OrderDetails = props => {
                 width: windowWidth * 0.9,
               }}>
               Address : {item?.pickup_point}
-            </CustomText>
+            </CustomText>}
           </View>
         )}
 
