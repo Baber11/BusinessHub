@@ -98,8 +98,16 @@ const PaymentInvoice = props => {
               justifyContent: 'space-between',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText>Payment Due To</CustomText>
+            <CustomText>Date</CustomText>
             <CustomText>{ moment().format('DD MMM YYYY')}</CustomText>
+          </View>
+          <View
+            style={{
+              width: windowWidth * 0.9,
+              flexDirection: 'row',
+              marginTop: moderateScale(20, 0.3),
+            }}>
+            <CustomText  numberOfLines={2} style={{width:windowWidth*0.9,color:"#e4b22d",fontSize:moderateScale(11,0.6)}}>Note: kindly contact seller for further details with in two days</CustomText>
           </View>
         </View>
 
@@ -108,7 +116,7 @@ const PaymentInvoice = props => {
           style={{
             width: windowWidth,
             paddingVertical: moderateScale(10, 0.3),
-            marginTop: moderateScale(20, 0.3),
+            marginTop: moderateScale(10, 0.3),
             alignItems: 'center',
           }}>
           <View
@@ -116,7 +124,7 @@ const PaymentInvoice = props => {
               width: windowWidth * 0.9,
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginTop: moderateScale(20, 0.3),
+              marginTop: moderateScale(10, 0.3),
               borderBottomWidth: 1,
               borderBottomColor: Color.mediumGray,
               paddingBottom: 10,
@@ -167,8 +175,7 @@ const PaymentInvoice = props => {
             width: windowWidth * 0.9,
             marginTop: moderateScale(20, 0.3),
           }}>
-          <CustomText isBold>Total (RUP
-          EES) </CustomText>
+          <CustomText isBold>Total (Rupees) </CustomText>
           <CustomText isBold>PKR {Invoice.total}</CustomText>
         </View>
 

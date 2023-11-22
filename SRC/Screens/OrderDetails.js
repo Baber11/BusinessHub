@@ -29,7 +29,10 @@ import moment from 'moment';
 const OrderDetails = props => {
   const item = props.route.params.item;
   const details = props.route.params.details;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressfsdfesfdfsDefdtail ~ item:', item);
+  console.log(
+    '🚀 ~ file: DressesDetail.js:28 ~ DressfsdfesfdfsDefdtail ~ item:',
+    item,
+  );
   const user = useSelector(state => state.commonReducer.userData);
   const [index, setIndex] = useState(1);
 
@@ -243,16 +246,18 @@ const OrderDetails = props => {
             </View>
           </View>
 
-          {!['null', null, undefined, '', []].includes(colors) &&<CustomText
-            isBold
-            style={{
-              color: '#201E1D',
-              fontSize: moderateScale(14, 0.6),
-              width: windowWidth * 0.17,
-              marginLeft: moderateScale(10, 0.3),
-            }}>
-            Color
-          </CustomText>}
+          {!['null', null, undefined, '', []].includes(colors) && (
+            <CustomText
+              isBold
+              style={{
+                color: '#201E1D',
+                fontSize: moderateScale(14, 0.6),
+                width: windowWidth * 0.17,
+                marginLeft: moderateScale(10, 0.3),
+              }}>
+              Color
+            </CustomText>
+          )}
 
           {!['null', null, undefined, '', []].includes(colors) && (
             <View style={styles.ColorLine}>
@@ -287,33 +292,34 @@ const OrderDetails = props => {
             </CustomText>
           )}
 
-          {!['null', null, undefined, '', []].includes(sizes) && <View style={styles.ColorLine1}>
-            {sizes.map(size => {
-              return (
-                <View
-                  style={[
-                    styles.size,
-                    {
-                      backgroundColor:
-                        item?.size == size ? Color.themeBlue : '#F4F5F6',
-                      marginHorizontal: moderateScale(5, 0.3),
-                    },
-                  ]}>
-                  <CustomText
-                    style={{
-                      color: item?.selectedSize == size ? 'white' : '#8e9194',
-                      fontSize: moderateScale(14, 0.6),
-                      textTransform: 'uppercase',
-                    }}>
-                    {size}
-                  </CustomText>
-                </View>
-              );
-            })}
-          </View>}
+          {!['null', null, undefined, '', []].includes(sizes) && (
+            <View style={styles.ColorLine1}>
+              {sizes.map(size => {
+                return (
+                  <View
+                    style={[
+                      styles.size,
+                      {
+                        backgroundColor:
+                          item?.size == size ? Color.themeBlue : '#F4F5F6',
+                        marginHorizontal: moderateScale(5, 0.3),
+                      },
+                    ]}>
+                    <CustomText
+                      style={{
+                        color: item?.selectedSize == size ? 'white' : '#8e9194',
+                        fontSize: moderateScale(14, 0.6),
+                        textTransform: 'uppercase',
+                      }}>
+                      {size}
+                    </CustomText>
+                  </View>
+                );
+              })}
+            </View>
+          )}
         </View>
 
-       
         {item?.order?.user && (
           <View
             style={{
@@ -366,20 +372,22 @@ const OrderDetails = props => {
               }}>
               Contact : {item?.order?.user?.phone}
             </CustomText>
-            {item?.pickup_point && <CustomText
-              style={{
-                fontSize: moderateScale(12, 0.6),
-                color: 'black',
-                textAlign: 'left',
-                marginTop: moderateScale(5, 0.3),
-                width: windowWidth * 0.9,
-              }}>
-              Address : {item?.pickup_point}
-            </CustomText>}
+            {item?.pickup_point && (
+              <CustomText
+                style={{
+                  fontSize: moderateScale(12, 0.6),
+                  color: 'black',
+                  textAlign: 'left',
+                  marginTop: moderateScale(5, 0.3),
+                  width: windowWidth * 0.9,
+                }}>
+                Address : {item?.pickup_point}
+              </CustomText>
+            )}
           </View>
         )}
 
-<View
+        <View
           style={{
             width: windowWidth * 0.95,
             backgroundColor: 'white',
@@ -403,8 +411,7 @@ const OrderDetails = props => {
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={1}
-            data={item?.product_review
-            }
+            data={item?.product_review}
             contentContainerStyle={{
               alignSelf: 'center',
               marginTop: moderateScale(5, 0.3),
