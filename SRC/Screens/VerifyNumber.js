@@ -28,10 +28,14 @@ import CardContainer from '../Components/CardContainer';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Icon} from 'native-base';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import { SetUserRole, setUserToken } from '../Store/slices/auth';
+import { setUserData } from '../Store/slices/common';
 
 const VerifyNumber = props => {
+  const userdata = props?.route?.params?.userData;
+  const token = props?.route?.params?.token
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
@@ -59,7 +63,7 @@ const VerifyNumber = props => {
   }
 
   const label = () => {
-    time == 0 && (settimerLabel('Resend Code '), settime(''));
+    time == 0 && (settimerLabel('Resend Code'), settime(''));
   };
 
   const sendOTP = async () => {
@@ -81,12 +85,16 @@ const VerifyNumber = props => {
     const response = await Post(url, {code: code}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      // console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response)
+      console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response?.data)
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
 
-      navigationService.navigate('ResetPassword', {email: email});
+      dispatch(setUserData(userdata));
+      dispatch(setUserToken({token}));
+      dispatch(SetUserRole(response?.data?.user_info?.role));
+
+      // navigationService.navigate('ResetPassword', {email: email});
     }
   };
 
@@ -94,17 +102,10 @@ const VerifyNumber = props => {
     label();
   }, [time]);
 
-  // useEffect(()=>{
-  //   if(timerLabel == )
-  //   sendOTP();
-  // },[timerLabel])
-
   return (
     <>
       <CustomStatusBar
-       backgroundColor={
-       Color.white
-      }
+        backgroundColor={Color.white}
         barStyle={'dark-content'}
       />
       <LinearGradient
@@ -112,11 +113,11 @@ const VerifyNumber = props => {
           width: windowWidth,
           height: windowHeight,
         }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-         colors={[Color.white,Color.white]}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        colors={[Color.white, Color.white]}
         // locations ={[0, 0.5, 0.6]}
-        >
+      >
         <TouchableOpacity
           activeOpacity={0.8}
           style={{
@@ -155,7 +156,7 @@ const VerifyNumber = props => {
             style={{
               paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
-              backgroundColor : 'white'
+              backgroundColor: 'white',
             }}>
             <CustomText isBold style={styles.txt2}>
               Enter OTP
@@ -163,11 +164,7 @@ const VerifyNumber = props => {
             <CustomText style={styles.txt3}>
               Enter the email address and we'll send and email with instructions
               to reset your password{' '}
-              {
-                <CustomText style={{color: Color.black}}>
-                  {email}
-                </CustomText>
-              }
+              {<CustomText style={{color: Color.black}}>{email}</CustomText>}
             </CustomText>
             <CodeField
               placeholder={'0'}
@@ -202,7 +199,6 @@ const VerifyNumber = props => {
                     settimerLabel('ReSend in '), settime(120);
                   }}>
                   <CustomText style={[styles.txt4]}>
-
                     {timerLabel} {time}
                   </CustomText>
                 </TouchableOpacity>
@@ -223,7 +219,7 @@ const VerifyNumber = props => {
               height={windowHeight * 0.06}
               marginTop={moderateScale(20, 0.3)}
               onPress={() => {
-                VerifyOTP()
+                VerifyOTP();
                 // navigationService.navigate('ResetPassword', {
                 //   phone: phoneNumber,
                 // });

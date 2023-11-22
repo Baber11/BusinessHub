@@ -6,7 +6,7 @@ import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import ScreenBoiler from '../Components/ScreenBoiler';
 import LinearGradient from 'react-native-linear-gradient';
-import {ActivityIndicator, ScrollView, View,TouchableOpacity} from 'react-native';
+import {ActivityIndicator, ScrollView, View, TouchableOpacity, Alert} from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -79,10 +79,10 @@ const Signup = () => {
     } else if (phone.length != 10) {
       return Platform.OS == 'android'
         ? ToastAndroid.show(
-            'Please Enter a valid phone number',
+            'Please Enter 10 digit phone number',
             ToastAndroid.SHORT,
           )
-        : Alert.alert('Please Enter a valid phone number');
+        : Alert.alert('Please Enter 10 digit phone number');
     } else if (password != confirmPass) {
       return Platform.OS == 'android'
         ? ToastAndroid.show('passwords donot match', ToastAndroid.SHORT)
@@ -96,10 +96,13 @@ const Signup = () => {
     setIsLoading(false);
 
     if (response != undefined) {
+      console.log("🚀 ~ file: Signup.js:93 ~ registerUser ~ response:", response?.data)
+      Alert.alert(`${response?.data?.user_info?.email_code}`)
+      navigationService.navigate('VerifyNumber',{token:response?.data?.token, userData:response?.data?.user_info})
       // console.log('response data==========>>>>>>>>', response?.data);
-      dispatch(setUserData(response?.data?.user_info));
-      dispatch(setUserToken({token: response?.data?.token}));
-      dispatch(SetUserRole(response?.data?.user_info?.role));
+      // dispatch(setUserData(response?.data?.user_info));
+      // dispatch(setUserToken({token: response?.data?.token}));
+      // dispatch(SetUserRole(response?.data?.user_info?.role));
     }
   };
 
