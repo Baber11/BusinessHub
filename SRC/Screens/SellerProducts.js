@@ -187,14 +187,12 @@ const SellerProduct = props => {
             }}>
             Services
           </CustomText>
+          {
+            services.length == 0  &&
+
           <CustomButton
             onPress={() => {
-              services.length > 0
-                ? ToastAndroid.show(
-                    'Service is already added',
-                    ToastAndroid.SHORT,
-                  )
-                : navigationService.navigate('AddServices');
+              navigationService.navigate('AddServices');
             }}
             text={'service'}
             textColor={Color.white}
@@ -209,6 +207,7 @@ const SellerProduct = props => {
             // isGradient
             isBold
           />
+          }
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -342,8 +341,16 @@ const SellerProduct = props => {
                         />
                         <CustomButton
                           onPress={() => {
-                            // dispatch(deleteService(item))
-                            deleteService(item?.id);
+
+                            Alert.alert('WARNING', 'are you sure you want to delete it?', [
+                              {
+                                text: 'Cancel',
+                                onPress: () => console.log('Cancel Pressed'),
+                                style: 'cancel',
+                              },
+                              {text: 'OK', onPress: () => deleteService(item?.id)},
+                            ]);
+                            
                           }}
                           text={'Delete'}
                           textColor={Color.white}

@@ -6,7 +6,13 @@ import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import ScreenBoiler from '../Components/ScreenBoiler';
 import LinearGradient from 'react-native-linear-gradient';
-import {ActivityIndicator, ScrollView, View, TouchableOpacity, Alert} from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -20,15 +26,16 @@ import navigationService from '../navigationService';
 import CardContainer from '../Components/CardContainer';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {Post} from '../Axios/AxiosInterceptorFunction';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setUserData} from '../Store/slices/common';
-import {SetUserRole, setUserToken} from '../Store/slices/auth';
+import {SetUserRole, setIsVerifed, setUserToken} from '../Store/slices/auth';
 import {ToastAndroid} from 'react-native';
 import {Platform} from 'react-native';
 import {validateEmail} from '../Config';
-import { Icon } from 'native-base';
+import {Icon} from 'native-base';
 
 const Signup = () => {
+  
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +43,7 @@ const Signup = () => {
   const [confirmPass, setconfirmPass] = useState('');
   const [showNumberModal, setShowNumberModal] = useState(false);
   const [countryCode, setCountryCode] = useState('PK');
-  console.log("🚀 ~ file: Signup.js:39 ~ Signup ~ countryCode:", countryCode)
+  console.log('🚀 ~ file: Signup.js:39 ~ Signup ~ countryCode:', countryCode);
   const [country, setCountry] = useState({
     callingCode: ['92'],
     cca2: 'PK',
@@ -46,7 +53,7 @@ const Signup = () => {
     region: 'Asia',
     subregion: 'Southern Asia',
   });
-  console.log("🚀 ~ file: Signup.js:48 ~ Signup ~ country:", country)
+  console.log('🚀 ~ file: Signup.js:48 ~ Signup ~ country:', country);
   const [userRole, setuserRole] = useState('seller');
   const [withCallingCode, setWithCallingCode] = useState(true);
   const [withFilter, setFilter] = useState(true);
@@ -96,13 +103,20 @@ const Signup = () => {
     setIsLoading(false);
 
     if (response != undefined) {
-      console.log("🚀 ~ file: Signup.js:93 ~ registerUser ~ response:", response?.data)
-      Alert.alert(`${response?.data?.user_info?.email_code}`)
-      navigationService.navigate('VerifyNumber',{token:response?.data?.token, userData:response?.data?.user_info})
+      console.log(
+        '🚀 ~ file: Signup.js:93 ~ registerUser ~ response:',
+        response?.data,
+      );
+      Alert.alert(`${response?.data?.user_info?.email_code}`);
+      // navigationService.navigate('VerifyNumber', {
+      //   token: response?.data?.token,
+      //   userData: response?.data?.user_info,
+      // });
       // console.log('response data==========>>>>>>>>', response?.data);
-      // dispatch(setUserData(response?.data?.user_info));
-      // dispatch(setUserToken({token: response?.data?.token}));
-      // dispatch(SetUserRole(response?.data?.user_info?.role));
+      dispatch(setUserData(response?.data?.user_info));
+      dispatch(setUserToken({token: response?.data?.token}));
+      dispatch(SetUserRole(response?.data?.user_info?.role));
+      dispatch(setIsVerifed(response?.data?.user_info?.is_verified))
     }
   };
 
@@ -151,181 +165,177 @@ const Signup = () => {
               justifyContent: 'center',
               marginTop: moderateScale(30, 0.3),
             }}> */}
-            <DropDownSingleSelect
-              array={UserRoleArray}
-              item={userRole}
-              setItem={setuserRole}
-              placeholder={userRole}
-              width={windowWidth * 0.75}
-              dropDownHeight={windowHeight * 0.06}
-              dropdownStyle={{
-                width: windowWidth * 0.75,
-                borderBottomWidth: 0,
+          <DropDownSingleSelect
+            array={UserRoleArray}
+            item={userRole}
+            setItem={setuserRole}
+            placeholder={userRole}
+            width={windowWidth * 0.75}
+            dropDownHeight={windowHeight * 0.06}
+            dropdownStyle={{
+              width: windowWidth * 0.75,
+              borderBottomWidth: 0,
+            }}
+            borderColor={Color.lightGrey}
+            elevation
+          />
+          <TextInputWithTitle
+            iconName={'user'}
+            iconType={SimpleLineIcons}
+            LeftIcon={true}
+            titleText={'Username'}
+            placeholder={'Username'}
+            setText={setUserName}
+            value={username}
+            viewHeight={0.07}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            border={1}
+            backgroundColor={Color.white}
+            borderColor={Color.black}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+          />
+
+          <TextInputWithTitle
+            iconName={'email'}
+            iconType={Fontisto}
+            LeftIcon={true}
+            titleText={'Email'}
+            placeholder={'Email'}
+            setText={setEmail}
+            value={email}
+            viewHeight={0.07}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            border={1}
+            borderColor={Color.black}
+            backgroundColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setShowNumberModal(true);
+            }}
+            activeOpacity={0.9}
+            style={[styles.birthday, {justifyContent: 'flex-start'}]}>
+            <CountryPicker
+              {...{
+                countryCode,
+                withCallingCode,
+                onSelect,
+                withFilter,
               }}
-              borderColor={Color.lightGrey}
-              elevation
-            />
-            <TextInputWithTitle
-              iconName={'user'}
-              iconType={SimpleLineIcons}
-              LeftIcon={true}
-              titleText={'Username'}
-              placeholder={'Username'}
-              setText={setUserName}
-              value={username}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              border={1}
-              backgroundColor={Color.white}
-              borderColor={Color.black}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              visible={showNumberModal}
             />
 
-            <TextInputWithTitle
-              iconName={'email'}
-              iconType={Fontisto}
-              LeftIcon={true}
-              titleText={'Email'}
-              placeholder={'Email'}
-              setText={setEmail}
-              value={email}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              border={1}
-              borderColor={Color.black}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
-            />
-              <TouchableOpacity
-              onPress={()=>{
-                setShowNumberModal(true)
+            {country && (
+              <CustomText
+                style={{
+                  fontSize: moderateScale(15, 0.6),
+                  color: '#5E5E5E',
+                }}>{`${countryCode}(+${country?.callingCode})`}</CustomText>
+            )}
+
+            <Icon
+              name={'angle-down'}
+              as={FontAwesome}
+              size={moderateScale(20, 0.6)}
+              color={Color.themeDarkGray}
+              onPress={() => {
+                setShowNumberModal(true);
               }}
-                activeOpacity={0.9}
-                style={[styles.birthday, {justifyContent: 'flex-start',}]}>
-                <CountryPicker
-                  {...{
-                    countryCode,
-                    withCallingCode,
-                    onSelect,
-                    withFilter,
-                  }}
-                  visible={showNumberModal}
-                  
-                />
-
-                {country && (
-                  <CustomText
-                    style={{
-                      fontSize: moderateScale(15, 0.6),
-                      color: '#5E5E5E',
-                    }}>{`${countryCode}(+${country?.callingCode})`}</CustomText>
-                )}
-
-                <Icon
-                  name={'angle-down'}
-                  as={FontAwesome}
-                  size={moderateScale(20, 0.6)}
-                  color={Color.themeDarkGray}
-                  onPress={()=>{
-                    setShowNumberModal(true)
-                  }}
-                  style={{
-                    position: 'absolute',
-                    right: moderateScale(5, 0.3),
-                  }}
-                />
-              </TouchableOpacity>
-             
-        
-            <TextInputWithTitle
-                iconName={'cellphone-sound'}
-                iconType={MaterialCommunityIcons}
-                LeftIcon={true}
-                titleText={'Contact'}
-                placeholder={'Contact'}
-                setText={setPhone}
-                value={phone}
-                viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.55}
-                border={1}
-                borderColor={Color.black}
-                backgroundColor={Color.white}
-                marginTop={moderateScale(10, 0.3)}
-                color={Color.black}
-                placeholderColor={Color.veryLightGray}
-                elevation
-              />
-
-           
-
-            <TextInputWithTitle
-              iconName={'key-outline'}
-              iconType={Ionicons}
-              LeftIcon={true}
-              titleText={'Password'}
-              placeholder={'Password'}
-              setText={setPassword}
-              value={password}
-              secureText={true}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              border={1}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              style={{
+                position: 'absolute',
+                right: moderateScale(5, 0.3),
+              }}
             />
+          </TouchableOpacity>
 
-            <TextInputWithTitle
-              iconName={'check-outline'}
-              iconType={MaterialCommunityIcons}
-              LeftIcon={true}
-              titleText={'confirm password'}
-              placeholder={'Re-type password'}
-              setText={setconfirmPass}
-              value={confirmPass}
-              secureText={true}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              border={1}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
-            />
+          <TextInputWithTitle
+            iconName={'cellphone-sound'}
+            iconType={MaterialCommunityIcons}
+            LeftIcon={true}
+            titleText={'Contact'}
+            placeholder={'Contact'}
+            setText={setPhone}
+            value={phone}
+            viewHeight={0.07}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            border={1}
+            borderColor={Color.black}
+            backgroundColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+          />
 
-            <CustomButton
-              onPress={() => registerUser()}
-              text={
-                isLoading ? (
-                  <ActivityIndicator color={Color.white} size={'small'} />
-                ) : (
-                  'SIGN UP'
-                )
-              }
-              textColor={Color.white}
-              width={windowWidth * 0.4}
-              height={windowHeight * 0.06}
-              marginTop={moderateScale(30, 0.3)}
-              bgColor={Color.themeBlue}
-              // borderRadius={moderateScale(5, 0.3)}
-              // isGradient
-            />
+          <TextInputWithTitle
+            iconName={'key-outline'}
+            iconType={Ionicons}
+            LeftIcon={true}
+            titleText={'Password'}
+            placeholder={'Password'}
+            setText={setPassword}
+            value={password}
+            secureText={true}
+            viewHeight={0.07}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            border={1}
+            borderColor={'#000'}
+            backgroundColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+          />
+
+          <TextInputWithTitle
+            iconName={'check-outline'}
+            iconType={MaterialCommunityIcons}
+            LeftIcon={true}
+            titleText={'confirm password'}
+            placeholder={'Re-type password'}
+            setText={setconfirmPass}
+            value={confirmPass}
+            secureText={true}
+            viewHeight={0.07}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            border={1}
+            borderColor={'#000'}
+            backgroundColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.black}
+            placeholderColor={Color.veryLightGray}
+            elevation
+          />
+
+          <CustomButton
+            onPress={() => registerUser()}
+            text={
+              isLoading ? (
+                <ActivityIndicator color={Color.white} size={'small'} />
+              ) : (
+                'SIGN UP'
+              )
+            }
+            textColor={Color.white}
+            width={windowWidth * 0.4}
+            height={windowHeight * 0.06}
+            marginTop={moderateScale(30, 0.3)}
+            bgColor={Color.themeBlue}
+            // borderRadius={moderateScale(5, 0.3)}
+            // isGradient
+          />
           {/* </CardContainer> */}
           <CustomText style={styles.txt5}>Already have an account ?</CustomText>
           <CustomText
@@ -344,10 +354,10 @@ const styles = ScaledSheet.create({
   birthday: {
     width: windowWidth * 0.75,
     height: windowHeight * 0.07,
-    marginTop:moderateScale(10,.3),
+    marginTop: moderateScale(10, 0.3),
     borderRadius: moderateScale(10, 0.6),
     borderWidth: 1,
-    backgroundColor:'white',
+    backgroundColor: 'white',
     borderColor: Color.lightGrey,
     flexDirection: 'row',
     paddingHorizontal: moderateScale(10, 0.6),

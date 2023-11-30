@@ -36,6 +36,9 @@ const AuthSlice = createSlice({
     setWalkThrough(state, action) {
       state.userWalkThrough = action.payload;
     },
+    setIsVerifed(state ,action){
+      state.isVerified = action.payload ;
+    }
   },
 });
 
@@ -46,7 +49,8 @@ export const {
   setUserToken,
   SetFCMToken,
   setWalkThrough,
-  SetUserRole
+  SetUserRole,
+  setIsVerifed
   
   
 } = AuthSlice.actions;

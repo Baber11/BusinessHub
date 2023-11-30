@@ -16,7 +16,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import navigationService from '../navigationService';
 import {useDispatch} from 'react-redux';
 import CardContainer from '../Components/CardContainer';
-import {SetUserRole, setUserToken} from '../Store/slices/auth';
+import {SetUserRole, setIsVerifed, setUserToken} from '../Store/slices/auth';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {setUserData} from '../Store/slices/common';
@@ -64,13 +64,14 @@ const LoginScreen = props => {
 
     // console.log('LoginResponse============>>>>>>>', response?.data);
     if (response?.data?.success) {
-      // console.log(
+      //  console.log(
       //   'Login Testing =============>>>>>>',
       //   response?.data?.user_info,
       // );
       dispatch(setUserData(response?.data?.user_info));
       dispatch(SetUserRole(response?.data?.user_info?.role));
       dispatch(setUserToken({token: response?.data?.token}));
+      dispatch(setIsVerifed(response?.data?.user_info?.is_verified))
     }
     // dispatch(setUserData(response?.data?.user_info));
     // dispatch(setUserToken({token: 'dfhksdjlsk'}));
@@ -169,7 +170,7 @@ const LoginScreen = props => {
               }}
               onPress={() => {
                 // console.log('here');
-                navigationService.navigate('EnterPhone');
+                navigationService.navigate('EnterPhone' , {fromForgot:true});
               }}
             />
 

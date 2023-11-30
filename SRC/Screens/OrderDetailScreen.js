@@ -63,6 +63,7 @@ const OrderDetailScreen = props => {
   );
 
   const type = props.route.params.type;
+  console.log("🚀 ~ file: OrderDetailScreen.js:66 ~ OrderDetailScreen ~ type:", type)
 
   return (
     <ImageBackground
@@ -340,7 +341,10 @@ const OrderDetailScreen = props => {
                   />
                 </>
               )}
-              <View
+            { 
+            !type && 
+            <>
+            <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -367,6 +371,9 @@ const OrderDetailScreen = props => {
                 _light={{bg: 'gray.200'}}
               />
             
+            
+            </>
+}            
               
                   <View
                     style={{

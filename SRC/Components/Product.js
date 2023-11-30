@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, ActivityIndicator,Alert} from 'react-native';
 import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
@@ -281,7 +281,15 @@ const Product = ({item, seller, onPress,setAddedProducts, addedProducts}) => {
             />
             <CustomButton
               onPress={() => {
-                deleteProduct(item?.id)
+                Alert.alert('WARNING', 'are you sure you want to delete it?', [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {text: 'OK', onPress: () => deleteProduct(item?.id)},
+                ]);
+                
                 // dispatch(deleteProducts(item));
               }}
               text={isLoading ? <ActivityIndicator size={'small'} color={'white'} /> : 'Delete'}

@@ -330,8 +330,8 @@ const AddServices = props => {
           </CustomText>
 
           <TextInputWithTitle
-            titleText={'Shop Name'}
-            placeholder={'Shop Name'}
+            titleText={'Brand Name'}
+            placeholder={'Brand Name'}
             setText={setTitle}
             value={title}
             viewHeight={0.07}

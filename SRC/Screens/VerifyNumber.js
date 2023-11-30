@@ -30,15 +30,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Icon} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { SetUserRole, setUserToken } from '../Store/slices/auth';
+import { SetUserRole, setIsVerifed, setUserToken } from '../Store/slices/auth';
 import { setUserData } from '../Store/slices/common';
 
 const VerifyNumber = props => {
-  const userdata = props?.route?.params?.userData;
-  const token = props?.route?.params?.token
-  const SelecteduserRole = useSelector(
-    state => state.commonReducer.selectedRole,
-  );
+  const dispatch = useDispatch()
+  const userData1 = useSelector((state)=>state.commonReducer.userData)
+  
   const navigationN = useNavigation();
 
   //params
@@ -85,16 +83,17 @@ const VerifyNumber = props => {
     const response = await Post(url, {code: code}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response?.data)
+        console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response?.data)
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
 
-      dispatch(setUserData(userdata));
-      dispatch(setUserToken({token}));
-      dispatch(SetUserRole(response?.data?.user_info?.role));
+      // dispatch(setUserData(userdata));
+      // dispatch(setUserToken({token:token}));
+      // dispatch(SetUserRole(response?.data?.user_info?.role));
+      dispatch(setIsVerifed(response?.data?.user_info?.is_verified))
 
-      // navigationService.navigate('ResetPassword', {email: email});
+    fromForgot &&  navigationService.navigate('ResetPassword', {email: email});
     }
   };
 
@@ -118,7 +117,7 @@ const VerifyNumber = props => {
         colors={[Color.white, Color.white]}
         // locations ={[0, 0.5, 0.6]}
       >
-        <TouchableOpacity
+       {fromForgot &&  <TouchableOpacity
           activeOpacity={0.8}
           style={{
             position: 'absolute',
@@ -141,7 +140,7 @@ const VerifyNumber = props => {
               navigationN.goBack();
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> }
 
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
@@ -197,6 +196,7 @@ const VerifyNumber = props => {
                   disabled={timerLabel == 'Resend Code ' ? false : true}
                   onPress={() => {
                     settimerLabel('ReSend in '), settime(120);
+                    sendOTP()
                   }}>
                   <CustomText style={[styles.txt4]}>
                     {timerLabel} {time}

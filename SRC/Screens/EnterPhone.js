@@ -48,13 +48,13 @@ const EnterPhone = props => {
     const response = await Post(url, {email: phone}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      // console.log('response data =>', response?.data);
+      console.log('response data =>', response?.data);
 
 
       Platform.OS == 'android'
         ? ToastAndroid.show(`OTP sent to ${phone}`, ToastAndroid.SHORT)
         : alert(`OTP sent to ${phone}`);
-      alert(`OTP is ${response?.data['0']?.code}`)  
+      alert(`OTP is ${response?.data?.data[0]?.code}`)  
       fromForgot
         ? navigationService.navigate('VerifyNumber', {
             fromForgot: fromForgot,

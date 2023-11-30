@@ -52,6 +52,7 @@ const AppNavigator = () => {
   // );
 
   const isVerified = useSelector(state => state.authReducer.isVerified);
+  console.log("🚀 ~ file: appNavigation.js:55 ~ AppNavigator ~ isVerified:", isVerified)
   const token = useSelector(state => state.authReducer.token);
   // console.log('🚀 ~ file: appNavigation.js:33 ~ AppNavigator ~ token:', token);
 
@@ -62,17 +63,20 @@ const AppNavigator = () => {
   const RootNavLogged = createNativeStackNavigator();
 
   const AppNavigatorContainer = () => {
-    const HomeScreen =
-      role == 'admin'
-        ? 'MyDrawer'
-        : role == 'customer'
-        ? 'HomeScreenOther'
-        : 'HomeScreenOther';
+    // const HomeScreen =
+    //   role == 'admin'
+    //     ? 'MyDrawer'
+    //     : role == 'customer'
+    //     ? 'HomeScreenOther'
+    //     : 'HomeScreenOther';
     const firstScreen = !walkThrough
       ? 'WalkThroughScreen'
       : token == null
       ? 'GetStarted'
-      : 'MyDrawer';
+      :  isVerified == 0 ?
+      'VerifyNumber'
+      :
+      'MyDrawer';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
