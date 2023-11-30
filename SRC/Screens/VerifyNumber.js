@@ -30,22 +30,27 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Icon} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import { SetUserRole, setIsVerifed, setUserToken } from '../Store/slices/auth';
-import { setUserData } from '../Store/slices/common';
+import {
+  SetUserRole,
+  setIsVerifed,
+  setUserLogoutAuth,
+  setUserToken,
+} from '../Store/slices/auth';
+import {setUserData, setUserLogOut} from '../Store/slices/common';
+import {Alert} from 'react-native';
 
 const VerifyNumber = props => {
-  const dispatch = useDispatch()
-  const userData1 = useSelector((state)=>state.commonReducer.userData)
-  
+  const dispatch = useDispatch();
   const navigationN = useNavigation();
 
-  //params
+  const userData1 = useSelector(state => state.commonReducer.userData);
+
   const fromForgot = props?.route?.params?.fromForgot;
   const email = props?.route?.params?.email;
 
-  //states
   const [code, setCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
   const CELL_COUNT = 4;
   const ref = useBlurOnFulfill({code, cellCount: CELL_COUNT});
   const [abcd, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -66,24 +71,42 @@ const VerifyNumber = props => {
 
   const sendOTP = async () => {
     const url = 'password/email';
-    setIsLoading(true);
-    const response = await Post(url, {email: email}, apiHeader());
-    setIsLoading(false);
+    setIsLoading2(true);
+    const response = await Post(
+      url,
+      {email: email ? email : userData1?.email},
+      apiHeader(),
+    );
+    setIsLoading2(false);
     if (response != undefined) {
-      Platform.OS == 'android'
-        ? ToastAndroid.show(`OTP sent to ${email}`, ToastAndroid.SHORT)
-        : alert(`OTP sent to ${email}`);
+      Alert.alert(`OTP is ${response?.data?.data[0]?.code}`);
+      settimerLabel('ReSend in '), settime(120);
+      setCode('');
+      return Platform.OS == 'android'
+        ? ToastAndroid.show(
+            `OTP sent to ${email ? email : userData1?.email}`,
+            ToastAndroid.SHORT,
+          )
+        : alert(`OTP sent to ${email ? email : userData1?.email}`);
     }
   };
 
   const VerifyOTP = async () => {
     const url = 'password/code/check';
+    if (code == '') {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show('Please enter OTP ', ToastAndroid.SHORT)
+        : Alert.alert('Please enter OTP');
+    }
     setIsLoading(true);
     // console.log(code);
     const response = await Post(url, {code: code}, apiHeader());
     setIsLoading(false);
-    if (response != undefined) {
-        console.log("🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:", response?.data)
+    if (response?.data?.success) {
+      console.log(
+        '🚀 ~ file: VerifyNumber.js:84 ~ VerifyOTP ~ response:',
+        response?.data,
+      );
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
@@ -91,15 +114,30 @@ const VerifyNumber = props => {
       // dispatch(setUserData(userdata));
       // dispatch(setUserToken({token:token}));
       // dispatch(SetUserRole(response?.data?.user_info?.role));
-      dispatch(setIsVerifed(response?.data?.user_info?.is_verified))
+      !fromForgot &&
+        dispatch(setIsVerifed(response?.data?.user_info?.is_verified));
 
-    fromForgot &&  navigationService.navigate('ResetPassword', {email: email});
+      fromForgot && navigationService.navigate('ResetPassword', {email: email});
+    } else {
+      setCode('');
+      return Platform.OS == 'android'
+        ? ToastAndroid.show(`Please enter the correct OTP`, ToastAndroid.SHORT)
+        : alert(`Please enter the correct OTP`);
     }
   };
 
   useEffect(() => {
     label();
   }, [time]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      sendOTP();
+    }, 2);
+    return () => {
+      clearTimeout(timerId)
+    };
+  }, []);
 
   return (
     <>
@@ -117,30 +155,32 @@ const VerifyNumber = props => {
         colors={[Color.white, Color.white]}
         // locations ={[0, 0.5, 0.6]}
       >
-       {fromForgot &&  <TouchableOpacity
-          activeOpacity={0.8}
-          style={{
-            position: 'absolute',
-            top: moderateScale(20, 0.3),
-            left: moderateScale(20, 0.3),
-            height: moderateScale(30, 0.3),
-            width: moderateScale(30, 0.3),
-            borderRadius: moderateScale(5, 0.3),
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: Color.themeBlue,
-            zIndex: 1,
-          }}>
-          <Icon
-            name={'arrowleft'}
-            as={AntDesign}
-            size={moderateScale(22, 0.3)}
-            color={Color.white}
-            onPress={() => {
-              navigationN.goBack();
-            }}
-          />
-        </TouchableOpacity> }
+        {fromForgot && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              position: 'absolute',
+              top: moderateScale(20, 0.3),
+              left: moderateScale(20, 0.3),
+              height: moderateScale(30, 0.3),
+              width: moderateScale(30, 0.3),
+              borderRadius: moderateScale(5, 0.3),
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: Color.themeBlue,
+              zIndex: 1,
+            }}>
+            <Icon
+              name={'arrowleft'}
+              as={AntDesign}
+              size={moderateScale(22, 0.3)}
+              color={Color.white}
+              onPress={() => {
+                navigationN.goBack();
+              }}
+            />
+          </TouchableOpacity>
+        )}
 
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
@@ -151,83 +191,116 @@ const VerifyNumber = props => {
             width: '100%',
             height: windowHeight,
           }}>
-          <CardContainer
-            style={{
-              paddingVertical: moderateScale(30, 0.3),
-              alignItems: 'center',
-              backgroundColor: 'white',
-            }}>
-            <CustomText isBold style={styles.txt2}>
-              Enter OTP
-            </CustomText>
-            <CustomText style={styles.txt3}>
-              Enter the email address and we'll send and email with instructions
-              to reset your password{' '}
-              {<CustomText style={{color: Color.black}}>{email}</CustomText>}
-            </CustomText>
-            <CodeField
-              placeholder={'0'}
-              ref={ref}
-              value={code}
-              onChangeText={setCode}
-              cellCount={CELL_COUNT}
-              rootStyle={styles.codeFieldRoot}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              renderCell={({index, symbol, isFocused}) => (
-                <View
-                  onLayout={getCellOnLayoutHandler(index)}
-                  key={index}
-                  style={[styles.cellRoot, isFocused && styles.focusCell]}>
-                  <CustomText
-                    style={[
-                      styles.cellText,
-                      isFocused && {color: Color.black},
-                    ]}>
-                    {symbol || (isFocused ? <Cursor /> : null)}
+          {isLoading2 ? (
+            <View
+              style={{
+                height: windowHeight * 0.8,
+                width: windowWidth,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ActivityIndicator color={Color.themeBlue} size={'large'} />
+            </View>
+          ) : (
+            <CardContainer
+              style={{
+                paddingVertical: moderateScale(30, 0.3),
+                alignItems: 'center',
+                backgroundColor: 'white',
+              }}>
+              <CustomText isBold style={styles.txt2}>
+                Enter OTP
+              </CustomText>
+              <CustomText style={styles.txt3}>
+                Enter the email address and we'll send and email with
+                instructions to reset your password{' '}
+                {
+                  <CustomText style={{color: Color.black}}>
+                    {email ? email : userData1?.email}
                   </CustomText>
-                </View>
-              )}
-            />
-            <CustomText style={[styles.txt3, {width: windowWidth * 0.6}]}>
-              Haven't Recieved Verification Code ?{' '}
-              {
-                <TouchableOpacity
-                  disabled={timerLabel == 'Resend Code ' ? false : true}
+                }
+              </CustomText>
+              <CodeField
+                placeholder={'0'}
+                // ref={ref}
+                value={code}
+                onChangeText={setCode}
+                // cellCount={CELL_COUNT}
+                rootStyle={styles.codeFieldRoot}
+                keyboardType="number-pad"
+                // textContentType="oneTimeCode"
+                renderCell={({index, symbol, isFocused}) => (
+                  <View
+                    onLayout={getCellOnLayoutHandler(index)}
+                    key={index}
+                    style={[styles.cellRoot, isFocused && styles.focusCell]}>
+                    <CustomText
+                      style={[
+                        styles.cellText,
+                        isFocused && {color: Color.black},
+                      ]}>
+                      {symbol || (isFocused ? <Cursor /> : null)}
+                    </CustomText>
+                  </View>
+                )}
+              />
+              <CustomText style={[styles.txt3, {width: windowWidth * 0.6}]}>
+                Haven't Recieved Verification Code ?{' '}
+                {
+                  <TouchableOpacity
+                    disabled={timerLabel == 'Resend Code ' ? false : true}
+                    onPress={() => {
+                      console.log('console======');
+
+                      sendOTP();
+                    }}>
+                    <CustomText
+                      onPress={() => {
+                        sendOTP();
+                      }}
+                      style={[styles.txt4]}>
+                      {timerLabel} {time}
+                    </CustomText>
+                  </TouchableOpacity>
+                }
+              </CustomText>
+              <CustomButton
+                text={
+                  isLoading ? (
+                    <ActivityIndicator color={'#ffffff'} size={'small'} />
+                  ) : (
+                    'Verify now'
+                  )
+                }
+                isBold
+                textColor={Color.white}
+                width={windowWidth * 0.4}
+                height={windowHeight * 0.06}
+                marginTop={moderateScale(20, 0.3)}
+                onPress={() => {
+                  VerifyOTP();
+                }}
+                bgColor={Color.themeBlue}
+              />
+              {!fromForgot && (
+                <CustomButton
+                  text={'Log out'}
+                  isBold
+                  textColor={Color.white}
+                  width={windowWidth * 0.4}
+                  height={windowHeight * 0.06}
+                  marginTop={moderateScale(20, 0.3)}
                   onPress={() => {
-                    settimerLabel('ReSend in '), settime(120);
-                    sendOTP()
-                  }}>
-                  <CustomText style={[styles.txt4]}>
-                    {timerLabel} {time}
-                  </CustomText>
-                </TouchableOpacity>
-              }
-            </CustomText>
-            <CustomButton
-              // textTransform={"capitalize"}
-              text={
-                isLoading ? (
-                  <ActivityIndicator color={'#ffffff'} size={'small'} />
-                ) : (
-                  'Verify now'
-                )
-              }
-              isBold
-              textColor={Color.white}
-              width={windowWidth * 0.4}
-              height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
-              onPress={() => {
-                VerifyOTP();
-                // navigationService.navigate('ResetPassword', {
-                //   phone: phoneNumber,
-                // });
-              }}
-              bgColor={Color.themeBlue}
-              // borderRadius={moderateScale(30, 0.3)}
-            />
-          </CardContainer>
+                    dispatch(setUserLogoutAuth());
+                    dispatch(setUserLogOut());
+                    dispatch(SetUserRole(''));
+                    dispatch(setIsVerifed(false));
+                  }}
+                  bgColor={Color.themeBlue}
+                />
+              )}
+            </CardContainer>
+          )}
         </KeyboardAwareScrollView>
       </LinearGradient>
     </>

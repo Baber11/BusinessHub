@@ -170,7 +170,7 @@ const LoginScreen = props => {
               }}
               onPress={() => {
                 // console.log('here');
-                navigationService.navigate('EnterPhone' , {fromForgot:true});
+                navigationService.navigate('EnterPhone' , {fromForgot : true});
               }}
             />
 

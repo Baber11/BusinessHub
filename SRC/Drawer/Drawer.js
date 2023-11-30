@@ -14,7 +14,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {SetUserRole, setUserLogoutAuth} from '../Store/slices/auth';
+import {
+  SetUserRole,
+  setIsVerifed,
+  setUserLogoutAuth,
+} from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
 import navigationService from '../navigationService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -55,6 +59,7 @@ const Drawer = () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
         dispatch(SetUserRole(''));
+        dispatch(setIsVerifed(false));
       },
     },
   ];
@@ -84,7 +89,7 @@ const Drawer = () => {
         navigation.navigate('Myorders');
       },
     },
-   
+
     {
       name: 'Change Password',
       iconName: 'lock',
@@ -93,7 +98,6 @@ const Drawer = () => {
         navigation.navigate('ChangePassword');
       },
     },
-    
 
     {
       name: 'Log out',
@@ -103,6 +107,7 @@ const Drawer = () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
         dispatch(SetUserRole(''));
+        dispatch(setIsVerifed(false));
       },
     },
   ];
@@ -132,7 +137,7 @@ const Drawer = () => {
         navigation.navigate('MyAccounts');
       },
     },
-    
+
     {
       name: 'Change Password',
       iconName: 'lock',
@@ -149,6 +154,7 @@ const Drawer = () => {
         dispatch(setUserLogoutAuth());
         dispatch(setUserLogOut());
         dispatch(SetUserRole(''));
+        dispatch(setIsVerifed(false));
       },
     },
   ];
@@ -231,7 +237,11 @@ const Drawer = () => {
               <View style={styles.Profile}>
                 <CustomImage
                   resizeMode={'cover'}
-                  source={userData?.photo ? {uri :userData?.photo } :require('../Assets/Images/logo.png')}
+                  source={
+                    userData?.photo
+                      ? {uri: userData?.photo}
+                      : require('../Assets/Images/logo.png')
+                  }
                   style={{width: '100%', height: '100%'}}
                 />
               </View>

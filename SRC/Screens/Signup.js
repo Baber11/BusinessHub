@@ -107,7 +107,7 @@ const Signup = () => {
         '🚀 ~ file: Signup.js:93 ~ registerUser ~ response:',
         response?.data,
       );
-      Alert.alert(`${response?.data?.user_info?.email_code}`);
+      // Alert.alert(`${response?.data?.user_info?.email_code}`);
       // navigationService.navigate('VerifyNumber', {
       //   token: response?.data?.token,
       //   userData: response?.data?.user_info,

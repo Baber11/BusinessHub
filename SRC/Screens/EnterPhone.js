@@ -23,19 +23,23 @@ import CardContainer from '../Components/CardContainer';
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import ScreenBoiler from '../Components/ScreenBoiler';
-import { Icon } from 'native-base';
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import { useNavigation } from '@react-navigation/native';
+import {Icon} from 'native-base';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
 const EnterPhone = props => {
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
   const fromForgot = props?.route?.params?.fromForgot;
+  console.log(
+    '🚀 ~ file: EnterPhone.js:35 ~ EnterPhone ~ fromForgot:',
+    fromForgot,
+  );
   // console.log('here=>', fromForgot);
   const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const sendOTP = async () => {
     const url = 'password/email';
@@ -50,11 +54,10 @@ const EnterPhone = props => {
     if (response != undefined) {
       console.log('response data =>', response?.data);
 
-
       Platform.OS == 'android'
         ? ToastAndroid.show(`OTP sent to ${phone}`, ToastAndroid.SHORT)
         : alert(`OTP sent to ${phone}`);
-      alert(`OTP is ${response?.data?.data[0]?.code}`)  
+      alert(`OTP is ${response?.data?.data[0]?.code}`);
       fromForgot
         ? navigationService.navigate('VerifyNumber', {
             fromForgot: fromForgot,
@@ -119,48 +122,62 @@ const EnterPhone = props => {
                 paddingVertical: moderateScale(30, 0.3),
                 alignItems: 'center',
               }}> */}
-              <CustomText isBold style={styles.txt2}>
-                Forget Password
-              </CustomText>
-              <CustomText style={styles.txt3}>
-                Forgot your password ? don't worry, jsut take a simple step and
-                create your new password!
-              </CustomText>
+            <CustomText isBold style={styles.txt2}>
+              Forget Password
+            </CustomText>
+            <CustomText style={styles.txt3}>
+              Forgot your password ? don't worry, jsut take a simple step and
+              create your new password!
+            </CustomText>
 
-              <TextInputWithTitle
-                titleText={'Enter your Email'}
-                secureText={false}
-                placeholder={'Enter your Email'}
-                setText={setPhone}
-                value={phone}
-                viewHeight={0.07}
-                viewWidth={0.75}
-                inputWidth={0.7}
-                borderColor={'#ffffff'}
-                backgroundColor={'#FFFFFF'}
-                marginTop={moderateScale(35, 0.3)}
-                color={Color.themeBlue}
-                placeholderColor={Color.themeLightGray}
-                elevation
-              />
-              <CustomButton
-                text={
-                  isLoading ? (
-                    <ActivityIndicator color={'#FFFFFF'} size={'small'} />
-                  ) : (
-                    'Submit'
-                  )
-                }
-                textColor={Color.white}
-                width={windowWidth * 0.4}
-                height={windowHeight * 0.06}
-                marginTop={moderateScale(20, 0.3)}
-                onPress={() => {
-                  sendOTP()
-                  
-                }}
-                bgColor={Color.themeBlue}
-              />
+            <TextInputWithTitle
+              titleText={'Enter your Email'}
+              secureText={false}
+              placeholder={'Enter your Email'}
+              setText={setPhone}
+              value={phone}
+              viewHeight={0.07}
+              viewWidth={0.75}
+              inputWidth={0.7}
+              borderColor={'#ffffff'}
+              backgroundColor={'#FFFFFF'}
+              marginTop={moderateScale(35, 0.3)}
+              color={Color.themeBlue}
+              placeholderColor={Color.themeLightGray}
+              elevation
+            />
+            <CustomButton
+              text={
+                isLoading ? (
+                  <ActivityIndicator color={'#FFFFFF'} size={'small'} />
+                ) : (
+                  'Submit'
+                )
+              }
+              textColor={Color.white}
+              width={windowWidth * 0.4}
+              height={windowHeight * 0.06}
+              marginTop={moderateScale(20, 0.3)}
+              onPress={() => {
+                // sendOTP()
+                Platform.OS == 'android'
+                  ? ToastAndroid.show(
+                      `OTP sent to ${phone}`,
+                      ToastAndroid.SHORT,
+                    )
+                  : alert(`OTP sent to ${phone}`);
+                alert(`OTP is ${response?.data?.data[0]?.code}`);
+                fromForgot
+                  ? navigationService.navigate('VerifyNumber', {
+                      fromForgot: fromForgot,
+                      email: `${phone}`,
+                    })
+                  : navigationService.navigate('VerifyNumber', {
+                      email: `${phone}`,
+                    });
+              }}
+              bgColor={Color.themeBlue}
+            />
             {/* </CardContainer> */}
           </KeyboardAwareScrollView>
         </LinearGradient>

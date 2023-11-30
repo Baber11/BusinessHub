@@ -70,14 +70,15 @@ const AppNavigator = () => {
     //     ? 'HomeScreenOther'
     //     : 'HomeScreenOther';
     const firstScreen = !walkThrough
-      ? 'WalkThroughScreen'
-      : token == null
-      ? 'GetStarted'
-      :  isVerified == 0 ?
-      'VerifyNumber'
-      :
-      'MyDrawer';
-
+    ? 'WalkThroughScreen'
+    : token == null
+    ? 'GetStarted'
+    :  isVerified == 0 ?
+    'VerifyNumber'
+    :
+    'MyDrawer';
+    
+    console.log("🚀 ~ file: appNavigation.js:73 ~ AppNavigatorContainer ~ firstScreen:", firstScreen)
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
