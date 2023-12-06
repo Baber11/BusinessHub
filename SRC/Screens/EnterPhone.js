@@ -166,7 +166,7 @@ const EnterPhone = props => {
                       ToastAndroid.SHORT,
                     )
                   : alert(`OTP sent to ${phone}`);
-                alert(`OTP is ${response?.data?.data[0]?.code}`);
+                // alert(`OTP is ${response?.data?.data[0]?.code}`);
                 fromForgot
                   ? navigationService.navigate('VerifyNumber', {
                       fromForgot: fromForgot,

@@ -39,7 +39,7 @@ const CustomerDashboard = () => {
   const [newData, setNewData] = useState([]);
   const [search, setSearch] = useState('');
 
-  console.log("🚀 ~ file: CustomerDashboard.js:40 ~ newData:", newData)
+  console.log('🚀 ~ file: CustomerDashboard.js:40 ~ newData:', newData);
 
   const productList = async () => {
     const url = 'products';
@@ -83,8 +83,7 @@ const CustomerDashboard = () => {
   }, []);
 
   useEffect(() => {
-    if(isFocused == true){
-
+    if (isFocused == true) {
       productList();
       serviceList();
       // setNewData(allProducts);
@@ -139,13 +138,38 @@ const CustomerDashboard = () => {
                 size={moderateScale(30, 0.6)}
               />
             </View>
-          ) : (
+          ) : allServices.length > 0 ? (
             allServices?.map((item, index) => {
-              
-              return (
-                <ServiceCard item={item} />
-              );
+              return <ServiceCard item={item} />;
             })
+          ) : (
+            <View >
+              <View
+                style={{
+                  width: windowWidth * 0.69,
+                  height: windowHeight * 0.2,
+                  marginTop: moderateScale(30, 0.3),
+                  alignSelf: 'center',
+                }}>
+                <CustomImage
+                  source={require('../Assets/Images/4.jpg')}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                  resizeMode={'contain'}
+                />
+              </View>
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'center',
+                  color: 'black',
+                  fontSize: moderateScale(12, 0.6),
+                }}>
+                DATA NOT ADDED YET
+              </CustomText>
+            </View>
           )}
         </ScrollView>
 
@@ -199,7 +223,6 @@ const CustomerDashboard = () => {
               marginTop: moderateScale(5, 0.3),
             }}
             renderItem={({item, index}) => {
-             
               return (
                 <Product
                   onPress={() => {
@@ -269,77 +292,77 @@ const styles = ScaledSheet.create({
   },
 });
 
-const ServiceCard =({item})=>{
-  const navigation = useNavigation()
-  return (  <TouchableOpacity
-    activeOpacity={0.8}
-    key={item?.userid}
-    style={{
-      flexDirection: 'row',
-      width: windowWidth * 0.9,
-      height: windowHeight * 0.15,
-      paddingVertical: moderateScale(10, 0.6),
-      paddingRight: moderateScale(10, 0.6),
-
-      borderRadius: moderateScale(10, 0.6),
-      borderColor: Color.veryLightGray,
-      borderWidth: 1,
-
-      marginHorizontal: moderateScale(5, 0.3),
-      backgroundColor: 'white',
-    }}
-    onPress={() => {
-      navigation.navigate('ServiceDetails', {
-        item,
-      });
-    }}>
-    <View
+const ServiceCard = ({item}) => {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      key={item?.userid}
       style={{
-        width: windowWidth * 0.3,
-        height: windowHeight * 0.12,
-        borderRadius: moderateScale(5, 0.6),
+        flexDirection: 'row',
+        width: windowWidth * 0.9,
+        height: windowHeight * 0.15,
+        paddingVertical: moderateScale(10, 0.6),
+        paddingRight: moderateScale(10, 0.6),
+
+        borderRadius: moderateScale(10, 0.6),
+        borderColor: Color.veryLightGray,
+        borderWidth: 1,
+
+        marginHorizontal: moderateScale(5, 0.3),
         backgroundColor: 'white',
-        overflow: 'hidden',
-        marginLeft: moderateScale(10, 0.6),
+      }}
+      onPress={() => {
+        navigation.navigate('ServiceDetails', {
+          item,
+        });
       }}>
-      <CustomImage
-        source={{uri: item?.images[0]?.photo}}
+      <View
         style={{
-          width: '100%',
-          height: '100%',
-        }}
-        resizeMode={'stretch'}
-        onPress={() => {
-          navigation.navigate('ServiceDetails', {item});
-        }}
-      />
-    </View>
-    <View
-      style={{
-        marginLeft: moderateScale(10, 0.3),
-        justifyContent: 'center',
-      }}>
-      <CustomText
-        numberOfLines={1}
-        style={{
-          fontSize: moderateScale(16, 0.6),
-          width: windowWidth * 0.45,
-          color: 'black',
+          width: windowWidth * 0.3,
+          height: windowHeight * 0.12,
+          borderRadius: moderateScale(5, 0.6),
+          backgroundColor: 'white',
+          overflow: 'hidden',
+          marginLeft: moderateScale(10, 0.6),
         }}>
-        {item?.shop_name}
-      </CustomText>
-      <CustomText
-        numberOfLines={1}
+        <CustomImage
+          source={{uri: item?.images[0]?.photo}}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+          resizeMode={'stretch'}
+          onPress={() => {
+            navigation.navigate('ServiceDetails', {item});
+          }}
+        />
+      </View>
+      <View
         style={{
-          fontSize: moderateScale(13, 0.6),
-          width: windowWidth * 0.45,
-          color: 'black',
+          marginLeft: moderateScale(10, 0.3),
+          justifyContent: 'center',
         }}>
-        {item?.category}
-      </CustomText>
-      <CustomText isBold>
-        starting from Rs {item?.charges}
-      </CustomText>
-    </View>
-  </TouchableOpacity>)
-}
+        <CustomText
+          numberOfLines={1}
+          style={{
+            fontSize: moderateScale(16, 0.6),
+            width: windowWidth * 0.45,
+            color: 'black',
+          }}>
+          {item?.shop_name}
+        </CustomText>
+        <CustomText
+          numberOfLines={1}
+          style={{
+            fontSize: moderateScale(13, 0.6),
+            width: windowWidth * 0.45,
+            color: 'black',
+          }}>
+          {item?.category}
+        </CustomText>
+        <CustomText isBold>starting from Rs {item?.charges}</CustomText>
+      </View>
+    </TouchableOpacity>
+  );
+};

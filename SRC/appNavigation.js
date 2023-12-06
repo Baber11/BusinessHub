@@ -44,7 +44,7 @@ const AppNavigator = () => {
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
   const role = useSelector(state => state.authReducer.role);
-  // console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
+  console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
 
   // console.log(
   //   '🚀 ~ file: appNavigation.js:27 ~ AppNavigator ~ walkThrough:',
@@ -73,9 +73,8 @@ const AppNavigator = () => {
     ? 'WalkThroughScreen'
     : token == null
     ? 'GetStarted'
-    :  isVerified == 0 ?
-    'VerifyNumber'
-    :
+    :  isVerified == 0 && role != 'admin' ?
+    'VerifyNumber':
     'MyDrawer';
     
     console.log("🚀 ~ file: appNavigation.js:73 ~ AppNavigatorContainer ~ firstScreen:", firstScreen)
