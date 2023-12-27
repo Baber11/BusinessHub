@@ -381,14 +381,14 @@ const AddServices = props => {
           />
            <TextInputWithTitle
             titleText={'Contact'}
-            placeholder={'Contact'}
+            placeholder={'Phone or email'}
             setText={setContact}
             value={contact}
             viewHeight={0.07}
             viewWidth={0.9}
             inputWidth={0.9}
             border={1}
-            keyboardType={'numeric'}
+            // keyboardType={'numeric'}
             // borderColor={Color.white}
             backgroundColor={Color.white}
             marginTop={moderateScale(15, 0.3)}
